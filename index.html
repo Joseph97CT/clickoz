@@ -1,730 +1,177 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Clickoz – Free Online Tools for YouTube, AI, PDF & Translation</title>
-  <meta name="description" content="Translate videos, summarize content, extract text, and solve daily tasks instantly. No signup required." />
-  <link rel="canonical" href="https://clickoz.com/" />
+  <title>Clickoz – Free Online Tools for SEO, Writing & Dev</title>
+  <meta name="description" content="Free online tools: word counter, readability analyzer, keyword density, meta tag optimizer, JSON formatter, URL/Base64 encoders, and SEO helpers. No signup.">
+  <link rel="canonical" href="https://clickoz.com/">
+  <meta name="robots" content="index,follow">
 
-  <!-- OpenGraph -->
-  <meta property="og:title" content="Clickoz – Free Online Tools for YouTube, AI, PDF & Translation" />
-  <meta property="og:description" content="Translate videos, summarize content, extract text, and solve daily tasks instantly. No signup required." />
-  <meta property="og:url" content="https://clickoz.com/" />
-  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Clickoz – Free Online Tools for SEO, Writing & Dev">
+  <meta property="og:description" content="Free online tools for SEO, writing and developers. Fast, mobile-first, no signup.">
+  <meta property="og:url" content="https://clickoz.com/">
+  <meta property="og:type" content="website">
 
-  <!-- Hreflang -->
-  <link rel="alternate" hreflang="x-default" href="https://clickoz.com/" />
-  <link rel="alternate" hreflang="en" href="https://clickoz.com/" />
-  <link rel="alternate" hreflang="it" href="https://clickoz.com/it/" />
-  <link rel="alternate" hreflang="fr" href="https://clickoz.com/fr/" />
-  <link rel="alternate" hreflang="es" href="https://clickoz.com/es/" />
-  <link rel="alternate" hreflang="de" href="https://clickoz.com/de/" />
-  <link rel="alternate" hreflang="pt" href="https://clickoz.com/pt/" />
-  <link rel="alternate" hreflang="nl" href="https://clickoz.com/nl/" />
-  <link rel="alternate" hreflang="pl" href="https://clickoz.com/pl/" />
-  <link rel="alternate" hreflang="tr" href="https://clickoz.com/tr/" />
-  <link rel="alternate" hreflang="ar" href="https://clickoz.com/ar/" />
-  <link rel="alternate" hreflang="hi" href="https://clickoz.com/hi/" />
-  <link rel="alternate" hreflang="ja" href="https://clickoz.com/ja/" />
-
-  <!-- Font (lighter than @import) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #0a0a0f;
-      --panel: #16161f;
-      --text: #e8e8f0;
-      --muted: #8888a0;
-      --accent: #6366f1;
-      --accent-hover: #4f46e5;
-      --radius: 12px;
-      --shadow: 0 4px 20px rgba(0,0,0,.4);
-      --gap: 24px;
-      --max: 1200px;
-    }
-
-    html, body { height: 100%; width: 100%; }
-    body {
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      overflow-x: hidden;
-      font-size: 16px;
-    }
-
-    .app-wrapper { width: 100%; min-height: 100%; }
-
-    /* Header */
-    .nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,15,.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .nav-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .nav-left { display: flex; align-items: center; gap: 12px; }
-    .logo {
-      font-size: 28px;
-      font-weight: 800;
-      color: #fff;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    #logoAccent { color: var(--accent); transition: color .2s; }
-
-    .nav-links { display: flex; gap: 24px; align-items: center; }
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 600;
-      transition: color .2s;
-      white-space: nowrap;
-      opacity: .92;
-    }
-    .nav-links a:hover { color: var(--accent); opacity: 1; }
-
-    .search-wrapper { flex: 1; max-width: 420px; }
-    .search-input {
-      width: 100%;
-      padding: 12px 16px;
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius);
-      color: var(--text);
-      font-size: 15px;
-      outline: none;
-      transition: border-color .2s;
-    }
-    .search-input:focus { border-color: var(--accent); }
-    .search-input::placeholder { color: var(--muted); }
-
-    .nav-controls { display: flex; gap: 12px; align-items: center; }
-
-    .icon-btn {
-      height: 40px;
-      border-radius: 10px;
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,.1);
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: all .2s;
-      font-size: 14px;
-      font-weight: 700;
-      white-space: nowrap;
-      padding: 0 12px;
-    }
-    .icon-btn:hover {
-      border-color: var(--accent);
-      background: rgba(99,102,241,.10);
-      color: #fff;
-    }
-
-    .color-dropdown, .lang-dropdown { position: relative; }
-    .color-btn-indicator {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: var(--accent);
-      transition: background .2s;
-    }
-
-    .color-menu, .lang-menu {
-      position: absolute;
-      top: 48px;
-      right: 0;
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius);
-      padding: 10px;
-      display: none;
-      box-shadow: var(--shadow);
-      z-index: 1000;
-      min-width: 210px;
-    }
-    .color-menu { right: auto; left: 0; min-width: 190px; }
-    .color-menu.active, .lang-menu.active { display: block; }
-
-    .color-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    .color-option {
-      width: 34px; height: 34px; border-radius: 50%;
-      cursor: pointer; transition: transform .15s, border-color .15s, box-shadow .15s;
-      border: 3px solid transparent;
-    }
-    .color-option:hover { transform: scale(1.12); border-color: rgba(255,255,255,.25); }
-    .color-option.active {
-      border-color: rgba(255,255,255,.8);
-      box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px rgba(255,255,255,.25);
-    }
-    .color-option[data-color="purple"] { background: #6366f1; }
-    .color-option[data-color="blue"] { background: #3b82f6; }
-    .color-option[data-color="green"] { background: #10b981; }
-    .color-option[data-color="yellow"] { background: #f59e0b; }
-    .color-option[data-color="orange"] { background: #f97316; }
-    .color-option[data-color="red"] { background: #ef4444; }
-    .color-option[data-color="pink"] { background: #ec4899; }
-    .color-option[data-color="cyan"] { background: #06b6d4; }
-
-    .lang-option {
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background .2s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--text);
-    }
-    .lang-option:hover { background: rgba(99,102,241,.10); }
-    .lang-flag { font-size: 18px; }
-
-    /* Container */
-    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
-    .section { padding: 58px 0; }
-
-    /* Hero */
-    .hero { text-align: center; padding: 74px 0 48px; }
-    .hero h1 {
-      font-size: 56px;
-      font-weight: 800;
-      margin-bottom: 18px;
-      line-height: 1.15;
-      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      font-size: 20px;
-      color: var(--muted);
-      margin: 0 auto 28px;
-      max-width: 680px;
-      line-height: 1.6;
-    }
-    .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
-    /* Buttons */
-    .btn-primary, .btn-secondary {
-      padding: 14px 28px;
-      border-radius: var(--radius);
-      font-size: 15px;
-      font-weight: 800;
-      text-decoration: none;
-      display: inline-block;
-      transition: transform .15s, box-shadow .15s, background .15s, border-color .15s;
-      cursor: pointer;
-      border: none;
-    }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 26px rgba(99,102,241,.35); }
-    .btn-secondary {
-      background: var(--panel);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    .btn-secondary:hover { border-color: var(--accent); background: rgba(99,102,241,.10); }
-
-    /* Chips */
-    .chips {
-      display: flex; gap: 12px; flex-wrap: wrap;
-      margin: 0 0 26px;
-      justify-content: center;
-    }
-    .chip {
-      padding: 10px 18px;
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
-      cursor: pointer;
-      transition: background .15s, border-color .15s, transform .15s;
-      user-select: none;
-    }
-    .chip:hover { border-color: var(--accent); background: rgba(99,102,241,.10); transform: translateY(-1px); }
-    .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    /* Section titles */
-    .section-title {
-      font-size: 38px;
-      font-weight: 900;
-      margin-bottom: 30px;
-      text-align: center;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-    }
-
-    /* Grid */
-    .grid { display: grid; gap: var(--gap); grid-template-columns: repeat(2, 1fr); }
-    @media (min-width: 768px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); } }
-
-    /* Card Square */
-    .card-square {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 20px;
-      aspect-ratio: 1 / 1;
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      color: var(--text);
-      transition: transform .2s, box-shadow .2s, border-color .2s;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,.06);
-    }
-    .card-square:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 34px rgba(0,0,0,.55);
-      border-color: var(--accent);
-    }
-    .thumb {
-      width: 100%;
-      height: 64px;
-      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
-      border-radius: 10px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-    }
-    .card-square h3 { font-size: 17px; font-weight: 900; margin-bottom: 8px; line-height: 1.25; }
-    .card-square p { font-size: 14px; color: var(--muted); line-height: 1.55; flex: 1; }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      background: rgba(99,102,241,.15);
-      color: var(--accent);
-      border-radius: 7px;
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      margin-top: 10px;
-      align-self: flex-start;
-    }
-
-    /* Trending & Guides */
-    .small-grid { display: grid; gap: var(--gap); grid-template-columns: repeat(2, 1fr); }
-    @media (min-width: 768px) { .small-grid { grid-template-columns: repeat(3, 1fr); } }
-    .small-card {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 20px;
-      text-decoration: none;
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.06);
-      transition: transform .2s, border-color .2s;
-    }
-    .small-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-    .small-card h3 { font-size: 17px; font-weight: 900; margin-bottom: 8px; line-height: 1.3; }
-    .small-card p { font-size: 14px; color: var(--muted); line-height: 1.5; }
-
-    /* Use cases */
-    .use-case-card {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 24px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,.06);
-    }
-    .use-case-icon {
-      width: 48px; height: 48px;
-      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 14px;
-      font-size: 24px;
-    }
-    .use-case-card h3 { font-size: 18px; font-weight: 900; margin-bottom: 8px; line-height: 1.25; }
-    .use-case-card p { font-size: 14px; color: var(--muted); line-height: 1.5; }
-
-    /* Footer */
-    .footer {
-      background: var(--panel);
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding: 40px 0;
-      margin-top: 70px;
-    }
-    .footer-content { display: grid; gap: 32px; grid-template-columns: 1fr; }
-    @media (min-width: 768px) { .footer-content { grid-template-columns: repeat(3, 1fr); } }
-    .footer h4 { font-size: 14px; font-weight: 900; margin-bottom: 14px; color: var(--text); }
-    .footer-links { display: flex; flex-direction: column; gap: 10px; }
-    .footer-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 13px;
-      transition: color .15s;
-    }
-    .footer-links a:hover { color: var(--accent); }
-    .footer-bottom {
-      text-align: center;
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    /* Mobile */
-    @media (max-width: 767px) {
-      .hero { padding: 54px 0 34px; }
-      .hero h1 { font-size: 34px; }
-      .hero p { font-size: 16px; }
-
-      .nav-inner { flex-wrap: wrap; gap: 12px; }
-      .nav-left { width: 100%; justify-content: space-between; }
-      .nav-links { display: none; } /* keep simple for now */
-      .search-wrapper { width: 100%; max-width: none; }
-    }
-  </style>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900;1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
 </head>
 
 <body>
-  <div class="app-wrapper">
-    <!-- Header -->
-    <nav class="nav">
-      <div class="nav-inner">
-        <div class="nav-left">
-          <div class="color-dropdown">
-            <button class="icon-btn" id="colorToggle" title="Select accent color" aria-label="Select accent color">
-              <div class="color-btn-indicator" id="colorIndicator"></div>
-            </button>
-            <div class="color-menu" id="colorMenu" aria-label="Accent color menu">
-              <div class="color-grid">
-                <div class="color-option active" data-color="purple" title="Purple"></div>
-                <div class="color-option" data-color="blue" title="Blue"></div>
-                <div class="color-option" data-color="green" title="Green"></div>
-                <div class="color-option" data-color="yellow" title="Yellow"></div>
-                <div class="color-option" data-color="orange" title="Orange"></div>
-                <div class="color-option" data-color="red" title="Red"></div>
-                <div class="color-option" data-color="pink" title="Pink"></div>
-                <div class="color-option" data-color="cyan" title="Cyan"></div>
-              </div>
-            </div>
-          </div>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="/">
+        <span class="logo-badge">⚡</span>
+        Click<span>oz</span>
+      </a>
 
-          <a href="/" class="logo" aria-label="Clickoz home">Click<span id="logoAccent">oz</span></a>
+      <div class="nav-links">
+        <a href="/#tools">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/about/">About</a>
+      </div>
 
-          <div class="nav-controls">
-            <div class="lang-dropdown">
-              <button class="icon-btn" id="langToggle" title="Select language" aria-label="Select language">🌍 🇬🇧</button>
-              <div class="lang-menu" id="langMenu" aria-label="Language menu">
-                <div class="lang-option" data-lang="en"><span class="lang-flag">🇬🇧</span><span>English</span></div>
-                <div class="lang-option" data-lang="it"><span class="lang-flag">🇮🇹</span><span>Italiano</span></div>
-                <div class="lang-option" data-lang="fr"><span class="lang-flag">🇫🇷</span><span>Français</span></div>
-                <div class="lang-option" data-lang="es"><span class="lang-flag">🇪🇸</span><span>Español</span></div>
-                <div class="lang-option" data-lang="de"><span class="lang-flag">🇩🇪</span><span>Deutsch</span></div>
-                <div class="lang-option" data-lang="pt"><span class="lang-flag">🇵🇹</span><span>Português</span></div>
-                <div class="lang-option" data-lang="nl"><span class="lang-flag">🇳🇱</span><span>Nederlands</span></div>
-                <div class="lang-option" data-lang="pl"><span class="lang-flag">🇵🇱</span><span>Polski</span></div>
-                <div class="lang-option" data-lang="tr"><span class="lang-flag">🇹🇷</span><span>Türkçe</span></div>
-                <div class="lang-option" data-lang="ar"><span class="lang-flag">🇸🇦</span><span>العربية</span></div>
-                <div class="lang-option" data-lang="hi"><span class="lang-flag">🇮🇳</span><span>हिन्दी</span></div>
-                <div class="lang-option" data-lang="ja"><span class="lang-flag">🇯🇵</span><span>日本語</span></div>
-              </div>
-            </div>
-          </div>
+      <div class="spacer"></div>
+      <a class="btn" href="/submit/">Submit a tool</a>
+      <a class="btn primary" href="/tool/word-counter-pro/">Try Word Counter Pro</a>
+    </div>
+  </nav>
+
+  <header class="hero container">
+    <div class="row" style="margin-bottom:10px">
+      <span class="badge">⚡ Free • Fast • Privacy-friendly • No signup</span>
+    </div>
+    <h1>Free online tools. One click. One result.</h1>
+    <p>Clickoz is a neon-clean hub of tools for SEO, writing, creators, and developers — designed to be fast on mobile and desktop.</p>
+
+    <div class="row" style="margin-top:10px">
+      <a class="btn primary" href="#tools">Browse tools</a>
+      <a class="btn" href="/guides/">Read guides</a>
+      <a class="btn" href="/tool/word-counter/">Start with Word Counter</a>
+    </div>
+
+    <div class="kicker" style="margin-top:10px">
+      <span>⚡ instant in-browser</span> • <span>🔒 no uploads</span> • <span>📱 mobile-first</span> • <span>🧠 SEO-ready pages</span>
+    </div>
+  </header>
+
+  <section class="section container" id="tools">
+    <h2 class="section-title">Tools hub</h2>
+    <p class="section-sub">Each tool has its own SEO page with a mini-guide + FAQ. This is how we rank long-tail keywords.</p>
+
+    <div class="row">
+      <input class="search" id="toolSearch" placeholder="Search tools (readability, meta, json, base64…)" aria-label="Search tools">
+    </div>
+
+    <div class="chips" id="chips" aria-label="Categories">
+      <div class="chip active" data-filter="all">All</div>
+      <div class="chip" data-filter="seo">SEO</div>
+      <div class="chip" data-filter="text">Text</div>
+      <div class="chip" data-filter="dev">Dev</div>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Cards -->
+      <a class="card" href="/tool/word-counter/" data-card="1" data-slug="word-counter" data-hay="Word Counter count words characters sentences paragraphs reading time">
+        <div class="thumb">🔢</div><h3>Word Counter</h3><p>Count words, characters, sentences, paragraphs and reading time instantly.</p>
+      </a>
+
+      <a class="card" href="/tool/word-counter-pro/" data-card="1" data-slug="word-counter-pro" data-hay="Word Counter Pro advanced speaking time top keywords">
+        <div class="thumb">✨</div><h3>Word Counter Pro</h3><p>Advanced analysis: reading + speaking time and top keyword hints.</p>
+      </a>
+
+      <a class="card" href="/tool/readability-analyzer/" data-card="1" data-slug="readability-analyzer" data-hay="Readability Analyzer flesch score grade level clarity">
+        <div class="thumb">📚</div><h3>Readability Analyzer</h3><p>Flesch score, grade estimate, and fast clarity suggestions.</p>
+      </a>
+
+      <a class="card" href="/tool/keyword-density/" data-card="1" data-slug="keyword-density" data-hay="Keyword Density Checker frequency highlight SEO">
+        <div class="thumb">🎯</div><h3>Keyword Density</h3><p>Check keyword frequency + density and highlight phrases.</p>
+      </a>
+
+      <a class="card" href="/tool/meta-tags/" data-card="1" data-slug="meta-tags" data-hay="Meta Tag Optimizer title description serp preview">
+        <div class="thumb">🏷️</div><h3>Meta Tag Optimizer</h3><p>Title + description length hints with SERP-style preview.</p>
+      </a>
+
+      <a class="card" href="/tool/json-formatter/" data-card="1" data-slug="json-formatter" data-hay="JSON Formatter minify validate">
+        <div class="thumb">🧾</div><h3>JSON Formatter</h3><p>Format, minify and validate JSON instantly.</p>
+      </a>
+
+      <a class="card" href="/tool/url-encoder/" data-card="1" data-slug="url-encoder" data-hay="URL Encoder Decoder encodeURIComponent decodeURIComponent">
+        <div class="thumb">🔗</div><h3>URL Encoder</h3><p>Encode/decode URLs safely (querystrings, special characters).</p>
+      </a>
+
+      <a class="card" href="/tool/base64/" data-card="1" data-slug="base64" data-hay="Base64 Encoder Decoder">
+        <div class="thumb">🔐</div><h3>Base64 Encoder</h3><p>Encode/decode Base64 for text (safe local processing).</p>
+      </a>
+
+      <a class="card" href="/tool/title-description/" data-card="1" data-slug="title-description" data-hay="Title Description Generator SEO">
+        <div class="thumb">📝</div><h3>Title & Description</h3><p>Generate SEO title + meta description ideas from a keyword.</p>
+      </a>
+
+      <a class="card" href="/tool/alt-text/" data-card="1" data-slug="alt-text" data-hay="Alt Text Generator accessibility SEO images">
+        <div class="thumb">🖼️</div><h3>Alt Text Generator</h3><p>Create accessibility-friendly, SEO-ready alt text variants.</p>
+      </a>
+
+      <a class="card" href="/tool/seo-outline/" data-card="1" data-slug="seo-outline" data-hay="SEO Outline Helper H1 H2 H3 FAQ">
+        <div class="thumb">🧠</div><h3>SEO Outline Helper</h3><p>Generate H1/H2/H3 outline + FAQ ideas for any keyword.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2 class="section-title">Guides & Updates</h2>
+    <p class="section-sub">We publish short guides to rank long-tail queries and link back to tools.</p>
+
+    <div class="small-grid">
+      <a class="small-card" href="/guides/word-count-for-seo/"><h3>Word Count for SEO (2026)</h3><p>Structure > length. What really matters now.</p></a>
+      <a class="small-card" href="/guides/readability-for-ranking/"><h3>Readability for Ranking</h3><p>Make content clear, scannable, and sticky.</p></a>
+      <a class="small-card" href="/guides/meta-tags-checklist/"><h3>Meta Tags Checklist</h3><p>Titles + descriptions that win clicks.</p></a>
+      <a class="small-card" href="/guides/keyword-research-basics/"><h3>Keyword Research Basics</h3><p>Find intent and build topical authority.</p></a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>Clickoz</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="/about/">About</a>
+          <a href="/guides/">Guides</a>
+          <a href="/updates/">Updates</a>
         </div>
-
-        <div class="nav-links">
-          <a href="/">Home</a>
-          <a href="/guides">Guides</a>
-          <a href="/updates">Updates</a>
-        </div>
-
-        <div class="search-wrapper">
-          <input type="text" id="searchInput" class="search-input" placeholder="Search tools..." aria-label="Search tools" />
-        </div>
-
-        <div class="nav-controls">
-          <a class="btn-primary" href="/submit" style="padding:10px 14px; border-radius:10px; font-size:13px;">Submit a tool</a>
+      </div>
+      <div>
+        <h4>Popular tools</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="/tool/word-counter/">Word Counter</a>
+          <a href="/tool/word-counter-pro/">Word Counter Pro</a>
+          <a href="/tool/readability-analyzer/">Readability</a>
+          <a href="/tool/meta-tags/">Meta Tags</a>
         </div>
       </div>
-    </nav>
-
-    <!-- Hero -->
-    <section class="hero container">
-      <h1>Free online tools. One click. One result.</h1>
-      <p>Translate videos, summarize content, extract text, and solve daily tasks instantly. No signup.</p>
-      <div class="hero-buttons">
-        <a href="#tools" class="btn-primary">Browse tools</a>
-        <a href="/tool/youtube-translate" class="btn-secondary">Try YouTube Translator</a>
-      </div>
-    </section>
-
-    <!-- Categories -->
-    <section class="container">
-      <div class="chips" id="categoryChips">
-        <div class="chip active" data-category="all">All Tools</div>
-        <div class="chip" data-category="video">Video</div>
-        <div class="chip" data-category="translation">Translation</div>
-        <div class="chip" data-category="ai">AI Tools</div>
-        <div class="chip" data-category="pdf">PDF & Files</div>
-        <div class="chip" data-category="images">Images</div>
-        <div class="chip" data-category="seo">SEO & Creator</div>
-        <div class="chip" data-category="utility">Utility</div>
-      </div>
-    </section>
-
-    <!-- Featured Tools -->
-    <section id="tools" class="section container">
-      <h2 class="section-title">Featured Tools</h2>
-      <div class="grid" id="toolsGrid"></div>
-    </section>
-
-    <!-- Trending -->
-    <section class="section container">
-      <h2 class="section-title">Trending this week</h2>
-      <div class="small-grid">
-        <a href="/tool/youtube-translate" class="small-card"><h3>YouTube Video Translator</h3><p>Most popular tool this week</p></a>
-        <a href="/guide/how-to-summarize" class="small-card"><h3>How to Summarize Content</h3><p>Complete guide for creators</p></a>
-        <a href="/tool/text-to-speech" class="small-card"><h3>Text to Speech</h3><p>Convert text to natural voice</p></a>
-        <a href="/guide/seo-tips" class="small-card"><h3>SEO Tips for YouTube</h3><p>Boost your video rankings</p></a>
-        <a href="/tool/pdf-to-text" class="small-card"><h3>PDF to Text Converter</h3><p>Extract text from documents</p></a>
-        <a href="/guide/ai-tools" class="small-card"><h3>Best AI Tools</h3><p>Top tools for productivity</p></a>
-      </div>
-    </section>
-
-    <!-- Use Cases -->
-    <section class="section container">
-      <h2 class="section-title">Who uses Clickoz?</h2>
-      <div class="grid">
-        <div class="use-case-card"><div class="use-case-icon">📹</div><h3>Content Creators</h3><p>Translate and subtitle videos, generate SEO tags and titles</p></div>
-        <div class="use-case-card"><div class="use-case-icon">📚</div><h3>Students</h3><p>Summarize research, extract text from PDFs, convert speech</p></div>
-        <div class="use-case-card"><div class="use-case-icon">💼</div><h3>Professionals</h3><p>Generate content, remove metadata, translate documents</p></div>
-        <div class="use-case-card"><div class="use-case-icon">✈️</div><h3>Travelers</h3><p>Translate text in multiple languages instantly</p></div>
-        <div class="use-case-card"><div class="use-case-icon">🛍️</div><h3>E-commerce Sellers</h3><p>Generate SEO descriptions and product content</p></div>
-        <div class="use-case-card"><div class="use-case-icon">📱</div><h3>Social Media Managers</h3><p>Create captions, tags, and multilingual content</p></div>
-      </div>
-    </section>
-
-    <!-- Guides -->
-    <section class="section container">
-      <h2 class="section-title">Guides & Updates</h2>
-      <div class="small-grid">
-        <a href="/guide/youtube-translation" class="small-card"><h3>Ultimate Guide to Video Translation</h3><p>Learn how to translate videos professionally</p></a>
-        <a href="/guide/ai-summarization" class="small-card"><h3>AI Summarization Best Practices</h3><p>Get the most out of AI tools</p></a>
-        <a href="/guide/ocr-guide" class="small-card"><h3>Understanding OCR Technology</h3><p>Extract text from any image</p></a>
-        <a href="/guide/metadata-privacy" class="small-card"><h3>File Metadata and Privacy</h3><p>Protect your personal information</p></a>
-        <a href="/guide/seo-optimization" class="small-card"><h3>SEO Optimization for Creators</h3><p>Rank higher on search engines</p></a>
-        <a href="/guide/productivity-tools" class="small-card"><h3>Productivity Tools</h3><p>Work smarter, not harder</p></a>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div>
-            <h4>Clickoz</h4>
-            <div class="footer-links">
-              <a href="/about">About Us</a>
-              <a href="/blog">Blog</a>
-              <a href="/contact">Contact</a>
-              <a href="/privacy">Privacy Policy</a>
-            </div>
-          </div>
-          <div>
-            <h4>Popular Tools</h4>
-            <div class="footer-links">
-              <a href="/tool/youtube-translate">YouTube Translator</a>
-              <a href="/tool/summarize-text">Text Summarizer</a>
-              <a href="/tool/pdf-to-text">PDF to Text</a>
-              <a href="/tool/image-to-text">Image OCR</a>
-            </div>
-          </div>
-          <div>
-            <h4>Resources</h4>
-            <div class="footer-links">
-              <a href="/guides">All Guides</a>
-              <a href="/api">API Documentation</a>
-              <a href="/faq">FAQ</a>
-              <a href="/support">Support</a>
-            </div>
-          </div>
+      <div>
+        <h4>Legal</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
         </div>
-        <div class="footer-bottom">© 2026 Clickoz. All rights reserved.</div>
       </div>
-    </footer>
-  </div>
+    </div>
 
-  <script>
-    const tools = [
-      { title: "YouTube → Transcript", slug: "youtube-transcript", category: "video", description: "Extract full text transcripts from any YouTube video", icon: "📝" },
-      { title: "Translate YouTube Video", slug: "youtube-translate", category: "translation", description: "Translate YouTube videos to any language", icon: "🌐" },
-      { title: "Summarize YouTube Video", slug: "youtube-summarize", category: "ai", description: "Get AI-powered summaries of video content", icon: "📊" },
-      { title: "Extract Audio from Video", slug: "extract-audio", category: "video", description: "Convert video files to audio format", icon: "🎵" },
-      { title: "Summarize Text", slug: "summarize-text", category: "ai", description: "Condense long texts into key points", icon: "✨" },
-      { title: "Rewrite Text with AI", slug: "rewrite-text", category: "ai", description: "Improve and rephrase your content", icon: "✍️" },
-      { title: "Text → Speech", slug: "text-to-speech", category: "ai", description: "Convert written text to natural speech", icon: "🔊" },
-      { title: "AI Paragraph Generator", slug: "paragraph-generator", category: "ai", description: "Generate high-quality paragraphs instantly", icon: "📄" },
-      { title: "PDF → Text", slug: "pdf-to-text", category: "pdf", description: "Extract text content from PDF files", icon: "📑" },
-      { title: "Remove File Metadata", slug: "remove-metadata", category: "pdf", description: "Strip metadata from your files securely", icon: "🔒" },
-      { title: "Image → Text OCR", slug: "image-to-text", category: "images", description: "Extract text from images and screenshots", icon: "🖼️" },
-      { title: "SEO Description Generator", slug: "seo-description", category: "seo", description: "Create optimized meta descriptions", icon: "🎯" },
-      { title: "YouTube Title Generator", slug: "youtube-title", category: "seo", description: "Generate engaging video titles", icon: "📺" },
-      { title: "YouTube Tags Generator", slug: "youtube-tags", category: "seo", description: "Create relevant tags for better reach", icon: "🏷️" },
-      { title: "Language Translator", slug: "translate-text", category: "translation", description: "Translate text between 100+ languages", icon: "💬" },
-      { title: "Word Counter", slug: "word-counter", category: "utility", description: "Count words, characters, and sentences", icon: "🔢" }
-    ];
+    <div class="container" style="margin-top:14px">
+      <hr class="sep">
+      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
+        © 2026 Clickoz • Neon-fast tools that run locally in your browser
+      </div>
+    </div>
+  </footer>
 
-    let currentCategory = "all";
-    let searchQuery = "";
-
-    function renderTools() {
-      const grid = document.getElementById("toolsGrid");
-      const filtered = tools.filter(t => {
-        const matchesCategory = currentCategory === "all" || t.category === currentCategory;
-        const q = searchQuery.trim().toLowerCase();
-        const matchesSearch = !q || t.title.toLowerCase().includes(q) || t.description.toLowerCase().includes(q);
-        return matchesCategory && matchesSearch;
-      });
-
-      grid.innerHTML = filtered.map(t => `
-        <a href="/tool/${t.slug}" class="card-square">
-          <div class="thumb">${t.icon}</div>
-          <h3>${t.title}</h3>
-          <p>${t.description}</p>
-          <span class="badge">${t.category}</span>
-        </a>
-      `).join("");
-    }
-
-    document.getElementById("categoryChips").addEventListener("click", (e) => {
-      const chip = e.target.closest(".chip");
-      if (!chip) return;
-      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
-      currentCategory = chip.dataset.category;
-      renderTools();
-    });
-
-    document.getElementById("searchInput").addEventListener("input", (e) => {
-      searchQuery = e.target.value;
-      renderTools();
-    });
-
-    // Accent color picker
-    const colorToggle = document.getElementById("colorToggle");
-    const colorMenu = document.getElementById("colorMenu");
-    const colorIndicator = document.getElementById("colorIndicator");
-
-    const langToggle = document.getElementById("langToggle");
-    const langMenu = document.getElementById("langMenu");
-
-    const colorMap = {
-      purple: { accent: "#6366f1", gradient: "#8b5cf6" },
-      blue:   { accent: "#3b82f6", gradient: "#60a5fa" },
-      green:  { accent: "#10b981", gradient: "#34d399" },
-      yellow: { accent: "#f59e0b", gradient: "#fbbf24" },
-      orange: { accent: "#f97316", gradient: "#fb923c" },
-      red:    { accent: "#ef4444", gradient: "#f87171" },
-      pink:   { accent: "#ec4899", gradient: "#f472b6" },
-      cyan:   { accent: "#06b6d4", gradient: "#22d3ee" }
-    };
-
-    function setAccent(colorName) {
-      const c = colorMap[colorName];
-      if (!c) return;
-
-      document.documentElement.style.setProperty("--accent", c.accent);
-      document.documentElement.style.setProperty("--accent-hover", c.accent);
-      colorIndicator.style.background = c.accent;
-      document.getElementById("logoAccent").style.color = c.accent;
-
-      document.querySelectorAll(".thumb, .use-case-icon").forEach(el => {
-        el.style.background = `linear-gradient(135deg, ${c.accent} 0%, ${c.gradient} 100%)`;
-      });
-
-      document.querySelectorAll(".color-option").forEach(o => o.classList.remove("active"));
-      const active = document.querySelector(`.color-option[data-color="${colorName}"]`);
-      if (active) active.classList.add("active");
-    }
-
-    colorToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      colorMenu.classList.toggle("active");
-      langMenu.classList.remove("active");
-    });
-
-    colorMenu.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const option = e.target.closest(".color-option");
-      if (!option) return;
-      setAccent(option.dataset.color);
-      colorMenu.classList.remove("active");
-    });
-
-    // Language dropdown (keeps current path)
-    const supportedLangs = ["en","it","fr","es","de","pt","nl","pl","tr","ar","hi","ja"];
-    function getCurrentLangAndRestPath(pathname) {
-      const parts = pathname.split("/").filter(Boolean);
-      const first = parts[0];
-      if (supportedLangs.includes(first) && first !== "en") {
-        return { lang: first, rest: "/" + parts.slice(1).join("/") };
-      }
-      return { lang: "en", rest: pathname === "/" ? "/" : pathname };
-    }
-
-    function buildLangUrl(targetLang) {
-      const { rest } = getCurrentLangAndRestPath(window.location.pathname);
-      if (targetLang === "en") return rest;
-      // ensure trailing slash for pure language root
-      if (rest === "/" || rest === "") return `/${targetLang}/`;
-      return `/${targetLang}${rest.startsWith("/") ? "" : "/"}${rest}`;
-    }
-
-    langToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      langMenu.classList.toggle("active");
-      colorMenu.classList.remove("active");
-    });
-
-    langMenu.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const option = e.target.closest(".lang-option");
-      if (!option) return;
-      const lang = option.dataset.lang;
-      const flag = option.querySelector(".lang-flag")?.textContent || "🌍";
-      langToggle.innerHTML = `🌍 ${flag}`;
-      langMenu.classList.remove("active");
-      window.location.href = buildLangUrl(lang);
-    });
-
-    document.addEventListener("click", () => {
-      langMenu.classList.remove("active");
-      colorMenu.classList.remove("active");
-    });
-
-    // init
-    setAccent("purple");
-    renderTools();
-  </script>
+  <script src="/assets/site.js"></script>
 </body>
 </html>
+
