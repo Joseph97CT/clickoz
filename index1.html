@@ -37,261 +37,242 @@
 
   <link rel="stylesheet" href="/assets/site.css" />
 
-  <!-- Home improvements (professional + readable + widgets) -->
-<style>
-  :root{
-    --ui-base: 18px;
+  <!-- Pro UI (readable, no "toy" hover, solid surfaces) -->
+  <style>
+    :root{
+      --ui-base: 18px;
 
-    /* Pro dark (leggibile) */
-    --bg: #0b0f19;
-    --surface: #0f1526;
-    --surface-2: #111a30;
-    --border: rgba(255,255,255,.10);
-    --border-2: rgba(255,255,255,.16);
+      --bg: #0b0f19;
+      --surface: #0f1526;
+      --surface-2: #111a30;
 
-    --text: rgba(255,255,255,.92);
-    --muted: rgba(255,255,255,.72);
+      --border: rgba(255,255,255,.10);
+      --border-2: rgba(255,255,255,.16);
 
-    /* tieni i tuoi accenti ma senza “neon” aggressivo */
-    --accent: #6366f1;
-    --accent2:#8b5cf6;
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
 
-    --radius: 14px;
-    --shadow: 0 10px 26px rgba(0,0,0,.35);
-    --shadow-soft: 0 6px 16px rgba(0,0,0,.22);
-  }
+      --accent: #6366f1;
+      --accent2:#8b5cf6;
 
-  html{ font-size: var(--ui-base); }
-  body{
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
+      --radius: 14px;
+      --shadow: 0 10px 26px rgba(0,0,0,.35);
+      --shadow-soft: 0 6px 16px rgba(0,0,0,.22);
+    }
 
-  /* HERO */
-  .hero h1{
-    font-size: clamp(38px, 4.2vw, 62px) !important;
-    max-width: 1050px !important;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
-  }
-  .hero p{
-    font-size: 18px !important;
-    line-height: 1.75;
-    max-width: 920px !important;
-    color: var(--muted);
-  }
+    html{ font-size: var(--ui-base); }
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-  .section-title{
-    font-size: clamp(26px, 2.8vw, 40px);
-    letter-spacing: -0.02em;
-  }
-  .section-sub{
-    font-size: 16px;
-    color: var(--muted);
-    max-width: 920px;
-    margin: 0 auto 18px;
-  }
+    .hero h1{
+      font-size: clamp(38px, 4.2vw, 62px) !important;
+      max-width: 1050px !important;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+    }
+    .hero p{
+      font-size: 18px !important;
+      line-height: 1.75;
+      max-width: 920px !important;
+      color: var(--muted);
+    }
 
-  /* NAV */
-  .nav-inner{ gap: 14px; }
-  .nav-actions{ display:flex; align-items:center; gap:10px; }
+    .section-title{
+      font-size: clamp(26px, 2.8vw, 40px);
+      letter-spacing: -0.02em;
+    }
+    .section-sub{
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 920px;
+      margin: 0 auto 18px;
+    }
 
-  .icon-btn{
-    display:inline-flex; align-items:center; gap:10px;
-    height:42px; padding:0 12px;
-    border-radius: 10px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    cursor:pointer;
-    transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
-    font-weight: 700;
-    font-size: 14px;
-    user-select:none; white-space:nowrap;
-  }
-  .icon-btn:hover{
-    background: var(--surface-2);
-    border-color: var(--border-2);
-    box-shadow: var(--shadow-soft);
-    transform: none; /* niente salto */
-  }
+    /* NAV */
+    .nav-inner{ gap: 14px; }
+    .nav-actions{ display:flex; align-items:center; gap:10px; }
 
-  .dot{
-    width: 14px; height: 14px; border-radius: 999px;
-    background: var(--accent);
-    box-shadow: none;
-    border: 2px solid rgba(255,255,255,.22);
-  }
+    .icon-btn{
+      display:inline-flex; align-items:center; gap:10px;
+      height:42px; padding:0 12px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor:pointer;
+      transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
+      font-weight: 700;
+      font-size: 14px;
+      user-select:none; white-space:nowrap;
+    }
+    .icon-btn:hover{
+      background: var(--surface-2);
+      border-color: var(--border-2);
+      box-shadow: var(--shadow-soft);
+      transform: none;
+    }
 
-  .dropdown{ position:relative; }
+    .dot{
+      width: 14px; height: 14px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: none;
+      border: 2px solid rgba(255,255,255,.22);
+    }
 
-  .menu{
-    position:absolute; top:52px; right:0; min-width:240px;
-    background: #0c1222;            /* solido = leggibile */
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 10px;
-    display:none;
-    z-index:999;
-    backdrop-filter: none;          /* via blur */
-  }
-  .menu.active{ display:block; }
+    .dropdown{ position:relative; }
 
-  .menu-title{
-    font-size: 12px;
-    letter-spacing: .10em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.58);
-    padding: 8px 10px 6px;
-  }
+    .menu{
+      position:absolute; top:52px; right:0; min-width:240px;
+      background: #0c1222;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 10px;
+      display:none;
+      z-index:999;
+      backdrop-filter: none;
+    }
+    .menu.active{ display:block; }
 
-  .menu-item{
-    display:flex; align-items:center; gap:10px;
-    padding: 10px 10px;
-    border-radius: 10px;
-    cursor:pointer;
-    color: var(--text);
-    font-size: 15px;
-    font-weight: 650;
-    transition: background .12s ease;
-  }
-  .menu-item:hover{
-    background: rgba(255,255,255,.06);
-    transform: none;
-  }
+    .menu-title{
+      font-size: 12px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.58);
+      padding: 8px 10px 6px;
+    }
 
-  .flag{ font-size: 18px; }
+    .menu-item{
+      display:flex; align-items:center; gap:10px;
+      padding: 10px 10px;
+      border-radius: 10px;
+      cursor:pointer;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 650;
+      transition: background .12s ease;
+    }
+    .menu-item:hover{
+      background: rgba(255,255,255,.06);
+      transform: none;
+    }
 
-  .color-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:6px 8px 10px; }
-  .color-option{
-    width: 34px; height: 34px;
-    border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.12);
-    cursor:pointer;
-    transition: border-color .12s ease, outline-color .12s ease;
-  }
-  .color-option:hover{ transform:none; border-color: rgba(255,255,255,.22); }
-  .color-option.active{ border-color: rgba(255,255,255,.80); }
+    .flag{ font-size: 18px; }
 
-  /* LAYOUT widgets */
-  .widget-row{
-    display:grid;
-    grid-template-columns: 1.25fr .75fr;
-    gap: 18px;
-    margin-top: 22px;
-  }
-  @media(max-width:980px){ .widget-row{ grid-template-columns:1fr; } }
+    .color-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:6px 8px 10px; }
+    .color-option{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,.12);
+      cursor:pointer;
+      transition: border-color .12s ease;
+    }
+    .color-option:hover{ transform:none; border-color: rgba(255,255,255,.22); }
+    .color-option.active{ border-color: rgba(255,255,255,.80); }
 
-  .widget{
-    border: 1px solid var(--border);
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 18px;
-    box-shadow: var(--shadow-soft);
-  }
-  .widget h3{
-    font-size: 18px;
-    margin: 0 0 10px;
-    display:flex; align-items:center; gap:10px;
-    letter-spacing: -0.01em;
-  }
-  .widget p{
-    margin: 0;
-    color: var(--muted);
-    font-size: 15.5px;
-    line-height: 1.7;
-  }
+    /* FULL-WIDTH recommended */
+    .widget-row{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .widget{
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .widget h3{
+      font-size: 18px;
+      margin: 0 0 10px;
+      display:flex; align-items:center; gap:10px;
+      letter-spacing: -0.01em;
+    }
+    .widget p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.7;
+    }
 
-  /* Pills: niente hover “giocattolo” */
-  .quick-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
-  .pill{
-    display:inline-flex; align-items:center; gap:8px;
-    padding: 10px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,.02);
-    color: var(--text);
-    text-decoration:none;
-    font-weight: 700;
-    font-size: 13px;
-    transition: background .12s ease, border-color .12s ease;
-  }
-  .pill:hover{
-    background: rgba(255,255,255,.05);
-    border-color: var(--border-2);
-    transform: none;
-  }
+    .rec-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media(max-width: 980px){
+      .rec-grid{ grid-template-columns: 1fr; }
+    }
+    .rec-card{ padding: 16px !important; }
+    .rec-card h3{
+      font-size: 16.5px !important;
+      letter-spacing: -0.01em;
+    }
+    .rec-card p{
+      font-size: 14.8px !important;
+      line-height: 1.65;
+      opacity: .82;
+      max-width: 60ch;
+      color: var(--muted) !important;
+    }
 
-  /* Stats */
-  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
-  @media(max-width:700px){ .stats{ grid-template-columns:1fr; } }
-  .stat{
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,.02);
-    border-radius: var(--radius);
-    padding: 14px;
-  }
-  .stat b{ display:block; line-height:1.1; font-size:18px; }
-  .stat span{ display:block; font-size: 13px; color: rgba(255,255,255,.65); margin-top:6px; }
+    /* Neutralize “lift” hover if site.css has it */
+    .card:hover, .small-card:hover, .btn:hover{ transform: none !important; }
 
-  /* Disattiva tutti i “lift” globali se site.css ha hover aggressivi */
-  .card:hover, .small-card:hover, .btn:hover{
-    transform: none !important;
-  }
+    .card, .small-card{
+      border: 1px solid var(--border) !important;
+      background: var(--surface) !important;
+      box-shadow: none !important;
+      transition: border-color .12s ease, background .12s ease !important;
+    }
+    .card:hover, .small-card:hover{
+      border-color: var(--border-2) !important;
+      background: var(--surface-2) !important;
+    }
 
-  /* Migliora leggibilità card grid (senza cambiare HTML) */
-  .card, .small-card{
-    border: 1px solid var(--border) !important;
-    background: var(--surface) !important;
-    box-shadow: none !important;
-    transition: border-color .12s ease, background .12s ease !important;
-  }
-  .card:hover, .small-card:hover{
-    border-color: var(--border-2) !important;
-    background: var(--surface-2) !important;
-  }
-  .card p, .small-card p{ color: var(--muted) !important; }
+    /* Search input */
+    input.search{
+      background: var(--surface) !important;
+      border: 1px solid var(--border) !important;
+      color: var(--text) !important;
+      border-radius: 12px !important;
+      outline: none !important;
+    }
+    input.search::placeholder{ color: rgba(255,255,255,.55) !important; }
+    input.search:focus{
+      border-color: rgba(99,102,241,.55) !important;
+      box-shadow: 0 0 0 4px rgba(99,102,241,.12) !important;
+    }
 
-  /* Search input più “pro” */
-  input.search{
-    background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    color: var(--text) !important;
-    border-radius: 12px !important;
-    outline: none !important;
-  }
-  input.search::placeholder{ color: rgba(255,255,255,.55) !important; }
-  input.search:focus{
-    border-color: rgba(99,102,241,.55) !important;
-    box-shadow: 0 0 0 4px rgba(99,102,241,.12) !important;
-  }
+    /* Chips */
+    .chip{
+      background: rgba(255,255,255,.02) !important;
+      border: 1px solid var(--border) !important;
+      color: rgba(255,255,255,.78) !important;
+      transition: background .12s ease, border-color .12s ease !important;
+    }
+    .chip:hover{ background: rgba(255,255,255,.05) !important; transform:none !important; }
+    .chip.active{
+      color: var(--text) !important;
+      border-color: rgba(99,102,241,.45) !important;
+      background: rgba(99,102,241,.10) !important;
+    }
 
-  /* Chips più sobrie */
-  .chip{
-    background: rgba(255,255,255,.02) !important;
-    border: 1px solid var(--border) !important;
-    color: rgba(255,255,255,.78) !important;
-    transition: background .12s ease, border-color .12s ease !important;
-  }
-  .chip:hover{ background: rgba(255,255,255,.05) !important; transform:none !important; }
-  .chip.active{
-    color: var(--text) !important;
-    border-color: rgba(99,102,241,.45) !important;
-    background: rgba(99,102,241,.10) !important;
-  }
+    @media(max-width:860px){
+      .nav-links{ display:none; }
+      .nav-inner{ justify-content:space-between; }
+    }
+  </style>
 
-  @media(max-width:860px){
-    .nav-links{ display:none; }
-    .nav-inner{ justify-content:space-between; }
-  }
-</style>
-
-
-  <!-- WebSite + SearchAction (good, not spam) -->
+  <!-- WebSite + SearchAction -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -372,15 +353,15 @@
 
   <header class="hero container">
     <div class="row" style="margin-bottom:12px">
-      <span class="badge">⚡ 100% Free • Instant • Privacy-friendly • No account needed</span>
+      <span class="badge">100% Free • Instant • Privacy-friendly • No account needed</span>
     </div>
 
     <h1>
-      A clean toolkit for <span style="color:var(--neon)">SEO</span>, <span style="color:var(--neon2)">writing</span> and developer tasks.
+      A clean toolkit for <span style="color:var(--accent)">SEO</span>, <span style="color:var(--accent2)">writing</span> and developer tasks.
     </h1>
 
     <p style="margin:14px auto 18px;">
-      Clickoz brings the most practical online utilities into one place: count and analyze text, improve readability,
+      Clickoz brings practical online utilities into one place: count and analyze text, improve readability,
       check keyword density, preview meta tags, format and validate JSON, and encode or decode URLs and Base64.
       Each tool has a dedicated page with examples and answers to common questions, so you can go from search to solution fast.
     </p>
@@ -391,65 +372,54 @@
       <a class="btn" href="/guides/">Read guides</a>
     </div>
 
-    <div class="kicker" style="margin-top:14px;font-size:14px">
-      <span>⚡ runs in-browser</span> •
-      <span>🔒 privacy-first</span> •
-      <span>📱 mobile-ready</span> •
-      <span>🧠 examples + FAQs</span> •
-      <span>✨ neon UI, zero clutter</span>
+    <div class="kicker" style="margin-top:14px;font-size:14px;color:rgba(255,255,255,.70)">
+      <span>Runs in-browser</span> •
+      <span>Privacy-first</span> •
+      <span>Mobile-ready</span> •
+      <span>Examples + FAQs</span> •
+      <span>Zero clutter</span>
     </div>
 
+    <!-- FULL WIDTH: Recommended now -->
     <div class="widget-row">
       <div class="widget">
-        <h3>🚀 Start with the essentials</h3>
-        <p>
-          Use these shortcuts for common jobs: measure text length, improve clarity, tune SERP snippets,
-          and handle quick developer formatting. It’s a simple way to jump straight to results without hunting around.
+        <h3>Recommended now</h3>
+        <p style="margin-bottom:14px;">
+          Hand-picked tools from the hub to solve common SEO, writing, and developer tasks quickly.
+          Refresh to discover new picks.
         </p>
 
-        <div class="quick-actions">
-          <a class="pill" href="/tool/word-counter/">🔢 Word Counter</a>
-          <a class="pill" href="/tool/readability-analyzer/">📚 Readability</a>
-          <a class="pill" href="/tool/meta-tags/">🏷️ Meta Tags</a>
-          <a class="pill" href="/tool/keyword-density/">🎯 Keyword Density</a>
-          <a class="pill" href="/tool/json-formatter/">🧾 JSON Formatter</a>
-          <a class="pill" href="/tool/url-encoder/">🔗 URL Encoder</a>
-          <a class="pill" href="/tool/base64/">🔐 Base64</a>
-        </div>
-
-        <div class="stats" aria-label="Highlights">
-          <div class="stat"><b id="statTools">—</b><span>tools available</span></div>
-          <div class="stat"><b>No signup</b><span>open and use instantly</span></div>
-          <div class="stat"><b>Guided</b><span>examples + FAQs</span></div>
-        </div>
-
-        <div style="margin-top:12px;font-size:13px;opacity:.78;">
-          Tip: press <b>/</b> to focus search and find tools by keyword.
-        </div>
-      </div>
-
-      <div class="widget">
-        <h3>✨ Recommended now</h3>
-        <p style="margin-bottom:12px;">
-          Two useful picks chosen at random from the tool hub. Refresh to discover different options.
-        </p>
-
-        <div style="display:grid;gap:12px;">
-          <a class="card" id="randTool1" href="/tool/word-counter/" style="display:block;text-decoration:none">
+        <div class="rec-grid">
+          <a class="card rec-card" id="randTool1" href="/tool/word-counter/" style="display:block;text-decoration:none">
             <div class="thumb" id="randIcon1">🔢</div>
             <h3 id="randTitle1" style="margin-top:10px">Word Counter</h3>
-            <p id="randDesc1">Count words, characters, and reading time instantly.</p>
+            <p id="randDesc1">
+              Count words online tool, characters counter tool, read sentences, paragraphs and reading time.
+              Useful for SEO drafts, essays, and content audits.
+            </p>
           </a>
 
-          <a class="card" id="randTool2" href="/tool/readability-analyzer/" style="display:block;text-decoration:none">
+          <a class="card rec-card" id="randTool2" href="/tool/readability-analyzer/" style="display:block;text-decoration:none">
             <div class="thumb" id="randIcon2">📚</div>
             <h3 id="randTitle2" style="margin-top:10px">Readability Analyzer</h3>
-            <p id="randDesc2">Flesch score + clarity hints to make content more scannable.</p>
+            <p id="randDesc2">
+              Analyze readability with a clear score, grade-level estimate, and practical suggestions to improve scannability,
+              comprehension, and on-page engagement.
+            </p>
+          </a>
+
+          <a class="card rec-card" id="randTool3" href="/tool/meta-tags/" style="display:block;text-decoration:none">
+            <div class="thumb" id="randIcon3">🏷️</div>
+            <h3 id="randTitle3" style="margin-top:10px">Meta Tag Optimizer</h3>
+            <p id="randDesc3">
+              Preview SEO titles and meta descriptions like real search snippets, check length limits, and refine copy to improve CTR
+              without guesswork.
+            </p>
           </a>
         </div>
 
-        <div style="margin-top:12px;font-size:13px;opacity:.78;">
-          Shortcuts: <b>C</b> opens accent colors, <b>L</b> opens languages.
+        <div style="margin-top:12px;font-size:13px;opacity:.72;">
+          Shortcut: press <b>/</b> to focus search and filter tools instantly.
         </div>
       </div>
     </div>
@@ -475,47 +445,69 @@
 
     <div class="grid" id="grid">
       <a class="card" href="/tool/word-counter/" data-slug="word-counter" data-hay="word counter character counter reading time count words sentences paragraphs">
-        <div class="thumb">🔢</div><h3>Word Counter</h3><p>Count words, characters, sentences, paragraphs and reading time.</p>
+        <div class="thumb">🔢</div>
+        <h3>Word Counter</h3>
+        <p>Count words, characters, sentences, paragraphs, and estimate reading time in seconds.</p>
       </a>
 
       <a class="card" href="/tool/word-counter-pro/" data-slug="word-counter-pro" data-hay="advanced word counter speaking time top keywords">
-        <div class="thumb">✨</div><h3>Word Counter Pro</h3><p>Advanced analysis: reading + speaking time and top keyword hints.</p>
+        <div class="thumb">✨</div>
+        <h3>Word Counter Pro</h3>
+        <p>Advanced analysis with reading and speaking time plus helpful keyword hints for structure.</p>
       </a>
 
       <a class="card" href="/tool/readability-analyzer/" data-slug="readability-analyzer" data-hay="readability score flesch grade level clarity">
-        <div class="thumb">📚</div><h3>Readability Analyzer</h3><p>Flesch score, grade estimate, and clarity suggestions.</p>
+        <div class="thumb">📚</div>
+        <h3>Readability Analyzer</h3>
+        <p>Get a readability score (Flesch-style), grade estimate, and clear suggestions to improve clarity.</p>
       </a>
 
       <a class="card" href="/tool/keyword-density/" data-slug="keyword-density" data-hay="keyword density checker frequency highlight phrases">
-        <div class="thumb">🎯</div><h3>Keyword Density</h3><p>Check keyword frequency, density, and phrase usage.</p>
+        <div class="thumb">🎯</div>
+        <h3>Keyword Density</h3>
+        <p>Measure keyword frequency and phrase density, highlight repeats, and balance relevance naturally.</p>
       </a>
 
       <a class="card" href="/tool/meta-tags/" data-slug="meta-tags" data-hay="meta tag optimizer title description serp preview length">
-        <div class="thumb">🏷️</div><h3>Meta Tag Optimizer</h3><p>Title + description length hints with SERP-style preview.</p>
+        <div class="thumb">🏷️</div>
+        <h3>Meta Tag Optimizer</h3>
+        <p>Optimize title tags and meta descriptions with a SERP-style preview and length guidance.</p>
       </a>
 
       <a class="card" href="/tool/json-formatter/" data-slug="json-formatter" data-hay="json formatter validate minify prettify">
-        <div class="thumb">🧾</div><h3>JSON Formatter</h3><p>Format, minify and validate JSON instantly.</p>
+        <div class="thumb">🧾</div>
+        <h3>JSON Formatter</h3>
+        <p>Prettify, validate, and minify JSON instantly for APIs, configs, and debugging workflows.</p>
       </a>
 
       <a class="card" href="/tool/url-encoder/" data-slug="url-encoder" data-hay="url encoder decoder querystring encodeURIComponent decodeURIComponent">
-        <div class="thumb">🔗</div><h3>URL Encoder</h3><p>Encode/decode URLs safely (query strings, special characters).</p>
+        <div class="thumb">🔗</div>
+        <h3>URL Encoder</h3>
+        <p>Encode and decode URLs safely for query strings, UTM tags, and special characters.</p>
       </a>
 
       <a class="card" href="/tool/base64/" data-slug="base64" data-hay="base64 encoder decoder text">
-        <div class="thumb">🔐</div><h3>Base64 Encoder</h3><p>Encode/decode Base64 for text (local processing).</p>
+        <div class="thumb">🔐</div>
+        <h3>Base64 Encoder</h3>
+        <p>Encode or decode Base64 text locally in your browser for quick checks and dev tasks.</p>
       </a>
 
       <a class="card" href="/tool/title-description/" data-slug="title-description" data-hay="seo title generator meta description generator ideas">
-        <div class="thumb">📝</div><h3>Title & Description</h3><p>Generate SEO title + meta description ideas from a keyword.</p>
+        <div class="thumb">📝</div>
+        <h3>Title & Description</h3>
+        <p>Generate SEO title and meta description ideas from a keyword, with multiple intent-friendly variations.</p>
       </a>
 
       <a class="card" href="/tool/alt-text/" data-slug="alt-text" data-hay="alt text generator accessibility seo images">
-        <div class="thumb">🖼️</div><h3>Alt Text Generator</h3><p>Create accessibility-friendly, SEO-ready alt text variants.</p>
+        <div class="thumb">🖼️</div>
+        <h3>Alt Text Generator</h3>
+        <p>Create accessibility-friendly, SEO-ready alt text variants for images and screen readers.</p>
       </a>
 
       <a class="card" href="/tool/seo-outline/" data-slug="seo-outline" data-hay="seo outline helper h1 h2 h3 faq ideas">
-        <div class="thumb">🧠</div><h3>SEO Outline Helper</h3><p>Generate H1/H2/H3 outline + FAQ ideas for any topic.</p>
+        <div class="thumb">🧠</div>
+        <h3>SEO Outline Helper</h3>
+        <p>Build an H1/H2/H3 content outline plus FAQ ideas aligned to intent and topical coverage.</p>
       </a>
     </div>
   </section>
@@ -596,8 +588,8 @@
       logoAccent.style.color = a1;
       localStorage.setItem('clickoz_accent', JSON.stringify({a1, a2}));
     }
-    colorToggle.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMenu(colorToggle, colorMenu); });
-    colorMenu.addEventListener('click', (e)=>{
+    colorToggle?.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMenu(colorToggle, colorMenu); });
+    colorMenu?.addEventListener('click', (e)=>{
       e.stopPropagation();
       const opt = e.target.closest('.color-option');
       if(!opt) return;
@@ -627,10 +619,10 @@
     const langMenu   = document.getElementById('langMenu');
     const langLabel  = document.getElementById('langLabel');
 
-    langToggle.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMenu(langToggle, langMenu); });
+    langToggle?.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMenu(langToggle, langMenu); });
     function setLangLabel(code){ langLabel.textContent = (code||'en').toUpperCase(); localStorage.setItem('clickoz_lang', (code||'en')); }
     const savedLang = localStorage.getItem('clickoz_lang'); if(savedLang) setLangLabel(savedLang);
-    langMenu.addEventListener('click', (e)=>{
+    langMenu?.addEventListener('click', (e)=>{
       e.stopPropagation();
       const item = e.target.closest('.menu-item');
       if(!item) return;
@@ -650,41 +642,63 @@
       if(e.key === 'Escape') closeAll();
     });
 
-    // stat tools count
-    (function(){
-      const statTools = document.getElementById('statTools');
-      const grid = document.getElementById('grid');
-      if(!statTools || !grid) return;
-      statTools.textContent = String(grid.querySelectorAll('a.card').length);
-    })();
-
-    // random recommendations from hub cards (2 distinct)
+    // random recommendations from hub cards (3 distinct)
     (function(){
       const cards = Array.from(document.querySelectorAll('#grid a.card'));
-      if(cards.length < 2) return;
-      const a = Math.floor(Math.random()*cards.length);
-      let b = Math.floor(Math.random()*cards.length);
-      while(b === a) b = Math.floor(Math.random()*cards.length);
-      function extract(card){
-        return {
-          href: card.getAttribute('href') || '#',
-          icon: (card.querySelector('.thumb')?.textContent || '✨').trim(),
-          title: (card.querySelector('h3')?.textContent || 'Tool').trim(),
-          desc: (card.querySelector('p')?.textContent || '').trim()
-        };
+      if(cards.length < 3) return;
+
+      function pickDistinct(n){
+        const idx = new Set();
+        while(idx.size < n) idx.add(Math.floor(Math.random()*cards.length));
+        return Array.from(idx).map(i => cards[i]);
       }
-      const t1 = extract(cards[a]);
-      const t2 = extract(cards[b]);
 
-      document.getElementById('randTool1').href = t1.href;
-      document.getElementById('randIcon1').textContent = t1.icon;
-      document.getElementById('randTitle1').textContent = t1.title;
-      document.getElementById('randDesc1').textContent = t1.desc;
+      function extract(card){
+        const title = (card.querySelector('h3')?.textContent || 'Tool').trim();
+        const descShort = (card.querySelector('p')?.textContent || '').trim();
+        const icon = (card.querySelector('.thumb')?.textContent || '✨').trim();
+        const href = card.getAttribute('href') || '#';
 
-      document.getElementById('randTool2').href = t2.href;
-      document.getElementById('randIcon2').textContent = t2.icon;
-      document.getElementById('randTitle2').textContent = t2.title;
-      document.getElementById('randDesc2').textContent = t2.desc;
+        const longMap = {
+          "Word Counter": "Count words online tool, characters counter tool, read sentences, paragraphs and reading time. Useful for SEO drafts, essays, and content audits.",
+          "Word Counter Pro": "Advanced word counter with reading and speaking time plus keyword hints. Great for polishing long-form content and improving structure.",
+          "Readability Analyzer": "Analyze readability with a clear score, grade-level estimate, and practical suggestions to improve scannability, comprehension, and engagement.",
+          "Keyword Density": "Measure keyword frequency and phrase density, highlight repeated terms, and keep content relevant without over-optimization.",
+          "Meta Tag Optimizer": "Preview SEO titles and meta descriptions like real search snippets, check length limits, and refine copy to improve CTR without guesswork.",
+          "JSON Formatter": "Format, validate, and minify JSON instantly. Ideal for debugging APIs, cleaning payloads, and making configuration files readable.",
+          "URL Encoder": "Encode and decode URLs safely (query strings, special characters). Perfect for tracking links, UTM parameters, and web debugging.",
+          "Base64 Encoder": "Encode or decode Base64 text locally in the browser. Useful for tokens, payload checks, and quick developer workflows.",
+          "Title & Description": "Generate SEO title and meta description ideas from a keyword, with variations designed to match intent and improve click-through.",
+          "Alt Text Generator": "Create accessibility-friendly, SEO-ready alt text variants with clear descriptions optimized for images and screen readers.",
+          "SEO Outline Helper": "Generate an H1/H2/H3 outline plus FAQ ideas aligned to search intent to build topical coverage faster."
+        };
+
+        const longDesc = longMap[title] || (
+          descShort
+            ? `${descShort} Includes practical guidance, examples, and fast answers to common “how-to” questions.`
+            : `A fast, privacy-friendly utility to solve common tasks with clear outputs and practical guidance.`
+        );
+
+        return { href, icon, title, desc: longDesc };
+      }
+
+      const picks = pickDistinct(3).map(extract);
+
+      const slots = [
+        {a:'randTool1', i:'randIcon1', t:'randTitle1', d:'randDesc1'},
+        {a:'randTool2', i:'randIcon2', t:'randTitle2', d:'randDesc2'},
+        {a:'randTool3', i:'randIcon3', t:'randTitle3', d:'randDesc3'},
+      ];
+
+      slots.forEach((slot, k) => {
+        const p = picks[k];
+        const a = document.getElementById(slot.a);
+        if(!a) return;
+        a.href = p.href;
+        document.getElementById(slot.i).textContent = p.icon;
+        document.getElementById(slot.t).textContent = p.title;
+        document.getElementById(slot.d).textContent = p.desc;
+      });
     })();
   </script>
 
