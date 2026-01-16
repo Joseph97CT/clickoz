@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Clickoz – Free Online Tools for SEO, Writing & Dev</title>
+  <meta name="description" content="Free online tools: word counter, readability analyzer, keyword density, meta tag optimizer, JSON formatter, URL/Base64 encoders, and SEO helpers. No signup.">
+  <link rel="canonical" href="https://clickoz.com/">
+  <meta name="robots" content="index,follow">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Clickoz – Free Online Tools for SEO, Writing & Dev">
+  <meta property="og:description" content="Free online tools for SEO, writing and developers. Fast, mobile-first, no signup.">
+  <meta property="og:url" content="https://clickoz.com/">
+  <meta property="og:type" content="website">
+
+  <!-- Hreflang (come vecchio CMS) -->
+  <link rel="alternate" hreflang="x-default" href="https://clickoz.com/">
+  <link rel="alternate" hreflang="en" href="https://clickoz.com/">
+  <link rel="alternate" hreflang="it" href="https://clickoz.com/it/">
+  <link rel="alternate" hreflang="fr" href="https://clickoz.com/fr/">
+  <link rel="alternate" hreflang="es" href="https://clickoz.com/es/">
+  <link rel="alternate" hreflang="de" href="https://clickoz.com/de/">
+  <link rel="alternate" hreflang="pt" href="https://clickoz.com/pt/">
+  <link rel="alternate" hreflang="nl" href="https://clickoz.com/nl/">
+  <link rel="alternate" hreflang="pl" href="https://clickoz.com/pl/">
+  <link rel="alternate" hreflang="tr" href="https://clickoz.com/tr/">
+  <link rel="alternate" hreflang="ar" href="https://clickoz.com/ar/">
+  <link rel="alternate" hreflang="hi" href="https://clickoz.com/hi/">
+  <link rel="alternate" hreflang="ja" href="https://clickoz.com/ja/">
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900;1000&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/site.css">
+
+  <!-- UI upgrades (font bigger + dropdowns + widgets styles) -->
+  <style>
+    :root{
+      /* puoi tenere i tuoi vars in site.css; questi sono override “safe” */
+      --ui-base: 18px;
+      --ui-radius: 16px;
+      --ui-border: rgba(255,255,255,.10);
+      --ui-panel: rgba(255,255,255,.06);
+      --ui-shadow: 0 18px 60px rgba(0,0,0,.45);
+    }
+
+    html { font-size: var(--ui-base); }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+    /* tipografia più leggibile */
+    .hero h1{ font-size: clamp(40px, 4.4vw, 64px) !important; letter-spacing: -0.02em; }
+    .hero p{ font-size: 19px !important; line-height: 1.7; }
+    .section-title{ font-size: clamp(28px, 3vw, 40px); }
+    .section-sub{ font-size: 17px; opacity: .9; }
+
+    /* navbar: controlli a destra */
+    .nav-inner{ gap: 14px; }
+    .nav-actions{ display:flex; align-items:center; gap:10px; }
+
+    .icon-btn{
+      display:inline-flex; align-items:center; gap:10px;
+      height: 44px; padding: 0 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--ui-border);
+      color: rgba(242,242,255,.92);
+      cursor:pointer;
+      transition: transform .15s, border-color .15s, background .15s;
+      font-weight: 700;
+      font-size: 14px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .icon-btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.08);
+    }
+
+    .dot{
+      width: 18px; height: 18px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,255,255,.08);
+    }
+
+    .dropdown{ position:relative; }
+    .menu{
+      position:absolute;
+      top: 52px; right: 0;
+      min-width: 220px;
+      background: rgba(15,15,22,.92);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--ui-radius);
+      box-shadow: var(--ui-shadow);
+      padding: 10px;
+      display:none;
+      z-index: 999;
+      backdrop-filter: blur(12px);
+    }
+    .menu.active{ display:block; }
+
+    .menu .menu-title{
+      font-size: 12px; letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .7;
+      padding: 8px 10px 6px;
+    }
+
+    .menu-item{
+      display:flex; align-items:center; gap:10px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      color: rgba(242,242,255,.92);
+      font-size: 15px;
+      font-weight: 600;
+      transition: background .15s, transform .15s;
+    }
+    .menu-item:hover{
+      background: rgba(255,255,255,.06);
+      transform: translateY(-1px);
+    }
+    .flag{ font-size: 18px; }
+
+    .color-grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 6px 8px 10px;
+    }
+    .color-option{
+      width: 40px; height: 40px; border-radius: 999px;
+      border: 3px solid transparent;
+      cursor:pointer;
+      transition: transform .15s, border-color .15s;
+    }
+    .color-option:hover{ transform: scale(1.08); border-color: rgba(255,255,255,.24); }
+    .color-option.active{ border-color: rgba(255,255,255,.85); }
+
+    /* widget blocks */
+    .widget-row{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+    @media (max-width: 980px){
+      .widget-row{ grid-template-columns: 1fr; }
+    }
+
+    .widget{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 12px 48px rgba(0,0,0,.25);
+    }
+    .widget h3{
+      font-size: 18px;
+      margin: 0 0 8px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .widget p{ margin: 0; opacity: .86; font-size: 15.5px; line-height: 1.6; }
+
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    @media (max-width: 700px){
+      .stats{ grid-template-columns: 1fr; }
+    }
+    .stat{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .stat b{ font-size: 18px; }
+    .stat span{ display:block; font-size: 13px; opacity: .75; margin-top: 3px; }
+
+    .quick-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: rgba(242,242,255,.92);
+      text-decoration:none;
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform .15s, border-color .15s, background .15s;
+    }
+    .pill:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.20); background: rgba(255,255,255,.06); }
+
+    /* cards bigger */
+    .card h3{ font-size: 18px; }
+    .card p{ font-size: 15.5px; line-height: 1.6; }
+
+    /* FAQ accordion */
+    .faq{ display:grid; gap: 10px; max-width: 980px; margin: 0 auto; }
+    details.faq-item{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    details.faq-item summary{
+      cursor:pointer;
+      font-weight: 800;
+      font-size: 16px;
+      list-style:none;
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 12px;
+    }
+    details.faq-item summary::-webkit-details-marker{ display:none; }
+    .chev{ opacity:.7; font-weight:900; }
+    details.faq-item[open] .chev{ transform: rotate(180deg); }
+    .faq-body{ margin-top: 10px; opacity:.88; font-size: 15.5px; line-height: 1.65; }
+
+    /* mobile nav */
+    @media (max-width: 860px){
+      .nav-links{ display:none; }
+      .nav-inner{ justify-content: space-between; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="/" aria-label="Clickoz Home">
+        <span class="logo-badge">⚡</span>
+        Click<span id="logoAccent">oz</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/#tools">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/about/">About</a>
+      </div>
+
+      <div class="spacer"></div>
+
+      <!-- NEW: language + color (al posto dei 2 bottoni) -->
+      <div class="nav-actions">
+        <div class="dropdown" id="langDD">
+          <button class="icon-btn" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false">
+            🌍 <span id="langLabel">EN</span>
+          </button>
+          <div class="menu" id="langMenu" role="menu" aria-label="Select language">
+            <div class="menu-title">Language</div>
+            <div class="menu-item" data-lang="en" data-path="/"><span class="flag">🇬🇧</span> English</div>
+            <div class="menu-item" data-lang="it" data-path="/it/"><span class="flag">🇮🇹</span> Italiano</div>
+            <div class="menu-item" data-lang="fr" data-path="/fr/"><span class="flag">🇫🇷</span> Français</div>
+            <div class="menu-item" data-lang="es" data-path="/es/"><span class="flag">🇪🇸</span> Español</div>
+            <div class="menu-item" data-lang="de" data-path="/de/"><span class="flag">🇩🇪</span> Deutsch</div>
+            <div class="menu-item" data-lang="pt" data-path="/pt/"><span class="flag">🇵🇹</span> Português</div>
+            <div class="menu-item" data-lang="nl" data-path="/nl/"><span class="flag">🇳🇱</span> Nederlands</div>
+            <div class="menu-item" data-lang="pl" data-path="/pl/"><span class="flag">🇵🇱</span> Polski</div>
+            <div class="menu-item" data-lang="tr" data-path="/tr/"><span class="flag">🇹🇷</span> Türkçe</div>
+            <div class="menu-item" data-lang="ar" data-path="/ar/"><span class="flag">🇸🇦</span> العربية</div>
+            <div class="menu-item" data-lang="hi" data-path="/hi/"><span class="flag">🇮🇳</span> हिन्दी</div>
+            <div class="menu-item" data-lang="ja" data-path="/ja/"><span class="flag">🇯🇵</span> 日本語</div>
+          </div>
+        </div>
+
+        <div class="dropdown" id="colorDD">
+          <button class="icon-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Pick accent color">
+            <span class="dot" id="colorDot"></span>
+            <span>Neon</span>
+          </button>
+          <div class="menu" id="colorMenu" role="menu" aria-label="Pick neon accent">
+            <div class="menu-title">Neon accent</div>
+            <div class="color-grid">
+              <div class="color-option active" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple"></div>
+              <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue"></div>
+              <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green"></div>
+              <div class="color-option" data-accent="#f59e0b" data-accent2="#fbbf24" style="background:#f59e0b" title="Yellow"></div>
+              <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange"></div>
+              <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red"></div>
+              <div class="color-option" data-accent="#ec4899" data-accent2="#f472b6" style="background:#ec4899" title="Pink"></div>
+              <div class="color-option" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <header class="hero container">
+    <div class="row" style="margin-bottom:12px">
+      <span class="badge">⚡ 100% Free • Instant Results • Privacy-friendly • No Signup</span>
+    </div>
+
+    <h1 style="max-width:1040px;margin:0 auto;">
+      The fastest neon hub for <span style="color:var(--neon)">SEO</span>, <span style="color:var(--neon2)">writing</span> & creator tools.
+    </h1>
+
+    <p style="max-width:920px;margin:14px auto 18px;">
+      Stop opening 10 websites. Clickoz gives you clean, fast tools that run directly in your browser:
+      word & character counts, readability, keyword density, meta tag preview, JSON formatting, URL/Base64 encoders, and more.
+    </p>
+
+    <div class="row" style="margin-top:10px">
+      <a class="btn primary" href="#tools">Browse tools</a>
+      <a class="btn" href="/guides/">Read guides</a>
+      <a class="btn" href="#shortcuts">Keyboard shortcuts</a>
+    </div>
+
+    <div class="kicker" style="margin-top:14px;font-size:14px">
+      <span>⚡ instant in-browser</span> •
+      <span>🔒 no uploads</span> •
+      <span>📱 mobile-first</span> •
+      <span>🧠 SEO-friendly pages</span> •
+      <span>✨ clean neon UI</span>
+    </div>
+
+    <!-- NEW WIDGETS under hero -->
+    <div class="widget-row">
+      <div class="widget">
+        <h3>🧰 Quick actions</h3>
+        <p>Jump to the most used tools in one click.</p>
+        <div class="quick-actions">
+          <a class="pill" href="/tool/word-counter/">🔢 Word Counter</a>
+          <a class="pill" href="/tool/readability-analyzer/">📚 Readability</a>
+          <a class="pill" href="/tool/meta-tags/">🏷️ Meta Tags</a>
+          <a class="pill" href="/tool/json-formatter/">🧾 JSON Formatter</a>
+          <a class="pill" href="/tool/base64/">🔐 Base64</a>
+          <a class="pill" href="/tool/url-encoder/">🔗 URL Encoder</a>
+        </div>
+
+        <div class="stats" aria-label="Site stats">
+          <div class="stat"><b id="statTools">12+</b><span>Tools live</span></div>
+          <div class="stat"><b>0</b><span>Uploads required</span></div>
+          <div class="stat"><b>~Instant</b><span>Results</span></div>
+        </div>
+      </div>
+
+      <div class="widget">
+        <h3>🔥 Tool of the day</h3>
+        <p style="margin-bottom:12px">A simple recommendation to guide new users.</p>
+        <a class="card" href="/tool/readability-analyzer/" style="display:block;text-decoration:none">
+          <div class="thumb">📚</div>
+          <h3 style="margin-top:10px">Readability Analyzer</h3>
+          <p>Get Flesch score + clarity hints to make content more scannable.</p>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section container" id="tools">
+    <h2 class="section-title">Tools hub</h2>
+    <p class="section-sub">Each tool has its own SEO page with a mini-guide + FAQ. This is how we rank long-tail keywords.</p>
+
+    <div class="row">
+      <input class="search" id="toolSearch" placeholder="Search tools (readability, meta, json, base64…)" aria-label="Search tools">
+    </div>
+
+    <div class="chips" id="chips" aria-label="Categories">
+      <div class="chip active" data-filter="all">All</div>
+      <div class="chip" data-filter="seo">SEO</div>
+      <div class="chip" data-filter="text">Text</div>
+      <div class="chip" data-filter="dev">Dev</div>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Cards -->
+      <a class="card" href="/tool/word-counter/" data-card="1" data-slug="word-counter" data-hay="Word Counter count words characters sentences paragraphs reading time">
+        <div class="thumb">🔢</div><h3>Word Counter</h3><p>Count words, characters, sentences, paragraphs and reading time instantly.</p>
+      </a>
+
+      <a class="card" href="/tool/word-counter-pro/" data-card="1" data-slug="word-counter-pro" data-hay="Word Counter Pro advanced speaking time top keywords">
+        <div class="thumb">✨</div><h3>Word Counter Pro</h3><p>Advanced analysis: reading + speaking time and top keyword hints.</p>
+      </a>
+
+      <a class="card" href="/tool/readability-analyzer/" data-card="1" data-slug="readability-analyzer" data-hay="Readability Analyzer flesch score grade level clarity">
+        <div class="thumb">📚</div><h3>Readability Analyzer</h3><p>Flesch score, grade estimate, and fast clarity suggestions.</p>
+      </a>
+
+      <a class="card" href="/tool/keyword-density/" data-card="1" data-slug="keyword-density" data-hay="Keyword Density Checker frequency highlight SEO">
+        <div class="thumb">🎯</div><h3>Keyword Density</h3><p>Check keyword frequency + density and highlight phrases.</p>
+      </a>
+
+      <a class="card" href="/tool/meta-tags/" data-card="1" data-slug="meta-tags" data-hay="Meta Tag Optimizer title description serp preview">
+        <div class="thumb">🏷️</div><h3>Meta Tag Optimizer</h3><p>Title + description length hints with SERP-style preview.</p>
+      </a>
+
+      <a class="card" href="/tool/json-formatter/" data-card="1" data-slug="json-formatter" data-hay="JSON Formatter minify validate">
+        <div class="thumb">🧾</div><h3>JSON Formatter</h3><p>Format, minify and validate JSON instantly.</p>
+      </a>
+
+      <a class="card" href="/tool/url-encoder/" data-card="1" data-slug="url-encoder" data-hay="URL Encoder Decoder encodeURIComponent decodeURIComponent">
+        <div class="thumb">🔗</div><h3>URL Encoder</h3><p>Encode/decode URLs safely (querystrings, special characters).</p>
+      </a>
+
+      <a class="card" href="/tool/base64/" data-card="1" data-slug="base64" data-hay="Base64 Encoder Decoder">
+        <div class="thumb">🔐</div><h3>Base64 Encoder</h3><p>Encode/decode Base64 for text (safe local processing).</p>
+      </a>
+
+      <a class="card" href="/tool/title-description/" data-card="1" data-slug="title-description" data-hay="Title Description Generator SEO">
+        <div class="thumb">📝</div><h3>Title & Description</h3><p>Generate SEO title + meta description ideas from a keyword.</p>
+      </a>
+
+      <a class="card" href="/tool/alt-text/" data-card="1" data-slug="alt-text" data-hay="Alt Text Generator accessibility SEO images">
+        <div class="thumb">🖼️</div><h3>Alt Text Generator</h3><p>Create accessibility-friendly, SEO-ready alt text variants.</p>
+      </a>
+
+      <a class="card" href="/tool/seo-outline/" data-card="1" data-slug="seo-outline" data-hay="SEO Outline Helper H1 H2 H3 FAQ">
+        <div class="thumb">🧠</div><h3>SEO Outline Helper</h3><p>Generate H1/H2/H3 outline + FAQ ideas for any keyword.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section container" id="shortcuts">
+    <h2 class="section-title">Shortcuts</h2>
+    <p class="section-sub">Little things that make the hub feel “pro”.</p>
+
+    <div class="small-grid">
+      <div class="small-card">
+        <h3>⌨️ Press <span style="color:var(--neon)">/</span> to search</h3>
+        <p>Focus the tool search instantly.</p>
+      </div>
+      <div class="small-card">
+        <h3>🎨 Press <span style="color:var(--neon2)">C</span> for colors</h3>
+        <p>Open the neon picker from anywhere.</p>
+      </div>
+      <div class="small-card">
+        <h3>🌍 Press <span style="color:var(--neon)">L</span> for language</h3>
+        <p>Switch locale fast.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2 class="section-title">Guides & Updates</h2>
+    <p class="section-sub">We publish short guides to rank long-tail queries and link back to tools.</p>
+
+    <div class="small-grid">
+      <a class="small-card" href="/guides/word-count-for-seo/"><h3>Word Count for SEO (2026)</h3><p>Structure > length. What really matters now.</p></a>
+      <a class="small-card" href="/guides/readability-for-ranking/"><h3>Readability for Ranking</h3><p>Make content clear, scannable, and sticky.</p></a>
+      <a class="small-card" href="/guides/meta-tags-checklist/"><h3>Meta Tags Checklist</h3><p>Titles + descriptions that win clicks.</p></a>
+      <a class="small-card" href="/guides/keyword-research-basics/"><h3>Keyword Research Basics</h3><p>Find intent and build topical authority.</p></a>
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2 class="section-title">FAQ</h2>
+    <p class="section-sub">Quick answers users search for (good anche per SEO + rich snippets).</p>
+
+    <div class="faq">
+      <details class="faq-item">
+        <summary>Do your tools upload my text? <span class="chev">⌄</span></summary>
+        <div class="faq-body">No. Most tools run locally in your browser. No signup, no forced uploads.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Are the tools mobile-friendly? <span class="chev">⌄</span></summary>
+        <div class="faq-body">Yes. The UI is designed to be fast and readable on mobile screens.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do you rank tools on Google? <span class="chev">⌄</span></summary>
+        <div class="faq-body">Each tool has its own SEO page + mini guide + FAQ, targeting long-tail intent and internal linking.</div>
+      </details>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>Clickoz</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="/about/">About</a>
+          <a href="/guides/">Guides</a>
+          <a href="/updates/">Updates</a>
+        </div>
+      </div>
+      <div>
+        <h4>Popular tools</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="/tool/word-counter/">Word Counter</a>
+          <a href="/tool/word-counter-pro/">Word Counter Pro</a>
+          <a href="/tool/readability-analyzer/">Readability</a>
+          <a href="/tool/meta-tags/">Meta Tags</a>
+        </div>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:14px">
+      <hr class="sep">
+      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
+        © 2026 Clickoz • Neon-fast tools that run locally in your browser
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =========
+    // Dropdown helpers
+    // =========
+    function toggleMenu(btn, menu){
+      const isOpen = menu.classList.contains('active');
+      document.querySelectorAll('.menu.active').forEach(m => m.classList.remove('active'));
+      menu.classList.toggle('active', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    }
+
+    function closeAll(){
+      document.querySelectorAll('.menu.active').forEach(m => m.classList.remove('active'));
+      document.querySelectorAll('[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded','false'));
+    }
+
+    document.addEventListener('click', (e)=>{
+      const inside = e.target.closest('.dropdown');
+      if(!inside) closeAll();
+    });
+
+    // =========
+    // Accent color (persisted)
+    // =========
+    const colorToggle = document.getElementById('colorToggle');
+    const colorMenu   = document.getElementById('colorMenu');
+    const colorDot    = document.getElementById('colorDot');
+    const logoAccent  = document.getElementById('logoAccent');
+
+    function setAccent(a1, a2){
+      document.documentElement.style.setProperty('--accent', a1);
+      document.documentElement.style.setProperty('--accent2', a2);
+      colorDot.style.background = a1;
+      logoAccent.style.color = a1;
+      localStorage.setItem('clickoz_accent', JSON.stringify({a1, a2}));
+    }
+
+    colorToggle.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      toggleMenu(colorToggle, colorMenu);
+    });
+
+    colorMenu.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const opt = e.target.closest('.color-option');
+      if(!opt) return;
+
+      document.querySelectorAll('.color-option').forEach(x=>x.classList.remove('active'));
+      opt.classList.add('active');
+      setAccent(opt.dataset.accent, opt.dataset.accent2);
+      closeAll();
+    });
+
+    // Load saved accent
+    try{
+      const saved = JSON.parse(localStorage.getItem('clickoz_accent') || 'null');
+      if(saved && saved.a1 && saved.a2){
+        setAccent(saved.a1, saved.a2);
+        // mark active
+        const match = Array.from(document.querySelectorAll('.color-option'))
+          .find(x => x.dataset.accent === saved.a1);
+        if(match){
+          document.querySelectorAll('.color-option').forEach(x=>x.classList.remove('active'));
+          match.classList.add('active');
+        }
+      }else{
+        // default (keep CSS default if you already set)
+        colorDot.style.background = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6366f1';
+        logoAccent.style.color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6366f1';
+      }
+    }catch(_){}
+
+    // =========
+    // Language picker (persist label + navigation)
+    // =========
+    const langToggle = document.getElementById('langToggle');
+    const langMenu   = document.getElementById('langMenu');
+    const langLabel  = document.getElementById('langLabel');
+
+    langToggle.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      toggleMenu(langToggle, langMenu);
+    });
+
+    function setLangLabel(code){
+      langLabel.textContent = (code || 'EN').toUpperCase();
+      localStorage.setItem('clickoz_lang', (code || 'en'));
+    }
+
+    // Load saved language label (doesn't force redirect)
+    const savedLang = localStorage.getItem('clickoz_lang');
+    if(savedLang) setLangLabel(savedLang);
+
+    langMenu.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const item = e.target.closest('.menu-item');
+      if(!item) return;
+      const lang = item.dataset.lang;
+      const path = item.dataset.path;
+
+      setLangLabel(lang);
+      closeAll();
+      window.location.href = path;
+    });
+
+    // =========
+    // Keyboard shortcuts
+    // / focuses search, C opens colors, L opens language
+    // =========
+    const search = document.getElementById('toolSearch');
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
+        e.preventDefault();
+        search?.focus();
+      }
+      if(e.key.toLowerCase() === 'c' && !e.metaKey && !e.ctrlKey){
+        toggleMenu(colorToggle, colorMenu);
+      }
+      if(e.key.toLowerCase() === 'l' && !e.metaKey && !e.ctrlKey){
+        toggleMenu(langToggle, langMenu);
+      }
+      if(e.key === 'Escape'){
+        closeAll();
+      }
+    });
+
+    // =========
+    // (Optional) keep hero stat "tools live" synced with number of cards
+    // =========
+    const statTools = document.getElementById('statTools');
+    const grid = document.getElementById('grid');
+    if(statTools && grid){
+      const count = grid.querySelectorAll('a.card').length;
+      statTools.textContent = count + '+';
+    }
+  </script>
+
+  <script src="/assets/site.js"></script>
+</body>
+</html>
