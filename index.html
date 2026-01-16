@@ -15,6 +15,7 @@
   <meta property="og:type" content="website">
 
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900;1000&display=swap" rel="stylesheet">
@@ -198,9 +199,28 @@
       </div>
     </div>
   </footer>
+<script>
+  // Accent color picker (home only)
+  (function(){
+    const buttons = document.querySelectorAll('[data-accent]');
+    if(!buttons.length) return;
+
+    function setAccent(a1, a2){
+      document.documentElement.style.setProperty('--accent', a1);
+      document.documentElement.style.setProperty('--accent2', a2);
+    }
+
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        setAccent(btn.dataset.accent, btn.dataset.accent2);
+      });
+    });
+  })();
+</script>
 
   <script src="/assets/site.js"></script>
 </body>
 </html>
+
 
 
