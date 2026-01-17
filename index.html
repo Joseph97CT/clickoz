@@ -339,7 +339,7 @@
   </style>
 
   <!-- WebSite + SearchAction -->
-  <script type="application/ld+json">
+  < type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -352,6 +352,7 @@
     }
   }
   </script>
+    
 </head>
 <!-- Cookie banner -->
 <div id="cookieBanner" class="cookie" role="dialog" aria-modal="false" aria-live="polite" aria-label="Cookie banner">
@@ -377,6 +378,101 @@
     <button class="btn cookie-mini-btn" id="cookieManage" type="button">Manage cookies</button>
   </div>
 </div>
+<script>
+(function(){
+  const KEY = "clickoz_consent";
+  const banner = document.getElementById("cookieBanner");
+  const mini = banner?.querySelector(".cookie-mini");
+
+  if(!banner) return;
+
+  // --- helpers
+  function setCookie(name, value, days){
+    const maxAge = days ? `; Max-Age=${days*24*60*60}` : "";
+    document.cookie = `${name}=${encodeURIComponent(value)}${maxAge}; Path=/; SameSite=Lax`;
+  }
+  function getCookie(name){
+    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]+)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function getStored(){
+    try { return localStorage.getItem(KEY); } catch(e){ return null; }
+  }
+  function store(val){
+    try { localStorage.setItem(KEY, val); } catch(e){}
+    setCookie(KEY, val, 365);
+  }
+
+  // --- Google Translate (only if consent=all)
+  function loadGoogleTranslate(){
+    if (window.__gt_loaded) return;
+    window.__gt_loaded = true;
+
+    // show your container if you have it (optional)
+    const wrap = document.getElementById("gtWrap");
+    if (wrap) wrap.classList.add("show");
+
+    window.googleTranslateElementInit = function(){
+      if(!window.google || !window.google.translate) return;
+      new window.google.translate.TranslateElement(
+        { pageLanguage: 'en', autoDisplay: false },
+        'google_translate_element'
+      );
+    };
+
+    const s = document.createElement("script");
+    s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    s.async = true;
+    document.head.appendChild(s);
+  }
+
+  // --- state
+  const existing = getStored() || getCookie(KEY);
+
+  function showBanner(){
+    banner.classList.add("show");
+    mini?.classList.remove("show");
+  }
+  function hideBanner(showMini){
+    banner.classList.remove("show");
+    if(showMini) mini?.classList.add("show");
+  }
+
+  // If no choice -> show banner
+  if(!existing){
+    showBanner();
+  } else {
+    // already decided -> optionally show "manage cookies"
+    hideBanner(true);
+    if(existing === "all") loadGoogleTranslate();
+  }
+
+  // --- actions
+  document.getElementById("cookieReject")?.addEventListener("click", () => {
+    store("none");
+    hideBanner(true);
+  });
+  document.getElementById("cookieEssential")?.addEventListener("click", () => {
+    store("essential");
+    hideBanner(true);
+  });
+  document.getElementById("cookieAccept")?.addEventListener("click", () => {
+    store("all");
+    hideBanner(true);
+    loadGoogleTranslate();
+  });
+
+  // Close X: just hide for now, but keep banner accessible via manage
+  document.getElementById("cookieClose")?.addEventListener("click", () => {
+    hideBanner(true);
+  });
+
+  // Manage cookies: reopen banner
+  document.getElementById("cookieManage")?.addEventListener("click", () => {
+    showBanner();
+  });
+})();
+</script>
 
 <body>
   <nav class="nav">
@@ -903,4 +999,5 @@
   <script src="/assets/site.js"></script>
 </body>
 </html>
+
 
