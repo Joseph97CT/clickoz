@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -31,286 +32,12 @@
 
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/assets/site.css" />
-
-  <style>
-    :root{
-      --ui-base: 18px;
-
-      --bg: #0b0f19;
-      --surface: #0f1526;
-      --surface-2: #111a30;
-
-      --border: rgba(255,255,255,.10);
-      --border-2: rgba(255,255,255,.16);
-
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-
-      --accent: #6366f1;
-      --accent2:#8b5cf6;
-
-      /* computed in JS from hex -> "r,g,b" */
-      --accent-rgb: 99,102,241;
-
-      --radius: 14px;
-      --shadow: 0 10px 26px rgba(0,0,0,.35);
-      --shadow-soft: 0 6px 16px rgba(0,0,0,.22);
-
-      --focus: 0 0 0 4px rgba(var(--accent-rgb), .16);
-    }
-
-    html{ font-size: var(--ui-base); }
-    body{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    /* Headings / text */
-    .hero h1{
-      font-size: clamp(38px, 4.2vw, 62px) !important;
-      max-width: 1080px !important;
-      letter-spacing: -0.03em;
-      line-height: 1.06;
-    }
-    .hero p{
-      font-size: 18px !important;
-      line-height: 1.75;
-      max-width: 980px !important;
-      color: var(--muted);
-    }
-    .section-title{
-      font-size: clamp(26px, 2.8vw, 40px);
-      letter-spacing: -0.02em;
-    }
-    .section-sub{
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 980px;
-      margin: 0 auto 18px;
-    }
-
-    /* NAV */
-    .nav-inner{ gap: 14px; }
-    .nav-actions{ display:flex; align-items:center; gap:10px; }
-
-    .icon-btn{
-      display:inline-flex; align-items:center; gap:10px;
-      height:42px; padding:0 12px;
-      border-radius: 10px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      cursor:pointer;
-      transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
-      font-weight: 700;
-      font-size: 14px;
-      user-select:none; white-space:nowrap;
-    }
-    .icon-btn:hover{
-      background: var(--surface-2);
-      border-color: var(--border-2);
-      box-shadow: var(--shadow-soft);
-      transform: none;
-    }
-
-    .dot{
-      width: 14px; height: 14px; border-radius: 999px;
-      background: var(--accent);
-      box-shadow: none;
-      border: 2px solid rgba(255,255,255,.22);
-    }
-
-    .dropdown{ position:relative; }
-
-    .menu{
-      position:absolute; top:52px; right:0; min-width:240px;
-      background: #0c1222;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 10px;
-      display:none;
-      z-index:999;
-      backdrop-filter: none;
-    }
-    .menu.active{ display:block; }
-
-    .menu-title{
-      font-size: 12px;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.58);
-      padding: 8px 10px 6px;
-    }
-
-    .menu-item{
-      display:flex; align-items:center; gap:10px;
-      padding: 10px 10px;
-      border-radius: 10px;
-      cursor:pointer;
-      color: var(--text);
-      font-size: 15px;
-      font-weight: 650;
-      transition: background .12s ease;
-    }
-    .menu-item:hover{
-      background: rgba(255,255,255,.06);
-      transform: none;
-    }
-
-    .flag{ font-size: 18px; }
-
-    .color-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:6px 8px 10px; }
-    .color-option{
-      width: 34px; height: 34px;
-      border-radius: 999px;
-      border: 2px solid rgba(255,255,255,.12);
-      cursor:pointer;
-      transition: border-color .12s ease;
-    }
-    .color-option:hover{ transform:none; border-color: rgba(255,255,255,.22); }
-    .color-option.active{ border-color: rgba(255,255,255,.80); }
-
-    /* HERO credibility strip */
-    .trust-strip{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top: 16px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.02);
-      border: 1px solid var(--border);
-      color: rgba(255,255,255,.75);
-      font-size: 13px;
-      line-height: 1.4;
-    }
-    .trust-pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.02);
-    }
-
-    /* Full width recommended */
-    .widget-row{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      margin-top: 18px;
-    }
-    .widget{
-      border: 1px solid var(--border);
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow-soft);
-    }
-    .widget h3{
-      font-size: 18px;
-      margin: 0 0 10px;
-      letter-spacing: -0.01em;
-    }
-    .widget p{
-      margin: 0;
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height: 1.7;
-    }
-
-    .rec-grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 14px;
-    }
-    @media(max-width: 980px){
-      .rec-grid{ grid-template-columns: 1fr; }
-    }
-
-    /* Buttons (Use Tool) – uses selected accent color */
-    .tool-cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width: 100%;
-      margin-top: 12px;
-      height: 40px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: .01em;
-      background: var(--accent);
-      color: rgba(255,255,255,.96);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 10px 22px rgba(var(--accent-rgb), .18);
-    }
-    .tool-cta:hover{
-      filter: brightness(1.04);
-    }
-
-    /* Cards – professional hover, accent-themed glow */
-    .card, .small-card{
-      border: 1px solid var(--border) !important;
-      background: var(--surface) !important;
-      box-shadow: none !important;
-      transition: border-color .12s ease, background .12s ease, box-shadow .12s ease !important;
-    }
-    .card:hover, .small-card:hover{
-      background: var(--surface-2) !important;
-      border-color: rgba(var(--accent-rgb), .50) !important;
-      box-shadow:
-        0 0 0 1px rgba(var(--accent-rgb), .22),
-        0 14px 40px rgba(0,0,0,.35),
-        0 8px 18px rgba(var(--accent-rgb), .08) !important;
-      transform: none !important;
-    }
-    .card p, .small-card p{ color: var(--muted) !important; }
-
-    /* If your site.css adds lift to buttons/cards */
-    .btn:hover{ transform:none !important; }
-
-    /* Search input */
-    input.search{
-      background: var(--surface) !important;
-      border: 1px solid var(--border) !important;
-      color: var(--text) !important;
-      border-radius: 12px !important;
-      outline: none !important;
-    }
-    input.search::placeholder{ color: rgba(255,255,255,.55) !important; }
-    input.search:focus{
-      border-color: rgba(var(--accent-rgb), .55) !important;
-      box-shadow: var(--focus) !important;
-    }
-
-    /* Chips */
-    .chip{
-      background: rgba(255,255,255,.02) !important;
-      border: 1px solid var(--border) !important;
-      color: rgba(255,255,255,.78) !important;
-      transition: background .12s ease, border-color .12s ease !important;
-    }
-    .chip:hover{ background: rgba(255,255,255,.05) !important; transform:none !important; }
-    .chip.active{
-      color: var(--text) !important;
-      border-color: rgba(var(--accent-rgb), .55) !important;
-      background: rgba(var(--accent-rgb), .12) !important;
-    }
-
-    /* Smaller layout tweaks */
-    @media(max-width:860px){
-      .nav-links{ display:none; }
-      .nav-inner{ justify-content:space-between; }
-    }
-  </style>
 
   <!-- WebSite + SearchAction -->
   <script type="application/ld+json">
@@ -397,10 +124,10 @@
     </div>
 
     <h1>
-      A professional toolkit for <span style="color:var(--accent)">SEO</span>, <span style="color:var(--accent2)">writing</span>, and developer tasks.
+      A professional toolkit for <span class="accent1">SEO</span>, <span class="accent2">writing</span>, and developer tasks.
     </h1>
 
-    <p style="margin:14px auto 10px;">
+    <p>
       Clickoz brings practical utilities into one place: analyze text, improve clarity, tune SERP snippets,
       format JSON, and handle encoding/decoding tasks. Each tool includes examples and quick answers so you can go from search to solution fast.
     </p>
@@ -422,32 +149,32 @@
     <div class="widget-row">
       <div class="widget">
         <h3>Recommended now</h3>
-        <p style="margin-bottom:14px;">
+        <p class="widget-sub">
           A quick starting point: three tools picked from the hub to cover common SEO, writing, and dev needs. Refresh to discover new picks.
         </p>
 
         <div class="rec-grid">
-          <a class="card rec-card" id="randTool1" href="/tool/word-counter/" style="display:block;text-decoration:none">
+          <a class="card rec-card" id="randTool1" href="/tool/word-counter/">
             <div class="thumb" id="randIcon1">🔢</div>
-            <h3 id="randTitle1" style="margin-top:10px">Word Counter</h3>
+            <h3 id="randTitle1">Word Counter</h3>
             <p id="randDesc1">
               Count words online tool, characters counter tool, read sentences, paragraphs and reading time. Useful for SEO drafts, essays, and content audits.
             </p>
             <span class="tool-cta" id="randCta1">Use Word Counter</span>
           </a>
 
-          <a class="card rec-card" id="randTool2" href="/tool/readability-analyzer/" style="display:block;text-decoration:none">
+          <a class="card rec-card" id="randTool2" href="/tool/readability-analyzer/">
             <div class="thumb" id="randIcon2">📚</div>
-            <h3 id="randTitle2" style="margin-top:10px">Readability Analyzer</h3>
+            <h3 id="randTitle2">Readability Analyzer</h3>
             <p id="randDesc2">
               Analyze readability with a clear score, grade-level estimate, and practical suggestions to improve scannability, comprehension, and engagement.
             </p>
             <span class="tool-cta" id="randCta2">Use Readability Analyzer</span>
           </a>
 
-          <a class="card rec-card" id="randTool3" href="/tool/meta-tags/" style="display:block;text-decoration:none">
+          <a class="card rec-card" id="randTool3" href="/tool/meta-tags/">
             <div class="thumb" id="randIcon3">🏷️</div>
-            <h3 id="randTitle3" style="margin-top:10px">Meta Tag Optimizer</h3>
+            <h3 id="randTitle3">Meta Tag Optimizer</h3>
             <p id="randDesc3">
               Preview SEO titles and meta descriptions like real search snippets, check length limits, and refine copy to improve CTR without guesswork.
             </p>
@@ -455,7 +182,7 @@
           </a>
         </div>
 
-        <div style="margin-top:12px;font-size:13px;opacity:.72;">
+        <div class="widget-foot">
           Shortcut: press <b>/</b> to focus search and filter tools instantly.
         </div>
       </div>
@@ -596,7 +323,7 @@
     <div class="container footer-grid">
       <div>
         <h4>Clickoz</h4>
-        <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="footer-links">
           <a href="/about/">About</a>
           <a href="/workflows/">Workflows</a>
           <a href="/guides/">Guides</a>
@@ -606,7 +333,7 @@
       </div>
       <div>
         <h4>Popular tools</h4>
-        <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="footer-links">
           <a href="/tool/word-counter/">Word Counter</a>
           <a href="/tool/readability-analyzer/">Readability</a>
           <a href="/tool/meta-tags/">Meta Tags</a>
@@ -615,7 +342,7 @@
       </div>
       <div>
         <h4>Legal</h4>
-        <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="footer-links">
           <a href="/privacy/">Privacy</a>
           <a href="/terms/">Terms</a>
           <a href="/contact/">Contact</a>
@@ -624,7 +351,7 @@
     </div>
     <div class="container" style="margin-top:14px">
       <hr class="sep" />
-      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
+      <div class="footer-bottom">
         © 2026 Clickoz • Fast tools for SEO, writing and developers
       </div>
     </div>
@@ -658,7 +385,7 @@
         const b = parseInt(h.slice(4,6), 16);
         return `${r},${g},${b}`;
       }
-      return `99,102,241`; // default fallback
+      return `99,102,241`;
     }
 
     // accent color
@@ -747,10 +474,7 @@
         const title = (card.querySelector('h3')?.textContent || 'Tool').trim();
         const icon = (card.querySelector('.thumb')?.textContent || '✨').trim();
         const href = card.getAttribute('href') || '#';
-
-        // Use the long description already in grid (best source of truth)
         const desc = (card.querySelector('p')?.textContent || '').trim();
-
         return { href, icon, title, desc };
       }
 
