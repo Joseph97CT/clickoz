@@ -353,6 +353,30 @@
   }
   </script>
 </head>
+<!-- Cookie banner -->
+<div id="cookieBanner" class="cookie" role="dialog" aria-modal="false" aria-live="polite" aria-label="Cookie banner">
+  <div class="cookie-card">
+    <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">✕</button>
+
+    <div class="cookie-content">
+      <div class="cookie-title">Privacy & cookies</div>
+      <div class="cookie-text">
+        We use essential storage to run the site. If you accept, we may load optional services like Google Translate.
+        <a href="/privacy/">Privacy Policy</a>
+      </div>
+    </div>
+
+    <div class="cookie-actions">
+      <button class="btn cookie-btn" id="cookieReject" type="button">Reject</button>
+      <button class="btn cookie-btn" id="cookieEssential" type="button">Essential</button>
+      <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
+    </div>
+  </div>
+
+  <div class="cookie-mini">
+    <button class="btn cookie-mini-btn" id="cookieManage" type="button">Manage cookies</button>
+  </div>
+</div>
 
 <body>
   <nav class="nav">
@@ -879,3 +903,4 @@
   <script src="/assets/site.js"></script>
 </body>
 </html>
+
