@@ -1712,3 +1712,82 @@ body .__grain{
 .section-sub{
   text-shadow: 0 14px 50px rgba(0,0,0,.45);
 }
+/* =========================================================
+   FIX PRO: HERO VOID + BOTTOM BLEND + NO HARSH BANDS
+   Incolla in fondo a /assets/site.css
+   ========================================================= */
+
+/* 1) Ammorbidisci il fog globale (meno “bande”) */
+body::before{
+  filter: blur(44px) !important;
+  opacity: 1 !important;
+}
+body::after{
+  filter: blur(64px) !important;
+  opacity: .92 !important;
+}
+
+/* 2) Crea un “blend” continuo tra ultima section e footer (niente stacco) */
+.footer{
+  background: transparent !important; /* evita fascia */
+  border-top: 1px solid rgba(255,255,255,.06) !important;
+  position: relative;
+  isolation: isolate;
+}
+.footer::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-120px;
+  transform: translateX(-50%);
+  width: min(1600px, calc(100% + 500px));
+  height: 320px;
+  pointer-events:none;
+  z-index:-1;
+
+  /* “floor glow” super morbido */
+  background:
+    radial-gradient(1200px 260px at 50% 80%, rgba(var(--accent-rgb), .16), transparent 72%),
+    radial-gradient(1600px 420px at 50% 90%, rgba(var(--accent-rgb), .10), transparent 80%);
+
+  filter: blur(34px);
+  opacity: .95;
+}
+
+/* 3) Riduci le “bande” orizzontali: aggiungi un haze che uniforma il centro pagina */
+.section::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-80px;
+  transform: translateX(-50%);
+  width: min(1600px, calc(100% + 420px));
+  height: calc(100% + 160px);
+  pointer-events:none;
+  z-index:-1;
+  background:
+    radial-gradient(1200px 520px at 50% 35%, rgba(var(--accent-rgb), .08), transparent 76%),
+    radial-gradient(1600px 900px at 50% 60%, rgba(var(--accent-rgb), .06), transparent 82%);
+  filter: blur(44px);
+  opacity: .9;
+}
+
+/* 4) Migliora il “mismatch” glow box vs background: halo più grande e più sfumato */
+.card::before, .small-card::before, .widget::before{
+  filter: blur(34px) !important;
+  opacity: .92 !important;
+}
+
+/* 5) Nei cerchi rossi: aggiungi un “vignette invertito” morbido per far staccare meglio i contenuti */
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:-120px -180px;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    radial-gradient(1200px 520px at 50% 18%, rgba(var(--accent-rgb), .18), transparent 74%),
+    radial-gradient(1400px 900px at 50% 55%, rgba(0,0,0,.35), transparent 70%);
+  filter: blur(28px);
+  opacity: 1;
+}
