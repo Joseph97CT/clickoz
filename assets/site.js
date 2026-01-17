@@ -568,3 +568,11 @@
   // burst quando cambi accent (così lo vedi subito)
   document.getElementById('colorMenu')?.addEventListener('click', ()=> setTimeout(burst, 50));
 })();
+// Ensure particles layer exists (safety)
+(function(){
+  if(!document.getElementById('clickozParticles')){
+    const d = document.createElement('div');
+    d.id = 'clickozParticles';
+    document.body.appendChild(d);
+  }
+})();
