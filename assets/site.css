@@ -1853,3 +1853,15 @@ body::after{
   filter: blur(52px);
   opacity: 1;
 }
+/* ===== FIX: particles always visible (layer order) ===== */
+body{ position: relative; }
+
+/* glow molto dietro */
+body::before{ z-index: -4 !important; }
+body::after{  z-index: -3 !important; }
+
+/* grain leggermente sopra il glow */
+.__grain{ z-index: -2 !important; }
+
+/* particles sopra bg layers ma sotto i contenuti */
+#clickozParticles{ z-index: -1 !important; }
