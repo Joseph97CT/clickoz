@@ -53,11 +53,26 @@
       text-rendering: optimizeLegibility;
     }
 
+    /* ===== Centering fixes (the main request) ===== */
+    .hero, .section{ text-align:center; }
+    .hero .row{ justify-content:center; }
+    .hero .badge{ margin: 0 auto; }
+    .hero p, .section-sub{ margin-left:auto !important; margin-right:auto !important; }
+    .trust-strip{ margin-left:auto; margin-right:auto; justify-content:center; }
+    .widget-row{ margin-left:auto; margin-right:auto; }
+    .widget h3, .widget p{ text-align:center; }
+    .small-grid, .grid{ justify-items: stretch; }
+    .row{ justify-content:center; }
+    .chips{ justify-content:center; }
+
+    /* Improve max widths so it looks “centered” even on very wide screens */
     .hero h1{
       font-size: clamp(38px, 4.2vw, 62px) !important;
       max-width: 1080px !important;
       letter-spacing: -0.03em;
       line-height: 1.06;
+      margin-left:auto;
+      margin-right:auto;
     }
     .hero p{
       font-size: 18px !important;
@@ -68,6 +83,9 @@
     .section-title{
       font-size: clamp(26px, 2.8vw, 40px);
       letter-spacing: -0.02em;
+      margin-left:auto;
+      margin-right:auto;
+      max-width: 980px;
     }
     .section-sub{
       font-size: 16px;
@@ -124,6 +142,7 @@
       padding: 10px;
       display:none;
       z-index:999;
+      text-align:left;
     }
     .menu.active{ display:block; }
     .menu-title{
@@ -163,6 +182,7 @@
       color: rgba(255,255,255,.75);
       font-size: 13px;
       line-height: 1.4;
+      max-width: 980px;
     }
     .trust-pill{
       display:inline-flex;
@@ -182,6 +202,8 @@
       border-radius: var(--radius);
       padding: 16px;
       box-shadow: var(--shadow-soft);
+      max-width: 1120px;
+      margin: 0 auto;
     }
     @media (min-width: 980px){ .widget{ padding: 18px; } }
     .rec-grid{
@@ -190,6 +212,7 @@
       margin-top: 14px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       align-items: stretch;
+      text-align:left;
     }
     @media(max-width: 980px){ .rec-grid{ grid-template-columns: 1fr; gap: 12px; } }
 
@@ -264,6 +287,10 @@
       color: var(--text) !important;
       border-radius: 12px !important;
       outline: none !important;
+      width: min(920px, 100%);
+      margin: 0 auto;
+      display:block;
+      text-align:left;
     }
     input.search::placeholder{ color: rgba(255,255,255,.55) !important; }
     input.search:focus{
@@ -291,8 +318,18 @@
     }
 
     /* Tools grid: pin CTA bottom */
-    #grid .card{ display:flex; flex-direction:column; }
+    #grid .card{ display:flex; flex-direction:column; text-align:left; }
     #grid .card .tool-cta{ margin-top:auto !important; }
+    #grid{ max-width: 1120px; margin: 0 auto; }
+
+    /* Example line under tool descriptions */
+    .example-line{
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.62);
+      line-height: 1.45;
+    }
+    .example-line b{ color: rgba(255,255,255,.86); }
 
     /* ===== Cookie banner ===== */
     .consent{
@@ -315,6 +352,7 @@
       align-items:center;
       justify-content:space-between;
       gap: 14px;
+      text-align:left;
     }
     .consent-text p{
       margin: 6px 0 0;
@@ -331,18 +369,36 @@
       .consent-actions .btn{ width: 100%; }
     }
 
-    /* Google Translate container */
-    #gtWrap{
-      margin: 14px 0 0;
-      display:none;
+    /* ===== Google Translate in NAV (right of Accent) ===== */
+    #gtNavWrap{
+      display:none; /* becomes visible only if accepted all */
+      align-items:center;
     }
-    #gtWrap.show{ display:block; }
+    #gtNavWrap.show{ display:inline-flex; }
+
     #google_translate_element{
       display:inline-block;
-      padding: 10px 12px;
+      padding: 8px 10px;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 10px;
       background: rgba(255,255,255,.03);
+      line-height: 1;
+      transform: translateY(0);
+    }
+
+    /* Keep translate UI compact */
+    .goog-te-gadget{ color: transparent !important; }
+    .goog-te-gadget span{ display:none !important; }
+    .goog-te-gadget select{
+      background: transparent;
+      color: rgba(255,255,255,.92);
+      border: none;
+      outline: none;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 2px 2px;
+      cursor:pointer;
     }
   </style>
 </head>
@@ -364,7 +420,7 @@
       <div class="spacer"></div>
 
       <div class="nav-actions" aria-label="Preferences">
-        <!-- ONLY Accent picker -->
+        <!-- Accent picker -->
         <div class="dropdown">
           <button class="icon-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Pick accent color">
             <span class="dot" id="colorDot" aria-hidden="true"></span>
@@ -385,6 +441,11 @@
             </div>
           </div>
         </div>
+
+        <!-- Google Translate: RIGHT of the color dot button -->
+        <div id="gtNavWrap" aria-label="Translate">
+          <div id="google_translate_element"></div>
+        </div>
       </div>
     </div>
   </nav>
@@ -402,8 +463,8 @@
     </h1>
 
     <p style="margin:14px auto 10px;">
-      Clickoz brings practical utilities into one place: analyze text, improve clarity, tune SERP snippets, format JSON, and handle encoding/decoding tasks.
-      Each tool includes examples and quick answers so you can go from search to solution fast.
+      Clickoz brings practical utilities into one place: analyze text, improve clarity, tune SERP snippets, format JSON,
+      and handle encoding/decoding tasks. Everything runs in your browser, so you can work fast without creating accounts.
     </p>
 
     <div class="trust-strip" aria-label="Trust points">
@@ -419,39 +480,34 @@
       <a class="btn" href="/guides/">Read guides</a>
     </div>
 
-    <!-- Google Translate appears ONLY if user accepts "all" -->
-    <div id="gtWrap" aria-label="Translation">
-      <div style="margin-top:14px;font-size:13px;opacity:.8">Translate this page:</div>
-      <div id="google_translate_element"></div>
-    </div>
-
     <!-- FULL WIDTH: Recommended now -->
     <div class="widget-row">
       <div class="widget">
         <h3>Recommended now</h3>
         <p style="margin-bottom:14px;">
-          Three quick picks to get you moving: one for text analysis, one for SEO, one for dev tasks. Refresh to discover new picks.
+          Three quick picks to move faster today: one for text analysis, one for SEO, and one for dev formatting.
+          Refresh anytime to discover new picks.
         </p>
 
         <div class="rec-grid">
           <a class="card rec-card" id="randTool1" href="/tool/word-counter/">
             <div class="thumb" id="randIcon1" aria-hidden="true">🔢</div>
             <h3 id="randTitle1">Word Counter</h3>
-            <p id="randDesc1">Count words, characters, sentences, and reading time for content briefs, SEO drafts, and writing checks.</p>
+            <p id="randDesc1">Count words, characters, sentences, and reading time for briefs, essays, and SEO drafts.</p>
             <span class="tool-cta" id="randCta1">Use Word Counter</span>
           </a>
 
           <a class="card rec-card" id="randTool2" href="/tool/readability-analyzer/">
             <div class="thumb" id="randIcon2" aria-hidden="true">📚</div>
             <h3 id="randTitle2">Readability Analyzer</h3>
-            <p id="randDesc2">Get a readability score, grade level estimate, and practical edits to improve clarity and engagement.</p>
+            <p id="randDesc2">Get a readability score, grade level, and clear edits to make text easier to skim and understand.</p>
             <span class="tool-cta" id="randCta2">Use Readability Analyzer</span>
           </a>
 
           <a class="card rec-card" id="randTool3" href="/tool/meta-tags/">
             <div class="thumb" id="randIcon3" aria-hidden="true">🏷️</div>
             <h3 id="randTitle3">Meta Tag Optimizer</h3>
-            <p id="randDesc3">Preview SERP-style titles/descriptions, check length, and refine copy to improve CTR.</p>
+            <p id="randDesc3">Preview SERP titles/descriptions, check length, and refine wording to improve click-through rate.</p>
             <span class="tool-cta" id="randCta3">Use Meta Tag Optimizer</span>
           </a>
         </div>
@@ -466,10 +522,10 @@
   <section class="section container" aria-label="Why Clickoz">
     <h2 class="section-title">Why Clickoz</h2>
     <p class="section-sub">
-      Built for real workflows: quick answers, clear output, and practical guidance. Use a tool in seconds, then improve results with examples and FAQs.
+      Built for real workflows: quick answers, clean output, and practical guidance. Use a tool in seconds, then improve results with examples and FAQs.
     </p>
 
-    <div class="small-grid">
+    <div class="small-grid" style="max-width:1120px;margin:0 auto;">
       <div class="small-card">
         <h3>Structured outputs</h3>
         <p>Each tool focuses on one job: clean inputs, readable results, and consistent formatting that’s easy to copy and reuse.</p>
@@ -487,7 +543,9 @@
 
   <section class="section container" id="tools">
     <h2 class="section-title">Tools hub</h2>
-    <p class="section-sub">Browse by category or search directly. Each tool has a dedicated page with practical guidance, examples, and quick answers.</p>
+    <p class="section-sub">
+      Search by keyword or browse by category. Each tool includes usage tips, examples, and common questions so you get results quickly.
+    </p>
 
     <div class="row">
       <input class="search" id="toolSearch" placeholder="Search tools (readability, meta, json, base64…)" aria-label="Search tools" autocomplete="off" />
@@ -505,6 +563,7 @@
         <div class="thumb" aria-hidden="true">🔢</div>
         <h3>Word Counter</h3>
         <p>Count words, characters, sentences, and reading time. Great for content briefs, SEO drafts, and writing checks.</p>
+        <div class="example-line"><b>Example:</b> “My blog post is 1,200 words. Is it too long for a landing page?”</div>
         <span class="tool-cta">Use Word Counter</span>
       </a>
 
@@ -512,6 +571,7 @@
         <div class="thumb" aria-hidden="true">✨</div>
         <h3>Word Counter Pro</h3>
         <p>Advanced word and character analysis with reading and speaking time, plus keyword hints to improve structure and focus.</p>
+        <div class="example-line"><b>Example:</b> “How long will this script take to read out loud on YouTube?”</div>
         <span class="tool-cta">Use Word Counter Pro</span>
       </a>
 
@@ -519,6 +579,7 @@
         <div class="thumb" aria-hidden="true">📚</div>
         <h3>Readability Analyzer</h3>
         <p>Readability score, grade-level estimate, and clarity suggestions to make text more scannable and easier to understand.</p>
+        <div class="example-line"><b>Example:</b> “Can you simplify this paragraph for a general audience?”</div>
         <span class="tool-cta">Use Readability Analyzer</span>
       </a>
 
@@ -526,6 +587,7 @@
         <div class="thumb" aria-hidden="true">🎯</div>
         <h3>Keyword Density</h3>
         <p>Measure keyword frequency and phrases, highlight repeats, and keep relevance without over-optimization.</p>
+        <div class="example-line"><b>Example:</b> “Am I repeating ‘best VPN’ too many times in this article?”</div>
         <span class="tool-cta">Use Keyword Density</span>
       </a>
 
@@ -533,6 +595,7 @@
         <div class="thumb" aria-hidden="true">🏷️</div>
         <h3>Meta Tag Optimizer</h3>
         <p>Preview SERP-style titles and meta descriptions, check length limits, and refine copy to improve CTR.</p>
+        <div class="example-line"><b>Example:</b> “Does my title get cut on Google? How can I improve CTR?”</div>
         <span class="tool-cta">Use Meta Tag Optimizer</span>
       </a>
 
@@ -540,6 +603,7 @@
         <div class="thumb" aria-hidden="true">🧾</div>
         <h3>JSON Formatter</h3>
         <p>Prettify/minify JSON and spot errors fast. Ideal for API payloads and config files.</p>
+        <div class="example-line"><b>Example:</b> “This JSON won’t parse. Where’s the missing comma?”</div>
         <span class="tool-cta">Use JSON Formatter</span>
       </a>
 
@@ -547,6 +611,7 @@
         <div class="thumb" aria-hidden="true">🔗</div>
         <h3>URL Encoder</h3>
         <p>Encode/decode query strings and special characters. Useful for UTM links and debugging.</p>
+        <div class="example-line"><b>Example:</b> “Encode spaces and symbols for a clean tracking URL.”</div>
         <span class="tool-cta">Use URL Encoder</span>
       </a>
 
@@ -554,6 +619,7 @@
         <div class="thumb" aria-hidden="true">🔐</div>
         <h3>Base64 Encoder</h3>
         <p>Base64 encode/decode text quickly for tokens, payloads, and developer workflows.</p>
+        <div class="example-line"><b>Example:</b> “Decode a Base64 string from an API response.”</div>
         <span class="tool-cta">Use Base64</span>
       </a>
 
@@ -561,6 +627,7 @@
         <div class="thumb" aria-hidden="true">📝</div>
         <h3>Title &amp; Description</h3>
         <p>Generate SEO title and meta description ideas from a keyword, optimized for intent and CTR.</p>
+        <div class="example-line"><b>Example:</b> “Give me 10 title ideas for ‘free invoice generator’.”</div>
         <span class="tool-cta">Use Title &amp; Description</span>
       </a>
 
@@ -568,6 +635,7 @@
         <div class="thumb" aria-hidden="true">🖼️</div>
         <h3>Alt Text Generator</h3>
         <p>Create clear alt text variants for accessibility and SEO, optimized for screen readers.</p>
+        <div class="example-line"><b>Example:</b> “Alt text for a product photo (white background, front view).”</div>
         <span class="tool-cta">Use Alt Text Generator</span>
       </a>
 
@@ -575,6 +643,7 @@
         <div class="thumb" aria-hidden="true">🧠</div>
         <h3>SEO Outline Helper</h3>
         <p>Create H1/H2/H3 outlines plus FAQ ideas aligned to search intent and topical coverage.</p>
+        <div class="example-line"><b>Example:</b> “Outline for ‘how to start a newsletter’ + FAQs people ask.”</div>
         <span class="tool-cta">Use SEO Outline Helper</span>
       </a>
     </div>
@@ -582,9 +651,12 @@
 
   <section class="section container">
     <h2 class="section-title">Guides &amp; Updates</h2>
-    <p class="section-sub">Short guides that explain what to do, why it matters, and how to apply it using the tools.</p>
+    <p class="section-sub">
+      Short, practical guides that explain what to do and why it matters. Use them when you’re writing content, optimizing pages, or fixing technical issues quickly.
+      Each guide links to the exact tools that help you apply the steps.
+    </p>
 
-    <div class="small-grid">
+    <div class="small-grid" style="max-width:1120px;margin:0 auto;">
       <a class="small-card" href="/guides/word-count-for-seo/"><h3>Word Count for SEO (2026)</h3><p>Structure, intent, and clarity: what matters now.</p></a>
       <a class="small-card" href="/guides/readability-for-ranking/"><h3>Readability for Ranking</h3><p>How readability affects engagement and SEO signals.</p></a>
       <a class="small-card" href="/guides/meta-tags-checklist/"><h3>Meta Tags Checklist</h3><p>Titles and descriptions that earn clicks.</p></a>
@@ -827,7 +899,7 @@
     (function(){
       const KEY = "clickoz_consent";
       const banner = document.getElementById("consentBanner");
-      const gtWrap = document.getElementById("gtWrap");
+      const gtNavWrap = document.getElementById("gtNavWrap");
 
       function setCookie(name, value, days){
         const maxAge = days ? `; Max-Age=${days*24*60*60}` : "";
@@ -849,7 +921,7 @@
         if (window.__gt_loaded) return;
         window.__gt_loaded = true;
 
-        gtWrap?.classList.add("show");
+        gtNavWrap?.classList.add("show");
 
         window.googleTranslateElementInit = function(){
           new window.google.translate.TranslateElement(
