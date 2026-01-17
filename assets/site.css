@@ -374,3 +374,172 @@ img{ max-width:100%; display:block; }
   .logo{ font-size: 19px; }
   .logo-badge{ width: 38px; height: 38px; }
 }
+/* =========================================================
+   PATCH: Google Translate FULL DARK (no white background)
+   ========================================================= */
+#gtNavWrap{ display:none; align-items:center; }
+#gtNavWrap.show{ display:inline-flex; }
+
+#google_translate_element,
+#google_translate_element *{
+  background: transparent !important;
+}
+
+.goog-te-gadget{ color: transparent !important; }
+.goog-te-gadget span{ display:none !important; }
+
+.goog-te-gadget select{
+  background: #0c1222 !important;
+  color: rgba(255,255,255,.92) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-radius: 10px !important;
+  padding: 6px 10px !important;
+  outline: none !important;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  appearance: none;
+}
+
+/* Dropdown options */
+.goog-te-gadget select option{
+  background: #0c1222 !important;
+  color: rgba(255,255,255,.92) !important;
+}
+
+/* Hide Google top banner if it appears */
+.goog-te-banner-frame{ display:none !important; }
+body{ top:0 !important; }
+
+/* =========================================================
+   PATCH: Tool pages (same CMS, same components)
+   Use: <main class="tool-wrap"> ... </main>
+   ========================================================= */
+.tool-wrap{
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 34px 0 50px;
+  text-align: center;
+}
+.tool-hero{
+  max-width: 920px;
+  margin: 0 auto 14px;
+}
+.tool-hero h1{
+  font-size: clamp(30px, 3.2vw, 48px);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0 auto;
+}
+.tool-hero p{
+  color: rgba(255,255,255,.72);
+  line-height: 1.75;
+  margin: 10px auto 0;
+  max-width: 880px;
+}
+
+.panel{
+  max-width: 1120px;
+  margin: 18px auto 0;
+  background: rgba(15,21,38,.92);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 16px rgba(0,0,0,.22);
+  padding: 16px;
+  text-align: left;
+}
+
+.grid2{
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 980px){
+  .grid2{ grid-template-columns: 1fr; }
+}
+
+.tool-input,
+.tool-output,
+.tool-field{
+  width: 100%;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.92);
+  border-radius: 12px;
+  padding: 12px 12px;
+  outline: none;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+.tool-input{ min-height: 220px; resize: vertical; line-height: 1.6; }
+.tool-output{ min-height: 160px; resize: vertical; line-height: 1.6; }
+.tool-input:focus, .tool-output:focus, .tool-field:focus{
+  border-color: rgba(var(--accent-rgb), .55);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .16);
+}
+
+.btn2{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.90);
+  font-weight: 900;
+  cursor: pointer;
+}
+.btn2:hover{
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.18);
+}
+.btn2.primary{
+  background: var(--accent);
+  box-shadow: 0 10px 22px rgba(var(--accent-rgb), .18);
+}
+
+.rowbtn{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.results{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+@media (max-width: 980px){
+  .results{ grid-template-columns: 1fr; }
+}
+
+.stat{
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.stat .k{
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.58);
+}
+.stat .v{
+  font-size: 18px;
+  font-weight: 900;
+  margin-top: 4px;
+}
+
+.note{
+  font-size: 13px;
+  color: rgba(255,255,255,.68);
+  line-height: 1.55;
+  margin-top: 10px;
+}
+.note b{ color: rgba(255,255,255,.86); }
