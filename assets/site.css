@@ -543,3 +543,149 @@ body{ top:0 !important; }
   margin-top: 10px;
 }
 .note b{ color: rgba(255,255,255,.86); }
+/* =========================================================
+   CLICKoz: ACCENT GLOW PACK (accent-driven)
+   Incolla in fondo a site.css
+   ========================================================= */
+
+/* Safety: evita scroll orizzontale per gli overlay */
+html, body{ overflow-x: hidden; }
+
+/* Il body deve poter ospitare overlay */
+body{
+  position: relative;
+}
+
+/* ---------- 1) GLOW BACKGROUND GLOBALE (segue --accent-rgb) ---------- */
+body::before{
+  content:"";
+  position: fixed;
+  inset: -22%;
+  pointer-events:none;
+  z-index: -2;
+
+  /* luci grandi e pulite */
+  background:
+    radial-gradient(1100px 640px at 18% -8%, rgba(var(--accent-rgb), .22), transparent 60%),
+    radial-gradient(980px 560px  at 92% -6%, rgba(var(--accent-rgb), .14), transparent 62%),
+    radial-gradient(1000px 720px at 50% 28%, rgba(var(--accent-rgb), .10), transparent 64%),
+    radial-gradient(900px 700px  at 50% 110%, rgba(var(--accent-rgb), .06), transparent 60%);
+  filter: blur(3px);
+  opacity: 1;
+}
+
+/* layer “vivo” (movimento soft) */
+body::after{
+  content:"";
+  position: fixed;
+  inset: -30%;
+  pointer-events:none;
+  z-index: -1;
+  background:
+    radial-gradient(900px 700px at 14% 24%, rgba(var(--accent-rgb), .14), transparent 62%),
+    radial-gradient(900px 700px at 86% 30%, rgba(var(--accent-rgb), .10), transparent 65%);
+  filter: blur(18px);
+  opacity: .55;
+  transform: translate3d(0,0,0);
+  animation: clickozGlowFloat 10s ease-in-out infinite alternate;
+}
+
+@keyframes clickozGlowFloat{
+  0%   { transform: translate3d(-1.2%, -0.8%, 0) scale(1); }
+  100% { transform: translate3d( 1.2%,  0.9%, 0) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body::after{ animation: none; }
+}
+
+
+/* ---------- 2) LUCI LATERALI (hero + sections) ---------- */
+.hero, .section{
+  position: relative;
+}
+
+/* glow laterale che “stacca” i blocchi */
+.hero::before,
+.section::before{
+  content:"";
+  position:absolute;
+  left: 50%;
+  top: -26px;
+  transform: translateX(-50%);
+  width: min(1240px, calc(100% + 160px));
+  height: calc(100% + 52px);
+  pointer-events:none;
+  z-index: -1;
+
+  background:
+    radial-gradient(640px 260px at 0% 50%, rgba(var(--accent-rgb), .22), transparent 72%),
+    radial-gradient(640px 260px at 100% 50%, rgba(var(--accent-rgb), .22), transparent 72%),
+    radial-gradient(520px 220px at 50% 0%, rgba(var(--accent-rgb), .14), transparent 72%);
+  filter: blur(14px);
+  opacity: .95;
+}
+
+/* se vuoi HERO ancora più “spotlight” (più forte sopra) */
+.hero::before{
+  background:
+    radial-gradient(820px 340px at 50% -10%, rgba(var(--accent-rgb), .26), transparent 68%),
+    radial-gradient(640px 260px at 0% 52%, rgba(var(--accent-rgb), .18), transparent 72%),
+    radial-gradient(640px 260px at 100% 52%, rgba(var(--accent-rgb), .18), transparent 72%);
+  opacity: 1;
+}
+
+
+/* ---------- 3) GLOW BORDI SU CARD/SMALL-CARD/WIDGET (sempre + hover) ---------- */
+/* Nota: nel tuo HTML stai già “forzando” border/background con !important.
+   Qui aggiungiamo overlay e glow senza rompere nulla. */
+
+.card, .small-card{
+  position: relative;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(15,21,38,.55);
+}
+
+/* bordo “luminoso” sempre presente */
+.card::after,
+.small-card::after{
+  content:"";
+  position:absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events:none;
+  z-index: -1;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--accent-rgb), .28),
+    rgba(255,255,255,.06),
+    rgba(var(--accent-rgb), .18)
+  );
+  opacity: .22;
+  filter: blur(10px);
+}
+
+/* hover più evidente e coerente col tema */
+.card:hover,
+.small-card:hover{
+  border-color: rgba(var(--accent-rgb), .60);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .20),
+    0 18px 50px rgba(0,0,0,.42),
+    0 14px 30px rgba(var(--accent-rgb), .12);
+}
+
+/* glow anche sulle icone (thumb) */
+.thumb{
+  border-color: rgba(var(--accent-rgb), .20);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .10) inset,
+    0 10px 22px rgba(var(--accent-rgb), .10);
+}
+
+/* ---------- 4) OPTIONAL: “rim light” sulle CTA primary ---------- */
+.btn.primary{
+  box-shadow:
+    0 10px 22px rgba(var(--accent-rgb), .18),
+    0 0 0 1px rgba(var(--accent-rgb), .18) inset;
+}
