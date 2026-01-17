@@ -393,3 +393,121 @@
     spawnFrom(em);
   }
 })();
+/* =========================
+   PARTICLE BURST (2s)
+========================= */
+#clickozParticles{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.pburst{
+  position:absolute;
+  left: var(--sx);
+  top:  var(--sy);
+  width: var(--sz);
+  height: var(--sz);
+  border-radius: 999px;
+
+  background: rgba(var(--accent-rgb), .95);
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), .55),
+    0 0 70px rgba(var(--accent-rgb), .18);
+
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.65);
+  animation: burstFly var(--dur) cubic-bezier(.12,.9,.18,1) forwards;
+  animation-delay: var(--delay);
+  will-change: transform, opacity;
+}
+
+@keyframes burstFly{
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.5); }
+  8%   { opacity: var(--op); }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #clickozParticles{ display:none; }
+}
+(function(){
+  // layer
+  let layer = document.getElementById('clickozParticles');
+  if(!layer){
+    layer = document.createElement('div');
+    layer.id = 'clickozParticles';
+    document.body.appendChild(layer);
+  }
+  layer.innerHTML = '';
+
+  const isMobile = matchMedia('(max-width: 720px)').matches;
+
+  // Punto di partenza unico (HERO)
+  // Regola questi 2 numeri se vuoi più su/giù:
+  const ORIGIN_X = 50;  // %
+  const ORIGIN_Y = 22;  // %
+
+  // quantità: desktop wow / mobile light
+  const COUNT = isMobile ? 120 : 260;
+
+  // durata: esplosione MAX 2s
+  const MAX_DUR = 2.0;
+
+  // “cascata”: delay a pacchetti (tutto finisce entro 2s)
+  const MAX_DELAY = 0.55; // sec
+
+  const rnd = (a,b)=>Math.random()*(b-a)+a;
+
+  // distribuzione direzioni: più verso laterali + un po' verso basso
+  function sampleDirection(){
+    // bias laterale: scegli sinistra o destra
+    const side = Math.random() < 0.5 ? -1 : 1;
+
+    // dx grande per laterali
+    const dx = side * rnd(260, 980);
+
+    // dy: un po' su, tanto giù (cascata)
+    const dy = rnd(-120, 760);
+
+    return { dx, dy };
+  }
+
+  // crea particella
+  for(let i=0;i<COUNT;i++){
+    const p = document.createElement('span');
+    p.className = 'pburst';
+
+    const {dx,dy} = sampleDirection();
+
+    // size e opacity
+    const sz = (Math.random() < 0.18) ? rnd(5,7) : rnd(2,4);
+    const op = (sz > 5) ? rnd(0.22, 0.36) : rnd(0.18, 0.30);
+
+    // “cascata”: un po’ di delay ma non oltre MAX_DELAY
+    const delay = rnd(0, MAX_DELAY);
+
+    // durata: sempre <= 2s (delay + durata = ~2s)
+    const dur = Math.max(0.9, Math.min(MAX_DUR, rnd(1.05, 1.65)));
+
+    p.style.setProperty('--sx', ORIGIN_X + '%');
+    p.style.setProperty('--sy', ORIGIN_Y + '%');
+    p.style.setProperty('--dx', dx.toFixed(0) + 'px');
+    p.style.setProperty('--dy', dy.toFixed(0) + 'px');
+    p.style.setProperty('--sz', sz.toFixed(1) + 'px');
+    p.style.setProperty('--op', op.toFixed(2));
+    p.style.setProperty('--delay', delay.toFixed(2) + 's');
+    p.style.setProperty('--dur', dur.toFixed(2) + 's');
+
+    layer.appendChild(p);
+  }
+
+  // Se vuoi che il burst si ripeta quando ricarichi (o al click logo):
+  // document.querySelector('.logo')?.addEventListener('click', ()=>location.reload());
+
+})();
