@@ -53,7 +53,7 @@
       text-rendering: optimizeLegibility;
     }
 
-    /* ===== Centering fixes (the main request) ===== */
+    /* ===== Centering fixes ===== */
     .hero, .section{ text-align:center; }
     .hero .row{ justify-content:center; }
     .hero .badge{ margin: 0 auto; }
@@ -65,7 +65,6 @@
     .row{ justify-content:center; }
     .chips{ justify-content:center; }
 
-    /* Improve max widths so it looks “centered” even on very wide screens */
     .hero h1{
       font-size: clamp(38px, 4.2vw, 62px) !important;
       max-width: 1080px !important;
@@ -97,6 +96,35 @@
     /* NAV */
     .nav-inner{ gap: 14px; }
     .nav-actions{ display:flex; align-items:center; gap:10px; }
+
+    /* ===== Logo bigger + badge follows accent ===== */
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      font-weight: 950;
+      letter-spacing: -0.02em;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .logo-badge{
+      width: 42px;
+      height: 42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius: 14px;
+      font-size: 20px;
+      background: rgba(var(--accent-rgb), .20);
+      border: 1px solid rgba(var(--accent-rgb), .38);
+      box-shadow: 0 10px 22px rgba(var(--accent-rgb), .14);
+    }
+    @media (max-width: 520px){
+      .logo{ font-size: 17px; }
+      .logo-badge{ width: 40px; height: 40px; border-radius: 13px; }
+    }
+
     .icon-btn{
       display:inline-flex;
       align-items:center;
@@ -194,7 +222,7 @@
       background: rgba(255,255,255,.02);
     }
 
-    /* Recommended (aligned, compact) */
+    /* Recommended */
     .widget-row{ display:grid; grid-template-columns: 1fr; gap: 18px; margin-top: 18px; }
     .widget{
       border: 1px solid var(--border);
@@ -233,7 +261,7 @@
     }
     .rec-card h3{ margin: 10px 0 8px !important; font-size: 16px; line-height: 1.2; }
     .rec-card p{
-      margin: 0 !important;
+      margin: 0 0 12px !important; /* ✅ spazio sotto descrizione */
       line-height: 1.65;
       font-size: 14.5px;
       color: var(--muted) !important;
@@ -263,7 +291,7 @@
       box-shadow: 0 10px 22px rgba(var(--accent-rgb), .18);
     }
     .tool-cta:hover{ filter: brightness(1.04); }
-    .rec-card .tool-cta{ margin-top:auto !important; }
+    .rec-card .tool-cta{ margin-top:auto !important; } /* pinned bottom */
 
     /* Card hover */
     .card, .small-card{
@@ -317,14 +345,18 @@
       .nav-inner{ justify-content:space-between; }
     }
 
-    /* Tools grid: pin CTA bottom */
+    /* Tools grid: pin CTA bottom + spacing under description */
     #grid .card{ display:flex; flex-direction:column; text-align:left; }
     #grid .card .tool-cta{ margin-top:auto !important; }
     #grid{ max-width: 1120px; margin: 0 auto; }
 
-    /* Example line under tool descriptions */
+    /* ✅ spazio sotto la descrizione (fix “CTR.” -> bottone) */
+    #grid .card p{
+      margin: 10px 0 12px !important;
+      line-height: 1.65;
+    }
     .example-line{
-      margin-top: 10px;
+      margin: 0 0 14px !important; /* ✅ gap prima del bottone */
       font-size: 12.5px;
       color: rgba(255,255,255,.62);
       line-height: 1.45;
@@ -369,37 +401,47 @@
       .consent-actions .btn{ width: 100%; }
     }
 
-    /* ===== Google Translate in NAV (right of Accent) ===== */
+    /* ===== Google Translate in NAV (dark UI) ===== */
     #gtNavWrap{
-      display:none; /* becomes visible only if accepted all */
+      display:none;
       align-items:center;
     }
     #gtNavWrap.show{ display:inline-flex; }
 
     #google_translate_element{
-      display:inline-block;
+      display:inline-flex;
+      align-items:center;
       padding: 8px 10px;
       border: 1px solid var(--border);
       border-radius: 10px;
       background: rgba(255,255,255,.03);
       line-height: 1;
-      transform: translateY(0);
     }
 
-    /* Keep translate UI compact */
+    /* Hide default text; keep only select */
     .goog-te-gadget{ color: transparent !important; }
     .goog-te-gadget span{ display:none !important; }
-    .goog-te-gadget select{
-      background: transparent;
-      color: rgba(255,255,255,.92);
-      border: none;
-      outline: none;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 2px 2px;
-      cursor:pointer;
+
+    /* ✅ Force dark-looking select (no white bg) */
+    .goog-te-gadget select,
+    .goog-te-combo{
+      background: transparent !important;
+      color: rgba(255,255,255,.92) !important;
+      border: none !important;
+      outline: none !important;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif !important;
+      font-weight: 800 !important;
+      font-size: 13px !important;
+      padding: 2px 4px !important;
+      cursor:pointer !important;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
     }
+
+    /* Dropdown options: keep readable (browser renders menu) */
+    .goog-te-combo option{ color:#111; background:#fff; }
+
   </style>
 </head>
 
@@ -407,7 +449,8 @@
   <nav class="nav" aria-label="Primary navigation">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
-        <span class="logo-badge" aria-hidden="true">⚡</span> Click<span id="logoAccent">oz</span>
+        <span class="logo-badge" id="logoBadge" aria-hidden="true">⚡</span>
+        Click<span id="logoAccent">oz</span>
       </a>
 
       <div class="nav-links" aria-label="Sections">
@@ -442,7 +485,7 @@
           </div>
         </div>
 
-        <!-- Google Translate: RIGHT of the color dot button -->
+        <!-- Google Translate -->
         <div id="gtNavWrap" aria-label="Translate">
           <div id="google_translate_element"></div>
         </div>
@@ -480,7 +523,6 @@
       <a class="btn" href="/guides/">Read guides</a>
     </div>
 
-    <!-- FULL WIDTH: Recommended now -->
     <div class="widget-row">
       <div class="widget">
         <h3>Recommended now</h3>
@@ -702,7 +744,6 @@
     </div>
   </footer>
 
-  <!-- Cookie/Consent banner -->
   <div id="consentBanner" class="consent" role="dialog" aria-live="polite" aria-label="Cookie preferences">
     <div class="consent-inner">
       <div class="consent-text">
@@ -721,7 +762,6 @@
   </div>
 
   <script>
-    // dropdown helpers
     function toggleMenu(btn, menu){
       const isOpen = menu.classList.contains('active');
       document.querySelectorAll('.menu.active').forEach(m => m.classList.remove('active'));
@@ -732,9 +772,7 @@
       document.querySelectorAll('.menu.active').forEach(m => m.classList.remove('active'));
       document.querySelectorAll('[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded','false'));
     }
-    document.addEventListener('click', (e)=>{
-      if(!e.target.closest('.dropdown')) closeAll();
-    });
+    document.addEventListener('click', (e)=>{ if(!e.target.closest('.dropdown')) closeAll(); });
 
     function hexToRgbTriplet(hex){
       const h = (hex || '').replace('#','').trim();
@@ -753,7 +791,6 @@
       return "99,102,241";
     }
 
-    // Accent picker
     const colorToggle = document.getElementById('colorToggle');
     const colorMenu = document.getElementById('colorMenu');
     const colorDot = document.getElementById('colorDot');
@@ -780,7 +817,6 @@
       closeAll();
     });
 
-    // allow keyboard selection inside menu
     colorMenu.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter' || e.key === ' '){
         const opt = e.target.closest('.color-option');
@@ -811,7 +847,6 @@
       }
     }catch(_){}
 
-    // Shortcuts
     const search = document.getElementById('toolSearch');
     document.addEventListener('keydown', (e)=>{
       if(e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
@@ -821,7 +856,6 @@
       if(e.key === 'Escape') closeAll();
     });
 
-    // Random recommendations from hub
     (function(){
       const cards = Array.from(document.querySelectorAll('#grid a.card'));
       if(cards.length < 3) return;
@@ -857,7 +891,6 @@
       });
     })();
 
-    // Tools hub search + chips
     (function(){
       const q = document.getElementById('toolSearch');
       const chips = Array.from(document.querySelectorAll('#chips .chip'));
@@ -895,7 +928,6 @@
       apply();
     })();
 
-    // ===== Consent + conditional loading (Google Translate) =====
     (function(){
       const KEY = "clickoz_consent";
       const banner = document.getElementById("consentBanner");
