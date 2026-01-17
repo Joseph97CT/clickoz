@@ -1331,3 +1331,315 @@ body::after{
 /* Hide Google banner (se appare) */
 .goog-te-banner-frame{ display:none !important; }
 body{ top:0 !important; }
+/* =========================================================
+   CLICKoz FUTURE PRO v3 (cinematic glow + particles + hero)
+   Incolla in fondo a /assets/site.css
+   ========================================================= */
+
+html, body{ overflow-x:hidden; }
+body{
+  position:relative;
+  background: var(--bg) !important;
+  padding-top: 74px; /* nav fixed */
+}
+@media (max-width: 520px){ body{ padding-top: 70px; } }
+
+/* ---------------- NAV: fixed + premium glass ---------------- */
+.nav{
+  position: fixed !important;
+  top:0; left:0; right:0;
+  z-index: 9999 !important;
+  background: rgba(7,10,18,.60) !important;
+  border-bottom: 1px solid rgba(255,255,255,.08) !important;
+  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: 0 18px 70px rgba(0,0,0,.55);
+}
+.nav::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-1px;
+  height:2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(var(--accent-rgb), .75),
+    transparent
+  );
+  opacity:.7;
+  pointer-events:none;
+}
+
+/* evita clip di glow */
+.container, .grid, .small-grid, .widget-row, .widget,
+.hero, .section, footer, .footer, #tools{ overflow: visible !important; }
+.hero, .section{ isolation:isolate; }
+
+/* =========================================================
+   CINEMATIC BACKGROUND (super sfumato, zero contrasti duri)
+   - top forte ma “bloom”
+   - bottom più soft e foggy
+========================================================= */
+body::before{
+  content:"";
+  position: fixed;
+  inset: -90%;
+  pointer-events:none;
+  z-index: -4;
+
+  /* layer principale (solo accent) */
+  background:
+    radial-gradient(1800px 1100px at 50% -18%, rgba(var(--accent-rgb), .70), transparent 62%),
+    radial-gradient(1400px 900px  at 50% 10%,  rgba(var(--accent-rgb), .28), transparent 70%),
+    radial-gradient(1200px 980px  at -12% 45%, rgba(var(--accent-rgb), .34), transparent 72%),
+    radial-gradient(1200px 980px  at 112% 45%, rgba(var(--accent-rgb), .34), transparent 72%),
+    radial-gradient(1800px 1400px at 50% 55%, rgba(var(--accent-rgb), .14), transparent 78%),
+    radial-gradient(1900px 1200px at 50% 118%, rgba(var(--accent-rgb), .20), transparent 82%);
+
+  filter: blur(34px);
+  opacity: 1;
+}
+
+/* “Fog/Haze” per togliere i contrasti e dare cinematic look */
+body::after{
+  content:"";
+  position: fixed;
+  inset: -35%;
+  pointer-events:none;
+  z-index: -3;
+
+  background:
+    radial-gradient(1100px 900px at 22% 30%, rgba(var(--accent-rgb), .14), transparent 70%),
+    radial-gradient(1100px 900px at 78% 30%, rgba(var(--accent-rgb), .12), transparent 72%),
+    radial-gradient(1600px 1200px at 50% 70%, rgba(var(--accent-rgb), .10), transparent 78%);
+
+  filter: blur(44px);
+  opacity: .95;
+  transform: translate3d(0,0,0);
+  animation: clickozHaze 10s ease-in-out infinite alternate;
+}
+@keyframes clickozHaze{
+  0%{ transform: translate3d(-1.3%, -0.8%, 0) scale(1); }
+  100%{ transform: translate3d( 1.3%,  1.0%, 0) scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce){ body::after{ animation:none; } }
+
+/* =========================================================
+   HERO: più leggibile + più “premium”
+   - titolo più pulito
+   - highlight accent con underline animato
+   - reveal soft
+========================================================= */
+
+.hero{
+  padding-top: 44px !important;
+  padding-bottom: 18px !important;
+}
+
+.hero h1{
+  letter-spacing: -0.035em !important;
+  line-height: 1.04 !important;
+  text-shadow: 0 18px 70px rgba(0,0,0,.55);
+  animation: heroIn .7s ease-out both;
+}
+.hero p{
+  max-width: 980px !important;
+  font-size: 17px !important;
+  opacity: .92;
+  animation: heroIn .85s ease-out both;
+  animation-delay: .05s;
+}
+
+@keyframes heroIn{
+  from{ transform: translateY(10px); opacity: 0; }
+  to{ transform: translateY(0); opacity: 1; }
+}
+
+/* tag “badge” più futuristico */
+.badge{
+  background: rgba(var(--accent-rgb), .10) !important;
+  border-color: rgba(var(--accent-rgb), .24) !important;
+  box-shadow:
+    0 18px 60px rgba(var(--accent-rgb), .12),
+    0 0 0 1px rgba(var(--accent-rgb), .10) inset;
+}
+
+/* evidenzia parole accent con underline animato */
+.hero .hl{
+  position: relative;
+  color: rgb(var(--accent-rgb)) !important;
+  text-shadow: 0 18px 70px rgba(var(--accent-rgb), .12);
+}
+.hero .hl::after{
+  content:"";
+  position:absolute;
+  left: 2px; right: 2px;
+  bottom: -6px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(var(--accent-rgb), .90),
+    transparent
+  );
+  filter: blur(.2px);
+  opacity: .85;
+  transform-origin: center;
+  animation: underlinePulse 2.8s ease-in-out infinite;
+}
+@keyframes underlinePulse{
+  0%,100%{ transform: scaleX(.65); opacity:.65; }
+  50%{ transform: scaleX(1); opacity:.95; }
+}
+
+/* =========================================================
+   SECTION TITLES: glow + “spotlight” dietro al titolo
+========================================================= */
+.section-title{
+  position: relative;
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 26px 90px rgba(0,0,0,.35),
+    0 0 0 1px rgba(var(--accent-rgb), .12) inset;
+}
+
+.section-title::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  width: 520px;
+  height: 180px;
+  pointer-events:none;
+  z-index: -1;
+  background:
+    radial-gradient(320px 140px at 50% 50%, rgba(var(--accent-rgb), .34), transparent 70%),
+    radial-gradient(520px 220px at 50% 50%, rgba(var(--accent-rgb), .14), transparent 78%);
+  filter: blur(22px);
+  opacity: 1;
+}
+
+/* =========================================================
+   CARDS: “bloom” uniforme e super sfumato
+   (render pro, niente bordi duri)
+========================================================= */
+.card, .small-card, .widget{
+  position: relative;
+  background: rgba(12,16,28,.78) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  box-shadow:
+    0 24px 90px rgba(0,0,0,.45) !important;
+}
+
+.card::before, .small-card::before, .widget::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius: inherit;
+  pointer-events:none;
+  z-index:-1;
+
+  background:
+    radial-gradient(620px 360px at 18% 12%, rgba(var(--accent-rgb), .30), transparent 74%),
+    radial-gradient(620px 360px at 82% 12%, rgba(var(--accent-rgb), .24), transparent 76%),
+    radial-gradient(900px 520px at 50% 120%, rgba(var(--accent-rgb), .16), transparent 78%);
+
+  filter: blur(26px);
+  opacity: .95;
+}
+
+/* hover: più premium (no “sparata”) */
+.card:hover, .small-card:hover, .widget:hover{
+  border-color: rgba(var(--accent-rgb), .42) !important;
+  background: rgba(14,20,36,.88) !important;
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .18) !important,
+    0 34px 120px rgba(0,0,0,.58) !important,
+    0 28px 100px rgba(var(--accent-rgb), .18) !important;
+}
+
+/* thumbs più futuristici */
+.thumb{
+  background: rgba(var(--accent-rgb), .10) !important;
+  border-color: rgba(var(--accent-rgb), .30) !important;
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .14) inset,
+    0 18px 60px rgba(var(--accent-rgb), .10) !important;
+}
+
+/* CTA primary */
+.btn.primary{
+  background: rgb(var(--accent-rgb)) !important;
+  box-shadow:
+    0 22px 70px rgba(var(--accent-rgb), .22) !important,
+    0 0 0 1px rgba(var(--accent-rgb), .18) inset !important;
+}
+
+/* =========================================================
+   PARTICLES LAYERS (hero + lateral jets + around cards)
+========================================================= */
+#clickozParticles{
+  position: fixed;
+  inset: 0;
+  pointer-events:none;
+  z-index: -2;
+  overflow:hidden;
+}
+
+/* base particle */
+.px{
+  position:absolute;
+  width: 3px; height: 3px;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), .92);
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), .45),
+    0 0 60px rgba(var(--accent-rgb), .16);
+  opacity: .55;
+  animation: pxMove var(--dur) linear infinite;
+  transform: translate3d(0,0,0);
+}
+.px.big{ width: 5px; height: 5px; opacity:.42; filter: blur(.2px); }
+.px.tiny{ width: 2px; height: 2px; opacity:.45; }
+
+/* movimenti: “uscita verso l’esterno” */
+@keyframes pxMove{
+  0%{ transform: translate3d(var(--x1), var(--y1), 0) scale(.8); opacity: 0; }
+  12%{ opacity: .55; }
+  100%{ transform: translate3d(var(--x2), var(--y2), 0) scale(1.2); opacity: 0; }
+}
+
+/* riduci su mobile */
+@media (max-width: 720px){
+  .px{ opacity: .40; }
+}
+@media (prefers-reduced-motion: reduce){
+  #clickozParticles{ display:none; }
+}
+
+/* =========================================================
+   GOOGLE TRANSLATE: più piccolo + dark (best-effort)
+========================================================= */
+.goog-te-gadget select,
+.goog-te-combo{
+  height: 34px !important;
+  padding: 0 10px !important;
+  border-radius: 10px !important;
+  font-size: 12.5px !important;
+
+  background: rgba(10,14,24,.92) !important;
+  color: rgba(255,255,255,.92) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  outline: none !important;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  appearance:none;
+}
+.goog-te-gadget select option,
+.goog-te-combo option{
+  background: #0b0f19 !important;
+  color: rgba(255,255,255,.92) !important;
+}
