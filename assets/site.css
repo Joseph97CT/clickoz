@@ -2034,3 +2034,91 @@ body::after{
 
 /* grain opzionale: sta sotto le particelle */
 .__grain{ z-index: -2 !important; }
+/* =========================
+   BACKGROUND: pro nebula, NO hard bands, NO overflow
+========================= */
+body{
+  background: #0b0f19 !important;
+}
+
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events:none;
+  z-index:-4;
+  background:
+    radial-gradient(1600px 900px at 50% -10%, rgba(var(--accent-rgb), .42), transparent 66%),
+    radial-gradient(1100px 900px at -8% 45%, rgba(var(--accent-rgb), .16), transparent 78%),
+    radial-gradient(1100px 900px at 108% 45%, rgba(var(--accent-rgb), .16), transparent 78%),
+    radial-gradient(1700px 1200px at 50% 62%, rgba(var(--accent-rgb), .10), transparent 84%),
+    radial-gradient(1700px 900px at 50% 120%, rgba(var(--accent-rgb), .07), transparent 90%);
+  filter: blur(60px);
+  opacity: .95;
+}
+
+body::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events:none;
+  z-index:-3;
+  background:
+    radial-gradient(1200px 900px at 18% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
+    radial-gradient(1200px 900px at 82% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
+    radial-gradient(1700px 1200px at 50% 72%, rgba(var(--accent-rgb), .06), transparent 86%);
+  filter: blur(84px);
+  opacity: .78;
+}
+/* =========================
+   PARTICLES: burst + idle
+========================= */
+#clickozParticles{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;         /* sopra bg, sotto contenuti */
+  overflow: hidden;
+}
+
+.pburst, .pidle{
+  position:absolute;
+  border-radius:999px;
+  background: rgba(var(--accent-rgb), .96);
+  box-shadow: 0 0 18px rgba(var(--accent-rgb), .50), 0 0 70px rgba(var(--accent-rgb), .16);
+  will-change: transform, opacity;
+}
+
+/* BURST */
+.pburst{
+  left: var(--sx);
+  top:  var(--sy);
+  width: var(--sz);
+  height: var(--sz);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.65);
+  animation: burstFly var(--dur) cubic-bezier(.12,.9,.18,1) forwards;
+  animation-delay: var(--delay);
+}
+@keyframes burstFly{
+  0%{ opacity:0; transform: translate(-50%,-50%) scale(.55); }
+  10%{ opacity: var(--op); }
+  100%{ opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.12); }
+}
+
+/* IDLE (sempre visibili, molto leggere) */
+.pidle{
+  width: 2px;
+  height: 2px;
+  opacity: .18;
+  animation: idleDrift var(--idur) linear infinite;
+}
+@keyframes idleDrift{
+  0%{ transform: translate3d(0,0,0); opacity: .08; }
+  10%{ opacity: .18; }
+  100%{ transform: translate3d(var(--ix), var(--iy), 0); opacity: .08; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #clickozParticles{ display:none; }
+}
