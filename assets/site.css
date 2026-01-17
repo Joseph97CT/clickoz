@@ -1951,3 +1951,86 @@ body::after{
     );
   filter: blur(.25px);
 }
+/* =========================
+   FOOTER FIX: less space + black + copyright glow
+========================= */
+
+/* togli padding enorme e spazio finale */
+.footer{
+  margin-top: 0 !important;
+  padding: 18px 0 10px !important;
+  background: #05060a !important;
+  border-top: 1px solid rgba(255,255,255,.07) !important;
+}
+.footer .container[style*="margin-top"]{
+  margin-top: 10px !important;
+}
+
+/* separatore più leggero */
+.footer .sep{
+  border-top: 1px solid rgba(255,255,255,.07) !important;
+}
+
+/* glow SOLO sul copyright (ultima riga) */
+.footer .container > div[style*="©"]{
+  position: relative;
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .10) inset,
+    0 18px 70px rgba(var(--accent-rgb), .14);
+}
+
+/* rimuovi eventuali glow/overlay del footer messi prima */
+.footer::before,
+.footer::after{ content: none !important; }
+/* =========================
+   BACKGROUND FIX: softer, no harsh stop/band
+========================= */
+
+body{
+  background: #0b0f19 !important;
+}
+
+/* glow dietro: meno potente e più uniforme */
+body::before{
+  z-index: -4 !important;
+  filter: blur(62px) !important;
+  opacity: .92 !important;
+  background:
+    radial-gradient(1500px 850px at 50% -12%, rgba(var(--accent-rgb), .42), transparent 66%),
+    radial-gradient(1100px 900px at -8% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
+    radial-gradient(1100px 900px at 108% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
+    radial-gradient(1700px 1200px at 50% 62%, rgba(var(--accent-rgb), .10), transparent 84%),
+    /* fondo: SUPER soft (niente fascia) */
+    radial-gradient(1800px 900px at 50% 120%, rgba(var(--accent-rgb), .07), transparent 90%) !important;
+}
+
+/* haze sopra: elimina banding e stacchi */
+body::after{
+  z-index: -3 !important;
+  filter: blur(84px) !important;
+  opacity: .78 !important;
+  background:
+    radial-gradient(1200px 900px at 18% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
+    radial-gradient(1200px 900px at 82% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
+    radial-gradient(1700px 1200px at 50% 72%, rgba(var(--accent-rgb), .06), transparent 86%) !important;
+}
+/* =========================
+   PARTICLES VISIBILITY FIX
+========================= */
+
+/* important: non devono finire sotto i pseudo-elementi */
+#clickozParticles{
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  z-index: -1 !important; /* sopra bg, sotto contenuti */
+}
+
+/* grain opzionale: sta sotto le particelle */
+.__grain{ z-index: -2 !important; }
