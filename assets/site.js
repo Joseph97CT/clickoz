@@ -275,3 +275,121 @@
     t=setTimeout(()=>{ try{ layer.innerHTML=''; for(let i=0;i<CORE;i++) spawn('core'); for(let i=0;i<SIDE;i++){ spawn('leftEmitter'); spawn('rightEmitter'); } for(let i=0;i<MIST;i++) spawn('mist'); }catch(e){} }, 250);
   }, {passive:true});
 })();
+(function(){
+  // Layer particles
+  let layer = document.getElementById('clickozParticles');
+  if(!layer){
+    layer = document.createElement('div');
+    layer.id = 'clickozParticles';
+    document.body.appendChild(layer);
+  }
+  layer.innerHTML = '';
+
+  const isMobile = matchMedia('(max-width: 720px)').matches;
+  const rnd = (a,b)=>Math.random()*(b-a)+a;
+  const pick = (arr)=>arr[(Math.random()*arr.length)|0];
+
+  // DENSITÀ: più “wow” (desktop)
+  const COUNTS = isMobile
+    ? { heroCore: 70, heroX: 90, midSides: 60, footerFog: 40, mist: 30 }
+    : { heroCore: 160, heroX: 260, midSides: 140, footerFog: 120, mist: 70 };
+
+  // Emitters: coordinate “relative” alla viewport (%)
+  // X ROSSE HERO: left/right, subito ai lati del titolo
+  const emitters = [
+    // HERO core (centro)
+    { name:'heroCore', left:50, top:18, dx:[-680,680], dy:[-520,720], dur:[8,16], size:['tiny','','big'], op:[0.35,0.60] },
+
+    // HERO X left (la tua X rossa a sinistra)
+    { name:'heroX', left:12, top:22, dx:[-980,-260], dy:[-380,780], dur:[6,12], size:['tiny','','big'], op:[0.35,0.58] },
+
+    // HERO X right (la tua X rossa a destra)
+    { name:'heroX', left:88, top:22, dx:[260,980], dy:[-380,780], dur:[6,12], size:['tiny','','big'], op:[0.35,0.58] },
+
+    // MID sides (riempie i cerchi della seconda immagine)
+    { name:'midSides', left:8,  top:52, dx:[-980,-260], dy:[-220,680], dur:[7,14], size:['tiny','','big'], op:[0.28,0.50] },
+    { name:'midSides', left:92, top:52, dx:[260,980],  dy:[-220,680], dur:[7,14], size:['tiny','','big'], op:[0.28,0.50] },
+
+    // FOOTER fog jets (riempie la parte bassa senza banda netta)
+    { name:'footerFog', left:18, top:86, dx:[-520,80], dy:[-120,260], dur:[10,20], size:['tiny','tiny',''], op:[0.20,0.35] },
+    { name:'footerFog', left:82, top:86, dx:[-80,520], dy:[-120,260],  dur:[10,20], size:['tiny','tiny',''], op:[0.20,0.35] },
+  ];
+
+  function makePx(){
+    const s = document.createElement('span');
+    s.className = 'px ' + pick(['tiny','', 'big']);
+    return s;
+  }
+
+  // se non hai più la classe .px / keyframes pxMove nel CSS, aggiungile:
+  // (lo metto comunque qui in modo “safe”)
+  if(!document.getElementById('__px_css')){
+    const st = document.createElement('style');
+    st.id='__px_css';
+    st.textContent = `
+      #clickozParticles{ position:fixed; inset:0; pointer-events:none; z-index:-2; overflow:hidden; }
+      .px{ position:absolute; width:3px; height:3px; border-radius:999px;
+           background: rgba(var(--accent-rgb), .92);
+           box-shadow: 0 0 18px rgba(var(--accent-rgb), .45), 0 0 60px rgba(var(--accent-rgb), .16);
+           opacity:.55; transform: translate3d(0,0,0);
+           animation: pxMove var(--dur) linear infinite; }
+      .px.big{ width:5px; height:5px; opacity:.42; filter: blur(.2px); }
+      .px.tiny{ width:2px; height:2px; opacity:.45; }
+      @keyframes pxMove{
+        0%{ transform: translate3d(var(--x1), var(--y1), 0) scale(.8); opacity:0; }
+        12%{ opacity: var(--op); }
+        100%{ transform: translate3d(var(--x2), var(--y2), 0) scale(1.25); opacity:0; }
+      }
+      @media (prefers-reduced-motion: reduce){ #clickozParticles{ display:none; } }
+    `;
+    document.head.appendChild(st);
+  }
+
+  function spawnFrom(em){
+    const p = document.createElement('span');
+    const cls = pick(em.size || ['tiny','','big']);
+    p.className = 'px ' + cls;
+
+    const x1 = rnd(-20, 20);
+    const y1 = rnd(-20, 20);
+    const x2 = rnd(em.dx[0], em.dx[1]);
+    const y2 = rnd(em.dy[0], em.dy[1]);
+
+    const dur = rnd(em.dur[0], em.dur[1]);
+    const delay = rnd(0, 5.5);
+    const op = rnd(em.op[0], em.op[1]);
+
+    p.style.left = (em.left + rnd(-2.5, 2.5)) + '%';
+    p.style.top  = (em.top  + rnd(-6, 6)) + '%';
+
+    p.style.setProperty('--x1', x1 + 'px');
+    p.style.setProperty('--y1', y1 + 'px');
+    p.style.setProperty('--x2', x2 + 'px');
+    p.style.setProperty('--y2', y2 + 'px');
+    p.style.setProperty('--dur', dur.toFixed(2) + 's');
+    p.style.setProperty('--op', op.toFixed(2));
+    p.style.animationDelay = delay.toFixed(2) + 's';
+
+    layer.appendChild(p);
+  }
+
+  // Emit per counts
+  function emit(name, n){
+    const list = emitters.filter(e => e.name === name);
+    for(let i=0;i<n;i++){
+      const em = list[i % list.length];
+      spawnFrom(em);
+    }
+  }
+
+  emit('heroCore',  COUNTS.heroCore);
+  emit('heroX',     COUNTS.heroX);
+  emit('midSides',  COUNTS.midSides);
+  emit('footerFog', COUNTS.footerFog);
+
+  // MIST globale leggero (riempie senza “macchiare”)
+  for(let i=0;i<COUNTS.mist;i++){
+    const em = { left:rnd(10,90), top:rnd(18,92), dx:[-320,320], dy:[-220,420], dur:[12,22], size:['tiny','tiny',''], op:[0.18,0.32] };
+    spawnFrom(em);
+  }
+})();
