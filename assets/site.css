@@ -1033,3 +1033,301 @@ body::after{
   border-color: rgba(var(--accent-rgb), .34) !important;
   box-shadow: 0 18px 60px rgba(var(--accent-rgb), .18) !important;
 }
+/* =========================================================
+   CLICKoz PRO DESIGN PACK (Glow + Particles + Nav + GT Dark)
+   Incolla in fondo a /assets/site.css
+   ========================================================= */
+
+html, body{ overflow-x:hidden; }
+body{ position:relative; background: var(--bg) !important; }
+
+/* ---------------------------
+   NAV: sempre fissa (non sticky)
+---------------------------- */
+.nav{
+  position: fixed !important;
+  top: 0; left: 0; right: 0;
+  z-index: 9999 !important;
+}
+
+/* spazio sotto nav per non coprire hero */
+body{ padding-top: 74px; }
+@media (max-width: 520px){
+  body{ padding-top: 70px; }
+}
+
+/* ombra + linea accent sotto nav (pro) */
+.nav{
+  box-shadow: 0 14px 50px rgba(0,0,0,.55);
+}
+.nav::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-1px;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(var(--accent-rgb), .75),
+    transparent
+  );
+  opacity:.85;
+  pointer-events:none;
+}
+
+/* ---------------------------
+   NO CLIP: evita tagli glow in basso
+---------------------------- */
+.container, .grid, .small-grid, .widget-row, .widget,
+.hero, .section, footer, .footer, #tools{
+  overflow: visible !important;
+}
+.hero, .section{ isolation:isolate; }
+
+/* =========================================================
+   1) BACKGROUND GLOW CONTINUO (NO TAGLI)
+   - Top più forte
+   - Bottom più soft e più sfumato
+========================================================= */
+body::before{
+  content:"";
+  position: fixed;
+  inset: -70%;
+  pointer-events:none;
+  z-index: -3;
+
+  background:
+    /* HERO super spotlight (più forte) */
+    radial-gradient(1600px 900px at 50% -16%, rgba(var(--accent-rgb), .86), transparent 64%),
+    radial-gradient(1200px 720px at 50% 0%, rgba(var(--accent-rgb), .44), transparent 70%),
+
+    /* pareti laterali */
+    radial-gradient(1200px 900px at -12% 42%, rgba(var(--accent-rgb), .52), transparent 70%),
+    radial-gradient(1200px 900px at 112% 42%, rgba(var(--accent-rgb), .52), transparent 70%),
+
+    /* wash centrale (stabilizza scroll) */
+    radial-gradient(1600px 1300px at 50% 55%, rgba(var(--accent-rgb), .22), transparent 74%),
+
+    /* bottom: meno intenso ma molto più morbido */
+    radial-gradient(1600px 1000px at 50% 118%, rgba(var(--accent-rgb), .28), transparent 74%);
+
+  filter: blur(22px);
+  opacity: 1;
+}
+
+/* layer “energia” controllata (non crea bande) */
+body::after{
+  content:"";
+  position: fixed;
+  inset: -85%;
+  pointer-events:none;
+  z-index: -2;
+
+  background:
+    radial-gradient(980px 820px at 22% 22%, rgba(var(--accent-rgb), .26), transparent 70%),
+    radial-gradient(980px 820px at 78% 26%, rgba(var(--accent-rgb), .22), transparent 70%),
+    radial-gradient(1500px 1100px at 50% 78%, rgba(var(--accent-rgb), .14), transparent 76%);
+
+  filter: blur(30px);
+  opacity: .95;
+  transform: translate3d(0,0,0);
+  animation: clickozGlowFloatPro 8.5s ease-in-out infinite alternate;
+}
+
+@keyframes clickozGlowFloatPro{
+  0%   { transform: translate3d(-1.6%, -1.0%, 0) scale(1); }
+  100% { transform: translate3d( 1.6%,  1.2%, 0) scale(1.035); }
+}
+@media (prefers-reduced-motion: reduce){
+  body::after{ animation:none; }
+}
+
+/* =========================================================
+   2) EDGE LIGHTS per HERO/SECTION (zero “tagli”)
+========================================================= */
+.hero::before,
+.section::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-90px;
+  transform: translateX(-50%);
+  width: min(1500px, calc(100% + 340px));
+  height: calc(100% + 180px);
+  pointer-events:none;
+  z-index:-1;
+
+  background:
+    radial-gradient(1100px 460px at 50% -10%, rgba(var(--accent-rgb), .58), transparent 72%),
+    radial-gradient(900px 420px at 0% 55%, rgba(var(--accent-rgb), .34), transparent 76%),
+    radial-gradient(900px 420px at 100% 55%, rgba(var(--accent-rgb), .34), transparent 76%),
+    radial-gradient(1100px 600px at 50% 118%, rgba(var(--accent-rgb), .18), transparent 78%);
+
+  filter: blur(22px);
+  opacity: 1;
+}
+
+/* HERO ancora più “spinto” sopra */
+.hero::before{
+  background:
+    radial-gradient(1500px 560px at 50% -18%, rgba(var(--accent-rgb), .74), transparent 70%),
+    radial-gradient(980px 460px at 0% 56%, rgba(var(--accent-rgb), .36), transparent 76%),
+    radial-gradient(980px 460px at 100% 56%, rgba(var(--accent-rgb), .36), transparent 76%),
+    radial-gradient(1200px 720px at 50% 122%, rgba(var(--accent-rgb), .16), transparent 80%);
+}
+
+/* =========================================================
+   3) CARDS RENDER PRO (morbido, glow “sfumato”)
+   - più bello sui box
+   - meno luce “brutale” sotto
+========================================================= */
+.card, .small-card, .widget{
+  position: relative;
+  background: rgba(15,21,38,.80) !important;
+  border: 1px solid rgba(var(--accent-rgb), .28) !important;
+  box-shadow: 0 18px 60px rgba(0,0,0,.40) !important;
+}
+
+/* halo morbido attorno */
+.card::before, .small-card::before, .widget::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:-1;
+
+  background:
+    radial-gradient(520px 320px at 20% 12%, rgba(var(--accent-rgb), .34), transparent 72%),
+    radial-gradient(520px 320px at 80% 12%, rgba(var(--accent-rgb), .26), transparent 74%),
+    radial-gradient(720px 420px at 50% 115%, rgba(var(--accent-rgb), .18), transparent 76%),
+    linear-gradient(135deg,
+      rgba(var(--accent-rgb), .26),
+      rgba(255,255,255,.05),
+      rgba(var(--accent-rgb), .18)
+    );
+
+  filter: blur(20px);
+  opacity: .95;
+}
+
+/* hover: più presente ma non “sparato” */
+.card:hover, .small-card:hover, .widget:hover{
+  border-color: rgba(var(--accent-rgb), .78) !important;
+  background: rgba(17,26,48,.92) !important;
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .28) !important,
+    0 26px 90px rgba(0,0,0,.55) !important,
+    0 20px 70px rgba(var(--accent-rgb), .22) !important;
+}
+
+/* thumb più coerente */
+.thumb{
+  background: rgba(var(--accent-rgb), .10) !important;
+  border-color: rgba(var(--accent-rgb), .40) !important;
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .18) inset,
+    0 18px 50px rgba(var(--accent-rgb), .14) !important;
+}
+
+/* =========================================================
+   4) PARTICLES (leggere, accent-driven)
+   - container fisso dietro i contenuti
+========================================================= */
+#clickozParticles{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.p{
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), .85);
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), .55),
+    0 0 50px rgba(var(--accent-rgb), .18);
+  opacity: .65;
+  filter: blur(.2px);
+  transform: translate3d(-50%, -50%, 0);
+  animation: pFloat var(--dur) linear infinite;
+}
+
+/* variazioni */
+.p.s2{ width: 4px; height: 4px; opacity:.55; }
+.p.s3{ width: 3px; height: 3px; opacity:.45; }
+.p.s4{ width: 2px; height: 2px; opacity:.38; }
+
+@keyframes pFloat{
+  0%{
+    transform: translate3d(calc(-50% + var(--sx)), calc(-50% + var(--sy)), 0) scale(.9);
+    opacity: 0;
+  }
+  10%{ opacity: .65; }
+  100%{
+    transform: translate3d(calc(-50% + var(--sx2)), calc(-50% + var(--sy2)), 0) scale(1.15);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #clickozParticles{ display:none; }
+}
+
+/* =========================================================
+   5) GOOGLE TRANSLATE: più piccolo + dark
+========================================================= */
+#gtNavWrap{ display:none; align-items:center; }
+#gtNavWrap.show{ display:inline-flex; }
+
+/* wrapper più compatto */
+#google_translate_element{
+  display:inline-flex;
+  align-items:center;
+  padding: 0 !important;
+}
+
+/* la select del translate: più piccola e proporzionata */
+.goog-te-gadget select,
+.goog-te-combo{
+  height: 36px !important;
+  padding: 0 10px !important;
+  border-radius: 10px !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+
+  background: rgba(12,18,34,.92) !important;
+  color: rgba(255,255,255,.92) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+
+  outline: none !important;
+  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+  appearance: none;
+}
+
+/* hover/focus */
+.goog-te-gadget select:hover,
+.goog-te-combo:hover{
+  border-color: rgba(var(--accent-rgb), .40) !important;
+}
+.goog-te-gadget select:focus,
+.goog-te-combo:focus{
+  border-color: rgba(var(--accent-rgb), .60) !important;
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .16) !important;
+}
+
+/* tendina opzioni (quando il browser lo permette) */
+.goog-te-gadget select option,
+.goog-te-combo option{
+  background: #0c1222 !important;
+  color: rgba(255,255,255,.92) !important;
+}
+
+/* Hide Google banner (se appare) */
+.goog-te-banner-frame{ display:none !important; }
+body{ top:0 !important; }
