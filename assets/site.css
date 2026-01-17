@@ -1,9 +1,4 @@
-/* Clickoz base layout (mobile-first) */
-
-:root{
-  color-scheme: dark;
-}
-
+:root{ color-scheme: dark; }
 *{ box-sizing:border-box; }
 a{ color: inherit; }
 img{ max-width:100%; display:block; }
@@ -13,6 +8,7 @@ img{ max-width:100%; display:block; }
   margin: 0 auto;
 }
 
+/* NAV */
 .nav{
   position: sticky;
   top: 0;
@@ -21,13 +17,11 @@ img{ max-width:100%; display:block; }
   border-bottom: 1px solid rgba(255,255,255,.08);
   backdrop-filter: blur(10px);
 }
-
 .nav-inner{
   display:flex;
   align-items:center;
   padding: 14px 0;
 }
-
 .logo{
   display:flex;
   align-items:center;
@@ -36,7 +30,6 @@ img{ max-width:100%; display:block; }
   font-weight: 900;
   letter-spacing: -0.02em;
 }
-
 .logo-badge{
   width: 34px;
   height: 34px;
@@ -47,7 +40,6 @@ img{ max-width:100%; display:block; }
   background: rgba(255,255,255,.06);
   border: 1px solid rgba(255,255,255,.10);
 }
-
 .nav-links{
   display:flex;
   align-items:center;
@@ -57,7 +49,6 @@ img{ max-width:100%; display:block; }
   font-size: 14px;
   color: rgba(255,255,255,.78);
 }
-
 .nav-links a{
   text-decoration:none;
   padding: 8px 10px;
@@ -67,14 +58,10 @@ img{ max-width:100%; display:block; }
   background: rgba(255,255,255,.06);
   color: rgba(255,255,255,.92);
 }
-
 .spacer{ flex: 1; }
 
 /* hero */
-.hero{
-  padding: 34px 0 10px;
-}
-
+.hero{ padding: 34px 0 10px; }
 .badge{
   display:inline-flex;
   gap:8px;
@@ -87,7 +74,6 @@ img{ max-width:100%; display:block; }
   font-size: 13px;
   font-weight: 700;
 }
-
 .row{
   display:flex;
   align-items:center;
@@ -116,21 +102,15 @@ img{ max-width:100%; display:block; }
   background: rgba(255,255,255,.07);
   border-color: rgba(255,255,255,.18);
 }
-
 .btn.primary{
   background: var(--accent);
   border-color: rgba(255,255,255,.12);
   box-shadow: 0 10px 22px rgba(var(--accent-rgb), .16);
 }
-.btn.primary:hover{
-  filter: brightness(1.04);
-}
+.btn.primary:hover{ filter: brightness(1.04); }
 
 /* sections */
-.section{
-  padding: 28px 0;
-}
-
+.section{ padding: 28px 0; }
 .small-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -138,21 +118,14 @@ img{ max-width:100%; display:block; }
   margin-top: 14px;
 }
 @media (max-width: 980px){
-  .small-grid{
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+  .small-grid{ grid-template-columns: 1fr; gap: 12px; }
 }
-
 .small-card{
   padding: 16px;
   border-radius: var(--radius);
   text-decoration:none;
 }
-.small-card h3{
-  margin: 0 0 8px;
-  font-size: 16px;
-}
+.small-card h3{ margin: 0 0 8px; font-size: 16px; }
 .small-card p{
   margin: 0;
   font-size: 14.5px;
@@ -184,19 +157,14 @@ img{ max-width:100%; display:block; }
   margin-top: 14px;
 }
 @media (max-width: 980px){
-  .grid{
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+  .grid{ grid-template-columns: 1fr; gap: 12px; }
 }
-
 .card{
   padding: 16px;
   border-radius: var(--radius);
   text-decoration:none;
   min-height: 190px;
 }
-
 .thumb{
   width: 46px;
   height: 46px;
@@ -208,13 +176,11 @@ img{ max-width:100%; display:block; }
   border: 1px solid rgba(255,255,255,.10);
   font-size: 20px;
 }
-
 .card h3{
   margin: 12px 0 8px;
   font-size: 16px;
   letter-spacing: -0.01em;
 }
-
 .card p{
   margin: 0;
   font-size: 14.5px;
@@ -229,7 +195,6 @@ img{ max-width:100%; display:block; }
   border-top: 1px solid rgba(255,255,255,.08);
   background: rgba(255,255,255,.01);
 }
-
 .footer-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -238,30 +203,21 @@ img{ max-width:100%; display:block; }
 @media (max-width: 980px){
   .footer-grid{ grid-template-columns: 1fr; }
 }
-
 .footer h4{
   margin: 0 0 10px;
   font-size: 14px;
   color: rgba(255,255,255,.80);
 }
-
 .footer-links{
   display:flex;
   flex-direction:column;
   gap: 8px;
 }
-
 .footer a{
   text-decoration:none;
   color: rgba(255,255,255,.70);
   font-weight: 650;
   font-size: 14px;
 }
-.footer a:hover{
-  color: rgba(255,255,255,.92);
-}
-
-.sep{
-  border: none;
-  border-top: 1px solid rgba(255,255,255,.08);
-}
+.footer a:hover{ color: rgba(255,255,255,.92); }
+.sep{ border: none; border-top: 1px solid rgba(255,255,255,.08); }
