@@ -2122,3 +2122,144 @@ body::after{
 @media (prefers-reduced-motion: reduce){
   #clickozParticles{ display:none; }
 }
+/* =========================================================
+   CLICKoz PRO PACK CLEAN (ONE ONLY)
+   - Soft nebula bg (no bands)
+   - Grain (anti banding)
+   - Particles (idle + burst)
+========================================================= */
+
+html, body { overflow-x: hidden; }
+body{
+  position: relative;
+  background: #0b0f19; /* base */
+}
+
+/* ---------- Background nebula (ONLY ONCE) ---------- */
+body::before{
+  content:"";
+  position: fixed;
+  inset: -60%;
+  pointer-events: none;
+  z-index: -4;
+  background:
+    radial-gradient(1500px 900px at 50% -12%, rgba(var(--accent-rgb), .42), transparent 66%),
+    radial-gradient(1100px 900px at -10% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
+    radial-gradient(1100px 900px at 110% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
+    radial-gradient(1700px 1200px at 50% 62%, rgba(var(--accent-rgb), .10), transparent 84%),
+    radial-gradient(1700px 900px at 50% 118%, rgba(var(--accent-rgb), .08), transparent 90%);
+  filter: blur(62px);
+  opacity: .95;
+}
+
+body::after{
+  content:"";
+  position: fixed;
+  inset: -35%;
+  pointer-events: none;
+  z-index: -3;
+  background:
+    radial-gradient(1200px 900px at 18% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
+    radial-gradient(1200px 900px at 82% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
+    radial-gradient(1700px 1200px at 50% 72%, rgba(var(--accent-rgb), .06), transparent 86%);
+  filter: blur(84px);
+  opacity: .80;
+}
+
+/* ---------- Grain (anti banding) ---------- */
+.__grain{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  opacity: .10;
+  mix-blend-mode: overlay;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.05) 0px,
+      rgba(255,255,255,.05) 1px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0) 4px
+    );
+  filter: blur(.25px);
+}
+
+/* ---------- Particles layer (ONLY ONCE) ---------- */
+#clickozParticles{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1; /* sopra bg/grain, sotto contenuti */
+  overflow: hidden;
+}
+
+/* idle particles */
+.pidle{
+  position:absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), .90);
+  box-shadow:
+    0 0 14px rgba(var(--accent-rgb), .40),
+    0 0 44px rgba(var(--accent-rgb), .14);
+  opacity: .16;
+  animation: idleDrift var(--idur) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@keyframes idleDrift{
+  0%   { transform: translate3d(0,0,0); opacity: .10; }
+  50%  { transform: translate3d(var(--ix), var(--iy), 0); opacity: .20; }
+  100% { transform: translate3d(0,0,0); opacity: .10; }
+}
+
+/* burst particles (2s) */
+.pburst{
+  position:absolute;
+  left: var(--sx);
+  top:  var(--sy);
+  width: var(--sz);
+  height: var(--sz);
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), .96);
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), .55),
+    0 0 70px rgba(var(--accent-rgb), .18);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.65);
+  animation: burstFly var(--dur) cubic-bezier(.12,.9,.18,1) forwards;
+  animation-delay: var(--delay);
+  will-change: transform, opacity;
+}
+@keyframes burstFly{
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.55); }
+  10%  { opacity: var(--op); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.12); }
+}
+
+/* ---------- Cards glow (light + clean) ---------- */
+.card, .small-card{
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(15,21,38,.58);
+  box-shadow: 0 16px 50px rgba(0,0,0,.28);
+  position: relative;
+}
+.card:hover, .small-card:hover{
+  border-color: rgba(var(--accent-rgb), .55);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .18),
+    0 22px 70px rgba(0,0,0,.42),
+    0 18px 44px rgba(var(--accent-rgb), .12);
+}
+
+/* ---------- Footer: less space + black ---------- */
+.footer{
+  margin-top: 0;
+  background: rgba(0,0,0,.18);
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce){
+  #clickozParticles, .__grain{ display:none; }
+}
