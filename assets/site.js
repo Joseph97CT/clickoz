@@ -511,3 +511,60 @@
   // document.querySelector('.logo')?.addEventListener('click', ()=>location.reload());
 
 })();
+(function(){
+  // grain layer
+  if(!document.querySelector('.__grain')){
+    const g = document.createElement('div');
+    g.className = '__grain';
+    document.body.appendChild(g);
+  }
+
+  function burst(){
+    let layer = document.getElementById('clickozParticles');
+    if(!layer){
+      layer = document.createElement('div');
+      layer.id = 'clickozParticles';
+      document.body.appendChild(layer);
+    }
+    layer.innerHTML = '';
+
+    const isMobile = matchMedia('(max-width: 720px)').matches;
+    const rnd = (a,b)=>Math.random()*(b-a)+a;
+
+    const ORIGIN_X = 50;  // %
+    const ORIGIN_Y = 22;  // %
+    const COUNT = isMobile ? 120 : 260;
+    const MAX_DELAY = 0.55;
+
+    for(let i=0;i<COUNT;i++){
+      const p = document.createElement('span');
+      p.className = 'pburst';
+
+      const side = Math.random() < 0.5 ? -1 : 1;
+      const dx = side * rnd(320, 1100);
+      const dy = rnd(-120, 780);
+
+      const sz = (Math.random() < 0.18) ? rnd(5,7) : rnd(2,4);
+      const op = (sz > 5) ? rnd(0.22, 0.36) : rnd(0.18, 0.30);
+      const delay = rnd(0, MAX_DELAY);
+      const dur = rnd(1.05, 1.65);
+
+      p.style.setProperty('--sx', ORIGIN_X + '%');
+      p.style.setProperty('--sy', ORIGIN_Y + '%');
+      p.style.setProperty('--dx', dx.toFixed(0) + 'px');
+      p.style.setProperty('--dy', dy.toFixed(0) + 'px');
+      p.style.setProperty('--sz', sz.toFixed(1) + 'px');
+      p.style.setProperty('--op', op.toFixed(2));
+      p.style.setProperty('--delay', delay.toFixed(2) + 's');
+      p.style.setProperty('--dur', dur.toFixed(2) + 's');
+
+      layer.appendChild(p);
+    }
+  }
+
+  // burst al load
+  addEventListener('load', burst);
+
+  // burst quando cambi accent (così lo vedi subito)
+  document.getElementById('colorMenu')?.addEventListener('click', ()=> setTimeout(burst, 50));
+})();
