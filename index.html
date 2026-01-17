@@ -940,9 +940,9 @@
     const colorDot = document.getElementById('colorDot');
 
     function setAccent(a1, a2){
-      document.documentElement.style.setProperty('--accent', a1);
-      document.documentElement.style.setProperty('--accent2', a2);
-      document.documentElement.style.setProperty('--accent-rgb', hexToRgbTriplet(a1));
+  document.documentElement.style.setProperty('--accent', a1);
+  document.documentElement.style.setProperty('--accent2', a1); // <-- sempre uguale
+  document.documentElement.style.setProperty('--accent-rgb', hexToRgbTriplet(a1));
       colorDot.style.background = a1;
       localStorage.setItem('clickoz_accent', JSON.stringify({a1, a2}));
     }
@@ -1134,4 +1134,5 @@
   <script src="/assets/site.js" defer></script>
 </body>
 </html>
+
 
