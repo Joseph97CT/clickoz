@@ -576,3 +576,77 @@
     document.body.appendChild(d);
   }
 })();
+(function(){
+  let layer = document.getElementById('clickozParticles');
+  if(!layer){
+    layer = document.createElement('div');
+    layer.id = 'clickozParticles';
+    document.body.appendChild(layer);
+  }
+
+  const rnd = (a,b)=>Math.random()*(b-a)+a;
+  const isMobile = matchMedia('(max-width: 720px)').matches;
+
+  // ORIGINE BURST (hero)
+  const ORIGIN_X = 50; // %
+  const ORIGIN_Y = 22; // %
+
+  function makeBurst(){
+    // rimuovo solo i burst vecchi, non gli idle
+    layer.querySelectorAll('.pburst').forEach(n => n.remove());
+
+    const COUNT = isMobile ? 120 : 260;
+    const MAX_DELAY = 0.55;
+
+    for(let i=0;i<COUNT;i++){
+      const p = document.createElement('span');
+      p.className = 'pburst';
+
+      const side = Math.random() < 0.5 ? -1 : 1;
+      const dx = side * rnd(320, 1100);
+      const dy = rnd(-120, 780);
+
+      const sz = (Math.random() < 0.18) ? rnd(5,7) : rnd(2,4);
+      const op = (sz > 5) ? rnd(0.22, 0.36) : rnd(0.18, 0.30);
+      const delay = rnd(0, MAX_DELAY);
+      const dur = rnd(1.05, 1.65);
+
+      p.style.setProperty('--sx', ORIGIN_X + '%');
+      p.style.setProperty('--sy', ORIGIN_Y + '%');
+      p.style.setProperty('--dx', dx.toFixed(0) + 'px');
+      p.style.setProperty('--dy', dy.toFixed(0) + 'px');
+      p.style.setProperty('--sz', sz.toFixed(1) + 'px');
+      p.style.setProperty('--op', op.toFixed(2));
+      p.style.setProperty('--delay', delay.toFixed(2) + 's');
+      p.style.setProperty('--dur', dur.toFixed(2) + 's');
+
+      layer.appendChild(p);
+    }
+  }
+
+  function makeIdle(){
+    // crea idle una volta sola
+    if(layer.querySelector('.pidle')) return;
+
+    const IDLE = isMobile ? 70 : 160;
+    for(let i=0;i<IDLE;i++){
+      const d = document.createElement('span');
+      d.className = 'pidle';
+      d.style.left = rnd(4, 96) + '%';
+      d.style.top  = rnd(6, 94) + '%';
+      d.style.setProperty('--ix', rnd(-220, 220).toFixed(0) + 'px');
+      d.style.setProperty('--iy', rnd(-180, 260).toFixed(0) + 'px');
+      d.style.setProperty('--idur', rnd(10, 24).toFixed(2) + 's');
+      layer.appendChild(d);
+    }
+  }
+
+  // init
+  addEventListener('load', ()=>{
+    makeIdle();   // sempre
+    makeBurst();  // esplosione in hero
+  });
+
+  // rifai burst quando cambi accent (così “wow”)
+  document.getElementById('colorMenu')?.addEventListener('click', ()=> setTimeout(makeBurst, 60));
+})();
