@@ -1643,3 +1643,64 @@ body::after{
   background: #0b0f19 !important;
   color: rgba(255,255,255,.92) !important;
 }
+/* =========================
+   FIX SFUMATURE + NO BANDING
+   Incolla in fondo a site.css
+========================= */
+
+/* Background più uniforme (niente bande) */
+body::before{
+  /* sostituisce i gradient “duri” con uno più morbido */
+  background:
+    radial-gradient(1800px 1100px at 50% -18%, rgba(var(--accent-rgb), .72), transparent 64%),
+    radial-gradient(1400px 980px  at -12% 45%, rgba(var(--accent-rgb), .30), transparent 76%),
+    radial-gradient(1400px 980px  at 112% 45%, rgba(var(--accent-rgb), .30), transparent 76%),
+    radial-gradient(2000px 1400px at 50% 55%, rgba(var(--accent-rgb), .14), transparent 82%),
+    radial-gradient(2000px 1300px at 50% 118%, rgba(var(--accent-rgb), .18), transparent 86%) !important;
+  filter: blur(38px) !important;
+}
+
+/* Fog continuo: elimina lo stacco “a metà” */
+body::after{
+  background:
+    radial-gradient(1400px 1100px at 50% 40%, rgba(var(--accent-rgb), .10), transparent 82%),
+    radial-gradient(1100px 900px at 18% 28%, rgba(var(--accent-rgb), .12), transparent 80%),
+    radial-gradient(1100px 900px at 82% 28%, rgba(var(--accent-rgb), .10), transparent 82%),
+    radial-gradient(1600px 1200px at 50% 78%, rgba(var(--accent-rgb), .08), transparent 86%) !important;
+  filter: blur(52px) !important;
+  opacity: .98 !important;
+}
+
+/* Dithering / grain (anti “si vede male”) */
+body{
+  background-image:
+    radial-gradient(1200px 700px at 50% 0%, rgba(var(--accent-rgb), .06), transparent 70%),
+    radial-gradient(1200px 900px at 50% 100%, rgba(var(--accent-rgb), .04), transparent 76%);
+  background-color: var(--bg) !important;
+}
+body::selection{ background: rgba(var(--accent-rgb), .35); }
+
+/* layer grain sopra lo sfondo (non sopra i contenuti) */
+body{
+  isolation: isolate;
+}
+body .__grain{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .10;
+  mix-blend-mode: overlay;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.05) 0px,
+      rgba(255,255,255,.05) 1px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0) 4px
+    );
+  filter: blur(.25px);
+}
+@media (prefers-reduced-motion: reduce){
+  body .__grain{ display:none; }
+}
