@@ -689,3 +689,218 @@ body::after{
     0 10px 22px rgba(var(--accent-rgb), .18),
     0 0 0 1px rgba(var(--accent-rgb), .18) inset;
 }
+/* =========================================================
+   CLICKoz: NEON GLOW v2 (STRONG + FULL ACCENT ONLY)
+   Incolla in fondo a site.css
+   ========================================================= */
+
+html, body{ overflow-x:hidden; }
+body{ position:relative; }
+
+/* --- 0) assicurati che l'accent sia ovunque (no colori fissi) --- */
+:root{
+  /* se hai qualche gradient in giro, questo aiuta */
+  --accent-soft: rgba(var(--accent-rgb), .16);
+  --accent-med:  rgba(var(--accent-rgb), .28);
+  --accent-strong: rgba(var(--accent-rgb), .42);
+}
+
+/* =========================================================
+   1) BACKGROUND GLOBALE: glow forte e continuo (TOP + SIDES + BOTTOM)
+   - niente tagli: inset molto grande
+   - glow anche in basso (prima era troppo debole)
+   ========================================================= */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-45%;
+  pointer-events:none;
+  z-index:-3;
+
+  background:
+    /* HERO spotlight */
+    radial-gradient(1200px 700px at 50% -8%, rgba(var(--accent-rgb), .55), transparent 62%),
+
+    /* left/right walls */
+    radial-gradient(900px 520px at -8% 38%, rgba(var(--accent-rgb), .38), transparent 68%),
+    radial-gradient(900px 520px at 108% 38%, rgba(var(--accent-rgb), .38), transparent 68%),
+
+    /* mid wash (evita “stacco” scroll) */
+    radial-gradient(1200px 900px at 50% 45%, rgba(var(--accent-rgb), .22), transparent 70%),
+
+    /* bottom glow (molto più forte) */
+    radial-gradient(1100px 720px at 50% 112%, rgba(var(--accent-rgb), .42), transparent 64%);
+
+  filter: blur(10px);
+  opacity: 1;
+}
+
+/* layer extra per “energia” e continuità (più forte di prima) */
+body::after{
+  content:"";
+  position:fixed;
+  inset:-55%;
+  pointer-events:none;
+  z-index:-2;
+
+  background:
+    radial-gradient(900px 700px at 20% 18%, rgba(var(--accent-rgb), .30), transparent 66%),
+    radial-gradient(900px 700px at 80% 22%, rgba(var(--accent-rgb), .24), transparent 66%),
+    radial-gradient(1200px 900px at 50% 70%, rgba(var(--accent-rgb), .18), transparent 70%);
+
+  filter: blur(22px);
+  opacity: .85;
+  transform: translate3d(0,0,0);
+  animation: clickozNeonFloat 8s ease-in-out infinite alternate;
+}
+
+@keyframes clickozNeonFloat{
+  0%   { transform: translate3d(-1.6%, -0.8%, 0) scale(1); }
+  100% { transform: translate3d( 1.6%,  1.1%, 0) scale(1.03); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body::after{ animation:none; }
+}
+
+/* =========================================================
+   2) HERO + SECTION EDGE LIGHTS: più grandi e non “tagliate”
+   - glow esterno + "rim" superiore
+   ========================================================= */
+.hero, .section{ position:relative; isolation:isolate; }
+
+/* glow enorme attorno ai blocchi, segue l'accent */
+.hero::before,
+.section::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-70px;
+  transform:translateX(-50%);
+  width:min(1400px, calc(100% + 280px));
+  height:calc(100% + 140px);
+  pointer-events:none;
+  z-index:-1;
+
+  background:
+    radial-gradient(900px 380px at 50% -6%, rgba(var(--accent-rgb), .44), transparent 70%),
+    radial-gradient(760px 340px at 0% 55%, rgba(var(--accent-rgb), .30), transparent 74%),
+    radial-gradient(760px 340px at 100% 55%, rgba(var(--accent-rgb), .30), transparent 74%),
+    radial-gradient(900px 520px at 50% 110%, rgba(var(--accent-rgb), .18), transparent 70%);
+
+  filter: blur(18px);
+  opacity: 1;
+}
+
+/* hero più “spinto” (spotlight) */
+.hero::before{
+  background:
+    radial-gradient(1200px 520px at 50% -12%, rgba(var(--accent-rgb), .62), transparent 66%),
+    radial-gradient(820px 360px at 0% 54%, rgba(var(--accent-rgb), .34), transparent 74%),
+    radial-gradient(820px 360px at 100% 54%, rgba(var(--accent-rgb), .34), transparent 74%),
+    radial-gradient(1100px 620px at 50% 120%, rgba(var(--accent-rgb), .24), transparent 70%);
+}
+
+/* =========================================================
+   3) CARDS: glow sempre presente + hover “neon” forte
+   - IMPORTANT: nel tuo HTML ci sono !important.
+     Qui usiamo !important per batterli.
+   ========================================================= */
+.card, .small-card{
+  position:relative;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  background: rgba(15,21,38,.72) !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,.28) !important;
+}
+
+/* glow continuo sui bordi (non tagliato) */
+.card::after,
+.small-card::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:-1;
+
+  background:
+    radial-gradient(420px 240px at 20% 15%, rgba(var(--accent-rgb), .42), transparent 70%),
+    radial-gradient(420px 240px at 80% 15%, rgba(var(--accent-rgb), .30), transparent 72%),
+    linear-gradient(135deg,
+      rgba(var(--accent-rgb), .32),
+      rgba(255,255,255,.06),
+      rgba(var(--accent-rgb), .22)
+    );
+
+  filter: blur(14px);
+  opacity: .70;
+}
+
+/* hover: più glow + più contrasto */
+.card:hover,
+.small-card:hover{
+  background: rgba(17,26,48,.86) !important;
+  border-color: rgba(var(--accent-rgb), .85) !important;
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .35) !important,
+    0 22px 60px rgba(0,0,0,.48) !important,
+    0 18px 40px rgba(var(--accent-rgb), .22) !important;
+}
+
+/* =========================================================
+   4) THUMB / BADGE / CTA: tutto del colore selezionato
+   ========================================================= */
+
+/* icone più “vive” */
+.thumb{
+  border-color: rgba(var(--accent-rgb), .35) !important;
+  background: rgba(var(--accent-rgb), .10) !important;
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .18) inset,
+    0 18px 40px rgba(var(--accent-rgb), .16) !important;
+}
+
+/* badge in hero con glow accent */
+.badge{
+  border-color: rgba(var(--accent-rgb), .28) !important;
+  background: rgba(var(--accent-rgb), .10) !important;
+  box-shadow: 0 14px 36px rgba(var(--accent-rgb), .14);
+}
+
+/* bottoni primary: più neon e coerenti */
+.btn.primary{
+  background: rgb(var(--accent-rgb)) !important;
+  box-shadow:
+    0 18px 44px rgba(var(--accent-rgb), .30) !important,
+    0 0 0 1px rgba(var(--accent-rgb), .22) inset !important;
+}
+.btn.primary:hover{
+  filter: brightness(1.06) !important;
+}
+
+/* links hover leggermente accent */
+.nav-links a:hover{
+  background: rgba(var(--accent-rgb), .12) !important;
+  border: 1px solid rgba(var(--accent-rgb), .28);
+}
+
+/* =========================================================
+   5) EXTRA: “Glow line” sotto la NAV (accent)
+   ========================================================= */
+.nav{
+  box-shadow: 0 12px 30px rgba(0,0,0,.28);
+}
+.nav::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-1px;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(var(--accent-rgb), .75),
+    transparent
+  );
+  filter: blur(.2px);
+  opacity: .85;
+  pointer-events:none;
+}
