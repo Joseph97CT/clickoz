@@ -457,3 +457,35 @@
     document.documentElement.classList.add("is-mobile");
   }
 })();
+// ===== Scroll-safe particles: pause while scrolling (mobile fix) =====
+(function () {
+  let t = null;
+  const isSmall = window.matchMedia("(max-width: 720px)").matches;
+
+  // Se vuoi, applica SOLO su mobile:
+  if (!isSmall) return;
+
+  const p = document.getElementById("clickozParticles");
+  const g = document.querySelector(".__grain");
+
+  // Se non esistono, esci
+  if (!p && !g) return;
+
+  // Se il tuo sistema particles ha un loop con requestAnimationFrame,
+  // ti conviene esporre window.pauseParticles / window.resumeParticles.
+  // Intanto, questa soluzione “safe” fa già tantissimo:
+  const onScroll = () => {
+    document.body.classList.add("is-scrolling");
+
+    // Se hai funzioni dedicate, chiamale:
+    if (typeof window.pauseParticles === "function") window.pauseParticles();
+
+    clearTimeout(t);
+    t = setTimeout(() => {
+      document.body.classList.remove("is-scrolling");
+      if (typeof window.resumeParticles === "function") window.resumeParticles();
+    }, 180);
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+})();
