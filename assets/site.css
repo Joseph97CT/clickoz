@@ -929,4 +929,82 @@ body.bigtext{ font-size: 20px; } /* se il tuo base era 16px -> +4 */
 .is-mobile .footer{
   backdrop-filter: none !important;
 }
+/* ===== Mega Box Wrapper (stabilizza mobile) ===== */
+.page-wrap{
+  width: min(1120px, calc(100% - 32px));
+  margin: 18px auto 24px;
+}
+
+.page-box{
+  background: rgba(0,0,0,.38);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 22px;
+  padding: 18px 14px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 45px rgba(0,0,0,.45);
+  overflow: hidden;               /* IMPORTANT: evita sfasamenti con layer/blur */
+  position: relative;
+  z-index: 1;
+}
+
+/* dentro il mega box: container non deve “stringere” troppo */
+.page-box .container{
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* separazioni più pulite dentro box */
+.page-box .section{
+  padding-top: 26px;
+}
+
+/* Footer: dentro il mega box diventa trasparente per non “doppiare” */
+.page-box .footer{
+  background: transparent !important;
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: none !important;
+  margin-top: 22px;
+}
+
+/* ===== Fix mobile: niente stacchi/overflow strani ===== */
+@media (max-width: 720px){
+  .page-wrap{
+    width: calc(100% - 20px);
+    margin: 12px auto 18px;
+  }
+  .page-box{
+    border-radius: 18px;
+    padding: 14px 10px;
+    backdrop-filter: none;        /* blur su mobile spesso “rompe” */
+  }
+
+  /* evita che grid/cards sforino */
+  .grid, .small-grid, .rec-grid{
+    grid-template-columns: 1fr !important;
+  }
+
+  /* riduci un filo padding hero per non “saltare” */
+  .hero{ padding-top: 18px; }
+}
+
+/* ===== important: impedisce overflow orizzontale globale ===== */
+html, body{
+  overflow-x: hidden;
+}
+#clickozParticles{
+  position: fixed;
+  inset: 0;
+  z-index: 0;               /* dietro */
+  pointer-events: none;
+}
+
+.__grain{
+  position: fixed;
+  inset: 0;
+  z-index: 0;               /* dietro */
+  pointer-events: none;
+}
+
+.nav{ z-index: 50; }        /* nav sempre sopra */
+.page-box{ z-index: 1; }    /* contenuto sopra particles */
 
