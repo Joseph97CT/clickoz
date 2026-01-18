@@ -893,4 +893,40 @@ body.bigtext{ font-size: 20px; } /* se il tuo base era 16px -> +4 */
 /* Bottoni leggermente più grandi */
 .btn{ font-size: 16px; }
 .btn.primary{ font-weight: 800; }
+/* ===== Footer: più scuro, stessa vibe dei box ===== */
+.footer{
+  background: rgba(0,0,0,.38);              /* come hero-box */
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+}
+
+/* Se hai una fascia interna del footer (es. .footer-grid) la rendiamo coerente */
+.footer .footer-grid{
+  background: transparent;
+}
+
+/* Rende separatore più soft sul fondo */
+.footer .sep{
+  border-color: rgba(255,255,255,.08);
+}
+
+/* ===== Logo: +6px (rispetto al tuo attuale 42) ===== */
+.logo-badge{
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.logo-mark{
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/* opzionale: un filo più grande il testo logo */
+.logo-text{ font-size: 20px; }
+/* Mobile perf: meno blur = caricamento più fluido */
+.is-mobile .nav,
+.is-mobile .hero-box,
+.is-mobile .footer{
+  backdrop-filter: none !important;
+}
 
