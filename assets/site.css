@@ -1095,4 +1095,37 @@ html, body { overflow-x: hidden; }
 
 /* mentre scrolli: spegni FX per evitare glitch */
 body.is-scrolling #fxCanvas{ opacity: 0; }
+/* ===== RESET: elimina spazio sopra nav ===== */
+html, body{
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+}
+
+/* Se il canvas non è fixed, crea il “vuoto” (altezza default).
+   Queste regole lo forzano fuori dal layout. */
+#fxCanvas{
+  display: block;
+  position: fixed !important;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Grain fuori dal layout */
+.__grain{
+  display: block;
+  position: fixed !important;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* nav sopra a tutto */
+.nav{
+  margin-top: 0 !important;
+  z-index: 50;
+}
 
