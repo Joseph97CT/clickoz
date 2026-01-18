@@ -403,3 +403,57 @@
   }
 
 })();
+// ===== Performance guard (mobile safe) =====
+(function () {
+  const isSmall = window.matchMedia("(max-width: 720px)").matches;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // info rete (se disponibile)
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const saveData = !!(conn && conn.saveData);
+  const slowNet = !!(conn && (conn.effectiveType === "2g" || conn.effectiveType === "slow-2g"));
+
+  // info device (se disponibile)
+  const lowMem = (navigator.deviceMemory && navigator.deviceMemory <= 4);
+  const lowCpu = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+
+  // decide se attivare particelle
+  const enableParticles = !reduceMotion && !saveData && !slowNet && !(isSmall && (lowMem || lowCpu));
+
+  // helper: run when idle
+  const runIdle = (fn) => {
+    if ("requestIdleCallback" in window) requestIdleCallback(fn, { timeout: 1200 });
+    else setTimeout(fn, 250);
+  };
+
+  // Se hai già una initParticles nel tuo file, puoi farla dipendere da enableParticles.
+  // Qui implemento una fallback "safe": se non vuoi cambiare nulla, basta che la tua init
+  // venga chiamata SOLO qui sotto.
+
+  runIdle(() => {
+    if (!enableParticles) {
+      // nascondi layer particelle per risparmiare
+      const el = document.getElementById("clickozParticles");
+      if (el) el.style.display = "none";
+      return;
+    }
+
+    // Se nel tuo sito.js esiste già una funzione initParticles(), chiamala:
+    if (typeof window.initParticles === "function") {
+      // passa un profilo "light" su mobile
+      window.initParticles({
+        density: isSmall ? 0.55 : 1.0,
+        max: isSmall ? 28 : 60,
+        fps: isSmall ? 35 : 60
+      });
+      return;
+    }
+
+    // Altrimenti: non facciamo nulla (evita crash)
+  });
+
+  // Riduci blur su mobile (optional, ma aiuta tanto)
+  if (isSmall) {
+    document.documentElement.classList.add("is-mobile");
+  }
+})();
