@@ -489,3 +489,120 @@
 
   window.addEventListener("scroll", onScroll, { passive: true });
 })();
+// ===== Canvas FX (mobile-safe) =====
+(function(){
+  const canvas = document.getElementById("fxCanvas");
+  if(!canvas) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isMobile = window.matchMedia("(max-width: 820px)").matches;
+
+  // Se vuoi zero rischi: disattiva su mobile
+  // (metti true se vuoi tenerle leggere su mobile)
+  const ENABLE_ON_MOBILE = false;
+
+  if(reduceMotion) { canvas.style.display="none"; return; }
+  if(isMobile && !ENABLE_ON_MOBILE) { canvas.style.display="none"; return; }
+
+  const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
+  if(!ctx){ canvas.style.display="none"; return; }
+
+  let w=0, h=0, dpr=1;
+  function resize(){
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    w = Math.floor(window.innerWidth);
+    h = Math.floor(window.innerHeight);
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize();
+  window.addEventListener("resize", () => {
+    clearTimeout(resize._t);
+    resize._t = setTimeout(resize, 120);
+  }, { passive:true });
+
+  // Particles (pochi, leggeri)
+  const N = isMobile ? 18 : 42;
+  const P = [];
+  const rand = (a,b)=>a+Math.random()*(b-a);
+
+  // prendi colore accent da CSS var
+  function getAccent(){
+    const s = getComputedStyle(document.documentElement);
+    return (s.getPropertyValue("--accent") || "#6366f1").trim();
+  }
+
+  function seed(){
+    P.length = 0;
+    for(let i=0;i<N;i++){
+      P.push({
+        x: w*0.5,
+        y: h*0.26,
+        vx: rand(-1.8,1.8),
+        vy: rand(-2.4,2.2),
+        r: rand(1.2,2.8),
+        a: rand(0.35,0.85)
+      });
+    }
+  }
+  seed();
+
+  let running = true;
+  document.addEventListener("visibilitychange", () => {
+    running = !document.hidden;
+  });
+
+  // pausa durante scroll (fix glitch)
+  let scrollT = null;
+  window.addEventListener("scroll", () => {
+    document.body.classList.add("is-scrolling");
+    running = false;
+    clearTimeout(scrollT);
+    scrollT = setTimeout(() => {
+      document.body.classList.remove("is-scrolling");
+      running = true;
+    }, 180);
+  }, { passive:true });
+
+  let last = performance.now();
+  function frame(now){
+    requestAnimationFrame(frame);
+    if(!running) return;
+
+    const dt = Math.min(0.033, (now-last)/1000);
+    last = now;
+
+    ctx.clearRect(0,0,w,h);
+
+    const accent = getAccent();
+    ctx.fillStyle = accent;
+
+    // disegna particelle
+    for(const p of P){
+      p.x += p.vx * (dt*60);
+      p.y += p.vy * (dt*60);
+
+      // drift + friction
+      p.vx *= 0.995;
+      p.vy *= 0.995;
+
+      // wrap soft
+      if(p.x < -20) p.x = w+20;
+      if(p.x > w+20) p.x = -20;
+      if(p.y < -20) p.y = h+20;
+      if(p.y > h+20) p.y = -20;
+
+      ctx.globalAlpha = p.a;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  requestAnimationFrame(frame);
+
+  // reseed quando cambi accent (se il tuo code setta --accent, non serve altro)
+})();
