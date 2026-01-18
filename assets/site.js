@@ -395,6 +395,9 @@
     buildIdleParticles();
     burstParticles();
   }
+if (!CLICK0Z_MOBILE_SAFE) {
+  // initParticles() / canvas loop / ecc
+}
 
   if (document.readyState === "loading"){
     document.addEventListener("DOMContentLoaded", initFX, { once:true });
@@ -606,3 +609,18 @@
 
   // reseed quando cambi accent (se il tuo code setta --accent, non serve altro)
 })();
+// ===== Mobile safe mode: disable heavy FX =====
+const CLICK0Z_MOBILE_SAFE =
+  window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
+if (CLICK0Z_MOBILE_SAFE) {
+  // Se avevi già elementi fx, li rimuovo
+  const fx1 = document.getElementById("clickozParticles");
+  if (fx1) fx1.remove();
+
+  const fx2 = document.getElementById("fxCanvas");
+  if (fx2) fx2.remove();
+
+  const g = document.querySelector(".__grain");
+  if (g) g.remove();
+}
