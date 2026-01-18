@@ -748,3 +748,101 @@ input.search:focus{
 }
 .goog-te-banner-frame{ display:none !important; }
 body{ top:0 !important; }
+/* =========================================================
+   PATCH v1 — Stronger glow + stronger particles
+   (incolla in fondo a site.css)
+========================================================= */
+
+/* 1) Glow background: più intenso e più “sfumato” */
+body::before{
+  opacity: 1 !important;
+  filter: blur(54px) !important;
+  background:
+    radial-gradient(1700px 980px at 50% -10%, rgba(var(--accent-rgb), .62), transparent 64%),
+    radial-gradient(1200px 980px at -12% 44%, rgba(var(--accent-rgb), .26), transparent 80%),
+    radial-gradient(1200px 980px at 112% 44%, rgba(var(--accent-rgb), .26), transparent 80%),
+    radial-gradient(1900px 1400px at 50% 62%, rgba(var(--accent-rgb), .16), transparent 86%),
+    radial-gradient(1900px 980px at 50% 118%, rgba(var(--accent-rgb), .18), transparent 90%) !important;
+}
+
+body::after{
+  opacity: .92 !important;
+  filter: blur(74px) !important;
+  background:
+    radial-gradient(1400px 1000px at 18% 26%, rgba(var(--accent-rgb), .14), transparent 84%),
+    radial-gradient(1400px 1000px at 82% 26%, rgba(var(--accent-rgb), .14), transparent 84%),
+    radial-gradient(1900px 1400px at 50% 72%, rgba(var(--accent-rgb), .10), transparent 90%) !important;
+}
+
+/* 2) Particles: colore molto più presente (circa 3x) */
+.pidle, .pburst{
+  background: rgba(var(--accent-rgb), 1) !important;
+  opacity: .42 !important; /* prima ~0.16 / 0.2: ora molto più visibile */
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), .95),
+    0 0 60px rgba(var(--accent-rgb), .55),
+    0 0 120px rgba(var(--accent-rgb), .22) !important;
+}
+
+/* idle: un filo più grandi */
+.pidle{
+  width: 3px !important;
+  height: 3px !important;
+}
+
+/* burst: più “spark” */
+.pburst{
+  opacity: 0; /* resta animata dal keyframe */
+}
+
+/* 3) Fix: classi che in index usi ma nel CSS clean non esistevano */
+.trust-strip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin: 12px auto 0;
+  max-width: 1120px;
+}
+.trust-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  color: rgba(255,255,255,.80);
+  font-weight: 850;
+  font-size: 13px;
+}
+
+/* 4) Fix: head card (se usi .card-head / .rec-head) */
+.card-head, .rec-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.rec-icon{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(var(--accent-rgb), .10);
+  border: 1px solid rgba(var(--accent-rgb), .22);
+  box-shadow: 0 10px 22px rgba(var(--accent-rgb), .10);
+  font-size: 20px;
+}
+
+/* 5) Fix: example-line (nel tuo HTML c’è) */
+.example-line{
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255,255,255,.10);
+  font-size: 13px;
+  color: rgba(255,255,255,.70);
+  line-height: 1.55;
+}
+.example-line b{ color: rgba(255,255,255,.88); }
