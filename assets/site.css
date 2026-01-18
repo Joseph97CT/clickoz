@@ -846,3 +846,51 @@ body::after{
   line-height: 1.55;
 }
 .example-line b{ color: rgba(255,255,255,.88); }
+/* ===== Clickoz tweaks (Index request) ===== */
+
+/* +4px “overall” feel (senza distruggere layout): */
+body.bigtext{ font-size: 20px; } /* se il tuo base era 16px -> +4 */
+
+/* Logo: badge +8 e senza sfondo */
+.logo-badge{
+  width: 42px; height: 42px; /* era ~34 */
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--accent, #6366f1);
+  display:flex; align-items:center; justify-content:center;
+}
+.logo-mark{ width: 34px; height: 34px; display:block; }
+.logo-text{ font-weight: 900; letter-spacing: -0.02em; }
+.logo-oz{
+  font-weight: 1000;
+  color: var(--accent, #6366f1);
+}
+
+/* Box trasparenti neri sotto badge e per Recommended */
+.hero-box{
+  background: rgba(0,0,0,.38);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 16px 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+/* Titoli e testi box */
+.box-title{ margin: 0 0 8px; font-size: 18px; font-weight: 900; }
+.box-sub{ margin: 0; opacity: .9; }
+
+/* footer del box (shortcut) */
+.box-foot{
+  margin-top: 12px;
+  font-size: 14px;
+  opacity: .8;
+}
+
+/* Trust pills un filo più grandi e “presenti” */
+.trust-pill{ font-size: 14.5px; }
+
+/* Bottoni leggermente più grandi */
+.btn{ font-size: 16px; }
+.btn.primary{ font-weight: 800; }
+
