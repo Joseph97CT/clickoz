@@ -1049,4 +1049,50 @@ body.is-scrolling .__grain{
 @media (max-width: 720px){
   #clickozParticles, .__grain{ display:none !important; }
 }
+/* ===== Mobile hardening: stop glitch/repaint ===== */
+html, body { overflow-x: hidden; }
+
+/* FX canvas dietro a tutto, super leggero */
+#fxCanvas{
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Grain dietro al contenuto, ma sopra canvas (se lo vuoi) */
+.__grain{
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .10;
+  transform: translateZ(0);
+}
+
+/* Contenuto sempre sopra */
+.nav{ position: sticky; top: 0; z-index: 50; }
+.page-box{ position: relative; z-index: 2; }
+
+/* IMPORTANT: blur su mobile causa “carica a pezzi” */
+@media (max-width: 820px){
+  .page-box,
+  .hero-box,
+  .nav,
+  .footer{
+    backdrop-filter: none !important;
+  }
+  /* riduci ombre pesanti */
+  .page-box{ box-shadow: 0 10px 26px rgba(0,0,0,.35) !important; }
+
+  /* se ancora buggato: spegni grain su mobile */
+  .__grain{ display:none !important; }
+}
+
+/* mentre scrolli: spegni FX per evitare glitch */
+body.is-scrolling #fxCanvas{ opacity: 0; }
 
