@@ -1,14 +1,169 @@
-:root{ color-scheme: dark; }
+/* =========================================================
+   CLICKoz — site.css (CLEAN / ONE FILE)
+   - Base UI + Layout
+   - Accent glow background (ONE version)
+   - Cards + hover glow (accent driven)
+   - Recommended now: icon + title inline (NO HTML change)
+   - Cookie banner (clean)
+   - Google Translate dark (best-effort)
+   - Grain + Particles styles (JS later)
+========================================================= */
+
+/* ---------------- Root + Reset ---------------- */
+:root{
+  color-scheme: dark;
+
+  --bg:#0b0f19;
+  --panel: rgba(15,21,38,.78);
+  --panel2: rgba(17,26,48,.86);
+
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.72);
+
+  --border: rgba(255,255,255,.10);
+  --border2: rgba(255,255,255,.16);
+
+  --radius: 14px;
+
+  /* accent will be overridden by JS/color picker */
+  --accent: #6366f1;
+  --accent2:#8b5cf6;
+  --accent-rgb: 99,102,241;
+
+  --shadow: 0 18px 60px rgba(0,0,0,.40);
+  --shadow2: 0 10px 26px rgba(0,0,0,.35);
+  --focus: 0 0 0 4px rgba(var(--accent-rgb), .16);
+}
+
 *{ box-sizing:border-box; }
 a{ color: inherit; }
 img{ max-width:100%; display:block; }
 
+html, body{ overflow-x:hidden; }
+
+body{
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  position: relative;
+}
+
+/* ---------------- Background (ONE only) ---------------- */
+body::before{
+  content:"";
+  position: fixed;
+  inset: -60%;
+  pointer-events:none;
+  z-index: -4;
+
+  background:
+    radial-gradient(1500px 900px at 50% -12%, rgba(var(--accent-rgb), .38), transparent 66%),
+    radial-gradient(1100px 900px at -10% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
+    radial-gradient(1100px 900px at 110% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
+    radial-gradient(1700px 1200px at 50% 62%, rgba(var(--accent-rgb), .10), transparent 84%),
+    radial-gradient(1700px 900px at 50% 118%, rgba(var(--accent-rgb), .08), transparent 90%);
+
+  filter: blur(62px);
+  opacity: .95;
+}
+body::after{
+  content:"";
+  position: fixed;
+  inset: -35%;
+  pointer-events:none;
+  z-index: -3;
+
+  background:
+    radial-gradient(1200px 900px at 18% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
+    radial-gradient(1200px 900px at 82% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
+    radial-gradient(1700px 1200px at 50% 72%, rgba(var(--accent-rgb), .06), transparent 86%);
+
+  filter: blur(84px);
+  opacity: .80;
+}
+
+/* ---------------- Grain (anti banding) ---------------- */
+.__grain{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  opacity: .10;
+  mix-blend-mode: overlay;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.05) 0px,
+      rgba(255,255,255,.05) 1px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0) 4px
+    );
+  filter: blur(.25px);
+}
+
+/* ---------------- Particles layer (CSS only, JS later) ---------------- */
+#clickozParticles{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1; /* sopra bg/grain, sotto i contenuti */
+  overflow: hidden;
+}
+.pidle, .pburst{
+  position:absolute;
+  border-radius:999px;
+  background: rgba(var(--accent-rgb), .96);
+  box-shadow:
+    0 0 14px rgba(var(--accent-rgb), .40),
+    0 0 44px rgba(var(--accent-rgb), .14);
+  will-change: transform, opacity;
+}
+
+/* idle */
+.pidle{
+  width: 2px;
+  height: 2px;
+  opacity: .16;
+  animation: idleDrift var(--idur) ease-in-out infinite;
+}
+@keyframes idleDrift{
+  0%   { transform: translate3d(0,0,0); opacity: .10; }
+  50%  { transform: translate3d(var(--ix), var(--iy), 0); opacity: .20; }
+  100% { transform: translate3d(0,0,0); opacity: .10; }
+}
+
+/* burst */
+.pburst{
+  left: var(--sx);
+  top:  var(--sy);
+  width: var(--sz);
+  height: var(--sz);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.65);
+  animation: burstFly var(--dur) cubic-bezier(.12,.9,.18,1) forwards;
+  animation-delay: var(--delay);
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), .55),
+    0 0 70px rgba(var(--accent-rgb), .18);
+}
+@keyframes burstFly{
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.55); }
+  10%  { opacity: var(--op); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #clickozParticles, .__grain{ display:none !important; }
+}
+
+/* ---------------- Container ---------------- */
 .container{
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
 }
 
-/* NAV */
+/* ---------------- NAV ---------------- */
 .nav{
   position: sticky;
   top: 0;
@@ -20,6 +175,7 @@ img{ max-width:100%; display:block; }
 .nav-inner{
   display:flex;
   align-items:center;
+  gap: 10px;
   padding: 14px 0;
 }
 .logo{
@@ -27,25 +183,35 @@ img{ max-width:100%; display:block; }
   align-items:center;
   gap:10px;
   text-decoration:none;
-  font-weight: 900;
-  letter-spacing: -0.02em;
+  font-weight: 1000;
+  letter-spacing: -0.03em;
+  font-size: 18px;
+  line-height: 1;
 }
 .logo-badge{
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius: 12px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  font-size: 20px;
+
+  background:
+    radial-gradient(120% 120% at 30% 20%, rgba(var(--accent-rgb), .42), rgba(var(--accent-rgb), .18) 45%, rgba(0,0,0,0) 70%),
+    rgba(var(--accent-rgb), .18);
+  border: 1px solid rgba(var(--accent-rgb), .55);
+  box-shadow:
+    0 14px 40px rgba(var(--accent-rgb), .22),
+    0 0 0 1px rgba(var(--accent-rgb), .18) inset;
 }
+
 .nav-links{
   display:flex;
   align-items:center;
   gap: 14px;
   margin-left: 18px;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 14px;
   color: rgba(255,255,255,.78);
 }
@@ -55,33 +221,147 @@ img{ max-width:100%; display:block; }
   border-radius: 10px;
 }
 .nav-links a:hover{
-  background: rgba(255,255,255,.06);
-  color: rgba(255,255,255,.92);
+  background: rgba(var(--accent-rgb), .12);
+  color: rgba(255,255,255,.94);
 }
 .spacer{ flex: 1; }
 
-/* hero */
-.hero{ padding: 34px 0 10px; }
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* ---------------- Accent dot + dropdown (structure ready) ---------------- */
+.dropdown{ position:relative; }
+
+.dot-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  cursor:pointer;
+  transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
+}
+.dot-btn:hover{
+  background: rgba(255,255,255,.07);
+  border-color: var(--border2);
+  box-shadow: var(--shadow2);
+}
+.dot-btn:focus{
+  outline:none;
+  box-shadow: var(--focus);
+  border-color: rgba(var(--accent-rgb), .55);
+}
+.dot{
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: 2px solid rgba(255,255,255,.22);
+}
+
+/* dropdown menu */
+.menu{
+  position:absolute;
+  top:52px;
+  right:0;
+  min-width:240px;
+  background: #0c1222;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow2);
+  padding: 10px;
+  display:none;
+  z-index:999;
+  text-align:left;
+}
+.menu.active{ display:block; }
+
+.menu-title{
+  font-size: 12px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.58);
+  padding: 8px 10px 6px;
+}
+
+.color-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  padding:6px 8px 10px;
+}
+.color-option{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,.12);
+  cursor:pointer;
+  transition: border-color .12s ease, transform .12s ease;
+}
+.color-option:hover{ border-color: rgba(255,255,255,.28); transform: translateY(-1px); }
+.color-option.active{ border-color: rgba(255,255,255,.85); }
+
+/* ---------------- HERO / Sections ---------------- */
+.hero{ padding: 34px 0 10px; text-align:center; }
+.section{ padding: 28px 0; text-align:center; }
+
+.row{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content:center;
+}
+
 .badge{
   display:inline-flex;
   gap:8px;
   align-items:center;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.10);
-  color: rgba(255,255,255,.78);
+  background: rgba(var(--accent-rgb), .10);
+  border: 1px solid rgba(var(--accent-rgb), .24);
+  color: rgba(255,255,255,.82);
   font-size: 13px;
-  font-weight: 700;
-}
-.row{
-  display:flex;
-  align-items:center;
-  gap: 10px;
-  flex-wrap: wrap;
+  font-weight: 800;
+  box-shadow: 0 18px 60px rgba(var(--accent-rgb), .10);
 }
 
-/* buttons */
+.hero h1{
+  font-size: clamp(38px, 4.2vw, 62px);
+  max-width: 1080px;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin: 12px auto 0;
+}
+.hero p{
+  font-size: 18px;
+  line-height: 1.75;
+  max-width: 980px;
+  color: var(--muted);
+  margin: 14px auto 10px;
+}
+
+.section-title{
+  font-size: clamp(26px, 2.8vw, 40px);
+  letter-spacing: -0.02em;
+  margin: 0 auto;
+  max-width: 980px;
+}
+.section-sub{
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 980px;
+  margin: 10px auto 18px;
+}
+
+/* ---------------- Buttons ---------------- */
 .btn{
   display:inline-flex;
   align-items:center;
@@ -93,7 +373,7 @@ img{ max-width:100%; display:block; }
   background: rgba(255,255,255,.04);
   color: rgba(255,255,255,.90);
   text-decoration:none;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 14px;
   cursor:pointer;
   transition: background .12s ease, border-color .12s ease, filter .12s ease;
@@ -105,51 +385,17 @@ img{ max-width:100%; display:block; }
 .btn.primary{
   background: var(--accent);
   border-color: rgba(255,255,255,.12);
-  box-shadow: 0 10px 22px rgba(var(--accent-rgb), .16);
+  box-shadow: 0 10px 22px rgba(var(--accent-rgb), .18);
 }
-.btn.primary:hover{ filter: brightness(1.04); }
+.btn.primary:hover{ filter: brightness(1.05); }
 
-/* sections */
-.section{ padding: 28px 0; }
+/* ---------------- Grids + Cards ---------------- */
 .small-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   margin-top: 14px;
 }
-@media (max-width: 980px){
-  .small-grid{ grid-template-columns: 1fr; gap: 12px; }
-}
-.small-card{
-  padding: 16px;
-  border-radius: var(--radius);
-  text-decoration:none;
-}
-.small-card h3{ margin: 0 0 8px; font-size: 16px; }
-.small-card p{
-  margin: 0;
-  font-size: 14.5px;
-  line-height: 1.65;
-  color: rgba(255,255,255,.72);
-}
-
-/* chips */
-.chips{
-  display:flex;
-  flex-wrap:wrap;
-  gap: 10px;
-  margin: 14px 0 14px;
-}
-.chip{
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 800;
-  cursor:pointer;
-  user-select:none;
-}
-
-/* tools grid */
 .grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -157,14 +403,38 @@ img{ max-width:100%; display:block; }
   margin-top: 14px;
 }
 @media (max-width: 980px){
-  .grid{ grid-template-columns: 1fr; gap: 12px; }
+  .small-grid, .grid{ grid-template-columns: 1fr; gap: 12px; }
+  .nav-links{ display:none; }
 }
-.card{
+
+.small-card, .card{
   padding: 16px;
   border-radius: var(--radius);
   text-decoration:none;
-  min-height: 190px;
+
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(15,21,38,.58);
+  box-shadow: 0 16px 50px rgba(0,0,0,.28);
+  transition: border-color .12s ease, background .12s ease, box-shadow .12s ease;
+  text-align:left;
 }
+.small-card:hover, .card:hover{
+  background: rgba(17,26,48,.80);
+  border-color: rgba(var(--accent-rgb), .55);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), .18),
+    0 22px 70px rgba(0,0,0,.42),
+    0 18px 44px rgba(var(--accent-rgb), .12);
+}
+
+.small-card h3{ margin: 0 0 8px; font-size: 16px; font-weight: 900; }
+.small-card p{
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: rgba(255,255,255,.72);
+}
+
 .thumb{
   width: 46px;
   height: 46px;
@@ -172,13 +442,17 @@ img{ max-width:100%; display:block; }
   display:flex;
   align-items:center;
   justify-content:center;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.10);
+
+  background: rgba(var(--accent-rgb), .10);
+  border: 1px solid rgba(var(--accent-rgb), .22);
   font-size: 20px;
+  box-shadow: 0 10px 22px rgba(var(--accent-rgb), .10);
 }
+
 .card h3{
   margin: 12px 0 8px;
   font-size: 16px;
+  font-weight: 900;
   letter-spacing: -0.01em;
 }
 .card p{
@@ -188,21 +462,138 @@ img{ max-width:100%; display:block; }
   color: rgba(255,255,255,.72);
 }
 
-/* footer */
+/* CTA inside card */
+.tool-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 100%;
+  margin-top: 12px;
+  height: 40px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: .01em;
+  background: var(--accent);
+  color: rgba(255,255,255,.96);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 10px 22px rgba(var(--accent-rgb), .18);
+}
+.tool-cta:hover{ filter: brightness(1.05); }
+
+/* ---------------- Recommended now (NO HTML change) ----------------
+   Goal: 🔐 Base64 Encoder (same row) + title bigger/bold
+   Assumes each rec card has: .thumb + h3 + p + .tool-cta
+------------------------------------------------------------------ */
+.rec-grid{
+  display:grid;
+  gap: 14px;
+  margin-top: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  text-align:left;
+}
+@media(max-width: 980px){ .rec-grid{ grid-template-columns: 1fr; gap: 12px; } }
+
+.rec-card{
+  display:grid !important;
+  grid-template-columns: 46px 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  column-gap: 10px;
+  row-gap: 8px;
+  align-items:start;
+  height: 100%;
+}
+
+.rec-card .thumb{
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0 !important;
+}
+.rec-card h3{
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 1000 !important;
+  line-height: 1.15;
+}
+
+.rec-card p{
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin: 0 !important;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted) !important
+}
+
+.rec-card .tool-cta{
+  grid-column: 1 / -1;
+  grid-row: 4;
+  margin-top: 10px !important;
+}
+
+/* ---------------- Search + chips ---------------- */
+input.search{
+  background: rgba(15,21,38,.70);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 12px;
+  outline: none;
+  width: min(920px, 100%);
+  margin: 0 auto;
+  display:block;
+  text-align:left;
+  padding: 12px 12px;
+}
+input.search::placeholder{ color: rgba(255,255,255,.55); }
+input.search:focus{
+  border-color: rgba(var(--accent-rgb), .55);
+  box-shadow: var(--focus);
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px;
+  margin: 14px 0 14px;
+  justify-content:center;
+}
+.chip{
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+  cursor:pointer;
+  user-select:none;
+  background: rgba(255,255,255,.02);
+  border: 1px solid var(--border);
+  color: rgba(255,255,255,.78);
+  transition: background .12s ease, border-color .12s ease;
+}
+.chip:hover{ background: rgba(255,255,255,.05); }
+.chip.active{
+  color: var(--text);
+  border-color: rgba(var(--accent-rgb), .55);
+  background: rgba(var(--accent-rgb), .12);
+}
+
+/* ---------------- Footer ---------------- */
 .footer{
   margin-top: 24px;
-  padding: 26px 0 26px;
+  padding: 22px 0 14px;
   border-top: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.01);
+  background: rgba(0,0,0,.14);
+  text-align:center;
 }
 .footer-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  text-align:center;
 }
-@media (max-width: 980px){
-  .footer-grid{ grid-template-columns: 1fr; }
-}
+@media (max-width: 980px){ .footer-grid{ grid-template-columns: 1fr; } }
 .footer h4{
   margin: 0 0 10px;
   font-size: 14px;
@@ -212,16 +603,19 @@ img{ max-width:100%; display:block; }
   display:flex;
   flex-direction:column;
   gap: 8px;
+  align-items:center;
+  justify-content:center;
 }
 .footer a{
   text-decoration:none;
   color: rgba(255,255,255,.70);
-  font-weight: 650;
+  font-weight: 750;
   font-size: 14px;
 }
 .footer a:hover{ color: rgba(255,255,255,.92); }
-.sep{ border: none; border-top: 1px solid rgba(255,255,255,.08); }
-/* ===== Cookie banner (clean, not buggy) ===== */
+.sep{ border:none; border-top: 1px solid rgba(255,255,255,.08); }
+
+/* ---------------- Cookie banner (keep your existing HTML ids) ---------------- */
 .cookie{
   position: fixed;
   left: 16px;
@@ -231,9 +625,8 @@ img{ max-width:100%; display:block; }
   display: none;
   pointer-events: none;
 }
-.cookie.show{
-  display: block;
-}
+.cookie.show{ display:block; }
+
 .cookie-card{
   pointer-events: auto;
   width: min(920px, 100%);
@@ -246,7 +639,6 @@ img{ max-width:100%; display:block; }
 
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
   gap: 12px;
 
   padding: 14px 14px;
@@ -255,10 +647,7 @@ img{ max-width:100%; display:block; }
   transition: transform .18s ease, opacity .18s ease;
   position: relative;
 }
-.cookie.show .cookie-card{
-  transform: translateY(0);
-  opacity: 1;
-}
+.cookie.show .cookie-card{ transform: translateY(0); opacity: 1; }
 
 .cookie-x{
   position: absolute;
@@ -271,19 +660,14 @@ img{ max-width:100%; display:block; }
   background: rgba(255,255,255,.04);
   color: rgba(255,255,255,.88);
   cursor: pointer;
-  font-weight: 900;
+  font-weight: 1000;
   line-height: 1;
 }
-.cookie-x:hover{
-  background: rgba(255,255,255,.07);
-  border-color: rgba(255,255,255,.18);
-}
+.cookie-x:hover{ background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18); }
 
-.cookie-content{
-  padding-right: 44px; /* room for X */
-}
+.cookie-content{ padding-right: 44px; }
 .cookie-title{
-  font-weight: 900;
+  font-weight: 1000;
   letter-spacing: -0.02em;
   font-size: 14px;
   margin-bottom: 6px;
@@ -300,2006 +684,57 @@ img{ max-width:100%; display:block; }
 }
 
 .cookie-actions{
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
   gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap:wrap;
 }
-.cookie-btn{
-  height: 40px;
-  padding: 0 12px;
-  font-size: 13px;
-  border-radius: 12px;
-}
+.cookie-btn{ height: 40px; padding: 0 12px; font-size: 13px; border-radius: 12px; }
 .cookie-actions .btn.primary.cookie-btn{
   box-shadow: 0 12px 26px rgba(var(--accent-rgb), .22);
 }
 
-/* Mini "manage" button when banner dismissed */
-.cookie-mini{
-  pointer-events: auto;
-  width: min(920px, 100%);
-  margin: 10px auto 0;
-  display: none;
-  justify-content: flex-end;
-}
-.cookie-mini.show{
-  display: flex;
-}
-.cookie-mini-btn{
-  height: 38px;
-  padding: 0 12px;
-  border-radius: 12px;
-  font-size: 13px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.12);
-}
-
-/* Mobile layout */
 @media (max-width: 720px){
-  .cookie-card{
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-  }
-  .cookie-actions{
-    justify-content: stretch;
-  }
-  .cookie-btn{
-    width: 100%;
-  }
-  .cookie-mini{
-    justify-content: stretch;
-  }
-  .cookie-mini-btn{
-    width: 100%;
-  }
+  .cookie-card{ grid-template-columns: 1fr; }
+  .cookie-actions{ justify-content: stretch; }
+  .cookie-btn{ width: 100%; }
 }
 
-/* Bigger logo */
-.logo{
-  font-size: 20px;              /* prima era più piccolo */
-  font-weight: 900;
-  letter-spacing: -0.02em;
-}
-.logo-badge{
-  width: 42px; height: 42px;    /* badge più grande */
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border-radius: 12px;
-  font-size: 20px;
-}
-@media (max-width: 860px){
-  .logo{ font-size: 19px; }
-  .logo-badge{ width: 38px; height: 38px; }
-}
-/* =========================================================
-   PATCH: Google Translate FULL DARK (no white background)
-   ========================================================= */
+/* ---------------- Google Translate dark (best-effort) ---------------- */
 #gtNavWrap{ display:none; align-items:center; }
 #gtNavWrap.show{ display:inline-flex; }
 
-#google_translate_element,
-#google_translate_element *{
-  background: transparent !important;
-}
-
-.goog-te-gadget{ color: transparent !important; }
+#google_translate_element{ display:inline-flex; align-items:center; position:relative; }
+.goog-te-gadget{ font-size: 0 !important; color: transparent !important; }
 .goog-te-gadget span{ display:none !important; }
 
-.goog-te-gadget select{
-  background: #0c1222 !important;
-  color: rgba(255,255,255,.92) !important;
-  border: 1px solid rgba(255,255,255,.14) !important;
-  border-radius: 10px !important;
-  padding: 6px 10px !important;
-  outline: none !important;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-weight: 800;
-  font-size: 13px;
-  appearance: none;
-}
-
-/* Dropdown options */
-.goog-te-gadget select option{
-  background: #0c1222 !important;
-  color: rgba(255,255,255,.92) !important;
-}
-
-/* Hide Google top banner if it appears */
-.goog-te-banner-frame{ display:none !important; }
-body{ top:0 !important; }
-
-/* =========================================================
-   PATCH: Tool pages (same CMS, same components)
-   Use: <main class="tool-wrap"> ... </main>
-   ========================================================= */
-.tool-wrap{
-  width: min(1120px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 34px 0 50px;
-  text-align: center;
-}
-.tool-hero{
-  max-width: 920px;
-  margin: 0 auto 14px;
-}
-.tool-hero h1{
-  font-size: clamp(30px, 3.2vw, 48px);
-  letter-spacing: -0.03em;
-  line-height: 1.08;
-  margin: 0 auto;
-}
-.tool-hero p{
-  color: rgba(255,255,255,.72);
-  line-height: 1.75;
-  margin: 10px auto 0;
-  max-width: 880px;
-}
-
-.panel{
-  max-width: 1120px;
-  margin: 18px auto 0;
-  background: rgba(15,21,38,.92);
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: var(--radius);
-  box-shadow: 0 6px 16px rgba(0,0,0,.22);
-  padding: 16px;
-  text-align: left;
-}
-
-.grid2{
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 14px;
-  align-items: start;
-}
-@media (max-width: 980px){
-  .grid2{ grid-template-columns: 1fr; }
-}
-
-.tool-input,
-.tool-output,
-.tool-field{
-  width: 100%;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.12);
-  color: rgba(255,255,255,.92);
-  border-radius: 12px;
-  padding: 12px 12px;
-  outline: none;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-}
-.tool-input{ min-height: 220px; resize: vertical; line-height: 1.6; }
-.tool-output{ min-height: 160px; resize: vertical; line-height: 1.6; }
-.tool-input:focus, .tool-output:focus, .tool-field:focus{
-  border-color: rgba(var(--accent-rgb), .55);
-  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .16);
-}
-
-.btn2{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height: 42px;
-  padding: 0 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.04);
-  color: rgba(255,255,255,.90);
-  font-weight: 900;
-  cursor: pointer;
-}
-.btn2:hover{
-  background: rgba(255,255,255,.07);
-  border-color: rgba(255,255,255,.18);
-}
-.btn2.primary{
-  background: var(--accent);
-  box-shadow: 0 10px 22px rgba(var(--accent-rgb), .18);
-}
-
-.rowbtn{
-  display:flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-top: 10px;
-}
-
-.results{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 10px;
-}
-@media (max-width: 980px){
-  .results{ grid-template-columns: 1fr; }
-}
-
-.stat{
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
-  border-radius: 12px;
-  padding: 10px 12px;
-}
-.stat .k{
-  font-size: 12px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.58);
-}
-.stat .v{
-  font-size: 18px;
-  font-weight: 900;
-  margin-top: 4px;
-}
-
-.note{
-  font-size: 13px;
-  color: rgba(255,255,255,.68);
-  line-height: 1.55;
-  margin-top: 10px;
-}
-.note b{ color: rgba(255,255,255,.86); }
-/* =========================================================
-   CLICKoz: ACCENT GLOW PACK (accent-driven)
-   Incolla in fondo a site.css
-   ========================================================= */
-
-/* Safety: evita scroll orizzontale per gli overlay */
-html, body{ overflow-x: hidden; }
-
-/* Il body deve poter ospitare overlay */
-body{
-  position: relative;
-}
-
-/* ---------- 1) GLOW BACKGROUND GLOBALE (segue --accent-rgb) ---------- */
-body::before{
-  content:"";
-  position: fixed;
-  inset: -22%;
-  pointer-events:none;
-  z-index: -2;
-
-  /* luci grandi e pulite */
-  background:
-    radial-gradient(1100px 640px at 18% -8%, rgba(var(--accent-rgb), .22), transparent 60%),
-    radial-gradient(980px 560px  at 92% -6%, rgba(var(--accent-rgb), .14), transparent 62%),
-    radial-gradient(1000px 720px at 50% 28%, rgba(var(--accent-rgb), .10), transparent 64%),
-    radial-gradient(900px 700px  at 50% 110%, rgba(var(--accent-rgb), .06), transparent 60%);
-  filter: blur(3px);
-  opacity: 1;
-}
-
-/* layer “vivo” (movimento soft) */
-body::after{
-  content:"";
-  position: fixed;
-  inset: -30%;
-  pointer-events:none;
-  z-index: -1;
-  background:
-    radial-gradient(900px 700px at 14% 24%, rgba(var(--accent-rgb), .14), transparent 62%),
-    radial-gradient(900px 700px at 86% 30%, rgba(var(--accent-rgb), .10), transparent 65%);
-  filter: blur(18px);
-  opacity: .55;
-  transform: translate3d(0,0,0);
-  animation: clickozGlowFloat 10s ease-in-out infinite alternate;
-}
-
-@keyframes clickozGlowFloat{
-  0%   { transform: translate3d(-1.2%, -0.8%, 0) scale(1); }
-  100% { transform: translate3d( 1.2%,  0.9%, 0) scale(1.02); }
-}
-
-@media (prefers-reduced-motion: reduce){
-  body::after{ animation: none; }
-}
-
-
-/* ---------- 2) LUCI LATERALI (hero + sections) ---------- */
-.hero, .section{
-  position: relative;
-}
-
-/* glow laterale che “stacca” i blocchi */
-.hero::before,
-.section::before{
-  content:"";
-  position:absolute;
-  left: 50%;
-  top: -26px;
-  transform: translateX(-50%);
-  width: min(1240px, calc(100% + 160px));
-  height: calc(100% + 52px);
-  pointer-events:none;
-  z-index: -1;
-
-  background:
-    radial-gradient(640px 260px at 0% 50%, rgba(var(--accent-rgb), .22), transparent 72%),
-    radial-gradient(640px 260px at 100% 50%, rgba(var(--accent-rgb), .22), transparent 72%),
-    radial-gradient(520px 220px at 50% 0%, rgba(var(--accent-rgb), .14), transparent 72%);
-  filter: blur(14px);
-  opacity: .95;
-}
-
-/* se vuoi HERO ancora più “spotlight” (più forte sopra) */
-.hero::before{
-  background:
-    radial-gradient(820px 340px at 50% -10%, rgba(var(--accent-rgb), .26), transparent 68%),
-    radial-gradient(640px 260px at 0% 52%, rgba(var(--accent-rgb), .18), transparent 72%),
-    radial-gradient(640px 260px at 100% 52%, rgba(var(--accent-rgb), .18), transparent 72%);
-  opacity: 1;
-}
-
-
-/* ---------- 3) GLOW BORDI SU CARD/SMALL-CARD/WIDGET (sempre + hover) ---------- */
-/* Nota: nel tuo HTML stai già “forzando” border/background con !important.
-   Qui aggiungiamo overlay e glow senza rompere nulla. */
-
-.card, .small-card{
-  position: relative;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(15,21,38,.55);
-}
-
-/* bordo “luminoso” sempre presente */
-.card::after,
-.small-card::after{
-  content:"";
-  position:absolute;
-  inset: -1px;
-  border-radius: inherit;
-  pointer-events:none;
-  z-index: -1;
-  background: linear-gradient(
-    135deg,
-    rgba(var(--accent-rgb), .28),
-    rgba(255,255,255,.06),
-    rgba(var(--accent-rgb), .18)
-  );
-  opacity: .22;
-  filter: blur(10px);
-}
-
-/* hover più evidente e coerente col tema */
-.card:hover,
-.small-card:hover{
-  border-color: rgba(var(--accent-rgb), .60);
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .20),
-    0 18px 50px rgba(0,0,0,.42),
-    0 14px 30px rgba(var(--accent-rgb), .12);
-}
-
-/* glow anche sulle icone (thumb) */
-.thumb{
-  border-color: rgba(var(--accent-rgb), .20);
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .10) inset,
-    0 10px 22px rgba(var(--accent-rgb), .10);
-}
-
-/* ---------- 4) OPTIONAL: “rim light” sulle CTA primary ---------- */
-.btn.primary{
-  box-shadow:
-    0 10px 22px rgba(var(--accent-rgb), .18),
-    0 0 0 1px rgba(var(--accent-rgb), .18) inset;
-}
-/* =========================================================
-   CLICKoz: NEON GLOW v2 (STRONG + FULL ACCENT ONLY)
-   Incolla in fondo a site.css
-   ========================================================= */
-
-html, body{ overflow-x:hidden; }
-body{ position:relative; }
-
-/* --- 0) assicurati che l'accent sia ovunque (no colori fissi) --- */
-:root{
-  /* se hai qualche gradient in giro, questo aiuta */
-  --accent-soft: rgba(var(--accent-rgb), .16);
-  --accent-med:  rgba(var(--accent-rgb), .28);
-  --accent-strong: rgba(var(--accent-rgb), .42);
-}
-
-/* =========================================================
-   1) BACKGROUND GLOBALE: glow forte e continuo (TOP + SIDES + BOTTOM)
-   - niente tagli: inset molto grande
-   - glow anche in basso (prima era troppo debole)
-   ========================================================= */
-body::before{
-  content:"";
-  position:fixed;
-  inset:-45%;
-  pointer-events:none;
-  z-index:-3;
-
-  background:
-    /* HERO spotlight */
-    radial-gradient(1200px 700px at 50% -8%, rgba(var(--accent-rgb), .55), transparent 62%),
-
-    /* left/right walls */
-    radial-gradient(900px 520px at -8% 38%, rgba(var(--accent-rgb), .38), transparent 68%),
-    radial-gradient(900px 520px at 108% 38%, rgba(var(--accent-rgb), .38), transparent 68%),
-
-    /* mid wash (evita “stacco” scroll) */
-    radial-gradient(1200px 900px at 50% 45%, rgba(var(--accent-rgb), .22), transparent 70%),
-
-    /* bottom glow (molto più forte) */
-    radial-gradient(1100px 720px at 50% 112%, rgba(var(--accent-rgb), .42), transparent 64%);
-
-  filter: blur(10px);
-  opacity: 1;
-}
-
-/* layer extra per “energia” e continuità (più forte di prima) */
-body::after{
-  content:"";
-  position:fixed;
-  inset:-55%;
-  pointer-events:none;
-  z-index:-2;
-
-  background:
-    radial-gradient(900px 700px at 20% 18%, rgba(var(--accent-rgb), .30), transparent 66%),
-    radial-gradient(900px 700px at 80% 22%, rgba(var(--accent-rgb), .24), transparent 66%),
-    radial-gradient(1200px 900px at 50% 70%, rgba(var(--accent-rgb), .18), transparent 70%);
-
-  filter: blur(22px);
-  opacity: .85;
-  transform: translate3d(0,0,0);
-  animation: clickozNeonFloat 8s ease-in-out infinite alternate;
-}
-
-@keyframes clickozNeonFloat{
-  0%   { transform: translate3d(-1.6%, -0.8%, 0) scale(1); }
-  100% { transform: translate3d( 1.6%,  1.1%, 0) scale(1.03); }
-}
-
-@media (prefers-reduced-motion: reduce){
-  body::after{ animation:none; }
-}
-
-/* =========================================================
-   2) HERO + SECTION EDGE LIGHTS: più grandi e non “tagliate”
-   - glow esterno + "rim" superiore
-   ========================================================= */
-.hero, .section{ position:relative; isolation:isolate; }
-
-/* glow enorme attorno ai blocchi, segue l'accent */
-.hero::before,
-.section::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:-70px;
-  transform:translateX(-50%);
-  width:min(1400px, calc(100% + 280px));
-  height:calc(100% + 140px);
-  pointer-events:none;
-  z-index:-1;
-
-  background:
-    radial-gradient(900px 380px at 50% -6%, rgba(var(--accent-rgb), .44), transparent 70%),
-    radial-gradient(760px 340px at 0% 55%, rgba(var(--accent-rgb), .30), transparent 74%),
-    radial-gradient(760px 340px at 100% 55%, rgba(var(--accent-rgb), .30), transparent 74%),
-    radial-gradient(900px 520px at 50% 110%, rgba(var(--accent-rgb), .18), transparent 70%);
-
-  filter: blur(18px);
-  opacity: 1;
-}
-
-/* hero più “spinto” (spotlight) */
-.hero::before{
-  background:
-    radial-gradient(1200px 520px at 50% -12%, rgba(var(--accent-rgb), .62), transparent 66%),
-    radial-gradient(820px 360px at 0% 54%, rgba(var(--accent-rgb), .34), transparent 74%),
-    radial-gradient(820px 360px at 100% 54%, rgba(var(--accent-rgb), .34), transparent 74%),
-    radial-gradient(1100px 620px at 50% 120%, rgba(var(--accent-rgb), .24), transparent 70%);
-}
-
-/* =========================================================
-   3) CARDS: glow sempre presente + hover “neon” forte
-   - IMPORTANT: nel tuo HTML ci sono !important.
-     Qui usiamo !important per batterli.
-   ========================================================= */
-.card, .small-card{
-  position:relative;
-  border: 1px solid rgba(255,255,255,.12) !important;
-  background: rgba(15,21,38,.72) !important;
-  box-shadow: 0 12px 30px rgba(0,0,0,.28) !important;
-}
-
-/* glow continuo sui bordi (non tagliato) */
-.card::after,
-.small-card::after{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:inherit;
-  pointer-events:none;
-  z-index:-1;
-
-  background:
-    radial-gradient(420px 240px at 20% 15%, rgba(var(--accent-rgb), .42), transparent 70%),
-    radial-gradient(420px 240px at 80% 15%, rgba(var(--accent-rgb), .30), transparent 72%),
-    linear-gradient(135deg,
-      rgba(var(--accent-rgb), .32),
-      rgba(255,255,255,.06),
-      rgba(var(--accent-rgb), .22)
-    );
-
-  filter: blur(14px);
-  opacity: .70;
-}
-
-/* hover: più glow + più contrasto */
-.card:hover,
-.small-card:hover{
-  background: rgba(17,26,48,.86) !important;
-  border-color: rgba(var(--accent-rgb), .85) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .35) !important,
-    0 22px 60px rgba(0,0,0,.48) !important,
-    0 18px 40px rgba(var(--accent-rgb), .22) !important;
-}
-
-/* =========================================================
-   4) THUMB / BADGE / CTA: tutto del colore selezionato
-   ========================================================= */
-
-/* icone più “vive” */
-.thumb{
-  border-color: rgba(var(--accent-rgb), .35) !important;
-  background: rgba(var(--accent-rgb), .10) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .18) inset,
-    0 18px 40px rgba(var(--accent-rgb), .16) !important;
-}
-
-/* badge in hero con glow accent */
-.badge{
-  border-color: rgba(var(--accent-rgb), .28) !important;
-  background: rgba(var(--accent-rgb), .10) !important;
-  box-shadow: 0 14px 36px rgba(var(--accent-rgb), .14);
-}
-
-/* bottoni primary: più neon e coerenti */
-.btn.primary{
-  background: rgb(var(--accent-rgb)) !important;
-  box-shadow:
-    0 18px 44px rgba(var(--accent-rgb), .30) !important,
-    0 0 0 1px rgba(var(--accent-rgb), .22) inset !important;
-}
-.btn.primary:hover{
-  filter: brightness(1.06) !important;
-}
-
-/* links hover leggermente accent */
-.nav-links a:hover{
-  background: rgba(var(--accent-rgb), .12) !important;
-  border: 1px solid rgba(var(--accent-rgb), .28);
-}
-
-/* =========================================================
-   5) EXTRA: “Glow line” sotto la NAV (accent)
-   ========================================================= */
-.nav{
-  box-shadow: 0 12px 30px rgba(0,0,0,.28);
-}
-.nav::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:-1px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(var(--accent-rgb), .75),
-    transparent
-  );
-  filter: blur(.2px);
-  opacity: .85;
-  pointer-events:none;
-}
-/* =========================================================
-   FIX: NO PURPLE + CONTINUOUS ACCENT GLOW (NO CUTS)
-   Incolla in fondo a /assets/site.css
-   ========================================================= */
-
-/* niente tagli laterali */
-html, body { overflow-x: hidden; }
-body { position: relative; }
-
-/* FORZA: nessun background fisso viola dall'HTML */
-body{
-  background: var(--bg) !important; /* reset */
-}
-
-/* glow continuo (segue --accent-rgb) */
-body::before{
-  content:"";
-  position: fixed;
-  inset: -60%;
-  pointer-events:none;
-  z-index: -3;
-
-  background:
-    /* HERO spotlight forte */
-    radial-gradient(1400px 820px at 50% -10%, rgba(var(--accent-rgb), .70), transparent 62%),
-
-    /* pareti sinistra/destra */
-    radial-gradient(1100px 720px at -10% 40%, rgba(var(--accent-rgb), .45), transparent 68%),
-    radial-gradient(1100px 720px at 110% 40%, rgba(var(--accent-rgb), .45), transparent 68%),
-
-    /* wash centrale per evitare stacchi */
-    radial-gradient(1400px 1100px at 50% 52%, rgba(var(--accent-rgb), .26), transparent 72%),
-
-    /* bottom glow forte (prima era troppo leggero) */
-    radial-gradient(1400px 900px at 50% 115%, rgba(var(--accent-rgb), .55), transparent 65%);
-
-  filter: blur(14px);
-  opacity: 1;
-}
-
-/* layer extra per “energia” senza creare bande */
-body::after{
-  content:"";
-  position: fixed;
-  inset: -70%;
-  pointer-events:none;
-  z-index: -2;
-
-  background:
-    radial-gradient(900px 700px at 22% 22%, rgba(var(--accent-rgb), .30), transparent 66%),
-    radial-gradient(900px 700px at 78% 24%, rgba(var(--accent-rgb), .26), transparent 66%),
-    radial-gradient(1200px 900px at 50% 70%, rgba(var(--accent-rgb), .18), transparent 70%);
-
-  filter: blur(26px);
-  opacity: .95;
-  transform: translate3d(0,0,0);
-  animation: clickozGlowFloat2 7s ease-in-out infinite alternate;
-}
-
-@keyframes clickozGlowFloat2{
-  0%   { transform: translate3d(-1.8%, -1.0%, 0) scale(1); }
-  100% { transform: translate3d( 1.8%,  1.3%, 0) scale(1.04); }
-}
-
-@media (prefers-reduced-motion: reduce){
-  body::after{ animation:none; }
-}
-
-/* IMPORTANT: evita clipping dei glow sui wrapper */
-.container, .grid, .small-grid, .widget-row, .widget { overflow: visible !important; }
-
-/* =========================================================
-   FIX: GLOW FORTE SUI BOX (cerchi bianchi)
-   ========================================================= */
-
-/* card / small-card glow sempre presente + più forte */
-.card, .small-card{
-  position: relative;
-  background: rgba(15,21,38,.78) !important;
-  border: 1px solid rgba(var(--accent-rgb), .32) !important;
-  box-shadow:
-    0 18px 60px rgba(0,0,0,.40) !important;
-}
-
-.card::before,
-.small-card::before{
-  content:"";
-  position:absolute;
-  inset:-3px;
-  border-radius:inherit;
-  pointer-events:none;
-  z-index:-1;
-  background:
-    radial-gradient(420px 260px at 20% 15%, rgba(var(--accent-rgb), .55), transparent 70%),
-    radial-gradient(420px 260px at 80% 15%, rgba(var(--accent-rgb), .40), transparent 72%),
-    radial-gradient(520px 340px at 50% 115%, rgba(var(--accent-rgb), .28), transparent 70%),
-    linear-gradient(135deg,
-      rgba(var(--accent-rgb), .42),
-      rgba(255,255,255,.05),
-      rgba(var(--accent-rgb), .28)
-    );
-  filter: blur(16px);
-  opacity: .95;
-}
-
-/* hover super neon */
-.card:hover, .small-card:hover{
-  border-color: rgba(var(--accent-rgb), .88) !important;
-  background: rgba(17,26,48,.90) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .40) !important,
-    0 28px 90px rgba(0,0,0,.55) !important,
-    0 22px 70px rgba(var(--accent-rgb), .30) !important;
-}
-
-/* thumb e badge più “accent” */
-.thumb{
-  background: rgba(var(--accent-rgb), .12) !important;
-  border-color: rgba(var(--accent-rgb), .42) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .20) inset,
-    0 18px 50px rgba(var(--accent-rgb), .18) !important;
-}
-
-.badge{
-  background: rgba(var(--accent-rgb), .12) !important;
-  border-color: rgba(var(--accent-rgb), .34) !important;
-  box-shadow: 0 18px 60px rgba(var(--accent-rgb), .18) !important;
-}
-/* =========================================================
-   CLICKoz PRO DESIGN PACK (Glow + Particles + Nav + GT Dark)
-   Incolla in fondo a /assets/site.css
-   ========================================================= */
-
-html, body{ overflow-x:hidden; }
-body{ position:relative; background: var(--bg) !important; }
-
-/* ---------------------------
-   NAV: sempre fissa (non sticky)
----------------------------- */
-.nav{
-  position: fixed !important;
-  top: 0; left: 0; right: 0;
-  z-index: 9999 !important;
-}
-
-/* spazio sotto nav per non coprire hero */
-body{ padding-top: 74px; }
-@media (max-width: 520px){
-  body{ padding-top: 70px; }
-}
-
-/* ombra + linea accent sotto nav (pro) */
-.nav{
-  box-shadow: 0 14px 50px rgba(0,0,0,.55);
-}
-.nav::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:-1px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(var(--accent-rgb), .75),
-    transparent
-  );
-  opacity:.85;
-  pointer-events:none;
-}
-
-/* ---------------------------
-   NO CLIP: evita tagli glow in basso
----------------------------- */
-.container, .grid, .small-grid, .widget-row, .widget,
-.hero, .section, footer, .footer, #tools{
-  overflow: visible !important;
-}
-.hero, .section{ isolation:isolate; }
-
-/* =========================================================
-   1) BACKGROUND GLOW CONTINUO (NO TAGLI)
-   - Top più forte
-   - Bottom più soft e più sfumato
-========================================================= */
-body::before{
-  content:"";
-  position: fixed;
-  inset: -70%;
-  pointer-events:none;
-  z-index: -3;
-
-  background:
-    /* HERO super spotlight (più forte) */
-    radial-gradient(1600px 900px at 50% -16%, rgba(var(--accent-rgb), .86), transparent 64%),
-    radial-gradient(1200px 720px at 50% 0%, rgba(var(--accent-rgb), .44), transparent 70%),
-
-    /* pareti laterali */
-    radial-gradient(1200px 900px at -12% 42%, rgba(var(--accent-rgb), .52), transparent 70%),
-    radial-gradient(1200px 900px at 112% 42%, rgba(var(--accent-rgb), .52), transparent 70%),
-
-    /* wash centrale (stabilizza scroll) */
-    radial-gradient(1600px 1300px at 50% 55%, rgba(var(--accent-rgb), .22), transparent 74%),
-
-    /* bottom: meno intenso ma molto più morbido */
-    radial-gradient(1600px 1000px at 50% 118%, rgba(var(--accent-rgb), .28), transparent 74%);
-
-  filter: blur(22px);
-  opacity: 1;
-}
-
-/* layer “energia” controllata (non crea bande) */
-body::after{
-  content:"";
-  position: fixed;
-  inset: -85%;
-  pointer-events:none;
-  z-index: -2;
-
-  background:
-    radial-gradient(980px 820px at 22% 22%, rgba(var(--accent-rgb), .26), transparent 70%),
-    radial-gradient(980px 820px at 78% 26%, rgba(var(--accent-rgb), .22), transparent 70%),
-    radial-gradient(1500px 1100px at 50% 78%, rgba(var(--accent-rgb), .14), transparent 76%);
-
-  filter: blur(30px);
-  opacity: .95;
-  transform: translate3d(0,0,0);
-  animation: clickozGlowFloatPro 8.5s ease-in-out infinite alternate;
-}
-
-@keyframes clickozGlowFloatPro{
-  0%   { transform: translate3d(-1.6%, -1.0%, 0) scale(1); }
-  100% { transform: translate3d( 1.6%,  1.2%, 0) scale(1.035); }
-}
-@media (prefers-reduced-motion: reduce){
-  body::after{ animation:none; }
-}
-
-/* =========================================================
-   2) EDGE LIGHTS per HERO/SECTION (zero “tagli”)
-========================================================= */
-.hero::before,
-.section::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:-90px;
-  transform: translateX(-50%);
-  width: min(1500px, calc(100% + 340px));
-  height: calc(100% + 180px);
-  pointer-events:none;
-  z-index:-1;
-
-  background:
-    radial-gradient(1100px 460px at 50% -10%, rgba(var(--accent-rgb), .58), transparent 72%),
-    radial-gradient(900px 420px at 0% 55%, rgba(var(--accent-rgb), .34), transparent 76%),
-    radial-gradient(900px 420px at 100% 55%, rgba(var(--accent-rgb), .34), transparent 76%),
-    radial-gradient(1100px 600px at 50% 118%, rgba(var(--accent-rgb), .18), transparent 78%);
-
-  filter: blur(22px);
-  opacity: 1;
-}
-
-/* HERO ancora più “spinto” sopra */
-.hero::before{
-  background:
-    radial-gradient(1500px 560px at 50% -18%, rgba(var(--accent-rgb), .74), transparent 70%),
-    radial-gradient(980px 460px at 0% 56%, rgba(var(--accent-rgb), .36), transparent 76%),
-    radial-gradient(980px 460px at 100% 56%, rgba(var(--accent-rgb), .36), transparent 76%),
-    radial-gradient(1200px 720px at 50% 122%, rgba(var(--accent-rgb), .16), transparent 80%);
-}
-
-/* =========================================================
-   3) CARDS RENDER PRO (morbido, glow “sfumato”)
-   - più bello sui box
-   - meno luce “brutale” sotto
-========================================================= */
-.card, .small-card, .widget{
-  position: relative;
-  background: rgba(15,21,38,.80) !important;
-  border: 1px solid rgba(var(--accent-rgb), .28) !important;
-  box-shadow: 0 18px 60px rgba(0,0,0,.40) !important;
-}
-
-/* halo morbido attorno */
-.card::before, .small-card::before, .widget::before{
-  content:"";
-  position:absolute;
-  inset:-3px;
-  border-radius:inherit;
-  pointer-events:none;
-  z-index:-1;
-
-  background:
-    radial-gradient(520px 320px at 20% 12%, rgba(var(--accent-rgb), .34), transparent 72%),
-    radial-gradient(520px 320px at 80% 12%, rgba(var(--accent-rgb), .26), transparent 74%),
-    radial-gradient(720px 420px at 50% 115%, rgba(var(--accent-rgb), .18), transparent 76%),
-    linear-gradient(135deg,
-      rgba(var(--accent-rgb), .26),
-      rgba(255,255,255,.05),
-      rgba(var(--accent-rgb), .18)
-    );
-
-  filter: blur(20px);
-  opacity: .95;
-}
-
-/* hover: più presente ma non “sparato” */
-.card:hover, .small-card:hover, .widget:hover{
-  border-color: rgba(var(--accent-rgb), .78) !important;
-  background: rgba(17,26,48,.92) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .28) !important,
-    0 26px 90px rgba(0,0,0,.55) !important,
-    0 20px 70px rgba(var(--accent-rgb), .22) !important;
-}
-
-/* thumb più coerente */
-.thumb{
-  background: rgba(var(--accent-rgb), .10) !important;
-  border-color: rgba(var(--accent-rgb), .40) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .18) inset,
-    0 18px 50px rgba(var(--accent-rgb), .14) !important;
-}
-
-/* =========================================================
-   4) PARTICLES (leggere, accent-driven)
-   - container fisso dietro i contenuti
-========================================================= */
-#clickozParticles{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.p{
-  position: absolute;
-  left: 50%;
-  top: 18%;
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(var(--accent-rgb), .85);
-  box-shadow:
-    0 0 18px rgba(var(--accent-rgb), .55),
-    0 0 50px rgba(var(--accent-rgb), .18);
-  opacity: .65;
-  filter: blur(.2px);
-  transform: translate3d(-50%, -50%, 0);
-  animation: pFloat var(--dur) linear infinite;
-}
-
-/* variazioni */
-.p.s2{ width: 4px; height: 4px; opacity:.55; }
-.p.s3{ width: 3px; height: 3px; opacity:.45; }
-.p.s4{ width: 2px; height: 2px; opacity:.38; }
-
-@keyframes pFloat{
-  0%{
-    transform: translate3d(calc(-50% + var(--sx)), calc(-50% + var(--sy)), 0) scale(.9);
-    opacity: 0;
-  }
-  10%{ opacity: .65; }
-  100%{
-    transform: translate3d(calc(-50% + var(--sx2)), calc(-50% + var(--sy2)), 0) scale(1.15);
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce){
-  #clickozParticles{ display:none; }
-}
-
-/* =========================================================
-   5) GOOGLE TRANSLATE: più piccolo + dark
-========================================================= */
-#gtNavWrap{ display:none; align-items:center; }
-#gtNavWrap.show{ display:inline-flex; }
-
-/* wrapper più compatto */
-#google_translate_element{
-  display:inline-flex;
-  align-items:center;
-  padding: 0 !important;
-}
-
-/* la select del translate: più piccola e proporzionata */
 .goog-te-gadget select,
 .goog-te-combo{
-  height: 36px !important;
-  padding: 0 10px !important;
-  border-radius: 10px !important;
-  font-size: 12.5px !important;
-  font-weight: 800 !important;
-
-  background: rgba(12,18,34,.92) !important;
-  color: rgba(255,255,255,.92) !important;
-  border: 1px solid rgba(255,255,255,.14) !important;
-
-  outline: none !important;
-  box-shadow: 0 10px 22px rgba(0,0,0,.25);
-  appearance: none;
-}
-
-/* hover/focus */
-.goog-te-gadget select:hover,
-.goog-te-combo:hover{
-  border-color: rgba(var(--accent-rgb), .40) !important;
-}
-.goog-te-gadget select:focus,
-.goog-te-combo:focus{
-  border-color: rgba(var(--accent-rgb), .60) !important;
-  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .16) !important;
-}
-
-/* tendina opzioni (quando il browser lo permette) */
-.goog-te-gadget select option,
-.goog-te-combo option{
-  background: #0c1222 !important;
-  color: rgba(255,255,255,.92) !important;
-}
-
-/* Hide Google banner (se appare) */
-.goog-te-banner-frame{ display:none !important; }
-body{ top:0 !important; }
-/* =========================================================
-   CLICKoz FUTURE PRO v3 (cinematic glow + particles + hero)
-   Incolla in fondo a /assets/site.css
-   ========================================================= */
-
-html, body{ overflow-x:hidden; }
-body{
-  position:relative;
-  background: var(--bg) !important;
-  padding-top: 74px; /* nav fixed */
-}
-@media (max-width: 520px){ body{ padding-top: 70px; } }
-
-/* ---------------- NAV: fixed + premium glass ---------------- */
-.nav{
-  position: fixed !important;
-  top:0; left:0; right:0;
-  z-index: 9999 !important;
-  background: rgba(7,10,18,.60) !important;
-  border-bottom: 1px solid rgba(255,255,255,.08) !important;
-  backdrop-filter: blur(14px) saturate(1.2);
-  box-shadow: 0 18px 70px rgba(0,0,0,.55);
-}
-.nav::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:-1px;
-  height:2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(var(--accent-rgb), .75),
-    transparent
-  );
-  opacity:.7;
-  pointer-events:none;
-}
-
-/* evita clip di glow */
-.container, .grid, .small-grid, .widget-row, .widget,
-.hero, .section, footer, .footer, #tools{ overflow: visible !important; }
-.hero, .section{ isolation:isolate; }
-
-/* =========================================================
-   CINEMATIC BACKGROUND (super sfumato, zero contrasti duri)
-   - top forte ma “bloom”
-   - bottom più soft e foggy
-========================================================= */
-body::before{
-  content:"";
-  position: fixed;
-  inset: -90%;
-  pointer-events:none;
-  z-index: -4;
-
-  /* layer principale (solo accent) */
-  background:
-    radial-gradient(1800px 1100px at 50% -18%, rgba(var(--accent-rgb), .70), transparent 62%),
-    radial-gradient(1400px 900px  at 50% 10%,  rgba(var(--accent-rgb), .28), transparent 70%),
-    radial-gradient(1200px 980px  at -12% 45%, rgba(var(--accent-rgb), .34), transparent 72%),
-    radial-gradient(1200px 980px  at 112% 45%, rgba(var(--accent-rgb), .34), transparent 72%),
-    radial-gradient(1800px 1400px at 50% 55%, rgba(var(--accent-rgb), .14), transparent 78%),
-    radial-gradient(1900px 1200px at 50% 118%, rgba(var(--accent-rgb), .20), transparent 82%);
-
-  filter: blur(34px);
-  opacity: 1;
-}
-
-/* “Fog/Haze” per togliere i contrasti e dare cinematic look */
-body::after{
-  content:"";
-  position: fixed;
-  inset: -35%;
-  pointer-events:none;
-  z-index: -3;
-
-  background:
-    radial-gradient(1100px 900px at 22% 30%, rgba(var(--accent-rgb), .14), transparent 70%),
-    radial-gradient(1100px 900px at 78% 30%, rgba(var(--accent-rgb), .12), transparent 72%),
-    radial-gradient(1600px 1200px at 50% 70%, rgba(var(--accent-rgb), .10), transparent 78%);
-
-  filter: blur(44px);
-  opacity: .95;
-  transform: translate3d(0,0,0);
-  animation: clickozHaze 10s ease-in-out infinite alternate;
-}
-@keyframes clickozHaze{
-  0%{ transform: translate3d(-1.3%, -0.8%, 0) scale(1); }
-  100%{ transform: translate3d( 1.3%,  1.0%, 0) scale(1.02); }
-}
-@media (prefers-reduced-motion: reduce){ body::after{ animation:none; } }
-
-/* =========================================================
-   HERO: più leggibile + più “premium”
-   - titolo più pulito
-   - highlight accent con underline animato
-   - reveal soft
-========================================================= */
-
-.hero{
-  padding-top: 44px !important;
-  padding-bottom: 18px !important;
-}
-
-.hero h1{
-  letter-spacing: -0.035em !important;
-  line-height: 1.04 !important;
-  text-shadow: 0 18px 70px rgba(0,0,0,.55);
-  animation: heroIn .7s ease-out both;
-}
-.hero p{
-  max-width: 980px !important;
-  font-size: 17px !important;
-  opacity: .92;
-  animation: heroIn .85s ease-out both;
-  animation-delay: .05s;
-}
-
-@keyframes heroIn{
-  from{ transform: translateY(10px); opacity: 0; }
-  to{ transform: translateY(0); opacity: 1; }
-}
-
-/* tag “badge” più futuristico */
-.badge{
-  background: rgba(var(--accent-rgb), .10) !important;
-  border-color: rgba(var(--accent-rgb), .24) !important;
-  box-shadow:
-    0 18px 60px rgba(var(--accent-rgb), .12),
-    0 0 0 1px rgba(var(--accent-rgb), .10) inset;
-}
-
-/* evidenzia parole accent con underline animato */
-.hero .hl{
-  position: relative;
-  color: rgb(var(--accent-rgb)) !important;
-  text-shadow: 0 18px 70px rgba(var(--accent-rgb), .12);
-}
-.hero .hl::after{
-  content:"";
-  position:absolute;
-  left: 2px; right: 2px;
-  bottom: -6px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(var(--accent-rgb), .90),
-    transparent
-  );
-  filter: blur(.2px);
-  opacity: .85;
-  transform-origin: center;
-  animation: underlinePulse 2.8s ease-in-out infinite;
-}
-@keyframes underlinePulse{
-  0%,100%{ transform: scaleX(.65); opacity:.65; }
-  50%{ transform: scaleX(1); opacity:.95; }
-}
-
-/* =========================================================
-   SECTION TITLES: glow + “spotlight” dietro al titolo
-========================================================= */
-.section-title{
-  position: relative;
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: rgba(0,0,0,.18);
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow:
-    0 26px 90px rgba(0,0,0,.35),
-    0 0 0 1px rgba(var(--accent-rgb), .12) inset;
-}
-
-.section-title::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform: translate(-50%,-50%);
-  width: 520px;
-  height: 180px;
-  pointer-events:none;
-  z-index: -1;
-  background:
-    radial-gradient(320px 140px at 50% 50%, rgba(var(--accent-rgb), .34), transparent 70%),
-    radial-gradient(520px 220px at 50% 50%, rgba(var(--accent-rgb), .14), transparent 78%);
-  filter: blur(22px);
-  opacity: 1;
-}
-
-/* =========================================================
-   CARDS: “bloom” uniforme e super sfumato
-   (render pro, niente bordi duri)
-========================================================= */
-.card, .small-card, .widget{
-  position: relative;
-  background: rgba(12,16,28,.78) !important;
-  border: 1px solid rgba(255,255,255,.10) !important;
-  box-shadow:
-    0 24px 90px rgba(0,0,0,.45) !important;
-}
-
-.card::before, .small-card::before, .widget::before{
-  content:"";
-  position:absolute;
-  inset:-4px;
-  border-radius: inherit;
-  pointer-events:none;
-  z-index:-1;
-
-  background:
-    radial-gradient(620px 360px at 18% 12%, rgba(var(--accent-rgb), .30), transparent 74%),
-    radial-gradient(620px 360px at 82% 12%, rgba(var(--accent-rgb), .24), transparent 76%),
-    radial-gradient(900px 520px at 50% 120%, rgba(var(--accent-rgb), .16), transparent 78%);
-
-  filter: blur(26px);
-  opacity: .95;
-}
-
-/* hover: più premium (no “sparata”) */
-.card:hover, .small-card:hover, .widget:hover{
-  border-color: rgba(var(--accent-rgb), .42) !important;
-  background: rgba(14,20,36,.88) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .18) !important,
-    0 34px 120px rgba(0,0,0,.58) !important,
-    0 28px 100px rgba(var(--accent-rgb), .18) !important;
-}
-
-/* thumbs più futuristici */
-.thumb{
-  background: rgba(var(--accent-rgb), .10) !important;
-  border-color: rgba(var(--accent-rgb), .30) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .14) inset,
-    0 18px 60px rgba(var(--accent-rgb), .10) !important;
-}
-
-/* CTA primary */
-.btn.primary{
-  background: rgb(var(--accent-rgb)) !important;
-  box-shadow:
-    0 22px 70px rgba(var(--accent-rgb), .22) !important,
-    0 0 0 1px rgba(var(--accent-rgb), .18) inset !important;
-}
-
-/* =========================================================
-   PARTICLES LAYERS (hero + lateral jets + around cards)
-========================================================= */
-#clickozParticles{
-  position: fixed;
-  inset: 0;
-  pointer-events:none;
-  z-index: -2;
-  overflow:hidden;
-}
-
-/* base particle */
-.px{
-  position:absolute;
-  width: 3px; height: 3px;
-  border-radius: 999px;
-  background: rgba(var(--accent-rgb), .92);
-  box-shadow:
-    0 0 18px rgba(var(--accent-rgb), .45),
-    0 0 60px rgba(var(--accent-rgb), .16);
-  opacity: .55;
-  animation: pxMove var(--dur) linear infinite;
-  transform: translate3d(0,0,0);
-}
-.px.big{ width: 5px; height: 5px; opacity:.42; filter: blur(.2px); }
-.px.tiny{ width: 2px; height: 2px; opacity:.45; }
-
-/* movimenti: “uscita verso l’esterno” */
-@keyframes pxMove{
-  0%{ transform: translate3d(var(--x1), var(--y1), 0) scale(.8); opacity: 0; }
-  12%{ opacity: .55; }
-  100%{ transform: translate3d(var(--x2), var(--y2), 0) scale(1.2); opacity: 0; }
-}
-
-/* riduci su mobile */
-@media (max-width: 720px){
-  .px{ opacity: .40; }
-}
-@media (prefers-reduced-motion: reduce){
-  #clickozParticles{ display:none; }
-}
-
-/* =========================================================
-   GOOGLE TRANSLATE: più piccolo + dark (best-effort)
-========================================================= */
-.goog-te-gadget select,
-.goog-te-combo{
-  height: 34px !important;
-  padding: 0 10px !important;
-  border-radius: 10px !important;
-  font-size: 12.5px !important;
-
-  background: rgba(10,14,24,.92) !important;
-  color: rgba(255,255,255,.92) !important;
-  border: 1px solid rgba(255,255,255,.14) !important;
-  outline: none !important;
-
-  box-shadow: 0 12px 30px rgba(0,0,0,.35);
-  appearance:none;
-}
-.goog-te-gadget select option,
-.goog-te-combo option{
-  background: #0b0f19 !important;
-  color: rgba(255,255,255,.92) !important;
-}
-/* =========================
-   FIX SFUMATURE + NO BANDING
-   Incolla in fondo a site.css
-========================= */
-
-/* Background più uniforme (niente bande) */
-body::before{
-  /* sostituisce i gradient “duri” con uno più morbido */
-  background:
-    radial-gradient(1800px 1100px at 50% -18%, rgba(var(--accent-rgb), .72), transparent 64%),
-    radial-gradient(1400px 980px  at -12% 45%, rgba(var(--accent-rgb), .30), transparent 76%),
-    radial-gradient(1400px 980px  at 112% 45%, rgba(var(--accent-rgb), .30), transparent 76%),
-    radial-gradient(2000px 1400px at 50% 55%, rgba(var(--accent-rgb), .14), transparent 82%),
-    radial-gradient(2000px 1300px at 50% 118%, rgba(var(--accent-rgb), .18), transparent 86%) !important;
-  filter: blur(38px) !important;
-}
-
-/* Fog continuo: elimina lo stacco “a metà” */
-body::after{
-  background:
-    radial-gradient(1400px 1100px at 50% 40%, rgba(var(--accent-rgb), .10), transparent 82%),
-    radial-gradient(1100px 900px at 18% 28%, rgba(var(--accent-rgb), .12), transparent 80%),
-    radial-gradient(1100px 900px at 82% 28%, rgba(var(--accent-rgb), .10), transparent 82%),
-    radial-gradient(1600px 1200px at 50% 78%, rgba(var(--accent-rgb), .08), transparent 86%) !important;
-  filter: blur(52px) !important;
-  opacity: .98 !important;
-}
-
-/* Dithering / grain (anti “si vede male”) */
-body{
-  background-image:
-    radial-gradient(1200px 700px at 50% 0%, rgba(var(--accent-rgb), .06), transparent 70%),
-    radial-gradient(1200px 900px at 50% 100%, rgba(var(--accent-rgb), .04), transparent 76%);
-  background-color: var(--bg) !important;
-}
-body::selection{ background: rgba(var(--accent-rgb), .35); }
-
-/* layer grain sopra lo sfondo (non sopra i contenuti) */
-body{
-  isolation: isolate;
-}
-body .__grain{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  opacity: .10;
-  mix-blend-mode: overlay;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,.05) 0px,
-      rgba(255,255,255,.05) 1px,
-      rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0) 4px
-    );
-  filter: blur(.25px);
-}
-@media (prefers-reduced-motion: reduce){
-  body .__grain{ display:none; }
-}
-.section-title{
-  text-shadow:
-    0 18px 80px rgba(0,0,0,.55),
-    0 0 26px rgba(var(--accent-rgb), .18);
-}
-.section-sub{
-  text-shadow: 0 14px 50px rgba(0,0,0,.45);
-}
-/* =========================================================
-   FIX PRO: HERO VOID + BOTTOM BLEND + NO HARSH BANDS
-   Incolla in fondo a /assets/site.css
-   ========================================================= */
-
-/* 1) Ammorbidisci il fog globale (meno “bande”) */
-body::before{
-  filter: blur(44px) !important;
-  opacity: 1 !important;
-}
-body::after{
-  filter: blur(64px) !important;
-  opacity: .92 !important;
-}
-
-/* 2) Crea un “blend” continuo tra ultima section e footer (niente stacco) */
-.footer{
-  background: transparent !important; /* evita fascia */
-  border-top: 1px solid rgba(255,255,255,.06) !important;
-  position: relative;
-  isolation: isolate;
-}
-.footer::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:-120px;
-  transform: translateX(-50%);
-  width: min(1600px, calc(100% + 500px));
-  height: 320px;
-  pointer-events:none;
-  z-index:-1;
-
-  /* “floor glow” super morbido */
-  background:
-    radial-gradient(1200px 260px at 50% 80%, rgba(var(--accent-rgb), .16), transparent 72%),
-    radial-gradient(1600px 420px at 50% 90%, rgba(var(--accent-rgb), .10), transparent 80%);
-
-  filter: blur(34px);
-  opacity: .95;
-}
-
-/* 3) Riduci le “bande” orizzontali: aggiungi un haze che uniforma il centro pagina */
-.section::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:-80px;
-  transform: translateX(-50%);
-  width: min(1600px, calc(100% + 420px));
-  height: calc(100% + 160px);
-  pointer-events:none;
-  z-index:-1;
-  background:
-    radial-gradient(1200px 520px at 50% 35%, rgba(var(--accent-rgb), .08), transparent 76%),
-    radial-gradient(1600px 900px at 50% 60%, rgba(var(--accent-rgb), .06), transparent 82%);
-  filter: blur(44px);
-  opacity: .9;
-}
-
-/* 4) Migliora il “mismatch” glow box vs background: halo più grande e più sfumato */
-.card::before, .small-card::before, .widget::before{
-  filter: blur(34px) !important;
-  opacity: .92 !important;
-}
-
-/* 5) Nei cerchi rossi: aggiungi un “vignette invertito” morbido per far staccare meglio i contenuti */
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:-120px -180px;
-  pointer-events:none;
-  z-index:-1;
-  background:
-    radial-gradient(1200px 520px at 50% 18%, rgba(var(--accent-rgb), .18), transparent 74%),
-    radial-gradient(1400px 900px at 50% 55%, rgba(0,0,0,.35), transparent 70%);
-  filter: blur(28px);
-  opacity: 1;
-}
-/* =========================
-   BOTTOM LIGHT FIX (no macchie / no stacchi)
-========================= */
-
-/* rende il glow più “uniforme” e meno aggressivo */
-body::before{
-  filter: blur(54px) !important;
-}
-body::after{
-  filter: blur(78px) !important;
-  opacity: .88 !important;
-}
-
-/* footer: floor glow ultra morbido + fade in trasparenza */
-.footer{
-  background: transparent !important;
-  border-top: 1px solid rgba(255,255,255,.06) !important;
-  position: relative;
-  isolation: isolate;
-}
-
-.footer::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:-140px;
-  transform: translateX(-50%);
-  width: min(1900px, calc(100% + 700px));
-  height: 520px;
-  pointer-events:none;
-  z-index:-1;
-
-  background:
-    radial-gradient(1400px 380px at 50% 74%, rgba(var(--accent-rgb), .14), transparent 72%),
-    radial-gradient(1900px 620px at 50% 88%, rgba(var(--accent-rgb), .08), transparent 82%);
-
-  filter: blur(46px);
-  opacity: .92;
-}
-
-/* elimina qualunque “banda” tra sezione e footer */
-.section{
-  position: relative;
-}
-.section::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-140px;
-  transform: translateX(-50%);
-  width: min(1900px, calc(100% + 700px));
-  height: 360px;
-  pointer-events:none;
-  z-index:-1;
-
-  background:
-    radial-gradient(1500px 420px at 50% 30%, rgba(var(--accent-rgb), .10), transparent 78%),
-    radial-gradient(1900px 560px at 50% 58%, rgba(0,0,0,.30), transparent 75%);
-
-  filter: blur(52px);
-  opacity: 1;
-}
-/* ===== FIX: particles always visible (layer order) ===== */
-body{ position: relative; }
-
-/* glow molto dietro */
-body::before{ z-index: -4 !important; }
-body::after{  z-index: -3 !important; }
-
-/* grain leggermente sopra il glow */
-.__grain{ z-index: -2 !important; }
-
-/* particles sopra bg layers ma sotto i contenuti */
-#clickozParticles{ z-index: -1 !important; }
-#clickozParticles{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.pburst{
-  position:absolute;
-  left: var(--sx);
-  top:  var(--sy);
-  width: var(--sz);
-  height: var(--sz);
-  border-radius: 999px;
-  background: rgba(var(--accent-rgb), .98);
-  box-shadow: 0 0 18px rgba(var(--accent-rgb), .55), 0 0 70px rgba(var(--accent-rgb), .18);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(.65);
-  animation: burstFly var(--dur) cubic-bezier(.12,.9,.18,1) forwards;
-  animation-delay: var(--delay);
-  will-change: transform, opacity;
-}
-
-@keyframes burstFly{
-  0%{ opacity:0; transform: translate(-50%,-50%) scale(.55); }
-  10%{ opacity: var(--op); }
-  100%{ opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.12); }
-}
-/* ===== PRO BACKGROUND: soft nebula, no harsh bands ===== */
-body{
-  background: var(--bg) !important;
-}
-
-body::before{
-  content:"";
-  position: fixed;
-  inset: -90%;
-  pointer-events:none;
-  z-index: -4;
-
-  background:
-    /* spotlight hero */
-    radial-gradient(1600px 900px at 50% -10%, rgba(var(--accent-rgb), .55), transparent 64%),
-    /* side nebula */
-    radial-gradient(1200px 900px at -10% 45%, rgba(var(--accent-rgb), .22), transparent 76%),
-    radial-gradient(1200px 900px at 110% 45%, rgba(var(--accent-rgb), .22), transparent 76%),
-    /* central haze to avoid “stacchi” */
-    radial-gradient(1900px 1400px at 50% 55%, rgba(var(--accent-rgb), .12), transparent 82%),
-    /* bottom fade (molto morbido) */
-    radial-gradient(1700px 900px at 50% 118%, rgba(var(--accent-rgb), .14), transparent 88%);
-
-  filter: blur(52px);
-  opacity: 1;
-}
-
-body::after{
-  content:"";
-  position: fixed;
-  inset: -50%;
-  pointer-events:none;
-  z-index: -3;
-
-  background:
-    radial-gradient(1100px 900px at 18% 24%, rgba(var(--accent-rgb), .10), transparent 78%),
-    radial-gradient(1100px 900px at 82% 24%, rgba(var(--accent-rgb), .10), transparent 80%),
-    radial-gradient(1700px 1200px at 50% 70%, rgba(var(--accent-rgb), .08), transparent 84%);
-
-  filter: blur(74px);
-  opacity: .92;
-}
-.__grain{
-  position: fixed;
-  inset: 0;
-  pointer-events:none;
-  opacity: .10;
-  mix-blend-mode: overlay;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,.05) 0px,
-      rgba(255,255,255,.05) 1px,
-      rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0) 4px
-    );
-  filter: blur(.25px);
-}
-/* =========================
-   FOOTER FIX: less space + black + copyright glow
-========================= */
-
-/* togli padding enorme e spazio finale */
-.footer{
-  margin-top: 0 !important;
-  padding: 18px 0 10px !important;
-  background: #05060a !important;
-  border-top: 1px solid rgba(255,255,255,.07) !important;
-}
-.footer .container[style*="margin-top"]{
-  margin-top: 10px !important;
-}
-
-/* separatore più leggero */
-.footer .sep{
-  border-top: 1px solid rgba(255,255,255,.07) !important;
-}
-
-/* glow SOLO sul copyright (ultima riga) */
-.footer .container > div[style*="©"]{
-  position: relative;
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .10) inset,
-    0 18px 70px rgba(var(--accent-rgb), .14);
-}
-
-/* rimuovi eventuali glow/overlay del footer messi prima */
-.footer::before,
-.footer::after{ content: none !important; }
-/* =========================
-   BACKGROUND FIX: softer, no harsh stop/band
-========================= */
-
-body{
-  background: #0b0f19 !important;
-}
-
-/* glow dietro: meno potente e più uniforme */
-body::before{
-  z-index: -4 !important;
-  filter: blur(62px) !important;
-  opacity: .92 !important;
-  background:
-    radial-gradient(1500px 850px at 50% -12%, rgba(var(--accent-rgb), .42), transparent 66%),
-    radial-gradient(1100px 900px at -8% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
-    radial-gradient(1100px 900px at 108% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
-    radial-gradient(1700px 1200px at 50% 62%, rgba(var(--accent-rgb), .10), transparent 84%),
-    /* fondo: SUPER soft (niente fascia) */
-    radial-gradient(1800px 900px at 50% 120%, rgba(var(--accent-rgb), .07), transparent 90%) !important;
-}
-
-/* haze sopra: elimina banding e stacchi */
-body::after{
-  z-index: -3 !important;
-  filter: blur(84px) !important;
-  opacity: .78 !important;
-  background:
-    radial-gradient(1200px 900px at 18% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
-    radial-gradient(1200px 900px at 82% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
-    radial-gradient(1700px 1200px at 50% 72%, rgba(var(--accent-rgb), .06), transparent 86%) !important;
-}
-/* =========================
-   PARTICLES VISIBILITY FIX
-========================= */
-
-/* important: non devono finire sotto i pseudo-elementi */
-#clickozParticles{
-  position: fixed !important;
-  inset: 0 !important;
-  pointer-events: none !important;
-  overflow: hidden !important;
-  z-index: -1 !important; /* sopra bg, sotto contenuti */
-}
-
-/* grain opzionale: sta sotto le particelle */
-.__grain{ z-index: -2 !important; }
-/* =========================
-   BACKGROUND: pro nebula, NO hard bands, NO overflow
-========================= */
-body{
-  background: #0b0f19 !important;
-}
-
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events:none;
-  z-index:-4;
-  background:
-    radial-gradient(1600px 900px at 50% -10%, rgba(var(--accent-rgb), .42), transparent 66%),
-    radial-gradient(1100px 900px at -8% 45%, rgba(var(--accent-rgb), .16), transparent 78%),
-    radial-gradient(1100px 900px at 108% 45%, rgba(var(--accent-rgb), .16), transparent 78%),
-    radial-gradient(1700px 1200px at 50% 62%, rgba(var(--accent-rgb), .10), transparent 84%),
-    radial-gradient(1700px 900px at 50% 120%, rgba(var(--accent-rgb), .07), transparent 90%);
-  filter: blur(60px);
-  opacity: .95;
-}
-
-body::after{
-  content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events:none;
-  z-index:-3;
-  background:
-    radial-gradient(1200px 900px at 18% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
-    radial-gradient(1200px 900px at 82% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
-    radial-gradient(1700px 1200px at 50% 72%, rgba(var(--accent-rgb), .06), transparent 86%);
-  filter: blur(84px);
-  opacity: .78;
-}
-/* =========================
-   PARTICLES: burst + idle
-========================= */
-#clickozParticles{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;         /* sopra bg, sotto contenuti */
-  overflow: hidden;
-}
-
-.pburst, .pidle{
-  position:absolute;
-  border-radius:999px;
-  background: rgba(var(--accent-rgb), .96);
-  box-shadow: 0 0 18px rgba(var(--accent-rgb), .50), 0 0 70px rgba(var(--accent-rgb), .16);
-  will-change: transform, opacity;
-}
-
-/* BURST */
-.pburst{
-  left: var(--sx);
-  top:  var(--sy);
-  width: var(--sz);
-  height: var(--sz);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(.65);
-  animation: burstFly var(--dur) cubic-bezier(.12,.9,.18,1) forwards;
-  animation-delay: var(--delay);
-}
-@keyframes burstFly{
-  0%{ opacity:0; transform: translate(-50%,-50%) scale(.55); }
-  10%{ opacity: var(--op); }
-  100%{ opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.12); }
-}
-
-/* IDLE (sempre visibili, molto leggere) */
-.pidle{
-  width: 2px;
-  height: 2px;
-  opacity: .18;
-  animation: idleDrift var(--idur) linear infinite;
-}
-@keyframes idleDrift{
-  0%{ transform: translate3d(0,0,0); opacity: .08; }
-  10%{ opacity: .18; }
-  100%{ transform: translate3d(var(--ix), var(--iy), 0); opacity: .08; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  #clickozParticles{ display:none; }
-}
-/* =========================================================
-   CLICKoz PRO PACK CLEAN (ONE ONLY)
-   - Soft nebula bg (no bands)
-   - Grain (anti banding)
-   - Particles (idle + burst)
-========================================================= */
-
-html, body { overflow-x: hidden; }
-body{
-  position: relative;
-  background: #0b0f19; /* base */
-}
-
-/* ---------- Background nebula (ONLY ONCE) ---------- */
-body::before{
-  content:"";
-  position: fixed;
-  inset: -60%;
-  pointer-events: none;
-  z-index: -4;
-  background:
-    radial-gradient(1500px 900px at 50% -12%, rgba(var(--accent-rgb), .42), transparent 66%),
-    radial-gradient(1100px 900px at -10% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
-    radial-gradient(1100px 900px at 110% 44%, rgba(var(--accent-rgb), .16), transparent 78%),
-    radial-gradient(1700px 1200px at 50% 62%, rgba(var(--accent-rgb), .10), transparent 84%),
-    radial-gradient(1700px 900px at 50% 118%, rgba(var(--accent-rgb), .08), transparent 90%);
-  filter: blur(62px);
-  opacity: .95;
-}
-
-body::after{
-  content:"";
-  position: fixed;
-  inset: -35%;
-  pointer-events: none;
-  z-index: -3;
-  background:
-    radial-gradient(1200px 900px at 18% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
-    radial-gradient(1200px 900px at 82% 26%, rgba(var(--accent-rgb), .08), transparent 82%),
-    radial-gradient(1700px 1200px at 50% 72%, rgba(var(--accent-rgb), .06), transparent 86%);
-  filter: blur(84px);
-  opacity: .80;
-}
-
-/* ---------- Grain (anti banding) ---------- */
-.__grain{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -2;
-  opacity: .10;
-  mix-blend-mode: overlay;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,.05) 0px,
-      rgba(255,255,255,.05) 1px,
-      rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0) 4px
-    );
-  filter: blur(.25px);
-}
-
-/* ---------- Particles layer (ONLY ONCE) ---------- */
-#clickozParticles{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1; /* sopra bg/grain, sotto contenuti */
-  overflow: hidden;
-}
-
-/* idle particles */
-.pidle{
-  position:absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 999px;
-  background: rgba(var(--accent-rgb), .90);
-  box-shadow:
-    0 0 14px rgba(var(--accent-rgb), .40),
-    0 0 44px rgba(var(--accent-rgb), .14);
-  opacity: .16;
-  animation: idleDrift var(--idur) ease-in-out infinite;
-  will-change: transform, opacity;
-}
-@keyframes idleDrift{
-  0%   { transform: translate3d(0,0,0); opacity: .10; }
-  50%  { transform: translate3d(var(--ix), var(--iy), 0); opacity: .20; }
-  100% { transform: translate3d(0,0,0); opacity: .10; }
-}
-
-/* burst particles (2s) */
-.pburst{
-  position:absolute;
-  left: var(--sx);
-  top:  var(--sy);
-  width: var(--sz);
-  height: var(--sz);
-  border-radius: 999px;
-  background: rgba(var(--accent-rgb), .96);
-  box-shadow:
-    0 0 18px rgba(var(--accent-rgb), .55),
-    0 0 70px rgba(var(--accent-rgb), .18);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(.65);
-  animation: burstFly var(--dur) cubic-bezier(.12,.9,.18,1) forwards;
-  animation-delay: var(--delay);
-  will-change: transform, opacity;
-}
-@keyframes burstFly{
-  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.55); }
-  10%  { opacity: var(--op); }
-  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.12); }
-}
-
-/* ---------- Cards glow (light + clean) ---------- */
-.card, .small-card{
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(15,21,38,.58);
-  box-shadow: 0 16px 50px rgba(0,0,0,.28);
-  position: relative;
-}
-.card:hover, .small-card:hover{
-  border-color: rgba(var(--accent-rgb), .55);
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), .18),
-    0 22px 70px rgba(0,0,0,.42),
-    0 18px 44px rgba(var(--accent-rgb), .12);
-}
-
-/* ---------- Footer: less space + black ---------- */
-.footer{
-  margin-top: 0;
-  background: rgba(0,0,0,.18);
-}
-
-/* accessibility */
-@media (prefers-reduced-motion: reduce){
-  #clickozParticles, .__grain{ display:none; }
-}
-/* ===== Google Translate (Language) — FIX size + dropdown black ===== */
-
-/* wrapper in nav: allineato e proporzionato */
-#gtNavWrap{
-  display:none;
-  align-items:center;
-}
-#gtNavWrap.show{ display:inline-flex; }
-
-/* “pulsante” del selettore: stessa feel del tuo dot-btn */
-#google_translate_element{
-  display:inline-flex;
-  align-items:center;
-}
-
-/* il select vero e proprio (goog-te-combo) */
-.goog-te-gadget select,
-.goog-te-combo{
-  height: 42px !important;               /* proporzionato ai bottoni */
-  min-width: 150px !important;           /* evita che sia microscopico */
-  padding: 0 34px 0 12px !important;     /* spazio per freccia */
+  height: 42px !important;
+  min-width: 160px !important;
+  padding: 0 34px 0 12px !important;
   border-radius: 12px !important;
   border: 1px solid var(--border) !important;
-  background: #000 !important;           /* nero */
-  color: #fff !important;                /* testo bianco */
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif !important;
-  font-weight: 800 !important;
+  background: #000 !important;
+  color: #fff !important;
+  font-weight: 900 !important;
   font-size: 13px !important;
-  line-height: 42px !important;
   cursor: pointer !important;
-
   appearance: none !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
 }
-
-/* hover/focus coerenti col tema */
+#google_translate_element::after{
+  content:"▾";
+  position:absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.85);
+  pointer-events:none;
+  font-size: 12px;
+}
 .goog-te-gadget select:hover,
 .goog-te-combo:hover{
   border-color: rgba(var(--accent-rgb), .55) !important;
@@ -2307,60 +742,9 @@ body::after{
 }
 .goog-te-gadget select:focus,
 .goog-te-combo:focus{
-  outline: none !important;
+  outline:none !important;
   box-shadow: var(--focus) !important;
   border-color: rgba(var(--accent-rgb), .65) !important;
 }
-
-/* freccia custom (simile a “dropdown”) */
-#google_translate_element{
-  position: relative;
-}
-#google_translate_element::after{
-  content: "▾";
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(255,255,255,.85);
-  pointer-events: none;
-  font-size: 12px;
-}
-
-/* “Select language” / gadget: nascondi roba extra */
-.goog-te-gadget{
-  font-size: 0 !important;
-}
-.goog-te-gadget span{ display:none !important; }
-
-/* IMPORTANT:
-   Il menu a tendina (lista lingue) è un overlay di Google.
-   Si può “forzare” stile nero su gran parte dei browser con queste regole. */
-.goog-te-menu-frame{
-  box-shadow: 0 18px 50px rgba(0,0,0,.55) !important;
-  border-radius: 12px !important;
-}
-
-/* interno menu Google */
-.goog-te-menu2{
-  background: #000 !important;
-  border: 1px solid rgba(255,255,255,.14) !important;
-  border-radius: 12px !important;
-}
-.goog-te-menu2-item div,
-.goog-te-menu2-item:link div,
-.goog-te-menu2-item:visited div{
-  background: #000 !important;
-  color: #fff !important;
-}
-.goog-te-menu2-item:hover div{
-  background: rgba(var(--accent-rgb), .18) !important;
-  color: #fff !important;
-}
-
-/* le option del select (alcuni browser non rispettano background nel dropdown nativo,
-   ma queste aiutano dove possibile) */
-.goog-te-combo option{
-  background: #000 !important;
-  color: #fff !important;
-}
+.goog-te-banner-frame{ display:none !important; }
+body{ top:0 !important; }
