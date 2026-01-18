@@ -329,7 +329,7 @@
     if (layer.querySelector('.pidle')) return; // don't duplicate
 
     const isMobile = window.matchMedia("(max-width: 720px)").matches;
-    const COUNT = isMobile ? 55 : 120;
+    const COUNT = isMobile ? 140 : 280;
 
     for(let i=0;i<COUNT;i++){
       const p = document.createElement('span');
@@ -352,7 +352,7 @@
     layer.querySelectorAll(".pburst").forEach(n => n.remove());
 
     const isMobile = window.matchMedia("(max-width: 720px)").matches;
-    const COUNT = isMobile ? 110 : 240;
+    const COUNT = isMobile ? 180 : 360;
 
     // origin from hero area
     const ORIGIN_X = 50; // %
