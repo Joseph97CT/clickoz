@@ -55,15 +55,18 @@
       <div class="spacer"></div>
 
       <div class="nav-actions" aria-label="Preferences">
+        
+          <!-- MOBILE: burger on the right -->
+  <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+        
         <!-- Accent picker -->
         <div class="dropdown">
           <button class="dot-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Theme color">
             <span class="dot" id="colorDot" aria-hidden="true"></span>
           </button>
-  <!-- MOBILE: burger -->
-      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-        <span></span><span></span><span></span>
-      </button>
+
           
           <div class="menu" id="colorMenu" role="menu" aria-label="Pick theme color">
             <div class="menu-title">Theme color</div>
@@ -496,4 +499,5 @@
   <script src="/assets/site.js" defer></script>
 </body>
 </html>
+
 
