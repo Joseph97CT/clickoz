@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="/assets/site.css?v=3" />
 </head>
 
-<body class="bigtext">
+<body>
   <!-- Optional: particles layer (JS also creates it if missing) -->
   <div id="clickozParticles" aria-hidden="true"></div>
   <div class="__grain" aria-hidden="true"></div>
@@ -33,17 +33,8 @@
   <nav class="nav" aria-label="Primary navigation">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
-        <!-- NEW: Clean C mark (no background) that follows accent color -->
-        <span class="logo-badge" id="logoBadge" aria-hidden="true">
-          <svg class="logo-mark" viewBox="0 0 48 48" width="1em" height="1em" aria-hidden="true" focusable="false">
-            <!-- stylized "C" (stroke only) -->
-            <path d="M32.5 13.5c-2.4-2.2-5.4-3.3-8.9-3.3-7.2 0-12.6 5.1-12.6 13.8S16.4 37.8 23.6 37.8c3.6 0 6.7-1.2 9.2-3.6"
-                  fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-
-        <!-- NEW: "oz" bold + accent -->
-        <span class="logo-text">Click<span class="logo-oz">oz</span></span>
+        <span class="logo-badge" id="logoBadge" aria-hidden="true">⚡</span>
+        <span class="logo-text">Clickoz</span>
       </a>
 
       <div class="nav-links" aria-label="Sections">
@@ -88,26 +79,7 @@
       <span class="badge">Free • Fast • Privacy-friendly • No account needed</span>
     </div>
 
-    <!-- NEW: Box under the badge with trust list + buttons -->
-    <div class="hero-box" aria-label="Quick highlights">
-      <div class="trust-strip" aria-label="Trust points">
-        <span class="trust-pill">🔒 Privacy-first (runs in your browser)</span>
-        <span class="trust-pill">⚡ Instant results, no signup</span>
-        <span class="trust-pill">🧠 Clear guidance + examples</span>
-        <span class="trust-pill">📋 Copy-ready outputs</span>
-        <span class="trust-pill">🖥️ Desktop + PC-friendly UI</span>
-        <span class="trust-pill">📱 Mobile-friendly UI</span>
-        <span class="trust-pill">🧩 Focused tools, no clutter</span>
-        <span class="trust-pill">🕒 Saves time on real workflows</span>
-      </div>
-
-      <div class="row" style="margin-top:14px">
-        <a class="btn primary" href="#tools">Browse tools</a>
-        <a class="btn" href="/guides/">Read guides</a>
-      </div>
-    </div>
-
-    <h1 style="margin-top:18px;">
+    <h1>
       A professional toolkit for
       <span class="hl">SEO</span>,
       <span class="hl">writing</span>,
@@ -119,51 +91,65 @@
       and handle encoding/decoding tasks. Everything runs in your browser, so you can work fast without creating accounts.
     </p>
 
-    <!-- NEW: 1st Recommended box (title + desc only) -->
-    <div class="hero-box" style="margin-top:16px;" aria-label="Recommended intro">
-      <h3 class="box-title">Recommended now</h3>
-      <p class="box-sub">
-        Three quick picks to move faster today: one for text analysis, one for SEO, and one for dev formatting.
-        Refresh anytime to discover new picks.
-      </p>
+    <div class="trust-strip" aria-label="Trust points">
+      <span class="trust-pill">🔒 Privacy-first (runs in your browser)</span>
+      <span class="trust-pill">⚡ Instant results, no signup</span>
+      <span class="trust-pill">🧠 Clear guidance + examples</span>
+      <span class="trust-pill">📋 Copy-ready outputs</span>
+      <span class="trust-pill">🖥️ Desktop + PC-friendly UI</span>
+      <span class="trust-pill">📱 Mobile-friendly UI</span>
+      <span class="trust-pill">🧩 Focused tools, no clutter</span>
+      <span class="trust-pill">🕒 Saves time on real workflows</span>
     </div>
 
-    <!-- NEW: 2nd Recommended box (grouped with cards + shortcut) -->
-    <div class="hero-box" style="margin-top:12px;" aria-label="Recommended tools">
-      <div class="rec-grid">
-        <!-- Slot 1 -->
-        <a class="card rec-card" id="randTool1" href="/tool/word-counter/">
-          <div class="rec-head">
-            <span class="rec-icon" id="randIcon1" aria-hidden="true">🔢</span>
-            <h3 id="randTitle1">Word Counter</h3>
-          </div>
-          <p id="randDesc1">Count words, characters, sentences, and reading time for briefs, essays, and SEO drafts.</p>
-          <span class="tool-cta" id="randCta1">Use Word Counter</span>
-        </a>
+    <div class="row" style="margin-top:14px">
+      <a class="btn primary" href="#tools">Browse tools</a>
+      <a class="btn" href="/guides/">Read guides</a>
+    </div>
 
-        <!-- Slot 2 -->
-        <a class="card rec-card" id="randTool2" href="/tool/readability-analyzer/">
-          <div class="rec-head">
-            <span class="rec-icon" id="randIcon2" aria-hidden="true">📚</span>
-            <h3 id="randTitle2">Readability Analyzer</h3>
-          </div>
-          <p id="randDesc2">Get a readability score, grade level, and clear edits to make text easier to skim and understand.</p>
-          <span class="tool-cta" id="randCta2">Use Readability Analyzer</span>
-        </a>
+    <div class="widget-row">
+      <div class="widget">
+        <h3>Recommended now</h3>
+        <p style="margin-bottom:14px;">
+          Three quick picks to move faster today: one for text analysis, one for SEO, and one for dev formatting.
+          Refresh anytime to discover new picks.
+        </p>
 
-        <!-- Slot 3 -->
-        <a class="card rec-card" id="randTool3" href="/tool/meta-tags/">
-          <div class="rec-head">
-            <span class="rec-icon" id="randIcon3" aria-hidden="true">🏷️</span>
-            <h3 id="randTitle3">Meta Tag Optimizer</h3>
-          </div>
-          <p id="randDesc3">Preview SERP titles/descriptions, check length, and refine wording to improve click-through rate.</p>
-          <span class="tool-cta" id="randCta3">Use Meta Tag Optimizer</span>
-        </a>
-      </div>
+        <div class="rec-grid">
+          <!-- Slot 1 -->
+          <a class="card rec-card" id="randTool1" href="/tool/word-counter/">
+            <div class="rec-head">
+              <span class="rec-icon" id="randIcon1" aria-hidden="true">🔢</span>
+              <h3 id="randTitle1">Word Counter</h3>
+            </div>
+            <p id="randDesc1">Count words, characters, sentences, and reading time for briefs, essays, and SEO drafts.</p>
+            <span class="tool-cta" id="randCta1">Use Word Counter</span>
+          </a>
 
-      <div class="box-foot">
-        Shortcut: press <b>/</b> to focus search and filter tools instantly.
+          <!-- Slot 2 -->
+          <a class="card rec-card" id="randTool2" href="/tool/readability-analyzer/">
+            <div class="rec-head">
+              <span class="rec-icon" id="randIcon2" aria-hidden="true">📚</span>
+              <h3 id="randTitle2">Readability Analyzer</h3>
+            </div>
+            <p id="randDesc2">Get a readability score, grade level, and clear edits to make text easier to skim and understand.</p>
+            <span class="tool-cta" id="randCta2">Use Readability Analyzer</span>
+          </a>
+
+          <!-- Slot 3 -->
+          <a class="card rec-card" id="randTool3" href="/tool/meta-tags/">
+            <div class="rec-head">
+              <span class="rec-icon" id="randIcon3" aria-hidden="true">🏷️</span>
+              <h3 id="randTitle3">Meta Tag Optimizer</h3>
+            </div>
+            <p id="randDesc3">Preview SERP titles/descriptions, check length, and refine wording to improve click-through rate.</p>
+            <span class="tool-cta" id="randCta3">Use Meta Tag Optimizer</span>
+          </a>
+        </div>
+
+        <div style="margin-top:10px;font-size:12.5px;opacity:.75;">
+          Shortcut: press <b>/</b> to focus search and filter tools instantly.
+        </div>
       </div>
     </div>
   </header>
