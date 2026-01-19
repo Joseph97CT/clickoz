@@ -37,6 +37,10 @@
     return "99,102,241";
   }
 
+  function currentAccentRgb(){
+    return (getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "99,102,241");
+  }
+
   function setAccent(a1, a2){
     const accent = a1 || '#6366f1';
     const accent2 = a2 || accent;
@@ -48,17 +52,17 @@
     const dot = $('#colorDot');
     if (dot) dot.style.background = accent;
 
-    // logo badge follows accent (CSS uses currentColor)
     const badge = $('#logoBadge');
     if (badge) badge.style.color = accent;
 
     try{
       localStorage.setItem('clickoz_accent', JSON.stringify({a1: accent, a2: accent2}));
     }catch(_){}
+
+    // Update canvas color smoothly (next frame reads CSS vars)
   }
 
   function markActiveSwatches(accent){
-    // desktop palette + mobile palette
     $$('.color-option').forEach(x => x.classList.toggle('active', x.dataset.accent === accent));
   }
 
@@ -70,7 +74,6 @@
     const menu    = $('#mobileMenu');
     const overlay = $('#mOverlay');
     const closeBtn= $('#mClose');
-
     if(!burger || !menu || !overlay || !closeBtn) return;
 
     const root = document.documentElement;
@@ -100,13 +103,11 @@
       if(e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
     });
 
-    // close when clicking a link
     menu.addEventListener('click', (e) => {
       const a = e.target.closest('a');
       if(a) closeMenu();
     });
 
-    // inject no-scroll style once
     if(!$('#__noScrollStyle')){
       const style = document.createElement('style');
       style.id = "__noScrollStyle";
@@ -119,9 +120,6 @@
      2) ACCENT MENU (DESKTOP) + SYNC WITH MOBILE GRID
   ========================================================= */
   (function initAccent(){
-    const toggle = $('#colorToggle');
-    const menu   = $('#colorMenu');
-
     // restore saved accent first
     try{
       const saved = JSON.parse(localStorage.getItem('clickoz_accent') || 'null');
@@ -129,7 +127,6 @@
         setAccent(saved.a1, saved.a2);
         markActiveSwatches(saved.a1);
       }else{
-        // ensure accent-rgb exists even if CSS sets accent
         const a = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6366f1';
         document.documentElement.style.setProperty('--accent-rgb', hexToRgbTriplet(a));
         const dot = $('#colorDot');
@@ -138,7 +135,9 @@
       }
     }catch(_){}
 
-    // Desktop dropdown behavior
+    const toggle = $('#colorToggle');
+    const menu   = $('#colorMenu');
+
     if(toggle && menu){
       toggle.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -156,21 +155,17 @@
         setAccent(opt.dataset.accent, opt.dataset.accent2);
         markActiveSwatches(opt.dataset.accent);
         closeAllMenus();
-
-        burstParticles(); // subtle FX on change
+        burstParticles();
       });
     }
 
-    // Mobile grid (same .color-option class, inside #mobileColorGrid)
     const mobileGrid = $('#mobileColorGrid');
     if(mobileGrid){
       mobileGrid.addEventListener('click', (e) => {
         const opt = e.target.closest('.color-option');
         if(!opt) return;
-
         setAccent(opt.dataset.accent, opt.dataset.accent2);
         markActiveSwatches(opt.dataset.accent);
-
         burstParticles();
       });
     }
@@ -202,7 +197,6 @@
     const cards = Array.from(grid.querySelectorAll('a.card'));
     let filter = 'all';
 
-    // Fallback category resolver if data-cat missing
     const SEO = new Set([
       "word-counter-pro","readability-analyzer","keyword-density","meta-tags",
       "title-description","alt-text","seo-outline"
@@ -276,7 +270,6 @@
       const p = picks[k];
       const a = $('#' + slot.a);
       if(!a) return;
-
       a.href = p.href;
 
       const i = $('#' + slot.i);
@@ -292,7 +285,7 @@
   })();
 
   /* =========================================================
-     6) COOKIE CONSENT + GOOGLE TRANSLATE (LOAD ONLY IF "all")
+     6) COOKIE CONSENT + GOOGLE TRANSLATE
   ========================================================= */
   (function consentAndGT(){
     const KEY = "clickoz_consent";
@@ -322,9 +315,6 @@
       const desktop = $('#google_translate_element');
       const mobile  = $('#google_translate_element_mobile');
       if(!desktop || !mobile) return;
-
-      // When GT loads, it injects a select into desktop container.
-      // Copy HTML into mobile container if mobile is empty.
       if(desktop.innerHTML.trim() && !mobile.innerHTML.trim()){
         mobile.innerHTML = desktop.innerHTML;
       }
@@ -342,13 +332,12 @@
           'google_translate_element'
         );
 
-        // try mirroring a few times (GT inject timing)
         let tries = 0;
         const t = setInterval(() => {
           mirrorGTToMobile();
           tries++;
-          if(tries > 15) clearInterval(t);
-        }, 400);
+          if(tries > 18) clearInterval(t);
+        }, 350);
       };
 
       const s = document.createElement('script');
@@ -365,37 +354,20 @@
     }
 
     $('#cookieAccept')?.addEventListener('click', () => {
-      store("all");
-      hideBanner();
-      loadGoogleTranslate();
+      store("all"); hideBanner(); loadGoogleTranslate();
     });
-
     $('#cookieEssential')?.addEventListener('click', () => {
-      store("essential");
-      hideBanner();
+      store("essential"); hideBanner();
     });
-
     $('#cookieReject')?.addEventListener('click', () => {
-      store("none");
-      hideBanner();
+      store("none"); hideBanner();
     });
-
-    $('#cookieClose')?.addEventListener('click', () => {
-      hideBanner();
-    });
+    $('#cookieClose')?.addEventListener('click', () => hideBanner());
   })();
 
   /* =========================================================
-     7) FX: GRAIN + PARTICLES (idle + burst) — OPTIMIZED
+     7) DOM PARTICLES (idle + burst) — stable
   ========================================================= */
-  function ensureGrain(){
-    if (prefersReduce) return;
-    if ($('.__grain')) return;
-    const g = document.createElement('div');
-    g.className = "__grain";
-    document.body.appendChild(g);
-  }
-
   function ensureParticlesLayer(){
     if (prefersReduce) return null;
     let layer = $('#clickozParticles');
@@ -411,12 +383,9 @@
     if (prefersReduce) return;
     const layer = ensureParticlesLayer();
     if(!layer) return;
-
-    // Avoid duplication
     if (layer.querySelector('.pidle')) return;
 
     const isMobile = window.matchMedia("(max-width: 720px)").matches;
-    // Reduced counts for mobile smoothness
     const COUNT = isMobile ? 44 : 90;
 
     for(let i=0;i<COUNT;i++){
@@ -436,14 +405,13 @@
     const layer = ensureParticlesLayer();
     if(!layer) return;
 
-    // remove only previous bursts
     layer.querySelectorAll(".pburst").forEach(n => n.remove());
 
     const isMobile = window.matchMedia("(max-width: 720px)").matches;
     const COUNT = isMobile ? 90 : 180;
 
-    const ORIGIN_X = 50; // %
-    const ORIGIN_Y = 22; // % (hero zone)
+    const ORIGIN_X = 50;
+    const ORIGIN_Y = 22;
     const MAX_DELAY = 0.50;
 
     for(let i=0;i<COUNT;i++){
@@ -474,19 +442,105 @@
     }
   }
 
-  // Pause FX when tab hidden (mobile friendly)
-  let fxRunning = true;
-  document.addEventListener("visibilitychange", () => {
-    fxRunning = !document.hidden;
-    const layer = $('#clickozParticles');
-    if(!layer) return;
-    layer.style.display = fxRunning ? "" : "none";
-  });
+  /* =========================================================
+     8) SPACE CANVAS BACKGROUND — the “real” space effect
+  ========================================================= */
+  (function spaceCanvas(){
+    if (prefersReduce) return;
 
+    const canvas = $('#spaceParticles');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha:true });
+
+    let w=0,h=0,dpr=1;
+    let parts = [];
+    let running = true;
+
+    function resize(){
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = canvas.width  = Math.floor(window.innerWidth * dpr);
+      h = canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height= window.innerHeight + 'px';
+
+      const isMobile = window.matchMedia("(max-width: 720px)").matches;
+      const count = isMobile ? 28 : 70; // PC visible, still light
+      parts = new Array(count).fill(0).map(()=>spawn(true));
+    }
+
+    function spawn(initial=false){
+      const cx = w*0.5, cy = h*0.28;       // hero center-ish
+      const a = Math.random()*Math.PI*2;
+      const speed = (Math.random()*0.60 + 0.25) * dpr;
+
+      const radius = (Math.random() < 0.22 ? (Math.random()*2.6+2.2) : (Math.random()*1.6+1.0)) * dpr;
+
+      const dist = initial ? (Math.random()*Math.min(w,h)*0.60) : 0;
+      const x = cx + Math.cos(a)*dist;
+      const y = cy + Math.sin(a)*dist;
+
+      const vx = Math.cos(a)*speed;
+      const vy = Math.sin(a)*speed;
+
+      return { x,y,vx,vy,r:radius, life:0, max:(Math.random()*260+260) };
+    }
+
+    function step(){
+      if(!running) return;
+
+      ctx.clearRect(0,0,w,h);
+
+      const v = currentAccentRgb();
+
+      // very soft haze to avoid “dead black”
+      ctx.fillStyle = `rgba(${v},0.05)`;
+      ctx.fillRect(0,0,w,h);
+
+      for(let i=0;i<parts.length;i++){
+        const p = parts[i];
+
+        // tiny swirl for space vibe
+        const sw = 0.00085 * dpr;
+        const dx = p.x - w*0.5;
+        const dy = p.y - h*0.28;
+        p.vx += (-dy) * sw;
+        p.vy += ( dx) * sw;
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life++;
+
+        const alpha = Math.max(0, 0.28 - (p.life/p.max)*0.28);
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${v},${alpha})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+
+        if(p.life > p.max || p.x < -120*dpr || p.x > w+120*dpr || p.y < -120*dpr || p.y > h+120*dpr){
+          parts[i] = spawn(false);
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      running = !document.hidden;
+      if(running) requestAnimationFrame(step);
+    });
+
+    window.addEventListener('resize', resize, { passive:true });
+
+    resize();
+    requestAnimationFrame(step);
+  })();
+
+  /* =========================================================
+     9) INIT FX
+  ========================================================= */
   function initFX(){
     if (prefersReduce) return;
-    ensureGrain();
-    ensureParticlesLayer();
     buildIdleParticles();
     burstParticles();
   }
@@ -496,120 +550,4 @@
   } else {
     initFX();
   }
-
-  // expose burst for accent handler (safe)
-  window.__clickozBurst = burstParticles;
-
-  // ensure burstParticles reference exists even before initAccent uses it
-  function burstParticlesSafe(){
-    if(typeof burstParticles === "function") burstParticles();
-  }
-
-  // replace calls inside file
-  function burstParticles(){
-    burstParticlesSafe();
-  }
-
-})();
-/* =========================================================
-   8) SPACE CANVAS PARTICLES (center origin, space drift)
-   - Very light, adapts to mobile/desktop
-========================================================= */
-(function spaceCanvas(){
-  if (prefersReduce) return;
-
-  const canvas = document.getElementById('spaceParticles');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d', { alpha:true });
-
-  let w=0,h=0,dpr=1;
-  let parts = [];
-  let running = true;
-
-  function rgb(){
-    const v = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || '99,102,241';
-    return v;
-  }
-
-  function resize(){
-    dpr = Math.min(2, window.devicePixelRatio || 1);
-    w = canvas.width  = Math.floor(window.innerWidth * dpr);
-    h = canvas.height = Math.floor(window.innerHeight * dpr);
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height= window.innerHeight + 'px';
-
-    const isMobile = window.matchMedia("(max-width: 720px)").matches;
-    const count = isMobile ? 28 : 60; // leggero!
-    parts = new Array(count).fill(0).map(()=>spawn(true));
-  }
-
-  function spawn(initial=false){
-    const cx = w*0.5, cy = h*0.28; // centro/hero (più su)
-    const a = Math.random()*Math.PI*2;
-    const speed = (Math.random()*0.55 + 0.25) * dpr;
-
-    // particelle "grandi" ma soft
-    const radius = (Math.random() < 0.20 ? (Math.random()*2.6+2.2) : (Math.random()*1.6+1.0)) * dpr;
-
-    // partono dal centro e si allargano
-    const dist = initial ? (Math.random()*Math.min(w,h)*0.55) : 0;
-    const x = cx + Math.cos(a)*dist;
-    const y = cy + Math.sin(a)*dist;
-
-    // drift “spaziale” + leggero swirl
-    const vx = Math.cos(a)*speed;
-    const vy = Math.sin(a)*speed;
-
-    return { x,y,vx,vy,r:radius, life:0, max: (Math.random()*240+260) };
-  }
-
-  function step(){
-    if(!running) return;
-
-    ctx.clearRect(0,0,w,h);
-
-    const v = rgb();
-    // glow soft
-    ctx.fillStyle = `rgba(${v},0.10)`;
-    ctx.fillRect(0,0,w,h);
-
-    for(let i=0;i<parts.length;i++){
-      const p = parts[i];
-
-      // swirl leggerissimo
-      const sw = 0.0008 * dpr;
-      const dx = p.x - w*0.5;
-      const dy = p.y - h*0.28;
-      p.vx += (-dy) * sw;
-      p.vy += ( dx) * sw;
-
-      p.x += p.vx;
-      p.y += p.vy;
-      p.life++;
-
-      // draw: orb soft
-      const alpha = Math.max(0, 0.22 - (p.life/p.max)*0.22);
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(${v},${alpha})`;
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fill();
-
-      // respawn fuori schermo o fine vita
-      if(p.life > p.max || p.x < -80*dpr || p.x > w+80*dpr || p.y < -80*dpr || p.y > h+80*dpr){
-        parts[i] = spawn(false);
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
-
-  document.addEventListener("visibilitychange", () => {
-    running = !document.hidden;
-    if(running) requestAnimationFrame(step);
-  });
-
-  window.addEventListener('resize', resize, { passive:true });
-
-  resize();
-  requestAnimationFrame(step);
 })();
