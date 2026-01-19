@@ -511,3 +511,105 @@
   }
 
 })();
+/* =========================================================
+   8) SPACE CANVAS PARTICLES (center origin, space drift)
+   - Very light, adapts to mobile/desktop
+========================================================= */
+(function spaceCanvas(){
+  if (prefersReduce) return;
+
+  const canvas = document.getElementById('spaceParticles');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha:true });
+
+  let w=0,h=0,dpr=1;
+  let parts = [];
+  let running = true;
+
+  function rgb(){
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || '99,102,241';
+    return v;
+  }
+
+  function resize(){
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    w = canvas.width  = Math.floor(window.innerWidth * dpr);
+    h = canvas.height = Math.floor(window.innerHeight * dpr);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height= window.innerHeight + 'px';
+
+    const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    const count = isMobile ? 28 : 60; // leggero!
+    parts = new Array(count).fill(0).map(()=>spawn(true));
+  }
+
+  function spawn(initial=false){
+    const cx = w*0.5, cy = h*0.28; // centro/hero (più su)
+    const a = Math.random()*Math.PI*2;
+    const speed = (Math.random()*0.55 + 0.25) * dpr;
+
+    // particelle "grandi" ma soft
+    const radius = (Math.random() < 0.20 ? (Math.random()*2.6+2.2) : (Math.random()*1.6+1.0)) * dpr;
+
+    // partono dal centro e si allargano
+    const dist = initial ? (Math.random()*Math.min(w,h)*0.55) : 0;
+    const x = cx + Math.cos(a)*dist;
+    const y = cy + Math.sin(a)*dist;
+
+    // drift “spaziale” + leggero swirl
+    const vx = Math.cos(a)*speed;
+    const vy = Math.sin(a)*speed;
+
+    return { x,y,vx,vy,r:radius, life:0, max: (Math.random()*240+260) };
+  }
+
+  function step(){
+    if(!running) return;
+
+    ctx.clearRect(0,0,w,h);
+
+    const v = rgb();
+    // glow soft
+    ctx.fillStyle = `rgba(${v},0.10)`;
+    ctx.fillRect(0,0,w,h);
+
+    for(let i=0;i<parts.length;i++){
+      const p = parts[i];
+
+      // swirl leggerissimo
+      const sw = 0.0008 * dpr;
+      const dx = p.x - w*0.5;
+      const dy = p.y - h*0.28;
+      p.vx += (-dy) * sw;
+      p.vy += ( dx) * sw;
+
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life++;
+
+      // draw: orb soft
+      const alpha = Math.max(0, 0.22 - (p.life/p.max)*0.22);
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${v},${alpha})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+
+      // respawn fuori schermo o fine vita
+      if(p.life > p.max || p.x < -80*dpr || p.x > w+80*dpr || p.y < -80*dpr || p.y > h+80*dpr){
+        parts[i] = spawn(false);
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    running = !document.hidden;
+    if(running) requestAnimationFrame(step);
+  });
+
+  window.addEventListener('resize', resize, { passive:true });
+
+  resize();
+  requestAnimationFrame(step);
+})();
