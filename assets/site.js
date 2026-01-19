@@ -1,293 +1,405 @@
-/* Clickoz site.js — clean + mobile-safe */
-(function () {
-  "use strict";
+(() => {
+  const $  = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  const rnd = (a,b)=>Math.random()*(b-a)+a;
 
-  // ===== Mobile SAFE MODE: Android/iPhone =====
-  const SAFE_MOBILE = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-  window.CLICK0Z_SAFE_MOBILE = SAFE_MOBILE;
+  const prefersReduce = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ===== Helpers =====
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  /* =========================================================
+     0) Helpers
+  ========================================================= */
+  function closeAllMenus(){
+    $$('.menu.active').forEach(m => m.classList.remove('active'));
+    $$('[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+  }
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dropdown')) closeAllMenus();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAllMenus();
+  });
 
-  // ===== Accent theme =====
-  const ACCENT_KEY = "clickozAccent";
-  const ACCENT2_KEY = "clickozAccent2";
-
-  function setAccent(accent, accent2) {
-    document.documentElement.style.setProperty("--accent", accent);
-    document.documentElement.style.setProperty("--accent2", accent2 || accent);
-
-    const dot = $("#colorDot");
-    if (dot) dot.style.background = accent;
-
-    // activate option
-    $$(".color-option").forEach(o => {
-      const a = o.getAttribute("data-accent");
-      o.classList.toggle("active", a === accent);
-    });
-
-    // persist
-    try {
-      localStorage.setItem(ACCENT_KEY, accent);
-      localStorage.setItem(ACCENT2_KEY, accent2 || accent);
-    } catch {}
+  function hexToRgbTriplet(hex){
+    const h = (hex || '').replace('#','').trim();
+    if (h.length === 3){
+      const r = parseInt(h[0]+h[0], 16);
+      const g = parseInt(h[1]+h[1], 16);
+      const b = parseInt(h[2]+h[2], 16);
+      return `${r},${g},${b}`;
+    }
+    if (h.length === 6){
+      const r = parseInt(h.slice(0,2), 16);
+      const g = parseInt(h.slice(2,4), 16);
+      const b = parseInt(h.slice(4,6), 16);
+      return `${r},${g},${b}`;
+    }
+    return "99,102,241";
   }
 
-  function loadSavedAccent() {
-    try {
-      const a = localStorage.getItem(ACCENT_KEY);
-      const a2 = localStorage.getItem(ACCENT2_KEY);
-      if (a) setAccent(a, a2 || a);
-    } catch {}
+  function setAccent(a1, a2){
+    document.documentElement.style.setProperty('--accent', a1);
+    document.documentElement.style.setProperty('--accent2', a2 || a1);
+    document.documentElement.style.setProperty('--accent-rgb', hexToRgbTriplet(a1));
+    const dot = $('#colorDot');
+    if (dot) dot.style.background = a1;
+
+    try{
+      localStorage.setItem('clickoz_accent', JSON.stringify({a1, a2: a2 || a1}));
+    }catch(_){}
   }
 
-  // ===== Accent dropdown UI =====
-  function initAccentPicker() {
-    const toggle = $("#colorToggle");
-    const menu = $("#colorMenu");
-    if (!toggle || !menu) return;
+  /* =========================================================
+     1) Accent menu (dot + palette)
+  ========================================================= */
+  (function initAccent(){
+    const toggle = $('#colorToggle');
+    const menu   = $('#colorMenu');
+    if(!toggle || !menu) return;
 
-    const open = () => {
-      menu.classList.add("open");
-      toggle.setAttribute("aria-expanded", "true");
-    };
-    const close = () => {
-      menu.classList.remove("open");
-      toggle.setAttribute("aria-expanded", "false");
-    };
-    const isOpen = () => menu.classList.contains("open");
-
-    toggle.addEventListener("click", (e) => {
-      e.preventDefault();
-      isOpen() ? close() : open();
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = menu.classList.contains('active');
+      closeAllMenus();
+      menu.classList.toggle('active', !open);
+      toggle.setAttribute('aria-expanded', String(!open));
     });
 
-    document.addEventListener("click", (e) => {
-      if (!menu.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) close();
+    menu.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const opt = e.target.closest('.color-option');
+      if(!opt) return;
+
+      $$('.color-option').forEach(x => x.classList.remove('active'));
+      opt.classList.add('active');
+
+      setAccent(opt.dataset.accent, opt.dataset.accent2);
+      closeAllMenus();
+
+      burstParticles(); // FX on change
     });
 
-    // options
-    $$(".color-option", menu).forEach((opt) => {
-      opt.addEventListener("click", () => {
-        const a = opt.getAttribute("data-accent");
-        const a2 = opt.getAttribute("data-accent2");
-        if (a) setAccent(a, a2 || a);
-      });
-      opt.addEventListener("keydown", (ev) => {
-        if (ev.key === "Enter" || ev.key === " ") {
-          ev.preventDefault();
-          opt.click();
+    // restore saved accent
+    try{
+      const saved = JSON.parse(localStorage.getItem('clickoz_accent') || 'null');
+      if(saved?.a1){
+        setAccent(saved.a1, saved.a2);
+        const match = $$('.color-option').find(x => x.dataset.accent === saved.a1);
+        if(match){
+          $$('.color-option').forEach(x => x.classList.remove('active'));
+          match.classList.add('active');
         }
-      });
-    });
+      }else{
+        // ensure accent-rgb exists even if CSS sets accent
+        const a = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6366f1';
+        document.documentElement.style.setProperty('--accent-rgb', hexToRgbTriplet(a));
+        const dot = $('#colorDot');
+        if (dot) dot.style.background = a;
+      }
+    }catch(_){}
+  })();
 
-    // ESC closes
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
-    });
-  }
-
-  // ===== Cookie consent + Google Translate gated =====
-  const CONSENT_KEY = "clickozConsent"; // "all" | "essential" | "reject"
-  const cookieEl = $(".cookie");
-  const btnReject = $("#cookieReject");
-  const btnEssential = $("#cookieEssential");
-  const btnAccept = $("#cookieAccept");
-  const btnClose = $("#cookieClose");
-  const gtWrap = $("#gtNavWrap");
-
-  function getConsent() {
-    try { return localStorage.getItem(CONSENT_KEY); } catch { return null; }
-  }
-  function setConsent(v) {
-    try { localStorage.setItem(CONSENT_KEY, v); } catch {}
-  }
-  function showCookie() {
-    if (!cookieEl) return;
-    cookieEl.classList.add("show");
-  }
-  function hideCookie() {
-    if (!cookieEl) return;
-    cookieEl.classList.remove("show");
-  }
-
-  function enableGoogleTranslate() {
-    if (!gtWrap) return;
-    gtWrap.style.display = "block";
-
-    // avoid double-load
-    if (window.__clickoz_gt_loaded) return;
-    window.__clickoz_gt_loaded = true;
-
-    window.googleTranslateElementInit = function () {
-      // eslint-disable-next-line no-undef
-      new google.translate.TranslateElement(
-        { pageLanguage: "en", autoDisplay: false },
-        "google_translate_element"
-      );
-    };
-
-    const s = document.createElement("script");
-    s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    s.async = true;
-    document.head.appendChild(s);
-  }
-
-  function applyConsent() {
-    const c = getConsent();
-
-    if (!c) {
-      showCookie();
-      if (gtWrap) gtWrap.style.display = "none";
-      return;
-    }
-
-    hideCookie();
-
-    if (c === "all") enableGoogleTranslate();
-    else if (gtWrap) gtWrap.style.display = "none";
-  }
-
-  function initCookieUI() {
-    if (!cookieEl) return;
-
-    const setAndApply = (v) => {
-      setConsent(v);
-      applyConsent();
-    };
-
-    if (btnReject) btnReject.addEventListener("click", () => setAndApply("reject"));
-    if (btnEssential) btnEssential.addEventListener("click", () => setAndApply("essential"));
-    if (btnAccept) btnAccept.addEventListener("click", () => setAndApply("all"));
-    if (btnClose) btnClose.addEventListener("click", () => setAndApply("essential"));
-  }
-
-  // ===== Tools search + category chips =====
-  function initToolsFilter() {
-    const search = $("#toolSearch");
-    const grid = $("#grid");
-    const chips = $("#chips");
-    if (!grid) return;
-
-    const cards = $$("a.card", grid);
-    let activeCat = "all";
-    let q = "";
-
-    function normalize(s) {
-      return (s || "").toLowerCase().trim();
-    }
-
-    function apply() {
-      const query = normalize(q);
-      cards.forEach((card) => {
-        const cat = card.getAttribute("data-cat") || "all";
-        const hay = normalize(card.getAttribute("data-hay") || "") + " " + normalize(card.textContent || "");
-
-        const okCat = (activeCat === "all") || (cat === activeCat);
-        const okQ = !query || hay.includes(query);
-
-        card.style.display = (okCat && okQ) ? "" : "none";
-      });
-    }
-
-    if (search) {
-      search.addEventListener("input", () => {
-        q = search.value || "";
-        apply();
-      });
-    }
-
-    if (chips) {
-      $$(".chip", chips).forEach((chip) => {
-        chip.addEventListener("click", () => {
-          $$(".chip", chips).forEach(c => c.classList.remove("active"));
-          chip.classList.add("active");
-          activeCat = chip.getAttribute("data-filter") || "all";
-          apply();
-        });
-        chip.addEventListener("keydown", (ev) => {
-          if (ev.key === "Enter" || ev.key === " ") {
-            ev.preventDefault();
-            chip.click();
-          }
-        });
-      });
-    }
-
-    // Shortcut "/" focuses search
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
-        const tag = (document.activeElement && document.activeElement.tagName) || "";
-        if (tag === "INPUT" || tag === "TEXTAREA") return;
+  /* =========================================================
+     2) "/" focuses search (nice UX)
+  ========================================================= */
+  (function slashFocus(){
+    const search = $('#toolSearch');
+    if(!search) return;
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
         e.preventDefault();
-        if (search) search.focus();
+        search.focus();
       }
     });
+  })();
 
+  /* =========================================================
+     3) Search + Chips filter (works with data-cat OR fallback)
+  ========================================================= */
+  (function searchAndChips(){
+    const grid  = $('#grid');
+    const chips = $('#chips');
+    const q     = $('#toolSearch');
+    if(!grid || !chips || !q) return;
+
+    const cards = Array.from(grid.querySelectorAll('a.card'));
+    let filter = 'all';
+
+    // optional fallback: infer cat from slug if you don't set data-cat
+    const SEO = new Set([
+      "word-counter-pro","readability-analyzer","keyword-density","meta-tags",
+      "title-description","alt-text","seo-outline"
+    ]);
+    const TEXT = new Set(["word-counter","readability-analyzer"]);
+    function catFromSlug(slug){
+      if (SEO.has(slug)) return "seo";
+      if (TEXT.has(slug)) return "text";
+      return "dev";
+    }
+
+    function apply(){
+      const term = (q.value || '').trim().toLowerCase();
+      cards.forEach(card => {
+        const hay = (card.dataset.hay || "").toLowerCase();
+        const title = (card.querySelector('h3')?.textContent || "").toLowerCase();
+
+        const okTerm = !term || hay.includes(term) || title.includes(term);
+
+        const cat = (card.dataset.cat || "").toLowerCase();
+        const slug = card.getAttribute('data-slug') || "";
+        const resolved = cat || catFromSlug(slug);
+
+        const okCat = (filter === "all") || (resolved === filter);
+
+        card.style.display = (okTerm && okCat) ? "" : "none";
+      });
+    }
+
+    chips.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if(!chip) return;
+      chips.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+      chip.classList.add('active');
+      filter = chip.dataset.filter || "all";
+      apply();
+    });
+
+    q.addEventListener('input', apply);
     apply();
-  }
+  })();
 
-  // ===== Recommended random picks =====
-  function initRecommended() {
-    const pool = [
-      { href:"/tool/word-counter/", icon:"🔢", title:"Word Counter", desc:"Count words, characters, sentences, and reading time for briefs, essays, and SEO drafts.", cta:"Use Word Counter" },
-      { href:"/tool/readability-analyzer/", icon:"📚", title:"Readability Analyzer", desc:"Get a readability score, grade level, and clear edits to make text easier to skim and understand.", cta:"Use Readability Analyzer" },
-      { href:"/tool/meta-tags/", icon:"🏷️", title:"Meta Tag Optimizer", desc:"Preview SERP titles/descriptions, check length, and refine wording to improve click-through rate.", cta:"Use Meta Tag Optimizer" },
-      { href:"/tool/keyword-density/", icon:"🎯", title:"Keyword Density", desc:"Measure keyword frequency and phrases to avoid overuse and keep relevance natural.", cta:"Use Keyword Density" },
-      { href:"/tool/json-formatter/", icon:"🧾", title:"JSON Formatter", desc:"Prettify/minify JSON instantly, validate structure, and fix common syntax mistakes.", cta:"Use JSON Formatter" },
-      { href:"/tool/url-encoder/", icon:"🔗", title:"URL Encoder", desc:"Encode/decode URLs and query strings safely for tracking, redirects, and debugging.", cta:"Use URL Encoder" },
-      { href:"/tool/base64/", icon:"🔐", title:"Base64 Encoder", desc:"Quickly encode/decode Base64 for tokens, payloads, and developer workflows.", cta:"Use Base64" }
+  /* =========================================================
+     4) Recommended Now random picks
+     - Expects slots ids in HTML:
+       randTool1/2/3 (anchor), randIcon1/2/3, randTitle1/2/3,
+       randDesc1/2/3, randCta1/2/3
+  ========================================================= */
+  (function recommendedRandom(){
+    const grid = $('#grid');
+    if(!grid) return;
+    const cards = $$('#grid a.card');
+    if(cards.length < 3) return;
+
+    function pickDistinct(n){
+      const idx = new Set();
+      while(idx.size < n) idx.add(Math.floor(Math.random() * cards.length));
+      return Array.from(idx).map(i => cards[i]);
+    }
+
+    function extract(card){
+      const title = (card.querySelector('h3')?.textContent || 'Tool').trim();
+      const icon  = (card.querySelector('.thumb')?.textContent || '✨').trim();
+      const href  = card.getAttribute('href') || '#';
+      const desc  = (card.querySelector('p')?.textContent || '').trim();
+      return { href, icon, title, desc };
+    }
+
+    const picks = pickDistinct(3).map(extract);
+    const slots = [
+      {a:'randTool1', i:'randIcon1', t:'randTitle1', d:'randDesc1', c:'randCta1'},
+      {a:'randTool2', i:'randIcon2', t:'randTitle2', d:'randDesc2', c:'randCta2'},
+      {a:'randTool3', i:'randIcon3', t:'randTitle3', d:'randDesc3', c:'randCta3'},
     ];
 
-    function pick3() {
-      // stable daily shuffle (so it doesn’t “jump” every refresh on mobile)
-      const d = new Date();
-      const seed = (d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate());
-      let x = seed % 2147483647;
-      const rnd = () => (x = (x * 48271) % 2147483647) / 2147483647;
+    slots.forEach((slot, k) => {
+      const p = picks[k];
+      const a = $('#' + slot.a);
+      if(!a) return;
+      a.href = p.href;
 
-      const arr = pool.slice();
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(rnd() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr.slice(0, 3);
+      const i = $('#' + slot.i);
+      const t = $('#' + slot.t);
+      const d = $('#' + slot.d);
+      const c = $('#' + slot.c);
+
+      if (i) i.textContent = p.icon;
+      if (t) t.textContent = p.title;
+      if (d && p.desc) d.textContent = p.desc;
+      if (c) c.textContent = `Use ${p.title}`;
+    });
+  })();
+
+  /* =========================================================
+     5) Cookie banner + Google Translate loader (privacy)
+     - Uses your existing cookie HTML:
+       .cookie, buttons: #cookieAccept, #cookieEssential, #cookieReject
+       optional: #cookieClose
+     - Shows GT only if accepted "all"
+  ========================================================= */
+  (function consentAndGT(){
+    const KEY = "clickoz_consent";
+    const banner = $('.cookie');
+    const gtWrap  = $('#gtNavWrap');
+
+    function setCookie(name, value, days){
+      const maxAge = days ? `; Max-Age=${days*24*60*60}` : "";
+      document.cookie = `${name}=${encodeURIComponent(value)}${maxAge}; Path=/; SameSite=Lax`;
+    }
+    function getCookie(name){
+      const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]+)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+    function store(val){
+      try { localStorage.setItem(KEY, val); } catch(e){}
+      setCookie(KEY, val, 365);
+    }
+    function readStored(){
+      try { return localStorage.getItem(KEY); } catch(e){ return null; }
     }
 
-    const picks = pick3();
+    function hideBanner(){
+      banner?.classList.remove('show');
+    }
 
-    for (let i = 1; i <= 3; i++) {
-      const p = picks[i - 1];
-      const a = $("#randTool" + i);
-      const ic = $("#randIcon" + i);
-      const tt = $("#randTitle" + i);
-      const dd = $("#randDesc" + i);
-      const cc = $("#randCta" + i);
-      if (!a || !p) continue;
+    function loadGoogleTranslate(){
+      if (window.__gt_loaded) return;
+      window.__gt_loaded = true;
 
-      a.setAttribute("href", p.href);
-      if (ic) ic.textContent = p.icon;
-      if (tt) tt.textContent = p.title;
-      if (dd) dd.textContent = p.desc;
-      if (cc) cc.textContent = p.cta;
+      if (gtWrap) gtWrap.classList.add('show');
+
+      window.googleTranslateElementInit = function(){
+        // Page language should match <html lang="en">
+        new window.google.translate.TranslateElement(
+          { pageLanguage: 'en', autoDisplay: false },
+          'google_translate_element'
+        );
+      };
+
+      const s = document.createElement('script');
+      s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      s.async = true;
+      document.head.appendChild(s);
+    }
+
+    const existing = readStored() || getCookie(KEY);
+    if (!existing){
+      banner?.classList.add('show');
+    } else {
+      if (existing === "all") loadGoogleTranslate();
+    }
+
+    $('#cookieAccept')?.addEventListener('click', () => {
+      store("all");
+      hideBanner();
+      loadGoogleTranslate();
+    });
+
+    $('#cookieEssential')?.addEventListener('click', () => {
+      store("essential");
+      hideBanner();
+    });
+
+    $('#cookieReject')?.addEventListener('click', () => {
+      store("none");
+      hideBanner();
+    });
+
+    $('#cookieClose')?.addEventListener('click', () => {
+      hideBanner();
+    });
+  })();
+
+  /* =========================================================
+     6) Grain + Particles (idle + burst)
+  ========================================================= */
+  function ensureGrain(){
+    if (prefersReduce) return;
+    if ($('.__grain')) return;
+    const g = document.createElement('div');
+    g.className = "__grain";
+    document.body.appendChild(g);
+  }
+
+  function ensureParticlesLayer(){
+    if (prefersReduce) return null;
+    let layer = $('#clickozParticles');
+    if(!layer){
+      layer = document.createElement('div');
+      layer.id = "clickozParticles";
+      document.body.appendChild(layer);
+    }
+    return layer;
+  }
+
+  function buildIdleParticles(){
+    if (prefersReduce) return;
+    const layer = ensureParticlesLayer();
+    if(!layer) return;
+
+    if (layer.querySelector('.pidle')) return; // don't duplicate
+
+    const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    const COUNT = isMobile ? 55 : 120;
+
+    for(let i=0;i<COUNT;i++){
+      const p = document.createElement('span');
+      p.className = "pidle";
+      p.style.left = rnd(4, 96) + "%";
+      p.style.top  = rnd(6, 94) + "%";
+      p.style.setProperty("--ix", rnd(-220, 220).toFixed(0) + "px");
+      p.style.setProperty("--iy", rnd(-180, 260).toFixed(0) + "px");
+      p.style.setProperty("--idur", rnd(10, 24).toFixed(2) + "s");
+      layer.appendChild(p);
     }
   }
 
-  // ===== Init =====
-  loadSavedAccent();
-  initAccentPicker();
-  initCookieUI();
-  applyConsent();
-  initToolsFilter();
-  initRecommended();
+  function burstParticles(){
+    if (prefersReduce) return;
+    const layer = ensureParticlesLayer();
+    if(!layer) return;
 
-  // ===== Mobile stability: no heavy FX (we keep it clean) =====
-  if (SAFE_MOBILE) {
-    // if any old fx elements exist, hide them (no break)
-    const p = document.getElementById("clickozParticles");
-    if (p) p.style.display = "none";
-    const g = document.querySelector(".__grain");
-    if (g) g.style.display = "none";
+    // remove only previous bursts
+    layer.querySelectorAll(".pburst").forEach(n => n.remove());
+
+    const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    const COUNT = isMobile ? 110 : 240;
+
+    // origin from hero area
+    const ORIGIN_X = 50; // %
+    const ORIGIN_Y = 22; // %
+
+    const MAX_DELAY = 0.55;
+
+    for(let i=0;i<COUNT;i++){
+      const p = document.createElement("span");
+      p.className = "pburst";
+
+      const side = Math.random() < 0.5 ? -1 : 1;
+      const dx = side * rnd(320, 1100);
+      const dy = rnd(-140, 820);
+
+      const big = Math.random() < 0.18;
+      const sz = big ? rnd(5,7) : rnd(2,4);
+      const op = big ? rnd(0.22, 0.36) : rnd(0.16, 0.28);
+
+      const delay = rnd(0, MAX_DELAY);
+      const dur = rnd(1.05, 1.65);
+
+      p.style.setProperty("--sx", ORIGIN_X + "%");
+      p.style.setProperty("--sy", ORIGIN_Y + "%");
+      p.style.setProperty("--dx", dx.toFixed(0) + "px");
+      p.style.setProperty("--dy", dy.toFixed(0) + "px");
+      p.style.setProperty("--sz", sz.toFixed(1) + "px");
+      p.style.setProperty("--op", op.toFixed(2));
+      p.style.setProperty("--delay", delay.toFixed(2) + "s");
+      p.style.setProperty("--dur", dur.toFixed(2) + "s");
+
+      layer.appendChild(p);
+    }
   }
+
+  function initFX(){
+    if (prefersReduce) return;
+    ensureGrain();
+    ensureParticlesLayer();
+    buildIdleParticles();
+    burstParticles();
+  }
+
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", initFX, { once:true });
+  } else {
+    initFX();
+  }
+
 })();
