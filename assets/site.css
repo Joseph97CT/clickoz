@@ -748,3 +748,80 @@ input.search:focus{
 }
 .goog-te-banner-frame{ display:none !important; }
 body{ top:0 !important; }
+/* ===== Clickoz tweaks (Index request) ===== */
+
+/* +4px “overall” feel (senza distruggere layout): */
+body.bigtext{ font-size: 20px; } /* se il tuo base era 16px -> +4 */
+
+/* Logo: badge +8 e senza sfondo */
+.logo-badge{
+  width: 42px; height: 42px; /* era ~34 */
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--accent, #6366f1);
+  display:flex; align-items:center; justify-content:center;
+}
+.logo-mark{ width: 34px; height: 34px; display:block; }
+.logo-text{ font-weight: 900; letter-spacing: -0.02em; }
+.logo-oz{
+  font-weight: 1000;
+  color: var(--accent, #6366f1);
+}
+
+/* Box trasparenti neri sotto badge e per Recommended */
+.hero-box{
+  background: rgba(0,0,0,.38);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 16px 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+/* Titoli e testi box */
+.box-title{ margin: 0 0 8px; font-size: 18px; font-weight: 900; }
+.box-sub{ margin: 0; opacity: .9; }
+
+/* footer del box (shortcut) */
+.box-foot{
+  margin-top: 12px;
+  font-size: 14px;
+  opacity: .8;
+}
+
+/* Trust pills un filo più grandi e “presenti” */
+.trust-pill{ font-size: 14.5px; }
+
+/* Bottoni leggermente più grandi */
+.btn{ font-size: 16px; }
+.btn.primary{ font-weight: 800; }
+/* ===== Footer: più scuro, stessa vibe dei box ===== */
+.footer{
+  background: rgba(0,0,0,.38);              /* come hero-box */
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+}
+
+/* Se hai una fascia interna del footer (es. .footer-grid) la rendiamo coerente */
+.footer .footer-grid{
+  background: transparent;
+}
+
+/* Rende separatore più soft sul fondo */
+.footer .sep{
+  border-color: rgba(255,255,255,.08);
+}
+
+/* ===== Logo: +6px (rispetto al tuo attuale 42) ===== */
+.logo-badge{
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.logo-mark{
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/* opzionale: un filo più grande il testo logo */
+.logo-text{ font-size: 20px; }
