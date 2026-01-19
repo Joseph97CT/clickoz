@@ -935,4 +935,19 @@ body{ top:0 !important; }
   body::before{ opacity: 1; filter: blur(70px); }
   body::after{ opacity: .95; filter: blur(92px); }
 }
+/* Burger: only on mobile */
+.burger{ display:none; }
+@media (max-width: 980px){
+  .burger{ display:flex; }
+  .nav-actions .dropdown{ display:none; } /* niente color picker in top bar */
+  #gtNavWrap{ display:none !important; }  /* translate solo nel drawer */
+}
+
+/* Make space canvas visible on desktop too */
+#spaceParticles{ opacity: .70; }
+@media (min-width: 981px){
+  body::before{ opacity: 1; filter: blur(72px); }
+  body::after{ opacity: .95; filter: blur(94px); }
+  #spaceParticles{ opacity: .85; }
+}
 
