@@ -563,7 +563,7 @@
     const rgb = accentRGB();
 
     // soft haze to avoid “dead black” on desktop
-    ctx.fillStyle = `rgba(${rgb},0.035)`;
+    ctx.fillStyle = `rgba(${rgb},0.09)`;
     ctx.fillRect(0,0,w,h);
 
     const o = origin();
