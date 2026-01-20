@@ -950,4 +950,17 @@ body{ top:0 !important; }
   body::after{ opacity: .95; filter: blur(94px); }
   #spaceParticles{ opacity: .85; }
 }
+#spaceParticles{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -2;     /* dietro ai DOM particles */
+  opacity: .95;    /* alza visibilità */
+}
+#clickozParticles{ z-index: -1; }  /* sopra canvas */
+.__grain{ z-index: -3; }           /* sotto canvas */
+body::before{ z-index: -6; }
+body::after{ z-index: -5; }
 
