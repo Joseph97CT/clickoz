@@ -442,99 +442,205 @@
     }
   }
 
-  /* =========================================================
-     8) SPACE CANVAS BACKGROUND — the “real” space effect
-  ========================================================= */
-  (function spaceCanvas(){
-    if (prefersReduce) return;
+ /* =========================================================
+   8) SPACE CANVAS — BIG burst to near edges, then drift
+   - burst once on load (no re-burst on accent change)
+   - color always follows --accent-rgb live
+========================================================= */
+(function spaceCanvas(){
+  if (prefersReduce) return;
 
-    const canvas = $('#spaceParticles');
-    if(!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha:true });
+  const canvas = document.getElementById('spaceParticles');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha:true });
 
-    let w=0,h=0,dpr=1;
-    let parts = [];
-    let running = true;
+  let w=0,h=0,dpr=1;
+  let stars = [];
+  let running = true;
 
-    function resize(){
-      dpr = Math.min(2, window.devicePixelRatio || 1);
-      w = canvas.width  = Math.floor(window.innerWidth * dpr);
-      h = canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height= window.innerHeight + 'px';
+  function accentRGB(){
+    return (getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "99,102,241");
+  }
+  function isMobile(){
+    return window.matchMedia("(max-width: 720px)").matches;
+  }
+  function origin(){
+    // hero center-ish
+    return { x: w*0.5, y: h*(isMobile() ? 0.30 : 0.26) };
+  }
 
-      const isMobile = window.matchMedia("(max-width: 720px)").matches;
-      const count = isMobile ? 28 : 70; // PC visible, still light
-      parts = new Array(count).fill(0).map(()=>spawn(true));
+  function resize(){
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    w = canvas.width  = Math.floor(window.innerWidth * dpr);
+    h = canvas.height = Math.floor(window.innerHeight * dpr);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height= window.innerHeight + 'px';
+
+    // Base starfield (always there)
+    const baseCount = isMobile() ? 22 : 50;
+    stars = [];
+    for(let i=0;i<baseCount;i++){
+      stars.push(spawnDriftStar(true));
     }
 
-    function spawn(initial=false){
-      const cx = w*0.5, cy = h*0.28;       // hero center-ish
-      const a = Math.random()*Math.PI*2;
-      const speed = (Math.random()*0.60 + 0.25) * dpr;
+    // One BIG explosion on load
+    bigBurst();
+  }
 
-      const radius = (Math.random() < 0.22 ? (Math.random()*2.6+2.2) : (Math.random()*1.6+1.0)) * dpr;
+  // Drift star (already distributed)
+  function spawnDriftStar(randomField=false){
+    const rgb = accentRGB(); // (not stored, just for defaults)
+    const r = (Math.random() < 0.12 ? rnd(1.8, 3.4) : rnd(0.9, 2.0)) * dpr;
 
-      const dist = initial ? (Math.random()*Math.min(w,h)*0.60) : 0;
-      const x = cx + Math.cos(a)*dist;
-      const y = cy + Math.sin(a)*dist;
+    const x = randomField ? rnd(0, w) : origin().x;
+    const y = randomField ? rnd(0, h) : origin().y;
 
-      const vx = Math.cos(a)*speed;
-      const vy = Math.sin(a)*speed;
+    // gentle random drift
+    const sp = (isMobile() ? rnd(0.08, 0.22) : rnd(0.10, 0.28)) * dpr;
+    const a = Math.random()*Math.PI*2;
 
-      return { x,y,vx,vy,r:radius, life:0, max:(Math.random()*260+260) };
-    }
+    return {
+      mode: "drift",
+      x, y,
+      vx: Math.cos(a)*sp,
+      vy: Math.sin(a)*sp,
+      r,
+      a: rnd(0.05, 0.14),      // alpha
+      life: 0,
+      max: rnd(900, 1500),
+      // swirl strength
+      swirl: (isMobile() ? 0.00055 : 0.00080) * dpr,
+    };
+  }
 
-    function step(){
-      if(!running) return;
+  // Burst star (starts at origin, goes to edges fast, then transitions to drift)
+  function spawnBurstStar(){
+    const o = origin();
 
-      ctx.clearRect(0,0,w,h);
+    // angle outward (uniform) + slight noise
+    const ang = Math.random()*Math.PI*2 + rnd(-0.12, 0.12);
 
-      const v = currentAccentRgb();
+    // BURST speed (strong) → so it reaches near margins
+    const vBase = isMobile() ? rnd(2.2, 3.6) : rnd(2.8, 4.6);
+    const vx0 = Math.cos(ang) * vBase * dpr;
+    const vy0 = Math.sin(ang) * vBase * dpr;
 
-      // very soft haze to avoid “dead black”
-      ctx.fillStyle = `rgba(${v},0.05)`;
-      ctx.fillRect(0,0,w,h);
+    const big = Math.random() < 0.20;
+    const r = (big ? rnd(2.2, 4.4) : rnd(1.0, 2.2)) * dpr;
 
-      for(let i=0;i<parts.length;i++){
-        const p = parts[i];
+    // Burst frames: longer = reaches edges
+    const burstFrames = isMobile() ? 90 : 120;
 
-        // tiny swirl for space vibe
-        const sw = 0.00085 * dpr;
-        const dx = p.x - w*0.5;
-        const dy = p.y - h*0.28;
-        p.vx += (-dy) * sw;
-        p.vy += ( dx) * sw;
+    return {
+      mode: "burst",
+      x: o.x + rnd(-3,3)*dpr,
+      y: o.y + rnd(-3,3)*dpr,
+      vx: vx0,
+      vy: vy0,
+      r,
+      a: isMobile() ? rnd(0.16, 0.28) : rnd(0.18, 0.32),
+      life: 0,
+      burstFrames,
+      // after burst, drift params
+      swirl: (isMobile() ? 0.00055 : 0.00080) * dpr,
+    };
+  }
 
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life++;
+  function bigBurst(){
+    // number of burst stars
+    const count = isMobile() ? 120 : 220;
+    for(let i=0;i<count;i++) stars.push(spawnBurstStar());
 
-        const alpha = Math.max(0, 0.28 - (p.life/p.max)*0.28);
+    // keep cap (performance)
+    const cap = isMobile() ? 220 : 420;
+    if(stars.length > cap) stars.splice(0, stars.length - cap);
+  }
 
+  function step(){
+    if(!running) return;
+
+    ctx.clearRect(0,0,w,h);
+    const rgb = accentRGB();
+
+    // soft haze to avoid “dead black” on desktop
+    ctx.fillStyle = `rgba(${rgb},0.035)`;
+    ctx.fillRect(0,0,w,h);
+
+    const o = origin();
+    const margin = 140*dpr;
+
+    for(let i=0;i<stars.length;i++){
+      const s = stars[i];
+      s.life++;
+
+      if(s.mode === "burst"){
+        // Move fast outward
+        s.x += s.vx;
+        s.y += s.vy;
+
+        // very light fade during burst
+        const burstT = Math.min(1, s.life / s.burstFrames);
+        const alpha = s.a * (1 - burstT*0.35);
+
+        // draw
         ctx.beginPath();
-        ctx.fillStyle = `rgba(${v},${alpha})`;
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(${rgb},${Math.max(0, alpha)})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
         ctx.fill();
 
-        if(p.life > p.max || p.x < -120*dpr || p.x > w+120*dpr || p.y < -120*dpr || p.y > h+120*dpr){
-          parts[i] = spawn(false);
+        // Transition to drift AFTER it already spread near edges
+        if(s.life >= s.burstFrames){
+          s.mode = "drift";
+          // damp speed to “space drift”
+          s.vx *= isMobile() ? 0.10 : 0.12;
+          s.vy *= isMobile() ? 0.10 : 0.12;
+          s.life = 0;
+          s.max = rnd(900, 1600);
+          // lower alpha for drift
+          s.a = rnd(0.05, 0.14);
         }
+        continue;
       }
 
-      requestAnimationFrame(step);
+      // DRIFT mode (space feel)
+      // swirl around origin
+      const dx = s.x - o.x;
+      const dy = s.y - o.y;
+      s.vx += (-dy) * s.swirl * 0.0009;
+      s.vy += ( dx) * s.swirl * 0.0009;
+
+      s.x += s.vx;
+      s.y += s.vy;
+
+      // fade slowly
+      const fade = 1 - (s.life / s.max);
+      const alpha = Math.max(0, s.a * Math.min(1, fade));
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${rgb},${alpha})`;
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+
+      // respawn if out/expired (keep field stable)
+      if(s.life > s.max || s.x < -margin || s.x > w+margin || s.y < -margin || s.y > h+margin){
+        stars[i] = spawnDriftStar(true);
+      }
     }
 
-    document.addEventListener("visibilitychange", () => {
-      running = !document.hidden;
-      if(running) requestAnimationFrame(step);
-    });
-
-    window.addEventListener('resize', resize, { passive:true });
-
-    resize();
     requestAnimationFrame(step);
-  })();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    running = !document.hidden;
+    if(running) requestAnimationFrame(step);
+  });
+
+  window.addEventListener('resize', resize, { passive:true });
+
+  resize();
+  requestAnimationFrame(step);
+})();
+
 
   /* =========================================================
      9) INIT FX
