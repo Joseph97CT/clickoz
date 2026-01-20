@@ -43,9 +43,6 @@
         <span class="logo-text">Click<span class="logo-oz">oz</span></span>
       </a>
 
-    
-
-      <!-- DESKTOP links -->
       <div class="nav-links" aria-label="Sections">
         <a href="/#tools">Tools</a>
         <a href="/guides/">Guides</a>
@@ -55,19 +52,17 @@
       <div class="spacer"></div>
 
       <div class="nav-actions" aria-label="Preferences">
-        
-          <!-- MOBILE: burger on the right -->
-  <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-    <span></span><span></span><span></span>
-  </button>
-        
+        <!-- MOBILE: burger on the right -->
+        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+
         <!-- Accent picker -->
         <div class="dropdown">
           <button class="dot-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Theme color">
             <span class="dot" id="colorDot" aria-hidden="true"></span>
           </button>
 
-          
           <div class="menu" id="colorMenu" role="menu" aria-label="Pick theme color">
             <div class="menu-title">Theme color</div>
             <div class="color-grid">
@@ -160,14 +155,13 @@
       and fix URL/Base64 encoding issues. No signup. No uploads. Just clean results you can copy instantly.
     </p>
 
-    <div class="hero-box" style="margin-top:16px;" aria-label="Recommended intro">
+    <!-- Recommended now (UN SOLO BOX) -->
+    <div class="hero-box" style="margin-top:16px;" aria-label="Recommended now">
       <h3 class="box-title">Recommended now</h3>
       <p class="box-sub">
         Three quick picks to move faster today: one for text, one for SEO, one for dev. Refresh anytime to discover new picks.
       </p>
-    </div>
 
-    <div class="hero-box" style="margin-top:12px;" aria-label="Recommended tools">
       <div class="rec-grid">
         <a class="card rec-card" id="randTool1" href="/tool/word-counter/">
           <div class="rec-head">
@@ -203,28 +197,7 @@
     </div>
   </header>
 
-  <section class="section container" aria-label="Why Clickoz">
-    <h2 class="section-title">Why Clickoz</h2>
-    <p class="section-sub">
-      Built for real workflows: quick answers, clean output, and practical guidance. Use a tool in seconds, then improve results with examples and FAQs.
-    </p>
-
-    <div class="small-grid" style="max-width:1120px;margin:0 auto;">
-      <div class="small-card">
-        <h3>One job per tool</h3>
-        <p>Fast inputs, readable outputs, consistent formatting. No clutter, no distractions.</p>
-      </div>
-      <div class="small-card">
-        <h3>SEO aligned by intent</h3>
-        <p>Counters, previews, checkers, generators, formatters: what people actually search for.</p>
-      </div>
-      <div class="small-card">
-        <h3>Made for mobile</h3>
-        <p>Stable layout, no weird jumps, and smooth UI even on Android browsers.</p>
-      </div>
-    </div>
-  </section>
-
+  <!-- Tools hub -->
   <section class="section container" id="tools">
     <h2 class="section-title">Tools hub</h2>
     <p class="section-sub">
@@ -243,7 +216,6 @@
     </div>
 
     <div class="grid" id="grid">
-      <!-- Word Counter -->
       <a class="card" href="/tool/word-counter/" data-cat="text" data-hay="word counter character counter reading time count words sentences paragraphs">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">🔢</div>
@@ -259,7 +231,6 @@
         <span class="tool-cta">Use Word Counter</span>
       </a>
 
-      <!-- Word Counter Pro -->
       <a class="card" href="/tool/word-counter-pro/" data-cat="text" data-hay="advanced word counter speaking time top keywords">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">✨</div>
@@ -275,7 +246,6 @@
         <span class="tool-cta">Use Word Counter Pro</span>
       </a>
 
-      <!-- Readability -->
       <a class="card" href="/tool/readability-analyzer/" data-cat="text" data-hay="readability score flesch grade level clarity">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">📚</div>
@@ -291,7 +261,6 @@
         <span class="tool-cta">Use Readability Analyzer</span>
       </a>
 
-      <!-- Keyword Density -->
       <a class="card" href="/tool/keyword-density/" data-cat="seo" data-hay="keyword density checker frequency highlight phrases">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">🎯</div>
@@ -307,7 +276,6 @@
         <span class="tool-cta">Use Keyword Density</span>
       </a>
 
-      <!-- Meta Tags -->
       <a class="card" href="/tool/meta-tags/" data-cat="seo" data-hay="meta tag optimizer title description serp preview length">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">🏷️</div>
@@ -323,7 +291,6 @@
         <span class="tool-cta">Use Meta Tag Optimizer</span>
       </a>
 
-      <!-- JSON Formatter -->
       <a class="card" href="/tool/json-formatter/" data-cat="dev" data-hay="json formatter validate minify prettify">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">🧾</div>
@@ -339,7 +306,6 @@
         <span class="tool-cta">Use JSON Formatter</span>
       </a>
 
-      <!-- URL Encoder -->
       <a class="card" href="/tool/url-encoder/" data-cat="dev" data-hay="url encoder decoder querystring encodeURIComponent decodeURIComponent">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">🔗</div>
@@ -355,7 +321,6 @@
         <span class="tool-cta">Use URL Encoder</span>
       </a>
 
-      <!-- Base64 -->
       <a class="card" href="/tool/base64/" data-cat="dev" data-hay="base64 encoder decoder text">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">🔐</div>
@@ -371,7 +336,6 @@
         <span class="tool-cta">Use Base64</span>
       </a>
 
-      <!-- Title & Description -->
       <a class="card" href="/tool/title-description/" data-cat="seo" data-hay="seo title generator meta description generator ideas">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">📝</div>
@@ -387,7 +351,6 @@
         <span class="tool-cta">Use Title &amp; Description</span>
       </a>
 
-      <!-- Alt Text -->
       <a class="card" href="/tool/alt-text/" data-cat="seo" data-hay="alt text generator accessibility seo images">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">🖼️</div>
@@ -403,7 +366,6 @@
         <span class="tool-cta">Use Alt Text Generator</span>
       </a>
 
-      <!-- SEO Outline -->
       <a class="card" href="/tool/seo-outline/" data-cat="seo" data-hay="seo outline helper h1 h2 h3 faq ideas">
         <div class="card-head">
           <div class="thumb" aria-hidden="true">🧠</div>
@@ -421,19 +383,78 @@
     </div>
   </section>
 
+  <!-- Guides in BOX -->
   <section class="section container">
-    <h2 class="section-title">Guides &amp; Updates</h2>
-    <p class="section-sub">
-      Short, practical guides that explain what to do and why it matters. Each guide links to the tools that help you apply the steps.
-    </p>
+    <div class="hero-box" aria-label="Guides and Updates">
+      <h2 class="section-title" style="margin-top:0">Guides &amp; Updates</h2>
+      <p class="section-sub" style="margin-bottom:14px">
+        Short, practical guides that explain what to do and why it matters. Each guide links to the tools that help you apply the steps.
+      </p>
 
-    <div class="small-grid" style="max-width:1120px;margin:0 auto;">
-      <a class="small-card" href="/guides/word-count-for-seo/"><h3>Word Count for SEO (2026)</h3><p>Structure, intent, and clarity: what matters now.</p></a>
-      <a class="small-card" href="/guides/readability-for-ranking/"><h3>Readability for Ranking</h3><p>How readability affects engagement and SEO signals.</p></a>
-      <a class="small-card" href="/guides/meta-tags-checklist/"><h3>Meta Tags Checklist</h3><p>Titles and descriptions that earn clicks.</p></a>
-      <a class="small-card" href="/guides/keyword-research-basics/"><h3>Keyword Research Basics</h3><p>Find intent and build topical coverage.</p></a>
-      <a class="small-card" href="/guides/json-formatting-tips/"><h3>JSON Formatting Tips</h3><p>Common parsing mistakes, validation, and clean outputs for APIs.</p></a>
-      <a class="small-card" href="/guides/url-encoding-explained/"><h3>URL Encoding Explained</h3><p>When to encode, what breaks links, and quick fixes for parameters.</p></a>
+      <div class="small-grid" style="max-width:1120px;margin:0 auto;">
+        <a class="small-card guide-card" href="/guides/word-count-for-seo/">
+          <h3>Word Count for SEO (2026)</h3>
+          <p>Structure, intent, and clarity: what matters now.</p>
+          <span class="tool-cta">Leggi la guida completa</span>
+        </a>
+        <a class="small-card guide-card" href="/guides/readability-for-ranking/">
+          <h3>Readability for Ranking</h3>
+          <p>How readability affects engagement and SEO signals.</p>
+          <span class="tool-cta">Leggi la guida completa</span>
+        </a>
+        <a class="small-card guide-card" href="/guides/meta-tags-checklist/">
+          <h3>Meta Tags Checklist</h3>
+          <p>Titles and descriptions that earn clicks.</p>
+          <span class="tool-cta">Leggi la guida completa</span>
+        </a>
+        <a class="small-card guide-card" href="/guides/keyword-research-basics/">
+          <h3>Keyword Research Basics</h3>
+          <p>Find intent and build topical coverage.</p>
+          <span class="tool-cta">Leggi la guida completa</span>
+        </a>
+        <a class="small-card guide-card" href="/guides/json-formatting-tips/">
+          <h3>JSON Formatting Tips</h3>
+          <p>Common parsing mistakes, validation, and clean outputs for APIs.</p>
+          <span class="tool-cta">Leggi la guida completa</span>
+        </a>
+        <a class="small-card guide-card" href="/guides/url-encoding-explained/">
+          <h3>URL Encoding Explained</h3>
+          <p>When to encode, what breaks links, and quick fixes for parameters.</p>
+          <span class="tool-cta">Leggi la guida completa</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Clickoz in BOX (SOTTO le guide) + trust pills in fondo -->
+  <section class="section container" aria-label="Why Clickoz">
+    <div class="hero-box why-box">
+      <h2 class="section-title" style="margin-top:0">Why Clickoz</h2>
+      <p class="section-sub" style="margin-bottom:14px">
+        Built for real workflows: quick answers, clean output, and practical guidance. Use a tool in seconds, then improve results with examples and FAQs.
+      </p>
+
+      <div class="small-grid" style="max-width:1120px;margin:0 auto;">
+        <div class="small-card">
+          <h3>One job per tool</h3>
+          <p>Fast inputs, readable outputs, consistent formatting. No clutter, no distractions.</p>
+        </div>
+        <div class="small-card">
+          <h3>SEO aligned by intent</h3>
+          <p>Counters, previews, checkers, generators, formatters: what people actually search for.</p>
+        </div>
+        <div class="small-card">
+          <h3>Made for mobile</h3>
+          <p>Stable layout, no weird jumps, and smooth UI even on Android browsers.</p>
+        </div>
+      </div>
+
+      <div class="trust-strip" style="margin-top:14px" aria-label="Trust points">
+        <span class="trust-pill">🔒 Runs in your browser</span>
+        <span class="trust-pill">⚡ Instant results</span>
+        <span class="trust-pill">📋 Copy-ready outputs</span>
+        <span class="trust-pill">📱 Mobile-friendly</span>
+      </div>
     </div>
   </section>
 
@@ -499,5 +520,3 @@
   <script src="/assets/site.js" defer></script>
 </body>
 </html>
-
-
