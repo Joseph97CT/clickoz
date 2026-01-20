@@ -1,19 +1,3 @@
-// === DEFAULT THEME ON FIRST VISIT (CYAN) ===
-(function () {
-  const STORAGE_KEY = 'clickoz-theme';
-
-  if (!localStorage.getItem(STORAGE_KEY)) {
-    const defaultTheme = {
-      accent: '#06b6d4',
-      accent2: '#22d3ee'
-    };
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultTheme));
-
-    document.documentElement.style.setProperty('--accent', defaultTheme.accent);
-    document.documentElement.style.setProperty('--accent2', defaultTheme.accent2);
-  }
-})();
 
 (() => {
   const $  = (s, r=document) => r.querySelector(s);
