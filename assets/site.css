@@ -120,14 +120,14 @@ body::after{
   border-radius:999px;
   background: rgba(var(--accent-rgb), .96);
   box-shadow:
-    0 0 14px rgba(var(--accent-rgb), .40),
-    0 0 44px rgba(var(--accent-rgb), .14);
+    0 0 14px rgba(var(--accent-rgb), .55),
+    0 0 44px rgba(var(--accent-rgb), .22);
   will-change: transform, opacity;
 }
 .pidle{
   width: 2px;
   height: 2px;
-  opacity: .16;
+  opacity: .22;
   animation: idleDrift var(--idur) ease-in-out infinite;
 }
 @keyframes idleDrift{
@@ -948,7 +948,7 @@ body{ top:0 !important; }
 @media (min-width: 981px){
   body::before{ opacity: 1; filter: blur(72px); }
   body::after{ opacity: .95; filter: blur(94px); }
-  #spaceParticles{ opacity: .85; }
+  #spaceParticles{ opacity: .95; }
 }
 #spaceParticles{
   position: fixed;
