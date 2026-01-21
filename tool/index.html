@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Clickoz Tools – Free SEO, Writing & Dev Tools (Privacy-First)</title>
+  <meta name="description" content="Explore Clickoz Tools: free, privacy-first online tools for SEO, writing, and developers. Word counter, readability, meta tags, JSON, Base64, URL tools, sitemap/robots generators and more. No signup." />
+  <link rel="canonical" href="https://clickoz.com/tools.html" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b0f19" />
+
+  <meta property="og:site_name" content="Clickoz" />
+  <meta property="og:title" content="Clickoz Tools – Free SEO, Writing & Dev Tools" />
+  <meta property="og:description" content="Free, privacy-first online tools. No signup. Copy-ready outputs. Works on mobile and desktop." />
+  <meta property="og:url" content="https://clickoz.com/tools.html" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/assets/site.css?v=4" />
+
+  <style>
+    /* Keep your external CSS intact; add only page-specific polish */
+
+    /* NAV: active link for current page */
+    .nav-links a.active,
+    .m-links a.active{
+      background: rgba(var(--accent-rgb), .12);
+      border: 1px solid rgba(var(--accent-rgb), .28);
+      color: rgba(255,255,255,.96);
+    }
+
+    /* A clean “page hero” */
+    .page-hero{
+      padding: 28px 0 10px;
+      text-align:center;
+    }
+    .page-hero h1{
+      font-size: clamp(32px, 4.0vw, 58px);
+      max-width: 1080px;
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      margin: 10px auto 0;
+    }
+    .page-hero p{
+      font-size: 18px;
+      line-height: 1.75;
+      max-width: 980px;
+      color: var(--muted);
+      margin: 14px auto 10px;
+    }
+
+    /* Pagination UI (uses your design language) */
+    .pager{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content:center;
+      align-items:center;
+      margin-top: 16px;
+    }
+    .pager .btn{
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 1000;
+    }
+    .pager .page-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.82);
+      font-weight: 1000;
+      font-size: 13px;
+    }
+
+    /* Tool “count + status” row */
+    .tools-meta{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content:center;
+      margin-top: 10px;
+    }
+
+    /* Long-form SEO section */
+    .seo-wrap{
+      text-align:left;
+      margin-top: 18px;
+    }
+    .seo-wrap h2, .seo-wrap h3{
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .seo-wrap h2{
+      font-size: clamp(24px, 2.6vw, 34px);
+      font-weight: 1000;
+    }
+    .seo-wrap h3{
+      font-size: 18px;
+      font-weight: 1000;
+      margin-top: 18px;
+    }
+    .seo-wrap p{
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+    .seo-wrap ul{
+      margin: 0 0 14px 18px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+    .seo-wrap a{
+      color: rgba(255,255,255,.92);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Small FAQ cards grid */
+    .faq-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (min-width: 981px){
+      .faq-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .faq-card{
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(15,21,38,.58);
+      box-shadow: 0 16px 50px rgba(0,0,0,.28);
+    }
+    .faq-q{
+      font-weight: 1000;
+      margin: 0 0 6px;
+      color: rgba(255,255,255,.92);
+    }
+    .faq-a{
+      margin: 0;
+      color: rgba(255,255,255,.74);
+      line-height: 1.7;
+      font-size: 14.5px;
+    }
+  </style>
+</head>
+
+<body class="bigtext">
+  <!-- FX layers -->
+  <div id="clickozParticles" aria-hidden="true"></div>
+  <canvas id="spaceParticles" aria-hidden="true"></canvas>
+  <div class="__grain" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Primary navigation" id="topNav">
+    <div class="container nav-inner">
+      <a class="logo" href="/" aria-label="Clickoz Home">
+        <span class="logo-badge" id="logoBadge" aria-hidden="true">
+          <svg class="logo-mark" viewBox="0 0 48 48" width="1em" height="1em" aria-hidden="true" focusable="false">
+            <path d="M32.5 13.5c-2.4-2.2-5.4-3.3-8.9-3.3-7.2 0-12.6 5.1-12.6 13.8S16.4 37.8 23.6 37.8c3.6 0 6.7-1.2 9.2-3.6"
+                  fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="logo-text">Click<span class="logo-oz">oz</span></span>
+      </a>
+
+      <div class="nav-links" aria-label="Sections">
+        <a href="/tools.html" class="active" aria-current="page">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/updates/">Updates</a>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="nav-actions" aria-label="Preferences">
+        <!-- MOBILE: burger on the right -->
+        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <!-- Accent picker -->
+        <div class="dropdown">
+          <button class="dot-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Theme color">
+            <span class="dot" id="colorDot" aria-hidden="true"></span>
+          </button>
+
+          <div class="menu" id="colorMenu" role="menu" aria-label="Pick theme color">
+            <div class="menu-title">Theme color</div>
+            <div class="color-grid">
+              <div class="color-option active" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#f59e0b" data-accent2="#fbbf24" style="background:#f59e0b" title="Yellow" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#ec4899" data-accent2="#f472b6" style="background:#ec4899" title="Pink" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" role="menuitem" tabindex="0"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Translate (shown only after consent: all) -->
+        <div id="gtNavWrap" aria-label="Translate">
+          <div id="google_translate_element"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="m-overlay" id="mOverlay" hidden></div>
+  <aside class="m-menu" id="mobileMenu" aria-hidden="true">
+    <div class="m-head">
+      <div class="m-title">Menu</div>
+      <button class="m-close" id="mClose" type="button" aria-label="Close menu">×</button>
+    </div>
+
+    <div class="m-links">
+      <a class="m-link active" href="/tools.html" aria-current="page">Tools</a>
+      <a class="m-link" href="/guides/">Guides</a>
+      <a class="m-link" href="/updates/">Updates</a>
+      <a class="m-link" href="/privacy/">Privacy</a>
+    </div>
+
+    <div class="m-block">
+      <div class="m-label">Theme color</div>
+      <div class="color-grid m-colors" id="mobileColorGrid">
+        <div class="color-option active" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" tabindex="0"></div>
+        <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" tabindex="0"></div>
+        <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" tabindex="0"></div>
+        <div class="color-option" data-accent="#f59e0b" data-accent2="#fbbf24" style="background:#f59e0b" title="Yellow" tabindex="0"></div>
+        <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" tabindex="0"></div>
+        <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" tabindex="0"></div>
+        <div class="color-option" data-accent="#ec4899" data-accent2="#f472b6" style="background:#ec4899" title="Pink" tabindex="0"></div>
+        <div class="color-option" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" tabindex="0"></div>
+      </div>
+    </div>
+
+    <div class="m-block">
+      <div class="m-label">Language</div>
+      <div id="google_translate_element_mobile"></div>
+      <div style="margin-top:10px;font-size:13px;opacity:.78;line-height:1.5;">
+        Translation loads only if you accept “All” cookies.
+      </div>
+    </div>
+  </aside>
+
+  <!-- Page Hero -->
+  <header class="page-hero container">
+    <h1>
+      Clickoz Tools: free online tools for
+      <span class="hl">SEO</span>,
+      <span class="hl">writing</span>,
+      and developers.
+    </h1>
+
+    <p>
+      Browse tools by category or search by keyword. Every tool is built to be fast, privacy-first, and copy-ready:
+      no signup, no uploads, and no personal data collection.
+    </p>
+
+    <div class="tools-meta" aria-label="Highlights">
+      <span class="trust-pill">🔒 Privacy-first</span>
+      <span class="trust-pill">⚡ Instant results</span>
+      <span class="trust-pill">📋 Copy-ready outputs</span>
+      <span class="trust-pill">📱 Works on any device</span>
+      <span class="trust-pill">🧩 Open-source (GitHub)</span>
+    </div>
+
+    <div class="hero-box" style="margin-top:16px;" aria-label="How to use">
+      <h3 class="box-title">How to use this page</h3>
+      <p class="box-sub">
+        Use search to filter tools instantly, then switch categories to focus on SEO, Text, or Dev tools. Pagination shows 15 tools per page.
+      </p>
+      <div class="box-foot">
+        Shortcut: press <b>/</b> to focus search.
+      </div>
+    </div>
+  </header>
+
+  <!-- Tools Hub -->
+  <section class="section container" id="tools">
+    <h2 class="section-title">Tools hub</h2>
+    <p class="section-sub">
+      Search by keyword or browse by category. Each tool includes usage tips, examples, and common questions so you get results quickly.
+    </p>
+
+    <div class="row">
+      <!-- NOTE: IDs are different so your existing site.js filtering does NOT conflict -->
+      <input class="search" id="toolsSearch" placeholder="Search tools (readability, meta, json, base64…)" aria-label="Search tools" autocomplete="off" />
+    </div>
+
+    <div class="chips" id="toolsChips" aria-label="Categories">
+      <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
+      <div class="chip" data-filter="seo" role="button" tabindex="0">SEO</div>
+      <div class="chip" data-filter="text" role="button" tabindex="0">Text</div>
+      <div class="chip" data-filter="dev" role="button" tabindex="0">Dev</div>
+    </div>
+
+    <div class="grid" id="toolsGrid">
+      <!-- 1) Word Counter -->
+      <a class="card" href="/tool/word-counter/" data-cat="text" data-hay="word counter character counter reading time count words sentences paragraphs">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🔢</div>
+          <h3>Word Counter</h3>
+        </div>
+        <p>
+          Count words, characters (with and without spaces), sentences, and paragraphs in seconds. Great for essays, content briefs,
+          SEO drafts, and platform limits. Includes an estimated reading time to help plan structure.
+        </p>
+        <div class="example-line"><b>Example:</b> “My landing page is 380 words. Should I shorten it?”</div>
+        <div class="example-line"><b>Example:</b> “How many characters do I have for a meta description draft?”</div>
+        <div class="example-line"><b>Example:</b> “Estimate reading time for a 1,200-word blog post.”</div>
+        <span class="tool-cta">Use Word Counter</span>
+      </a>
+
+      <!-- 2) Word Counter Pro -->
+      <a class="card" href="/tool/word-counter-pro/" data-cat="text" data-hay="advanced word counter speaking time top keywords section breakdown">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">✨</div>
+          <h3>Word Counter Pro</h3>
+        </div>
+        <p>
+          Advanced text stats: reading time, speaking time, section breakdown, and quick keyword hints to spot repeated terms.
+          Ideal for scripts, newsletters, and long-form pages.
+        </p>
+        <div class="example-line"><b>Example:</b> “How long will this YouTube script take to read out loud?”</div>
+        <div class="example-line"><b>Example:</b> “What are the most repeated terms in this article?”</div>
+        <div class="example-line"><b>Example:</b> “Check if my intro is too long compared to the rest.”</div>
+        <span class="tool-cta">Use Word Counter Pro</span>
+      </a>
+
+      <!-- 3) Readability -->
+      <a class="card" href="/tool/readability-analyzer/" data-cat="text" data-hay="readability score flesch grade level clarity simplify text">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">📚</div>
+          <h3>Readability Analyzer</h3>
+        </div>
+        <p>
+          Get a readability score, grade-level estimate, and practical clarity hints. Identify long sentences, dense wording,
+          and sections that are hard to skim, then rewrite for smoother flow.
+        </p>
+        <div class="example-line"><b>Example:</b> “Simplify this paragraph for a general audience.”</div>
+        <div class="example-line"><b>Example:</b> “Is my FAQ too technical for beginners?”</div>
+        <div class="example-line"><b>Example:</b> “Find sentences that are too long and break them up.”</div>
+        <span class="tool-cta">Use Readability Analyzer</span>
+      </a>
+
+      <!-- 4) Keyword Density -->
+      <a class="card" href="/tool/keyword-density/" data-cat="seo" data-hay="keyword density checker frequency highlight phrases on-page seo">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🎯</div>
+          <h3>Keyword Density</h3>
+        </div>
+        <p>
+          Measure keyword frequency and common phrases. Spot overuse, find missing variations, and keep relevance without stuffing.
+          Useful for on-page SEO checks and editorial cleanup.
+        </p>
+        <div class="example-line"><b>Example:</b> “Am I repeating ‘best VPN’ too many times?”</div>
+        <div class="example-line"><b>Example:</b> “What 2–3 word phrases appear most often?”</div>
+        <div class="example-line"><b>Example:</b> “Did I use the main keyword enough in headings?”</div>
+        <span class="tool-cta">Use Keyword Density</span>
+      </a>
+
+      <!-- 5) Meta Tags -->
+      <a class="card" href="/tool/meta-tags/" data-cat="seo" data-hay="meta tag optimizer title description serp preview length ctr">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🏷️</div>
+          <h3>Meta Tag Optimizer</h3>
+        </div>
+        <p>
+          Preview titles and meta descriptions in a SERP-style layout, check limits, and refine wording for higher CTR.
+          Compare variations and keep your message clear and intent-aligned.
+        </p>
+        <div class="example-line"><b>Example:</b> “Does my title get cut off on Google?”</div>
+        <div class="example-line"><b>Example:</b> “Write 3 descriptions that sound less generic.”</div>
+        <div class="example-line"><b>Example:</b> “Make the snippet more benefit-driven.”</div>
+        <span class="tool-cta">Use Meta Tag Optimizer</span>
+      </a>
+
+      <!-- 6) JSON Formatter -->
+      <a class="card" href="/tool/json-formatter/" data-cat="dev" data-hay="json formatter validate minify prettify api payload webhook">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🧾</div>
+          <h3>JSON Formatter</h3>
+        </div>
+        <p>
+          Prettify or minify JSON instantly, validate structure, and catch common syntax issues without leaving your browser.
+          Perfect for API payloads, webhook bodies, and quick debugging.
+        </p>
+        <div class="example-line"><b>Example:</b> “This JSON fails: where is the missing comma?”</div>
+        <div class="example-line"><b>Example:</b> “Minify JSON to reduce payload size.”</div>
+        <div class="example-line"><b>Example:</b> “Pretty-print an API response for copy.”</div>
+        <span class="tool-cta">Use JSON Formatter</span>
+      </a>
+
+      <!-- 7) URL Encoder -->
+      <a class="card" href="/tool/url-encoder/" data-cat="dev" data-hay="url encoder decoder querystring encodeURIComponent decode utm parameters">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🔗</div>
+          <h3>URL Encoder</h3>
+        </div>
+        <p>
+          Encode or decode URLs and query strings safely. Useful for UTM links, redirects, tracking parameters, and debugging
+          when special characters break a request.
+        </p>
+        <div class="example-line"><b>Example:</b> “Encode spaces and symbols in a tracking URL.”</div>
+        <div class="example-line"><b>Example:</b> “Decode a percent-encoded query string.”</div>
+        <div class="example-line"><b>Example:</b> “Fix a redirect URL failing due to reserved chars.”</div>
+        <span class="tool-cta">Use URL Encoder</span>
+      </a>
+
+      <!-- 8) Base64 -->
+      <a class="card" href="/tool/base64/" data-cat="dev" data-hay="base64 encoder decoder text token payload inspect">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🔐</div>
+          <h3>Base64 Encoder</h3>
+        </div>
+        <p>
+          Base64 encode or decode text for tokens, payloads, and developer workflows. Great for inspecting API responses or
+          safely transporting data through systems that expect Base64.
+        </p>
+        <div class="example-line"><b>Example:</b> “Decode a Base64 string from an API response.”</div>
+        <div class="example-line"><b>Example:</b> “Encode JSON to Base64 for a quick test.”</div>
+        <div class="example-line"><b>Example:</b> “Check what a token contains before using it.”</div>
+        <span class="tool-cta">Use Base64</span>
+      </a>
+
+      <!-- 9) Title & Description -->
+      <a class="card" href="/tool/title-description/" data-cat="seo" data-hay="seo title generator meta description generator ctr keyword intent">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">📝</div>
+          <h3>Title &amp; Description</h3>
+        </div>
+        <p>
+          Generate SEO title and meta description ideas from a keyword, aligned to intent and CTR. Get multiple angles
+          and refine them to fit limits without losing meaning.
+        </p>
+        <div class="example-line"><b>Example:</b> “10 title ideas for ‘free invoice generator’.”</div>
+        <div class="example-line"><b>Example:</b> “Descriptions for a product page that sound natural.”</div>
+        <div class="example-line"><b>Example:</b> “Variants for informational vs transactional intent.”</div>
+        <span class="tool-cta">Use Title &amp; Description</span>
+      </a>
+
+      <!-- 10) Alt Text -->
+      <a class="card" href="/tool/alt-text/" data-cat="seo" data-hay="alt text generator accessibility seo images screen reader">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🖼️</div>
+          <h3>Alt Text Generator</h3>
+        </div>
+        <p>
+          Create clear alt text options for accessibility and SEO. Produce short and long variants, keep them screen-reader
+          friendly, and avoid keyword stuffing while still describing what matters.
+        </p>
+        <div class="example-line"><b>Example:</b> “Alt text for a product photo (front view).”</div>
+        <div class="example-line"><b>Example:</b> “Accessible alt text for a chart screenshot.”</div>
+        <div class="example-line"><b>Example:</b> “Short + detailed variants for the same image.”</div>
+        <span class="tool-cta">Use Alt Text Generator</span>
+      </a>
+
+      <!-- 11) SEO Outline -->
+      <a class="card" href="/tool/seo-outline/" data-cat="seo" data-hay="seo outline helper h1 h2 h3 faq ideas topical coverage">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🧠</div>
+          <h3>SEO Outline Helper</h3>
+        </div>
+        <p>
+          Build a strong H1/H2/H3 outline plus FAQ ideas that match search intent. Useful for planning coverage, structuring
+          long-form content, and ensuring you answer what people actually ask.
+        </p>
+        <div class="example-line"><b>Example:</b> “Outline for ‘how to start a newsletter’ + FAQs.”</div>
+        <div class="example-line"><b>Example:</b> “Headings for a comparison page (A vs B).”</div>
+        <div class="example-line"><b>Example:</b> “Add missing subtopics so the article feels complete.”</div>
+        <span class="tool-cta">Use SEO Outline Helper</span>
+      </a>
+
+      <!-- 12) Robots.txt Generator -->
+      <a class="card" href="/tool/robots-txt/" data-cat="seo" data-hay="robots.txt generator disallow allow crawl rules user-agent sitemap">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🤖</div>
+          <h3>Robots.txt Generator</h3>
+        </div>
+        <p>
+          Generate a clean robots.txt for common setups: allow key pages, block private paths, and reference your sitemap.
+          Great for new sites that want safe defaults without mistakes.
+        </p>
+        <div class="example-line"><b>Example:</b> “Block /admin/ and /private/ but keep /blog/ crawlable.”</div>
+        <div class="example-line"><b>Example:</b> “Add a Sitemap directive for Google.”</div>
+        <div class="example-line"><b>Example:</b> “Create rules for multiple user-agents.”</div>
+        <span class="tool-cta">Use Robots.txt Generator</span>
+      </a>
+
+      <!-- 13) Sitemap.xml Generator -->
+      <a class="card" href="/tool/sitemap-generator/" data-cat="seo" data-hay="sitemap.xml generator url list lastmod priority changefreq">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🗺️</div>
+          <h3>Sitemap.xml Generator</h3>
+        </div>
+        <p>
+          Build a valid sitemap.xml from a list of URLs. Add lastmod and basic priority hints, then copy the output
+          to publish on your site for faster discovery.
+        </p>
+        <div class="example-line"><b>Example:</b> “Create a sitemap from 200 tool pages.”</div>
+        <div class="example-line"><b>Example:</b> “Add last modified dates for updated pages.”</div>
+        <div class="example-line"><b>Example:</b> “Validate the XML output structure.”</div>
+        <span class="tool-cta">Use Sitemap Generator</span>
+      </a>
+
+      <!-- 14) UTM Builder -->
+      <a class="card" href="/tool/utm-builder/" data-cat="seo" data-hay="utm builder campaign source medium content tracking url parameters">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">📈</div>
+          <h3>UTM Builder</h3>
+        </div>
+        <p>
+          Create clean UTM tracking links for campaigns without broken parameters. Useful for paid ads, social posts,
+          newsletters, and consistent analytics naming.
+        </p>
+        <div class="example-line"><b>Example:</b> “Build UTMs for a TikTok + Instagram campaign.”</div>
+        <div class="example-line"><b>Example:</b> “Keep naming consistent across channels.”</div>
+        <div class="example-line"><b>Example:</b> “Encode parameters safely to avoid errors.”</div>
+        <span class="tool-cta">Use UTM Builder</span>
+      </a>
+
+      <!-- 15) Slug Generator -->
+      <a class="card" href="/tool/slug-generator/" data-cat="seo" data-hay="slug generator url slugify lowercase hyphen remove accents">
+        <div class="card-head">
+          <div class="thumb" aria-hidden="true">🔤</div>
+          <h3>Slug Generator</h3>
+        </div>
+        <p>
+          Turn titles into clean URL slugs: lowercase, hyphenated, and readable. Great for blogs, tool pages, guides,
+          and consistent internal linking.
+        </p>
+        <div class="example-line"><b>Example:</b> “Convert ‘Best Free Tools (2026)’ into a clean slug.”</div>
+        <div class="example-line"><b>Example:</b> “Remove accents and special characters safely.”</div>
+        <div class="example-line"><b>Example:</b> “Generate multiple slugs for A/B testing.”</div>
+        <span class="tool-cta">Use Slug Generator</span>
+      </a>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pager" aria-label="Pagination controls">
+      <button class="btn" id="prevPage" type="button" aria-label="Previous page">← Prev</button>
+      <span class="page-pill" id="pageInfo" aria-live="polite">Page 1</span>
+      <button class="btn" id="nextPage" type="button" aria-label="Next page">Next →</button>
+    </div>
+  </section>
+
+  <!-- SEO / Long-form content -->
+  <section class="section container" aria-label="About Clickoz Tools">
+    <div class="hero-box seo-wrap">
+      <h2>Free online tools that solve real problems</h2>
+      <p>
+        Clickoz is a focused hub of online tools for SEO, writing, and developers. Each tool is designed for one clear job:
+        fast input, clean output, and practical examples. That makes it easier to move from “I have a problem” to “I fixed it”
+        without extra accounts, installs, or confusing settings.
+      </p>
+
+      <h3>What problems do Clickoz tools help you solve?</h3>
+      <ul>
+        <li><b>Content limits:</b> check word count, character count, and reading time before publishing.</li>
+        <li><b>Clarity & engagement:</b> improve readability to reduce bounce and increase time on page.</li>
+        <li><b>On-page SEO hygiene:</b> validate titles, meta descriptions, and keyword usage without guessing.</li>
+        <li><b>Technical workflows:</b> format JSON, decode Base64, and fix URL encoding issues instantly.</li>
+        <li><b>Site setup:</b> generate robots.txt and sitemap.xml to support crawling and discovery.</li>
+      </ul>
+
+      <h3>Privacy-first by design</h3>
+      <p>
+        Tools run in your browser whenever possible, with a “no signup” approach and no need to provide personal data.
+        We keep the experience fast and lightweight, and we avoid pushing you into accounts or locked features.
+      </p>
+
+      <h3>Open-source and transparent</h3>
+      <p>
+        Clickoz is built to be open and auditable. If you like the project, you can follow development and contribute on GitHub:
+        <a href="https://github.com/" rel="noopener" target="_blank">Clickoz on GitHub</a>.
+        (Replace this link with your real repo URL.)
+      </p>
+
+      <h3>Works on every device</h3>
+      <p>
+        Whether you’re on Android, iPhone, a tablet, or desktop—Clickoz tools are designed to be stable, responsive, and copy-friendly.
+        That means you can draft, check, and publish from anywhere.
+      </p>
+
+      <h3>Ad-supported (so the tools stay free)</h3>
+      <p>
+        The project is supported with ads, so you can keep using the tools without subscriptions. We don’t ask for personal details,
+        and we keep the UI clean and readable.
+      </p>
+
+      <h3>FAQ</h3>
+      <div class="faq-grid" aria-label="Frequently asked questions">
+        <div class="faq-card">
+          <div class="faq-q">Do I need to create an account?</div>
+          <p class="faq-a">No. Clickoz tools are designed to be usable instantly—no signup, no friction, and no personal data required.</p>
+        </div>
+        <div class="faq-card">
+          <div class="faq-q">Are these tools free to use?</div>
+          <p class="faq-a">Yes. Clickoz is ad-supported so the core tools stay free. Outputs are copy-ready and available immediately.</p>
+        </div>
+        <div class="faq-card">
+          <div class="faq-q">Do tools work on mobile?</div>
+          <p class="faq-a">Yes. The UI is built to be stable on Android browsers and iPhone Safari, with responsive layout and smooth controls.</p>
+        </div>
+        <div class="faq-card">
+          <div class="faq-q">Will you add more categories and tools?</div>
+          <p class="faq-a">Yes. This page already supports search, categories, and pagination (15 tools per page) so it scales as the library grows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>Clickoz</h4>
+        <div class="footer-links">
+          <a href="/tools.html">Tools</a>
+          <a href="/guides/">Guides</a>
+          <a href="/updates/">Updates</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Popular tools</h4>
+        <div class="footer-links">
+          <a href="/tool/word-counter/">Word Counter</a>
+          <a href="/tool/readability-analyzer/">Readability</a>
+          <a href="/tool/meta-tags/">Meta Tags</a>
+          <a href="/tool/json-formatter/">JSON Formatter</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="footer-links">
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:14px">
+      <hr class="sep" />
+      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
+        © 2026 Clickoz • Fast tools for SEO, writing and developers
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner -->
+  <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
+    <div class="cookie-card">
+      <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
+
+      <div class="cookie-content">
+        <div class="cookie-title">Privacy choices</div>
+        <div class="cookie-text">
+          We use essential storage for core features. If you accept all, we may load third-party services like Google Translate.
+          Read more in <a href="/privacy/">Privacy</a>.
+        </div>
+      </div>
+
+      <div class="cookie-actions">
+        <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
+        <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
+        <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ structured data (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need to create an account?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Clickoz tools are designed to be usable instantly—no signup, no friction, and no personal data required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are these tools free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Clickoz is ad-supported so the core tools stay free. Outputs are copy-ready and available immediately."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do tools work on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The UI is built to be stable on Android browsers and iPhone Safari, with responsive layout and smooth controls."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will you add more categories and tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. This page already supports search, categories, and pagination (15 tools per page) so it scales as the library grows."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Nav glow on scroll (same behavior as your index) -->
+  <script>
+    (function(){
+      const nav = document.getElementById('topNav');
+      if(!nav) return;
+
+      let lastY = window.scrollY || 0;
+      const onScroll = () => {
+        const y = window.scrollY || 0;
+        const scrolled = y > 8;
+        nav.classList.toggle('is-scrolled', scrolled);
+
+        const goingDown = y > lastY + 2;
+        const goingUp = y < lastY - 2;
+
+        if(scrolled && goingDown) nav.classList.add('is-down');
+        if(!scrolled || goingUp) nav.classList.remove('is-down');
+
+        lastY = y;
+      };
+
+      window.addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
+    })();
+  </script>
+
+  <!-- Your global JS (accent, menu, cookies, particles, translate) -->
+  <script src="/assets/site.js" defer></script>
+
+  <!-- Tools page: search + category + pagination (15 per page) -->
+  <script>
+    (function(){
+      const $  = (s, r=document) => r.querySelector(s);
+      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+      const grid   = $('#toolsGrid');
+      const chips  = $('#toolsChips');
+      const search = $('#toolsSearch');
+      const prev   = $('#prevPage');
+      const next   = $('#nextPage');
+      const info   = $('#pageInfo');
+
+      if(!grid || !chips || !search || !prev || !next || !info) return;
+
+      const PAGE_SIZE = 15;
+      let page = 1;
+      let filter = 'all';
+
+      const allCards = $$('#toolsGrid a.card');
+
+      function normalize(s){
+        return (s || '').toLowerCase().trim();
+      }
+
+      function getFiltered(){
+        const term = normalize(search.value);
+        return allCards.filter(card => {
+          const cat = normalize(card.dataset.cat || '');
+          const hay = normalize((card.dataset.hay || '') + ' ' + (card.textContent || ''));
+          const okCat = (filter === 'all') || (cat === filter);
+          const okTerm = !term || hay.includes(term);
+          return okCat && okTerm;
+        });
+      }
+
+      function render(){
+        const filtered = getFiltered();
+        const total = filtered.length;
+        const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+        if(page > pages) page = pages;
+        if(page < 1) page = 1;
+
+        // Hide all
+        allCards.forEach(c => c.style.display = 'none');
+
+        // Show current page
+        const start = (page - 1) * PAGE_SIZE;
+        const slice = filtered.slice(start, start + PAGE_SIZE);
+        slice.forEach(c => c.style.display = '');
+
+        // Buttons
+        prev.disabled = page <= 1;
+        next.disabled = page >= pages;
+
+        info.textContent = `Page ${page} of ${pages} • ${total} tool${total === 1 ? '' : 's'}`;
+      }
+
+      // Chip clicks
+      chips.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip');
+        if(!chip) return;
+        chips.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+        chip.classList.add('active');
+        filter = chip.dataset.filter || 'all';
+        page = 1;
+        render();
+      });
+
+      // Search
+      let t = null;
+      search.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+          page = 1;
+          render();
+        }, 60);
+      });
+
+      // "/" focuses search
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
+          e.preventDefault();
+          search.focus();
+        }
+      });
+
+      prev.addEventListener('click', () => { page--; render(); });
+      next.addEventListener('click', () => { page++; render(); });
+
+      // First render
+      render();
+    })();
+  </script>
+</body>
+</html>
