@@ -24,9 +24,8 @@
 
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- ONLY small tools-page patches (does NOT touch nav sizing) -->
+  <!-- Tools page micro-patches ONLY (no nav resizing here) -->
   <style>
-    /* Active state for Tools link — does not affect nav height */
     .nav-links a.active,
     .m-links a.active{
       background: rgba(var(--accent-rgb), .12);
@@ -34,28 +33,34 @@
       color: rgba(255,255,255,.96);
     }
 
-    /* Tools header spacing (keep tools visible immediately) */
-    .tools-top{
-      padding-top: 10px;
+    /* Make the top of the page feel “product-grade” */
+    .tools-shell{
+      padding-top: 18px;
     }
 
-    /* Better search UX without changing your core input style */
-    .tools-intro{
+    /* Clean, short header — tools are still immediately below */
+    .tools-kicker{
       max-width: 980px;
       margin: 0 auto 10px;
-      color: rgba(255,255,255,.72);
-      font-size: 15.5px;
+      text-align:center;
+      color: rgba(255,255,255,.70);
+      font-size: 15px;
       line-height: 1.65;
-      text-align: center;
     }
 
+    .tools-kicker b{
+      color: rgba(255,255,255,.92);
+      font-weight: 900;
+    }
+
+    /* Search hint: neat and compact */
     .search-hint{
       max-width: 920px;
       margin: 8px auto 0;
-      font-size: 13.5px;
-      opacity: .78;
+      font-size: 13px;
+      opacity: .80;
       line-height: 1.55;
-      text-align: left;
+      text-align:left;
     }
     .search-hint b{ color: rgba(255,255,255,.92); }
 
@@ -87,20 +92,20 @@
       color: rgba(255,255,255,.82);
       font-weight: 1000;
       font-size: 13px;
-      text-align:center;
-      min-width: 240px;
+      min-width: 260px;
     }
 
-    /* SEO section typography (no FAQ vibe, more editorial) */
+    /* Editorial section typography */
     .pillar{
       text-align:left;
-      margin-top: 18px;
+      margin-top: 16px;
     }
     .pillar h2{
       margin: 0 0 10px;
-      font-size: clamp(24px, 2.6vw, 34px);
+      font-size: clamp(22px, 2.4vw, 32px);
       font-weight: 1000;
       letter-spacing: -0.02em;
+      line-height: 1.18;
     }
     .pillar h3{
       margin: 18px 0 10px;
@@ -114,19 +119,8 @@
       line-height: 1.75;
       font-size: 15.5px;
     }
-    .pillar ul{
-      margin: 0 0 14px 18px;
-      color: rgba(255,255,255,.76);
-      line-height: 1.75;
-      font-size: 15.5px;
-    }
-    .pillar .mini{
-      font-size: 13.5px;
-      opacity: .82;
-      margin-top: 10px;
-    }
 
-    /* A clean “lane” grid for surprise / scanning */
+    /* “Lanes”: better scanning + less chunky */
     .lanes{
       display:grid;
       grid-template-columns: 1fr;
@@ -140,7 +134,7 @@
       padding: 16px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.20));
+      background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
       box-shadow: 0 16px 50px rgba(0,0,0,.28);
       position: relative;
       overflow:hidden;
@@ -187,19 +181,16 @@
       line-height: 1.7;
       font-size: 14.5px;
     }
-
-    /* Keep tools visible: reduce top section padding a bit */
-    .section.tools-top{ padding-top: 18px; }
   </style>
 </head>
 
 <body class="bigtext">
-  <!-- FX layers (same as indexhome) -->
+  <!-- FX layers -->
   <div id="clickozParticles" aria-hidden="true"></div>
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
   <div class="__grain" aria-hidden="true"></div>
 
-  <!-- NAV (copied structure: do NOT change scale here) -->
+  <!-- NAV -->
   <nav class="nav" aria-label="Primary navigation" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
@@ -290,18 +281,18 @@
     </div>
   </aside>
 
-  <!-- TOOLS SECTION (tools visible immediately) -->
-  <section class="section container tools-top" id="tools">
-    <h1 class="section-title">Clickoz Tools</h1>
-    <div class="tools-intro">
-      Free online tools for SEO, writing, developers, and creators — built to run in your browser with copy-ready outputs and no signup.
+  <!-- TOOLS -->
+  <section class="section container tools-shell" id="tools">
+    <h1 class="section-title">Tools</h1>
+    <div class="tools-kicker">
+      <b>Free online tools</b> for SEO, writing, developers, and creators — privacy-first, no signup, copy-ready outputs.
     </div>
 
     <div class="row">
-      <input class="search" id="toolsSearch" placeholder="Search tools (word counter, readability, meta tags, json, base64, url…)" aria-label="Search tools" autocomplete="off" />
+      <input class="search" id="toolsSearch" placeholder="Search tools (meta tags, readability, keyword density, json, base64, url…)" aria-label="Search tools" autocomplete="off" />
     </div>
     <div class="search-hint">
-      Tip: press <b>/</b> to focus search • Use filters to switch between <b>SEO</b>, <b>Text</b>, <b>Dev</b> and <b>Creator</b> tools • 15 tools per page.
+      Press <b>/</b> to search • Filter by category • <b>15 tools per page</b>
     </div>
 
     <div class="chips" id="toolsChips" aria-label="Categories" style="margin-top:12px;">
@@ -312,153 +303,9 @@
       <div class="chip" data-filter="creator" role="button" tabindex="0">Creator</div>
     </div>
 
+    <!-- Keep your existing 15 tools grid HERE (same as previous) -->
     <div class="grid" id="toolsGrid">
-      <!-- 1 -->
-      <a class="card" href="/tool/word-counter/" data-cat="text" data-hay="word counter character counter count words sentences paragraphs reading time">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🔢</div><h3>Word Counter</h3></div>
-        <p>Count words, characters (with and without spaces), sentences, and paragraphs in seconds. Includes reading time for briefs, essays, blog drafts, and landing pages.</p>
-        <div class="example-line"><b>Example:</b> “My landing page is 380 words — is that too long?”</div>
-        <div class="example-line"><b>Example:</b> “How many characters can I use for a snippet?”</div>
-        <div class="example-line"><b>Example:</b> “Estimate reading time for a 1,200-word article.”</div>
-        <span class="tool-cta">Use Word Counter</span>
-      </a>
-
-      <!-- 2 -->
-      <a class="card" href="/tool/word-counter-pro/" data-cat="text" data-hay="advanced word counter speaking time keyword hints section breakdown script">
-        <div class="card-head"><div class="thumb" aria-hidden="true">✨</div><h3>Word Counter Pro</h3></div>
-        <p>Advanced text stats for long-form: reading time, speaking time, section breakdown, and quick keyword hints to spot repetition.</p>
-        <div class="example-line"><b>Example:</b> “How long will this YouTube script take out loud?”</div>
-        <div class="example-line"><b>Example:</b> “What terms am I repeating too often?”</div>
-        <div class="example-line"><b>Example:</b> “Is my intro too long vs the rest?”</div>
-        <span class="tool-cta">Use Word Counter Pro</span>
-      </a>
-
-      <!-- 3 -->
-      <a class="card" href="/tool/readability-analyzer/" data-cat="text" data-hay="readability score flesch grade level clarity simplify text">
-        <div class="card-head"><div class="thumb" aria-hidden="true">📚</div><h3>Readability Analyzer</h3></div>
-        <p>Measure readability, estimate reading level, and get clarity hints. Identify long sentences and dense sections, then rewrite for smoother flow.</p>
-        <div class="example-line"><b>Example:</b> “Simplify this paragraph for a general audience.”</div>
-        <div class="example-line"><b>Example:</b> “Is this FAQ too technical for beginners?”</div>
-        <div class="example-line"><b>Example:</b> “Find sentences that are too long.”</div>
-        <span class="tool-cta">Use Readability Analyzer</span>
-      </a>
-
-      <!-- 4 -->
-      <a class="card" href="/tool/keyword-density/" data-cat="seo" data-hay="keyword density checker frequency phrases on-page seo overuse">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🎯</div><h3>Keyword Density</h3></div>
-        <p>Check keyword frequency and common phrases. Spot overuse, find natural variations, and keep relevance without stuffing.</p>
-        <div class="example-line"><b>Example:</b> “Am I repeating a term too many times?”</div>
-        <div class="example-line"><b>Example:</b> “What 2–3 word phrases show up most?”</div>
-        <div class="example-line"><b>Example:</b> “Did I use the main topic in headings?”</div>
-        <span class="tool-cta">Use Keyword Density</span>
-      </a>
-
-      <!-- 5 -->
-      <a class="card" href="/tool/meta-tags/" data-cat="seo" data-hay="meta tag optimizer title description serp preview length ctr snippet">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🏷️</div><h3>Meta Tag Optimizer</h3></div>
-        <p>Preview titles and meta descriptions in a SERP-style layout, check limits, and refine wording to improve click-through rate.</p>
-        <div class="example-line"><b>Example:</b> “Is my title cut off in search results?”</div>
-        <div class="example-line"><b>Example:</b> “Rewrite my snippet to sound less generic.”</div>
-        <div class="example-line"><b>Example:</b> “Make it clearer and benefit-driven.”</div>
-        <span class="tool-cta">Use Meta Tag Optimizer</span>
-      </a>
-
-      <!-- 6 -->
-      <a class="card" href="/tool/json-formatter/" data-cat="dev" data-hay="json formatter validate minify prettify api payload webhook">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🧾</div><h3>JSON Formatter</h3></div>
-        <p>Prettify or minify JSON instantly, validate structure, and catch syntax issues. Great for API payloads, webhooks, and debugging.</p>
-        <div class="example-line"><b>Example:</b> “Where is the missing comma?”</div>
-        <div class="example-line"><b>Example:</b> “Minify to reduce payload size.”</div>
-        <div class="example-line"><b>Example:</b> “Pretty-print an API response for copy.”</div>
-        <span class="tool-cta">Use JSON Formatter</span>
-      </a>
-
-      <!-- 7 -->
-      <a class="card" href="/tool/url-encoder/" data-cat="dev" data-hay="url encoder decoder querystring encodeURIComponent decode utm redirect">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🔗</div><h3>URL Encoder</h3></div>
-        <p>Encode or decode URLs and query strings safely. Useful for redirects, UTM tracking links, parameters, and debugging when characters break a request.</p>
-        <div class="example-line"><b>Example:</b> “Encode spaces and symbols in a link.”</div>
-        <div class="example-line"><b>Example:</b> “Decode a percent-encoded query string.”</div>
-        <div class="example-line"><b>Example:</b> “Fix a redirect URL failing due to reserved chars.”</div>
-        <span class="tool-cta">Use URL Encoder</span>
-      </a>
-
-      <!-- 8 -->
-      <a class="card" href="/tool/base64/" data-cat="dev" data-hay="base64 encoder decoder text token payload inspect">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🔐</div><h3>Base64 Encoder</h3></div>
-        <p>Base64 encode or decode text for tokens, payloads, and developer workflows. Useful to inspect what’s inside a string before using it.</p>
-        <div class="example-line"><b>Example:</b> “Decode a Base64 value from an API.”</div>
-        <div class="example-line"><b>Example:</b> “Encode JSON to Base64 for testing.”</div>
-        <div class="example-line"><b>Example:</b> “Check what a token contains.”</div>
-        <span class="tool-cta">Use Base64</span>
-      </a>
-
-      <!-- 9 -->
-      <a class="card" href="/tool/title-description/" data-cat="seo" data-hay="seo title generator meta description generator ctr intent variations">
-        <div class="card-head"><div class="thumb" aria-hidden="true">📝</div><h3>Title &amp; Description</h3></div>
-        <p>Generate title and description ideas aligned to intent and CTR. Create multiple angles, then refine to fit limits without losing meaning.</p>
-        <div class="example-line"><b>Example:</b> “10 titles for ‘free invoice generator’.”</div>
-        <div class="example-line"><b>Example:</b> “Descriptions that sound natural, not templated.”</div>
-        <div class="example-line"><b>Example:</b> “Variants for informational vs transactional intent.”</div>
-        <span class="tool-cta">Use Title &amp; Description</span>
-      </a>
-
-      <!-- 10 -->
-      <a class="card" href="/tool/alt-text/" data-cat="seo" data-hay="alt text generator accessibility seo images screen reader">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🖼️</div><h3>Alt Text Generator</h3></div>
-        <p>Create clear alt text for accessibility and SEO. Get short and long variants that remain screen-reader friendly and avoid keyword stuffing.</p>
-        <div class="example-line"><b>Example:</b> “Alt text for a product photo (front view).”</div>
-        <div class="example-line"><b>Example:</b> “Accessible alt text for a chart screenshot.”</div>
-        <div class="example-line"><b>Example:</b> “Short + detailed variants for the same image.”</div>
-        <span class="tool-cta">Use Alt Text Generator</span>
-      </a>
-
-      <!-- 11 -->
-      <a class="card" href="/tool/seo-outline/" data-cat="seo" data-hay="seo outline helper h1 h2 h3 content plan topical coverage">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🧠</div><h3>SEO Outline Helper</h3></div>
-        <p>Build a strong H1/H2/H3 outline plus topic coverage ideas. Useful for planning long-form content and avoiding missing subtopics.</p>
-        <div class="example-line"><b>Example:</b> “Outline for ‘how to start a newsletter’.”</div>
-        <div class="example-line"><b>Example:</b> “Headings for a comparison page (A vs B).”</div>
-        <div class="example-line"><b>Example:</b> “Add missing sections to feel complete.”</div>
-        <span class="tool-cta">Use SEO Outline Helper</span>
-      </a>
-
-      <!-- 12-15: Creator placeholders (ready for future YouTube tools) -->
-      <a class="card" href="/tool/youtube-title-checker/" data-cat="creator" data-hay="youtube title checker title length hook ctr video seo 0 views">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🎬</div><h3>YouTube Title Checker</h3></div>
-        <p>Improve packaging: check title length, clarity, and hook strength. Built for creators asking “why am I getting 0 views?”.</p>
-        <div class="example-line"><b>Example:</b> “Is my title too generic for search?”</div>
-        <div class="example-line"><b>Example:</b> “Shorten without losing the topic.”</div>
-        <div class="example-line"><b>Example:</b> “Make the first 3 words stronger.”</div>
-        <span class="tool-cta">Coming soon</span>
-      </a>
-
-      <a class="card" href="/tool/youtube-description-optimizer/" data-cat="creator" data-hay="youtube description optimizer chapters timestamps keywords structure">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🧩</div><h3>YouTube Description Optimizer</h3></div>
-        <p>Turn a messy description into a clean, scannable structure: keywords used naturally, chapters, links, and mobile-friendly formatting.</p>
-        <div class="example-line"><b>Example:</b> “Add chapters and a clean layout.”</div>
-        <div class="example-line"><b>Example:</b> “Keep it readable on phones.”</div>
-        <div class="example-line"><b>Example:</b> “Add keywords without stuffing.”</div>
-        <span class="tool-cta">Coming soon</span>
-      </a>
-
-      <a class="card" href="/tool/youtube-tags-generator/" data-cat="creator" data-hay="youtube tags generator keyword variations discoverability video seo">
-        <div class="card-head"><div class="thumb" aria-hidden="true">🏷️</div><h3>YouTube Tags Generator</h3></div>
-        <p>Generate tag ideas and keyword variations around a topic. Useful for early discoverability and consistent metadata across uploads.</p>
-        <div class="example-line"><b>Example:</b> “Related keyword variations people search.”</div>
-        <div class="example-line"><b>Example:</b> “Avoid irrelevant tags that confuse intent.”</div>
-        <div class="example-line"><b>Example:</b> “Generate tags for a niche channel.”</div>
-        <span class="tool-cta">Coming soon</span>
-      </a>
-
-      <a class="card" href="/tool/platform-bio-generator/" data-cat="creator" data-hay="instagram bio generator tiktok bio youtube about profile copy">
-        <div class="card-head"><div class="thumb" aria-hidden="true">👤</div><h3>Platform Bio Generator</h3></div>
-        <p>Create clean bios for YouTube, TikTok, Instagram, and creator pages. Optimized for clarity, trust, and niche positioning.</p>
-        <div class="example-line"><b>Example:</b> “Explain my channel in one line.”</div>
-        <div class="example-line"><b>Example:</b> “Make it memorable and specific.”</div>
-        <div class="example-line"><b>Example:</b> “Add a CTA without sounding spammy.”</div>
-        <span class="tool-cta">Coming soon</span>
-      </a>
+      <!-- incolla qui le 15 card che già hai (Word Counter ... Platform Bio Generator) -->
     </div>
 
     <div class="pager" aria-label="Pagination controls">
@@ -468,24 +315,22 @@
     </div>
   </section>
 
-  <!-- BELOW TOOLS: the narrative + SEO (your request) -->
+  <!-- BELOW: Narrative / SEO (same as before, ma più leggibile già con patch CSS) -->
   <section class="section container" aria-label="Tools value and use cases">
     <div class="hero-box">
-      <h2 class="section-title" style="margin-top:0;">What these tools are for (in plain English)</h2>
+      <h2 class="section-title" style="margin-top:0;">Why Clickoz Tools exists</h2>
       <p class="section-sub" style="margin-bottom:14px;">
-        This page is intentionally practical: it’s built for the exact moments people search for quick answers, clean output, and zero friction.
+        People don’t search for “a platform”. They search for problems — word count, meta preview, keyword checks, JSON errors, broken URLs, Base64 decoding, and creator packaging.
       </p>
 
       <div class="lanes">
         <div class="lane">
           <div class="lane-head">
             <div class="lane-ico" aria-hidden="true">🔎</div>
-            <h3>SEO checks before you publish</h3>
+            <h3>SEO checks before publishing</h3>
           </div>
           <p>
-            If you write landing pages, blogs, tool pages, or guides, you always end up checking the same things: word count,
-            readability, headline clarity, snippet length, and whether your meta title or description gets cut off. These tools keep
-            the workflow fast—measure, adjust, copy, publish.
+            Titles, descriptions, and content clarity are small details that decide clicks. Clickoz tools help you measure and fix those details fast: snippet length, readability, keyword usage, and on-page structure.
           </p>
         </div>
 
@@ -495,9 +340,7 @@
             <h3>Creator packaging (YouTube and beyond)</h3>
           </div>
           <p>
-            “Why do I get 0 views on YouTube?” is often packaging: weak title hook, unclear description structure, inconsistent keywords,
-            low clarity, or metadata that doesn’t match intent. Creator tools are built to fix these basics quickly—titles, descriptions,
-            tags, and repeatable templates for video platforms.
+            “Why do I get 0 views on YouTube?” is often packaging: unclear titles, weak hooks, messy descriptions, and keywords that don’t match intent. Creator tools focus on titles, descriptions, tags, and repeatable templates.
           </p>
         </div>
 
@@ -507,99 +350,50 @@
             <h3>Developer utilities when stuff breaks</h3>
           </div>
           <p>
-            When a request fails because JSON is invalid, a query string is malformed, or a Base64 value needs inspection, you don’t want
-            a heavy app. You want a fast online tool. Format, validate, encode, decode—then move on.
+            When JSON is invalid, query strings are malformed, or Base64 needs inspection, you want a fast browser tool. Format, validate, encode, decode — done.
           </p>
         </div>
 
         <div class="lane">
           <div class="lane-head">
             <div class="lane-ico" aria-hidden="true">✍️</div>
-            <h3>Writers, freelancers, and daily output</h3>
+            <h3>Writing workflows that stay clean</h3>
           </div>
           <p>
-            Writers care about flow, readability, scannability, and limits—especially on mobile. The best content often wins because it’s
-            easy to understand. These tools help you make text cleaner without turning the writing process into a science project.
+            Good writing wins because it’s easy to understand. Tools like word count and readability help you keep content scannable, structured, and mobile-friendly.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Long pillar section (SEO-rich, natural, no FAQ tone) -->
   <section class="section container" aria-label="About Clickoz Tools">
     <div class="hero-box pillar">
-      <h2>A free online toolkit that scales with your work</h2>
+      <h2>Free, privacy-first, and built to scale</h2>
       <p>
-        Clickoz Tools is built like a toolbox, not a dashboard. Each tool is focused: one job, clear inputs, clean outputs.
-        That’s why it works for SEO tasks, writing workflows, developer utilities, and creator packaging—without asking for signup,
-        without forcing uploads, and without turning simple problems into complicated steps.
+        Clickoz is designed around “one job per tool”. That makes the site fast, predictable, and easy to use — especially on mobile.
+        Tools run in your browser, outputs are copy-ready, and you don’t need an account.
       </p>
       <p>
-        People don’t search for “a platform”. They search for problems: a word counter, a character limit, a readability score,
-        a meta tag preview, a keyword density check, a JSON formatter, a URL encoder, a Base64 decoder.
-        Clickoz is designed to match those searches with tools that respond fast and feel trustworthy.
+        The library will expand into more categories (YouTube tools, social tools, marketing utilities, website tools, private tools, developer tools).
+        Pagination keeps this page quick as the catalog grows — and each tool can become its own landing page for search intent.
       </p>
 
-      <h3>Why tool pages matter for search (and for humans)</h3>
+      <h3>Open source and transparent</h3>
       <p>
-        A serious tools website needs two things at the same time: discoverability and usability. Discoverability means search engines can crawl,
-        understand, and rank individual tools. Usability means a real person can land on a page and solve a task in seconds.
-        That’s why this page is structured as a tools directory with search, categories, and pagination.
-      </p>
-      <p>
-        The goal is simple: you should be able to find the right tool even if you don’t remember its name. Search by task
-        (“preview meta description”, “format JSON”, “encode URL”), filter by category (SEO, text, dev, creator), then pick the tool that fits.
+        Clickoz is open source on GitHub: you can review how tools work, suggest improvements, and contribute. Transparency builds trust — especially for “privacy-first” tools.
       </p>
 
-      <h3>Multiple keywords without spam (done correctly)</h3>
+      <h3>Multiple keywords without spam</h3>
       <p>
-        A page becomes spammy when it repeats the same phrase unnaturally. Clickoz does the opposite: it covers real tasks using natural language.
-        In practice, this means the same topic can be described with multiple variations: online tools, browser tools, free tools,
-        SEO tools, writing tools, developer tools, creator tools, marketing utilities, and platform helpers.
-      </p>
-      <p>
-        The content stays human because it’s tied to real situations: preparing a page before publishing, checking snippet length,
-        cleaning an API payload, fixing a tracking URL, rewriting for clarity, or improving YouTube packaging when views are stuck.
-      </p>
-
-      <h3>YouTube tools and the “0 views” search</h3>
-      <p>
-        When creators search “why do I have 0 views on YouTube”, they often expect a magic trick. Usually it’s fundamentals:
-        the title doesn’t create curiosity, the first line of the description is weak, the structure is messy, the keywords don’t match intent,
-        or the video is hard to understand quickly.
-      </p>
-      <p>
-        That’s why Clickoz is expanding into creator-focused tools: title checkers, description optimizers, tags generators,
-        and profile bio generators for YouTube, TikTok, Instagram, and other platforms. Not because “tools create views”, but because
-        good packaging removes friction between a video and the click.
-      </p>
-
-      <h3>Private, fast, and available on any device</h3>
-      <p>
-        Clickoz tools are built to be accessible from desktop, mobile, and tablets. The UI is designed to stay stable on Android browsers
-        and iPhone devices. Outputs are copy-ready so you can paste results into your CMS, your editor, your campaign, your platform,
-        or your workflow without extra formatting.
-      </p>
-      <p>
-        The project is privacy-first: no account required. You can use tools quickly and move on. The site is supported through advertising
-        to keep tools free and accessible, without turning your work into a data exchange.
-      </p>
-
-      <h3>Categories today, categories tomorrow</h3>
-      <p>
-        Today, Clickoz groups tools into SEO, Text, Dev, and Creator categories. Tomorrow, you can expand into more specific directories:
-        YouTube tools, social tools, online marketing tools, website utilities, private internal tools, and platform helpers.
-        The architecture stays clean because each tool stays focused and searchable.
-      </p>
-
-      <p class="mini">
-        Shortcut reminder: press <b>/</b> to search instantly. Use category filters when you’re exploring. Pagination keeps the page fast as the library grows.
+        Keyword coverage becomes spam when it repeats the same phrase unnaturally. Clickoz aims for natural language tied to real tasks:
+        free online tools, browser tools, SEO tools, writing tools, developer utilities, creator tools, YouTube tools, and platform helpers —
+        all mentioned where they actually fit, not stuffed.
       </p>
     </div>
   </section>
 
-  <!-- Footer (same structure) -->
+  <!-- Footer + Cookie banner identici alla tua struttura -->
   <footer class="footer">
     <div class="container footer-grid">
       <div>
@@ -639,11 +433,9 @@
     </div>
   </footer>
 
-  <!-- Cookie banner (uses your site.js consent logic) -->
   <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
     <div class="cookie-card">
       <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
-
       <div class="cookie-content">
         <div class="cookie-title">Privacy choices</div>
         <div class="cookie-text">
@@ -651,7 +443,6 @@
           Read more in <a href="/privacy/">Privacy</a>.
         </div>
       </div>
-
       <div class="cookie-actions">
         <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
         <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
@@ -660,37 +451,28 @@
     </div>
   </div>
 
-  <!-- Nav glow on scroll (same behavior as indexhome) -->
   <script>
     (function(){
       const nav = document.getElementById('topNav');
       if(!nav) return;
-
       let lastY = window.scrollY || 0;
-
       const onScroll = () => {
         const y = window.scrollY || 0;
         const scrolled = y > 8;
         nav.classList.toggle('is-scrolled', scrolled);
-
         const goingDown = y > lastY + 2;
         const goingUp = y < lastY - 2;
-
         if(scrolled && goingDown) nav.classList.add('is-down');
         if(!scrolled || goingUp) nav.classList.remove('is-down');
-
         lastY = y;
       };
-
       window.addEventListener('scroll', onScroll, { passive:true });
       onScroll();
     })();
   </script>
 
-  <!-- Your global JS -->
   <script src="/assets/site.js" defer></script>
 
-  <!-- Tools page logic: search + chips + pagination (15 per page) -->
   <script>
     (function(){
       const $  = (s, r=document) => r.querySelector(s);
@@ -702,18 +484,14 @@
       const prev   = $('#prevPage');
       const next   = $('#nextPage');
       const info   = $('#pageInfo');
-
       if(!grid || !chips || !search || !prev || !next || !info) return;
 
       const PAGE_SIZE = 15;
       let page = 1;
       let filter = 'all';
-
       const allCards = $$('#toolsGrid a.card');
 
-      function normalize(s){
-        return (s || '').toLowerCase().trim();
-      }
+      function normalize(s){ return (s || '').toLowerCase().trim(); }
 
       function getFiltered(){
         const term = normalize(search.value);
@@ -730,19 +508,15 @@
         const filtered = getFiltered();
         const total = filtered.length;
         const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-
         if(page > pages) page = pages;
         if(page < 1) page = 1;
 
         allCards.forEach(c => c.style.display = 'none');
-
         const start = (page - 1) * PAGE_SIZE;
-        const slice = filtered.slice(start, start + PAGE_SIZE);
-        slice.forEach(c => c.style.display = '');
+        filtered.slice(start, start + PAGE_SIZE).forEach(c => c.style.display = '');
 
         prev.disabled = page <= 1;
         next.disabled = page >= pages;
-
         info.textContent = `Page ${page} of ${pages} • ${total} tool${total === 1 ? '' : 's'}`;
       }
 
@@ -759,10 +533,7 @@
       let t = null;
       search.addEventListener('input', () => {
         clearTimeout(t);
-        t = setTimeout(() => {
-          page = 1;
-          render();
-        }, 60);
+        t = setTimeout(() => { page = 1; render(); }, 60);
       });
 
       document.addEventListener('keydown', (e) => {
