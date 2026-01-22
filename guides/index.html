@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Clickoz Guides – Tutorials, Checklists & Playbooks for SEO, Writing, Dev & Creators</title>
+  <meta name="description" content="Browse Clickoz Guides: practical tutorials, checklists, and playbooks for SEO, writing, developers, and creators. Learn workflows, fix issues fast, and ship better content." />
+  <link rel="canonical" href="https://clickoz.com/guides/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b0f19" />
+
+  <meta property="og:site_name" content="Clickoz" />
+  <meta property="og:title" content="Clickoz Guides – Tutorials & Playbooks" />
+  <meta property="og:description" content="Practical guides for SEO, writing, dev, and creators. Clear steps, copy-ready checklists, and fast wins." />
+  <meta property="og:url" content="https://clickoz.com/guides/" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/assets/site.css?v=4" />
+
+  <!-- Guides page micro-patches ONLY -->
+  <style>
+    .nav-links a.active,
+    .m-links a.active{
+      background: rgba(var(--accent-rgb), .12);
+      border: 1px solid rgba(var(--accent-rgb), .28);
+      color: rgba(255,255,255,.96);
+    }
+
+    .guides-shell{ padding-top: 18px; }
+
+    .guides-kicker{
+      max-width: 980px;
+      margin: 0 auto 10px;
+      text-align:center;
+      color: rgba(255,255,255,.70);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .guides-kicker b{
+      color: rgba(255,255,255,.92);
+      font-weight: 900;
+    }
+
+    .search-hint{
+      max-width: 920px;
+      margin: 8px auto 0;
+      font-size: 13px;
+      opacity: .80;
+      line-height: 1.55;
+      text-align:left;
+    }
+    .search-hint b{ color: rgba(255,255,255,.92); }
+
+    .pager{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content:center;
+      align-items:center;
+      margin-top: 16px;
+    }
+    .pager .btn{
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 1000;
+    }
+    .page-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.82);
+      font-weight: 1000;
+      font-size: 13px;
+      min-width: 260px;
+    }
+
+    .pillar{ text-align:left; margin-top: 16px; }
+    .pillar h2{
+      margin: 0 0 10px;
+      font-size: clamp(22px, 2.4vw, 32px);
+      font-weight: 1000;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+    }
+    .pillar h3{
+      margin: 18px 0 10px;
+      font-size: 18px;
+      font-weight: 1000;
+      letter-spacing: -0.01em;
+    }
+    .pillar p{
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+
+    .lanes{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    @media (min-width: 981px){
+      .lanes{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    }
+    .lane{
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
+      box-shadow: 0 16px 50px rgba(0,0,0,.28);
+      position: relative;
+      overflow:hidden;
+      text-align:left;
+    }
+    .lane::after{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background: radial-gradient(600px 240px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
+      filter: blur(26px);
+      opacity: .9;
+      pointer-events:none;
+    }
+    .lane-head{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .lane-ico{
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(var(--accent-rgb), .10);
+      border: 1px solid rgba(var(--accent-rgb), .22);
+      font-size: 20px;
+      flex: 0 0 auto;
+    }
+    .lane h3{ margin: 0; font-size: 16px; font-weight: 1000; }
+    .lane p{
+      margin: 10px 0 0;
+      position: relative;
+      z-index: 1;
+      color: rgba(255,255,255,.74);
+      line-height: 1.7;
+      font-size: 14.5px;
+    }
+  </style>
+</head>
+
+<body class="bigtext">
+  <!-- FX layers -->
+  <div id="clickozParticles" aria-hidden="true"></div>
+  <canvas id="spaceParticles" aria-hidden="true"></canvas>
+  <div class="__grain" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" aria-label="Primary navigation" id="topNav">
+    <div class="container nav-inner">
+      <a class="logo" href="/" aria-label="Clickoz Home">
+        <span class="logo-badge" id="logoBadge" aria-hidden="true">
+          <svg class="logo-mark" viewBox="0 0 48 48" width="1em" height="1em" aria-hidden="true" focusable="false">
+            <path d="M32.5 13.5c-2.4-2.2-5.4-3.3-8.9-3.3-7.2 0-12.6 5.1-12.6 13.8S16.4 37.8 23.6 37.8c3.6 0 6.7-1.2 9.2-3.6"
+                  fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="logo-text">Click<span class="logo-oz">oz</span></span>
+      </a>
+
+      <div class="nav-links" aria-label="Sections">
+        <a href="/tools.html">Tools</a>
+        <a href="/guides/" class="active" aria-current="page">Guides</a>
+        <a href="/updates/">Updates</a>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="nav-actions" aria-label="Preferences">
+        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="dropdown">
+          <button class="dot-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Theme color">
+            <span class="dot" id="colorDot" aria-hidden="true"></span>
+          </button>
+
+          <div class="menu" id="colorMenu" role="menu" aria-label="Pick theme color">
+            <div class="menu-title">Theme color</div>
+            <div class="color-grid">
+              <div class="color-option active" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#f59e0b" data-accent2="#fbbf24" style="background:#f59e0b" title="Yellow" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#ec4899" data-accent2="#f472b6" style="background:#ec4899" title="Pink" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" role="menuitem" tabindex="0"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="gtNavWrap" aria-label="Translate">
+          <div id="google_translate_element"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="m-overlay" id="mOverlay" hidden></div>
+  <aside class="m-menu" id="mobileMenu" aria-hidden="true">
+    <div class="m-head">
+      <div class="m-title">Menu</div>
+      <button class="m-close" id="mClose" type="button" aria-label="Close menu">×</button>
+    </div>
+
+    <div class="m-links">
+      <a class="m-link" href="/tools.html">Tools</a>
+      <a class="m-link active" href="/guides/" aria-current="page">Guides</a>
+      <a class="m-link" href="/updates/">Updates</a>
+      <a class="m-link" href="/privacy/">Privacy</a>
+    </div>
+
+    <div class="m-block">
+      <div class="m-label">Theme color</div>
+      <div class="color-grid m-colors" id="mobileColorGrid">
+        <div class="color-option active" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" tabindex="0"></div>
+        <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" tabindex="0"></div>
+        <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" tabindex="0"></div>
+        <div class="color-option" data-accent="#f59e0b" data-accent2="#fbbf24" style="background:#f59e0b" title="Yellow" tabindex="0"></div>
+        <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" tabindex="0"></div>
+        <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" tabindex="0"></div>
+        <div class="color-option" data-accent="#ec4899" data-accent2="#f472b6" style="background:#ec4899" title="Pink" tabindex="0"></div>
+        <div class="color-option" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" tabindex="0"></div>
+      </div>
+    </div>
+
+    <div class="m-block">
+      <div class="m-label">Language</div>
+      <div id="google_translate_element_mobile"></div>
+      <div style="margin-top:10px;font-size:13px;opacity:.78;line-height:1.5;">
+        Translation loads only if you accept “All” cookies.
+      </div>
+    </div>
+  </aside>
+
+  <!-- GUIDES -->
+  <section class="section container guides-shell" id="guides">
+    <h1 class="section-title">Guides</h1>
+    <div class="guides-kicker">
+      <b>Practical guides</b> for SEO, writing, developers, and creators — clear steps, checklists, and repeatable workflows.
+    </div>
+
+    <div class="row">
+      <input class="search" id="guidesSearch" placeholder="Search guides (seo checklist, meta tags, youtube titles, json errors…)" aria-label="Search guides" autocomplete="off" />
+    </div>
+    <div class="search-hint">
+      Press <b>/</b> to search • Filter by category • <b>15 guides per page</b>
+    </div>
+
+    <div class="chips" id="guidesChips" aria-label="Categories" style="margin-top:12px;">
+      <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
+      <div class="chip" data-filter="seo" role="button" tabindex="0">SEO</div>
+      <div class="chip" data-filter="writing" role="button" tabindex="0">Writing</div>
+      <div class="chip" data-filter="dev" role="button" tabindex="0">Dev</div>
+      <div class="chip" data-filter="creator" role="button" tabindex="0">Creator</div>
+    </div>
+
+    <div class="grid" id="guidesGrid">
+      <!-- EXAMPLE guide cards (replace/expand as you want) -->
+      <a class="card" href="/guides/seo-checklist/" data-cat="seo"
+         data-hay="seo checklist on-page audit titles meta description internal linking">
+        <div class="card-top">
+          <div class="badge">SEO</div>
+          <div class="card-title">On-Page SEO Checklist</div>
+          <div class="card-desc">A clean step-by-step checklist to improve titles, meta descriptions, headings, and internal links.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">10–15 min</span>
+          <span class="btn small">Read guide</span>
+        </div>
+      </a>
+
+      <a class="card" href="/guides/meta-title-formula/" data-cat="seo"
+         data-hay="meta title formula serp title length ctr keywords">
+        <div class="card-top">
+          <div class="badge">SEO</div>
+          <div class="card-title">Meta Title Formula (CTR)</div>
+          <div class="card-desc">How to write titles that fit SERP limits and match intent—without keyword stuffing.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">7–10 min</span>
+          <span class="btn small">Read guide</span>
+        </div>
+      </a>
+
+      <a class="card" href="/guides/readability-basics/" data-cat="writing"
+         data-hay="readability writing clarity short sentences scannable content">
+        <div class="card-top">
+          <div class="badge">Writing</div>
+          <div class="card-title">Readability Basics</div>
+          <div class="card-desc">Make text scannable on mobile: structure, spacing, sentence length, and clarity rules.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">6–9 min</span>
+          <span class="btn small">Read guide</span>
+        </div>
+      </a>
+
+      <a class="card" href="/guides/youtube-packaging/" data-cat="creator"
+         data-hay="youtube packaging titles thumbnails hook description tags keyword intent">
+        <div class="card-top">
+          <div class="badge">Creator</div>
+          <div class="card-title">YouTube Packaging Playbook</div>
+          <div class="card-desc">Titles, hooks, and descriptions that match what people actually search and click.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">10–12 min</span>
+          <span class="btn small">Read guide</span>
+        </div>
+      </a>
+
+      <a class="card" href="/guides/json-fix-common-errors/" data-cat="dev"
+         data-hay="json errors trailing comma invalid quotes validate format parse">
+        <div class="card-top">
+          <div class="badge">Dev</div>
+          <div class="card-title">Fix Common JSON Errors</div>
+          <div class="card-desc">The fastest way to debug invalid JSON: commas, quotes, encoding, and validation tips.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">5–8 min</span>
+          <span class="btn small">Read guide</span>
+        </div>
+      </a>
+
+      <!-- Add more guide cards here -->
+    </div>
+
+    <div class="pager" aria-label="Pagination controls">
+      <button class="btn" id="prevPage" type="button" aria-label="Previous page">← Prev</button>
+      <span class="page-pill" id="pageInfo" aria-live="polite">Page 1</span>
+      <button class="btn" id="nextPage" type="button" aria-label="Next page">Next →</button>
+    </div>
+  </section>
+
+  <!-- BELOW: Narrative / SEO -->
+  <section class="section container" aria-label="Guides value and use cases">
+    <div class="hero-box">
+      <h2 class="section-title" style="margin-top:0;">Why Clickoz Guides exists</h2>
+      <p class="section-sub" style="margin-bottom:14px;">
+        Tools solve a task. Guides teach the workflow — the “why”, the steps, and the common mistakes that waste time.
+        Clickoz Guides are short, practical, and made for speed.
+      </p>
+
+      <div class="lanes">
+        <div class="lane">
+          <div class="lane-head">
+            <div class="lane-ico" aria-hidden="true">🧭</div>
+            <h3>Clear steps, no fluff</h3>
+          </div>
+          <p>
+            Each guide is built around a real outcome: fix SEO basics, write better titles, debug JSON, or improve packaging.
+            You can follow it fast and apply it immediately.
+          </p>
+        </div>
+
+        <div class="lane">
+          <div class="lane-head">
+            <div class="lane-ico" aria-hidden="true">✅</div>
+            <h3>Checklists you can reuse</h3>
+          </div>
+          <p>
+            The best workflows are repeatable. Use the checklist, ship the work, and come back later without re-learning everything.
+          </p>
+        </div>
+
+        <div class="lane">
+          <div class="lane-head">
+            <div class="lane-ico" aria-hidden="true">🎯</div>
+            <h3>Search intent aligned</h3>
+          </div>
+          <p>
+            Guides are written to match how people search: “meta title length”, “fix JSON”, “YouTube title ideas”, “readability score”.
+            That helps users and helps SEO.
+          </p>
+        </div>
+
+        <div class="lane">
+          <div class="lane-head">
+            <div class="lane-ico" aria-hidden="true">⚡</div>
+            <h3>Pair guides with tools</h3>
+          </div>
+          <p>
+            Each guide can link directly to the matching tool: learn the workflow, then run the check instantly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container" aria-label="About Clickoz Guides">
+    <div class="hero-box pillar">
+      <h2>Fast learning, built for mobile</h2>
+      <p>
+        Clickoz Guides are structured for skimming: short paragraphs, clear steps, and practical examples.
+        Perfect for creators and builders who want results, not theory.
+      </p>
+
+      <h3>Each guide can be a landing page</h3>
+      <p>
+        As the library grows, every guide becomes a focused search entry point.
+        Combined with tools, this creates a strong “intent hub” (guides = education, tools = execution).
+      </p>
+
+      <h3>Natural keyword coverage</h3>
+      <p>
+        Instead of repeating the same phrase, each guide targets a real query and uses related language naturally:
+        SEO checklist, meta titles, readability, YouTube packaging, JSON errors, encoding—used only when relevant.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer + Cookie banner (same structure as yours) -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>Clickoz</h4>
+        <div class="footer-links">
+          <a href="/tools.html">Tools</a>
+          <a href="/guides/">Guides</a>
+          <a href="/updates/">Updates</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Popular guides</h4>
+        <div class="footer-links">
+          <a href="/guides/seo-checklist/">On-Page SEO Checklist</a>
+          <a href="/guides/meta-title-formula/">Meta Title Formula</a>
+          <a href="/guides/youtube-packaging/">YouTube Packaging</a>
+          <a href="/guides/json-fix-common-errors/">Fix JSON Errors</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="footer-links">
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:14px">
+      <hr class="sep" />
+      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
+        © 2026 Clickoz • Guides for SEO, writing and developers
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
+    <div class="cookie-card">
+      <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
+      <div class="cookie-content">
+        <div class="cookie-title">Privacy choices</div>
+        <div class="cookie-text">
+          We use essential storage for core features. If you accept all, we may load third-party services like Google Translate.
+          Read more in <a href="/privacy/">Privacy</a>.
+        </div>
+      </div>
+      <div class="cookie-actions">
+        <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
+        <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
+        <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav scroll micro-script (same as yours) -->
+  <script>
+    (function(){
+      const nav = document.getElementById('topNav');
+      if(!nav) return;
+      let lastY = window.scrollY || 0;
+      const onScroll = () => {
+        const y = window.scrollY || 0;
+        const scrolled = y > 8;
+        nav.classList.toggle('is-scrolled', scrolled);
+        const goingDown = y > lastY + 2;
+        const goingUp = y < lastY - 2;
+        if(scrolled && goingDown) nav.classList.add('is-down');
+        if(!scrolled || goingUp) nav.classList.remove('is-down');
+        lastY = y;
+      };
+      window.addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
+    })();
+  </script>
+
+  <script src="/assets/site.js" defer></script>
+
+  <!-- Guides search/filter/pagination (adapted from tools) -->
+  <script>
+    (function(){
+      const $  = (s, r=document) => r.querySelector(s);
+      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+      const grid   = $('#guidesGrid');
+      const chips  = $('#guidesChips');
+      const search = $('#guidesSearch');
+      const prev   = $('#prevPage');
+      const next   = $('#nextPage');
+      const info   = $('#pageInfo');
+      if(!grid || !chips || !search || !prev || !next || !info) return;
+
+      const PAGE_SIZE = 15;
+      let page = 1;
+      let filter = 'all';
+      const allCards = $$('#guidesGrid a.card');
+
+      function normalize(s){ return (s || '').toLowerCase().trim(); }
+
+      function getFiltered(){
+        const term = normalize(search.value);
+        return allCards.filter(card => {
+          const cat = normalize(card.dataset.cat || '');
+          const hay = normalize((card.dataset.hay || '') + ' ' + (card.textContent || ''));
+          const okCat  = (filter === 'all') || (cat === filter);
+          const okTerm = !term || hay.includes(term);
+          return okCat && okTerm;
+        });
+      }
+
+      function render(){
+        const filtered = getFiltered();
+        const total = filtered.length;
+        const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+        if(page > pages) page = pages;
+        if(page < 1) page = 1;
+
+        allCards.forEach(c => c.style.display = 'none');
+        const start = (page - 1) * PAGE_SIZE;
+        filtered.slice(start, start + PAGE_SIZE).forEach(c => c.style.display = '');
+
+        prev.disabled = page <= 1;
+        next.disabled = page >= pages;
+        info.textContent = `Page ${page} of ${pages} • ${total} guide${total === 1 ? '' : 's'}`;
+      }
+
+      chips.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip');
+        if(!chip) return;
+        chips.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+        chip.classList.add('active');
+        filter = chip.dataset.filter || 'all';
+        page = 1;
+        render();
+      });
+
+      let t = null;
+      search.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(() => { page = 1; render(); }, 60);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
+          e.preventDefault();
+          search.focus();
+        }
+      });
+
+      prev.addEventListener('click', () => { page--; render(); });
+      next.addEventListener('click', () => { page++; render(); });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
