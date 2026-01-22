@@ -48,20 +48,9 @@
       box-shadow: 0 0 18px rgba(99,102,241,.55);
     }
 
-    /* Logo: bigger + bolder + black outline */
-    .logo-badge{ width:42px; height:42px; border-radius:14px; }
-    .logo-text{
-      font-weight: 1000;
-      font-size: 28px;
-      letter-spacing: -0.03em;
-      -webkit-text-stroke: 2px rgba(0,0,0,.95);
-      text-shadow:
-        0 1px 0 rgba(0,0,0,.95),
-        0 0 22px rgba(99,102,241,.14);
-    }
-    .logo-oz{ font-weight: 1000; }
+    /* ✅ Logo: use the SAME defaults as other pages (no overrides here) */
 
-    /* Section titles: bigger + glow + extra emphasis */
+    /* Section titles: keep your pop */
     .section-title{
       font-size: clamp(34px, 3.3vw, 48px);
       font-weight: 1000;
@@ -78,18 +67,35 @@
       display:flex;
       flex-direction:column;
       gap:10px;
-      min-height: 190px; /* keeps rows more even on desktop */
+      min-height: 190px;
     }
     .small-card.guide-card .tool-cta{
       margin-top:auto;
       align-self:flex-start;
       display:inline-flex;
     }
-    /* Ensure “at least one a capo” before buttons */
     .tool-cta{ margin-top: 14px; }
 
-    /* A tiny “section box title pop” */
     .hero-box .section-title{ margin-bottom: 6px; }
+
+    /* Recommended grid button (full width under the 3 columns) */
+    .rec-actions{
+      margin-top: 12px;
+      display:flex;
+      justify-content:center;
+    }
+    .rec-actions .btn-wide{
+      width:100%;
+      max-width: 1120px;
+      height: 46px;
+      border-radius: 14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 1000;
+    }
+    /* Keep it visually “one block” aligned with the rec grid width */
+    .hero .hero-box{ overflow: hidden; }
   </style>
 </head>
 
@@ -112,7 +118,8 @@
       </a>
 
       <div class="nav-links" aria-label="Sections">
-        <a href="/#tools">Tools</a>
+        <a class="active" href="/" aria-current="page">Home</a>
+        <a href="/tools/">Tools</a>
         <a href="/guides/">Guides</a>
         <a href="/updates/">Updates</a>
       </div>
@@ -163,7 +170,8 @@
     </div>
 
     <div class="m-links">
-      <a class="m-link" href="/#tools">Tools</a>
+      <a class="m-link active" href="/" aria-current="page">Home</a>
+      <a class="m-link" href="/tools/">Tools</a>
       <a class="m-link" href="/guides/">Guides</a>
       <a class="m-link" href="/updates/">Updates</a>
       <a class="m-link" href="/privacy/">Privacy</a>
@@ -209,11 +217,12 @@
     <div class="hero-box" style="margin-top:16px;" aria-label="Recommended now">
       <h3 class="box-title">Recommended now</h3>
       <p class="box-sub">
-        Three quick picks to move faster today: one for text, one for SEO, one for dev. Refresh anytime to discover new picks.
+        Quick picks to move faster today. Refresh anytime to discover new picks.
       </p>
 
+      <!-- ✅ 6 recommended cards now -->
       <div class="rec-grid">
-        <a class="card rec-card" id="randTool1" href="/tool/word-counter/">
+        <a class="card rec-card" id="randTool1" href="/tools/word-counter/">
           <div class="rec-head">
             <span class="rec-icon" id="randIcon1" aria-hidden="true">🔢</span>
             <h3 id="randTitle1">Word Counter</h3>
@@ -222,7 +231,7 @@
           <span class="tool-cta" id="randCta1">Use Word Counter</span>
         </a>
 
-        <a class="card rec-card" id="randTool2" href="/tool/readability-analyzer/">
+        <a class="card rec-card" id="randTool2" href="/tools/readability-analyzer/">
           <div class="rec-head">
             <span class="rec-icon" id="randIcon2" aria-hidden="true">📚</span>
             <h3 id="randTitle2">Readability Analyzer</h3>
@@ -231,7 +240,7 @@
           <span class="tool-cta" id="randCta2">Use Readability Analyzer</span>
         </a>
 
-        <a class="card rec-card" id="randTool3" href="/tool/meta-tags/">
+        <a class="card rec-card" id="randTool3" href="/tools/meta-tags/">
           <div class="rec-head">
             <span class="rec-icon" id="randIcon3" aria-hidden="true">🏷️</span>
             <h3 id="randTitle3">Meta Tag Optimizer</h3>
@@ -239,14 +248,46 @@
           <p id="randDesc3">Preview SERP titles/descriptions, check length, and refine wording to improve CTR.</p>
           <span class="tool-cta" id="randCta3">Use Meta Tag Optimizer</span>
         </a>
+
+        <a class="card rec-card" id="randTool4" href="/tools/json-formatter/">
+          <div class="rec-head">
+            <span class="rec-icon" id="randIcon4" aria-hidden="true">🧾</span>
+            <h3 id="randTitle4">JSON Formatter</h3>
+          </div>
+          <p id="randDesc4">Format, validate, and minify JSON instantly for API debugging and clean copy-ready outputs.</p>
+          <span class="tool-cta" id="randCta4">Use JSON Formatter</span>
+        </a>
+
+        <a class="card rec-card" id="randTool5" href="/tools/url-encoder/">
+          <div class="rec-head">
+            <span class="rec-icon" id="randIcon5" aria-hidden="true">🔗</span>
+            <h3 id="randTitle5">URL Encoder</h3>
+          </div>
+          <p id="randDesc5">Encode/decode URLs and query strings safely to fix broken parameters and redirects.</p>
+          <span class="tool-cta" id="randCta5">Use URL Encoder</span>
+        </a>
+
+        <a class="card rec-card" id="randTool6" href="/tools/base64/">
+          <div class="rec-head">
+            <span class="rec-icon" id="randIcon6" aria-hidden="true">🔐</span>
+            <h3 id="randTitle6">Base64</h3>
+          </div>
+          <p id="randDesc6">Encode or decode Base64 strings for tokens, payloads, and quick developer checks.</p>
+          <span class="tool-cta" id="randCta6">Use Base64</span>
+        </a>
       </div>
 
-      <div class="box-foot">
-        Shortcut: press <b>/</b> to focus search and filter tools instantly.
+      <!-- ✅ Wide button under the grid (same width feel as the grid area) -->
+      <div class="rec-actions">
+        <a class="btn primary btn-wide" href="/tools/" aria-label="Open full tools list">
+          Click to view the full tools list
+        </a>
       </div>
+
+      <!-- ✅ removed: “Shortcut: press / to focus search …” -->
     </div>
 
-    <!-- Trust pills ONLY in basso (as requested) -->
+    <!-- Trust pills ONLY in basso -->
     <div class="trust-strip" style="margin-top:14px" aria-label="Trust points">
       <span class="trust-pill">🔒 Runs in your browser</span>
       <span class="trust-pill">⚡ Instant results</span>
@@ -255,202 +296,7 @@
     </div>
   </header>
 
-  <!-- Tools hub -->
-  <section class="section container" id="tools">
-    <h2 class="section-title">Tools hub</h2>
-    <p class="section-sub">
-      Search by keyword or browse by category. Each tool includes usage tips, examples, and common questions so you get results quickly.
-    </p>
-
-    <div class="row">
-      <input class="search" id="toolSearch" placeholder="Search tools (readability, meta, json, base64…)" aria-label="Search tools" autocomplete="off" />
-    </div>
-
-    <div class="chips" id="chips" aria-label="Categories">
-      <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
-      <div class="chip" data-filter="seo" role="button" tabindex="0">SEO</div>
-      <div class="chip" data-filter="text" role="button" tabindex="0">Text</div>
-      <div class="chip" data-filter="dev" role="button" tabindex="0">Dev</div>
-    </div>
-
-    <div class="grid" id="grid">
-      <!-- Word Counter -->
-      <a class="card" href="/tool/word-counter/" data-cat="text" data-hay="word counter character counter reading time count words sentences paragraphs">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">🔢</div>
-          <h3>Word Counter</h3>
-        </div>
-        <p>
-          Count words, characters (with and without spaces), sentences, and paragraphs in seconds. Great for essays, content briefs,
-          SEO drafts, and platform limits. Includes an estimated reading time to help plan structure.
-        </p>
-        <div class="example-line"><b>Example:</b> “My landing page is 380 words. Should I shorten it?”</div>
-        <div class="example-line"><b>Example:</b> “How many characters do I have for a meta description draft?”</div>
-        <div class="example-line"><b>Example:</b> “Estimate reading time for a 1,200-word blog post.”</div>
-        <span class="tool-cta">Use Word Counter</span>
-      </a>
-
-      <!-- Word Counter Pro -->
-      <a class="card" href="/tool/word-counter-pro/" data-cat="text" data-hay="advanced word counter speaking time top keywords">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">✨</div>
-          <h3>Word Counter Pro</h3>
-        </div>
-        <p>
-          Advanced text stats: reading time, speaking time, section breakdown, and quick keyword hints to spot repeated terms.
-          Ideal for scripts, newsletters, and long-form pages.
-        </p>
-        <div class="example-line"><b>Example:</b> “How long will this YouTube script take to read out loud?”</div>
-        <div class="example-line"><b>Example:</b> “What are the most repeated terms in this article?”</div>
-        <div class="example-line"><b>Example:</b> “Check if my intro is too long compared to the rest.”</div>
-        <span class="tool-cta">Use Word Counter Pro</span>
-      </a>
-
-      <!-- Readability -->
-      <a class="card" href="/tool/readability-analyzer/" data-cat="text" data-hay="readability score flesch grade level clarity">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">📚</div>
-          <h3>Readability Analyzer</h3>
-        </div>
-        <p>
-          Get a readability score, grade-level estimate, and practical clarity hints. Identify long sentences, dense wording,
-          and sections that are hard to skim, then rewrite for smoother flow.
-        </p>
-        <div class="example-line"><b>Example:</b> “Simplify this paragraph for a general audience.”</div>
-        <div class="example-line"><b>Example:</b> “Is my FAQ too technical for beginners?”</div>
-        <div class="example-line"><b>Example:</b> “Find sentences that are too long and break them up.”</div>
-        <span class="tool-cta">Use Readability Analyzer</span>
-      </a>
-
-      <!-- Keyword Density -->
-      <a class="card" href="/tool/keyword-density/" data-cat="seo" data-hay="keyword density checker frequency highlight phrases">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">🎯</div>
-          <h3>Keyword Density</h3>
-        </div>
-        <p>
-          Measure keyword frequency and common phrases. Spot overuse, find missing variations, and keep relevance without stuffing.
-          Useful for on-page SEO checks and editorial cleanup.
-        </p>
-        <div class="example-line"><b>Example:</b> “Am I repeating ‘best VPN’ too many times?”</div>
-        <div class="example-line"><b>Example:</b> “What 2–3 word phrases appear most often?”</div>
-        <div class="example-line"><b>Example:</b> “Did I use the main keyword enough in headings?”</div>
-        <span class="tool-cta">Use Keyword Density</span>
-      </a>
-
-      <!-- Meta Tags -->
-      <a class="card" href="/tool/meta-tags/" data-cat="seo" data-hay="meta tag optimizer title description serp preview length">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">🏷️</div>
-          <h3>Meta Tag Optimizer</h3>
-        </div>
-        <p>
-          Preview titles and meta descriptions in a SERP-style layout, check limits, and refine wording for higher CTR.
-          Compare variations and keep your message clear and intent-aligned.
-        </p>
-        <div class="example-line"><b>Example:</b> “Does my title get cut off on Google?”</div>
-        <div class="example-line"><b>Example:</b> “Write 3 descriptions that sound less generic.”</div>
-        <div class="example-line"><b>Example:</b> “Make the snippet more benefit-driven.”</div>
-        <span class="tool-cta">Use Meta Tag Optimizer</span>
-      </a>
-
-      <!-- JSON Formatter -->
-      <a class="card" href="/tool/json-formatter/" data-cat="dev" data-hay="json formatter validate minify prettify">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">🧾</div>
-          <h3>JSON Formatter</h3>
-        </div>
-        <p>
-          Prettify or minify JSON instantly, validate structure, and catch common syntax issues without leaving your browser.
-          Perfect for API payloads, webhook bodies, and quick debugging.
-        </p>
-        <div class="example-line"><b>Example:</b> “This JSON fails: where is the missing comma?”</div>
-        <div class="example-line"><b>Example:</b> “Minify JSON to reduce payload size.”</div>
-        <div class="example-line"><b>Example:</b> “Pretty-print an API response for copy.”</div>
-        <span class="tool-cta">Use JSON Formatter</span>
-      </a>
-
-      <!-- URL Encoder -->
-      <a class="card" href="/tool/url-encoder/" data-cat="dev" data-hay="url encoder decoder querystring encodeURIComponent decodeURIComponent">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">🔗</div>
-          <h3>URL Encoder</h3>
-        </div>
-        <p>
-          Encode or decode URLs and query strings safely. Useful for UTM links, redirects, tracking parameters, and debugging
-          when special characters break a request.
-        </p>
-        <div class="example-line"><b>Example:</b> “Encode spaces and symbols in a tracking URL.”</div>
-        <div class="example-line"><b>Example:</b> “Decode a percent-encoded query string.”</div>
-        <div class="example-line"><b>Example:</b> “Fix a redirect URL failing due to reserved chars.”</div>
-        <span class="tool-cta">Use URL Encoder</span>
-      </a>
-
-      <!-- Base64 -->
-      <a class="card" href="/tool/base64/" data-cat="dev" data-hay="base64 encoder decoder text">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">🔐</div>
-          <h3>Base64 Encoder</h3>
-        </div>
-        <p>
-          Base64 encode or decode text for tokens, payloads, and developer workflows. Great for inspecting API responses or
-          safely transporting data through systems that expect Base64.
-        </p>
-        <div class="example-line"><b>Example:</b> “Decode a Base64 string from an API response.”</div>
-        <div class="example-line"><b>Example:</b> “Encode JSON to Base64 for a quick test.”</div>
-        <div class="example-line"><b>Example:</b> “Check what a token contains before using it.”</div>
-        <span class="tool-cta">Use Base64</span>
-      </a>
-
-      <!-- Title & Description -->
-      <a class="card" href="/tool/title-description/" data-cat="seo" data-hay="seo title generator meta description generator ideas">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">📝</div>
-          <h3>Title &amp; Description</h3>
-        </div>
-        <p>
-          Generate SEO title and meta description ideas from a keyword, aligned to intent and CTR. Get multiple angles
-          and refine them to fit limits without losing meaning.
-        </p>
-        <div class="example-line"><b>Example:</b> “10 title ideas for ‘free invoice generator’.”</div>
-        <div class="example-line"><b>Example:</b> “Descriptions for a product page that sound natural.”</div>
-        <div class="example-line"><b>Example:</b> “Variants for informational vs transactional intent.”</div>
-        <span class="tool-cta">Use Title &amp; Description</span>
-      </a>
-
-      <!-- Alt Text -->
-      <a class="card" href="/tool/alt-text/" data-cat="seo" data-hay="alt text generator accessibility seo images">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">🖼️</div>
-          <h3>Alt Text Generator</h3>
-        </div>
-        <p>
-          Create clear alt text options for accessibility and SEO. Produce short and long variants, keep them screen-reader
-          friendly, and avoid keyword stuffing while still describing what matters.
-        </p>
-        <div class="example-line"><b>Example:</b> “Alt text for a product photo (front view).”</div>
-        <div class="example-line"><b>Example:</b> “Accessible alt text for a chart screenshot.”</div>
-        <div class="example-line"><b>Example:</b> “Short + detailed variants for the same image.”</div>
-        <span class="tool-cta">Use Alt Text Generator</span>
-      </a>
-
-      <!-- SEO Outline -->
-      <a class="card" href="/tool/seo-outline/" data-cat="seo" data-hay="seo outline helper h1 h2 h3 faq ideas">
-        <div class="card-head">
-          <div class="thumb" aria-hidden="true">🧠</div>
-          <h3>SEO Outline Helper</h3>
-        </div>
-        <p>
-          Build a strong H1/H2/H3 outline plus FAQ ideas that match search intent. Useful for planning coverage, structuring
-          long-form content, and ensuring you answer what people actually ask.
-        </p>
-        <div class="example-line"><b>Example:</b> “Outline for ‘how to start a newsletter’ + FAQs.”</div>
-        <div class="example-line"><b>Example:</b> “Headings for a comparison page (A vs B).”</div>
-        <div class="example-line"><b>Example:</b> “Add missing subtopics so the article feels complete.”</div>
-        <span class="tool-cta">Use SEO Outline Helper</span>
-      </a>
-    </div>
-  </section>
+  <!-- ✅ removed the entire “Tools hub” section (search + big tool cards) -->
 
   <!-- Guides in BOX -->
   <section class="section container">
@@ -530,6 +376,7 @@
       <div>
         <h4>Clickoz</h4>
         <div class="footer-links">
+          <a href="/tools/">Tools</a>
           <a href="/guides/">Guides</a>
           <a href="/updates/">Updates</a>
         </div>
@@ -538,10 +385,10 @@
       <div>
         <h4>Popular tools</h4>
         <div class="footer-links">
-          <a href="/tool/word-counter/">Word Counter</a>
-          <a href="/tool/readability-analyzer/">Readability</a>
-          <a href="/tool/meta-tags/">Meta Tags</a>
-          <a href="/tool/json-formatter/">JSON Formatter</a>
+          <a href="/tools/word-counter/">Word Counter</a>
+          <a href="/tools/readability-analyzer/">Readability</a>
+          <a href="/tools/meta-tags/">Meta Tags</a>
+          <a href="/tools/json-formatter/">JSON Formatter</a>
         </div>
       </div>
 
@@ -597,7 +444,6 @@
         const scrolled = y > 8;
         nav.classList.toggle('is-scrolled', scrolled);
 
-        // Only show the stronger bottom glow when user is scrolling DOWN
         const goingDown = y > lastY + 2;
         const goingUp = y < lastY - 2;
 
