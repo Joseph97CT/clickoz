@@ -24,7 +24,7 @@
 
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- Tools page micro-patches ONLY (kept identical) -->
+  <!-- Same micro-patches as Tools (kept for identical look) -->
   <style>
     .nav-links a.active,
     .m-links a.active{
@@ -33,9 +33,7 @@
       color: rgba(255,255,255,.96);
     }
 
-    .tools-shell{
-      padding-top: 18px;
-    }
+    .tools-shell{ padding-top: 18px; }
 
     .tools-kicker{
       max-width: 980px;
@@ -45,21 +43,10 @@
       font-size: 15px;
       line-height: 1.65;
     }
-
     .tools-kicker b{
       color: rgba(255,255,255,.92);
       font-weight: 900;
     }
-
-    .search-hint{
-      max-width: 920px;
-      margin: 8px auto 0;
-      font-size: 13px;
-      opacity: .80;
-      line-height: 1.55;
-      text-align:left;
-    }
-    .search-hint b{ color: rgba(255,255,255,.92); }
 
     .pager{
       display:flex;
@@ -91,10 +78,7 @@
       min-width: 260px;
     }
 
-    .pillar{
-      text-align:left;
-      margin-top: 16px;
-    }
+    .pillar{ text-align:left; margin-top: 16px; }
     .pillar h2{
       margin: 0 0 10px;
       font-size: clamp(22px, 2.4vw, 32px);
@@ -162,11 +146,7 @@
       font-size: 20px;
       flex: 0 0 auto;
     }
-    .lane h3{
-      margin: 0;
-      font-size: 16px;
-      font-weight: 1000;
-    }
+    .lane h3{ margin: 0; font-size: 16px; font-weight: 1000; }
     .lane p{
       margin: 10px 0 0;
       position: relative;
@@ -275,7 +255,7 @@
     </div>
   </aside>
 
-  <!-- GUIDES (same structure/IDs as Tools to keep CSS+JS identical) -->
+  <!-- GUIDES (kept same IDs as Tools to preserve your CSS/JS behavior) -->
   <section class="section container tools-shell" id="tools">
     <h1 class="section-title">Guides</h1>
     <div class="tools-kicker">
@@ -285,9 +265,8 @@
     <div class="row">
       <input class="search" id="toolsSearch" placeholder="Search guides (seo checklist, meta titles, youtube packaging, json errors…)" aria-label="Search guides" autocomplete="off" />
     </div>
-    <div class="search-hint">
-      Press <b>/</b> to search • Filter by category • <b>15 guides per page</b>
-    </div>
+
+    <!-- ✅ removed the “Press / to search • Filter by category • 15 guides per page” line -->
 
     <div class="chips" id="toolsChips" aria-label="Categories" style="margin-top:12px;">
       <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
@@ -297,21 +276,95 @@
       <div class="chip" data-filter="creator" role="button" tabindex="0">Creator</div>
     </div>
 
+    <!-- Guides grid -->
     <div class="grid" id="toolsGrid">
-      <!-- INCOLLA QUI LE TUE 15 CARD GUIDE (stessa struttura card dei tools)
-           Ricorda: data-cat="seo|writing|dev|creator" e data-hay="..." -->
-      <!-- example (remove): -->
-      <a class="card" href="/guides/seo-checklist/" data-cat="seo" data-hay="seo checklist on-page title meta description headings internal linking">
+
+      <!-- Replace these with your “guides from index” (same structure) -->
+
+      <a class="card" href="/guides/seo-checklist/"
+         data-cat="seo"
+         data-hay="seo checklist on-page audit title meta description headings internal links">
         <div class="card-top">
           <div class="badge">SEO</div>
           <div class="card-title">On-Page SEO Checklist</div>
-          <div class="card-desc">A clean checklist to improve titles, meta descriptions, headings, and internal links.</div>
+          <div class="card-desc">A repeatable checklist to improve titles, meta descriptions, headings, and internal linking.</div>
         </div>
         <div class="card-bot">
-          <span class="pill">10–15 min</span>
+          <span class="pill">Guide</span>
           <span class="btn small">Read</span>
         </div>
       </a>
+
+      <a class="card" href="/guides/meta-title-formula/"
+         data-cat="seo"
+         data-hay="meta title formula serp length ctr keywords intent">
+        <div class="card-top">
+          <div class="badge">SEO</div>
+          <div class="card-title">Meta Title Formula (CTR)</div>
+          <div class="card-desc">Write titles that fit SERP limits and match intent—without keyword stuffing.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">Guide</span>
+          <span class="btn small">Read</span>
+        </div>
+      </a>
+
+      <a class="card" href="/guides/readability-basics/"
+         data-cat="writing"
+         data-hay="readability writing clarity short sentences structure scannable mobile">
+        <div class="card-top">
+          <div class="badge">Writing</div>
+          <div class="card-title">Readability Basics</div>
+          <div class="card-desc">Make content easier to read on mobile: structure, spacing, and clarity rules.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">Guide</span>
+          <span class="btn small">Read</span>
+        </div>
+      </a>
+
+      <a class="card" href="/guides/youtube-packaging/"
+         data-cat="creator"
+         data-hay="youtube packaging titles hooks description tags keywords intent">
+        <div class="card-top">
+          <div class="badge">Creator</div>
+          <div class="card-title">YouTube Packaging Playbook</div>
+          <div class="card-desc">Titles, hooks and descriptions that match what people actually search and click.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">Guide</span>
+          <span class="btn small">Read</span>
+        </div>
+      </a>
+
+      <a class="card" href="/guides/json-fix-common-errors/"
+         data-cat="dev"
+         data-hay="json errors validate format trailing comma quotes parse encoding">
+        <div class="card-top">
+          <div class="badge">Dev</div>
+          <div class="card-title">Fix Common JSON Errors</div>
+          <div class="card-desc">The fastest way to debug invalid JSON: commas, quotes, encoding and validation.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">Guide</span>
+          <span class="btn small">Read</span>
+        </div>
+      </a>
+
+      <a class="card" href="/guides/base64-url-basics/"
+         data-cat="dev"
+         data-hay="base64 url encode decode query string percent encoding">
+        <div class="card-top">
+          <div class="badge">Dev</div>
+          <div class="card-title">Base64 + URL Encoding Basics</div>
+          <div class="card-desc">When to encode/decode and how to avoid broken query strings and malformed URLs.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill">Guide</span>
+          <span class="btn small">Read</span>
+        </div>
+      </a>
+
     </div>
 
     <div class="pager" aria-label="Pagination controls">
@@ -321,8 +374,8 @@
     </div>
   </section>
 
-  <!-- Keep your narrative/SEO blocks if you want (optional) -->
-  <!-- Footer + Cookie banner same as your structure -->
+  <!-- Optional: keep your narrative SEO sections if you want (not required) -->
+
   <footer class="footer">
     <div class="container footer-grid">
       <div>
@@ -380,7 +433,6 @@
     </div>
   </div>
 
-  <!-- Keep nav scroll micro-script identical -->
   <script>
     (function(){
       const nav = document.getElementById('topNav');
@@ -403,7 +455,7 @@
 
   <script src="/assets/site.js" defer></script>
 
-  <!-- EXACT same tools paging script (works because IDs stayed the same) -->
+  <!-- Same paging/filter script (works because IDs stayed the same) -->
   <script>
     (function(){
       const $  = (s, r=document) => r.querySelector(s);
