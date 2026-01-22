@@ -237,53 +237,97 @@
     apply();
   })();
 
-  /* =========================================================
-     5) RECOMMENDED NOW RANDOM PICKS
+    /* =========================================================
+     5) RECOMMENDED NOW RANDOM PICKS (6 cards)
+     - Works on Tools pages (uses #grid if present)
+     - Works on Home even without #grid (fallback catalog list)
   ========================================================= */
   (function recommendedRandom(){
-    const grid = $('#grid');
-    if(!grid) return;
-    const cards = $$('#grid a.card');
-    if(cards.length < 3) return;
-
-    function pickDistinct(n){
-      const idx = new Set();
-      while(idx.size < n) idx.add(Math.floor(Math.random() * cards.length));
-      return Array.from(idx).map(i => cards[i]);
-    }
-
-    function extract(card){
-      const title = (card.querySelector('h3')?.textContent || 'Tool').trim();
-      const icon  = (card.querySelector('.thumb')?.textContent || '✨').trim();
-      const href  = card.getAttribute('href') || '#';
-      const desc  = (card.querySelector('p')?.textContent || '').trim();
-      return { href, icon, title, desc };
-    }
-
-    const picks = pickDistinct(3).map(extract);
+    // Slots available on Home (and can exist elsewhere too)
     const slots = [
       {a:'randTool1', i:'randIcon1', t:'randTitle1', d:'randDesc1', c:'randCta1'},
       {a:'randTool2', i:'randIcon2', t:'randTitle2', d:'randDesc2', c:'randCta2'},
       {a:'randTool3', i:'randIcon3', t:'randTitle3', d:'randDesc3', c:'randCta3'},
+      {a:'randTool4', i:'randIcon4', t:'randTitle4', d:'randDesc4', c:'randCta4'},
+      {a:'randTool5', i:'randIcon5', t:'randTitle5', d:'randDesc5', c:'randCta5'},
+      {a:'randTool6', i:'randIcon6', t:'randTitle6', d:'randDesc6', c:'randCta6'},
     ];
+
+    // If the page doesn't have these elements, do nothing
+    const anySlot = document.getElementById(slots[0].a);
+    if(!anySlot) return;
+
+    // Fallback catalog (used on Home when #grid is removed)
+    // IMPORTANT: uses /tools/ routes
+    const FALLBACK = [
+      { href:'/tools/word-counter/',          icon:'🔢', title:'Word Counter',          desc:'Count words, characters, sentences, paragraphs and reading time.' },
+      { href:'/tools/word-counter-pro/',      icon:'✨', title:'Word Counter Pro',      desc:'Advanced stats: speaking time, section breakdown and keyword hints.' },
+      { href:'/tools/readability-analyzer/',  icon:'📚', title:'Readability Analyzer',  desc:'Readability score + clarity hints to improve scannability.' },
+      { href:'/tools/keyword-density/',       icon:'🎯', title:'Keyword Density',       desc:'Measure keyword frequency and spot overuse without stuffing.' },
+      { href:'/tools/meta-tags/',             icon:'🏷️', title:'Meta Tag Optimizer',    desc:'SERP preview + length checks to improve CTR.' },
+      { href:'/tools/json-formatter/',        icon:'🧾', title:'JSON Formatter',        desc:'Prettify/minify/validate JSON instantly for debugging.' },
+      { href:'/tools/url-encoder/',           icon:'🔗', title:'URL Encoder',           desc:'Encode/decode URLs and query strings safely.' },
+      { href:'/tools/base64/',                icon:'🔐', title:'Base64',                desc:'Encode/decode Base64 strings for tokens and payloads.' },
+      { href:'/tools/title-description/',     icon:'📝', title:'Title & Description',   desc:'Generate SEO title/description ideas aligned to intent.' },
+      { href:'/tools/alt-text/',              icon:'🖼️', title:'Alt Text Generator',    desc:'Accessibility-friendly alt text variants without spam.' },
+      { href:'/tools/seo-outline/',           icon:'🧠', title:'SEO Outline Helper',    desc:'Build H1/H2/H3 outline + FAQ ideas that match intent.' },
+    ];
+
+    // If a Tools page has #grid, extract from real cards (best source of truth)
+    const grid = document.getElementById('grid');
+    const cards = grid ? Array.from(grid.querySelectorAll('a.card')) : [];
+
+    function extractFromCard(card){
+      const title = (card.querySelector('h3')?.textContent || 'Tool').trim();
+      const icon  = (card.querySelector('.thumb')?.textContent || '✨').trim();
+      const href  = (card.getAttribute('href') || '#').trim();
+      const desc  = (card.querySelector('p')?.textContent || '').trim();
+      return { href, icon, title, desc };
+    }
+
+    // Build catalog:
+    // - if #grid exists and has enough cards, use it
+    // - else use FALLBACK
+    let catalog = [];
+    if(cards.length >= 6){
+      catalog = cards.map(extractFromCard)
+        // ensure we prefer /tools/ in case some old /tool/ slipped in
+        .map(x => ({...x, href: x.href.replace(/^\/tool\//, '/tools/')}));
+    }else{
+      catalog = FALLBACK.slice();
+    }
+
+    if(catalog.length < 6) return;
+
+    function pickDistinct(n){
+      const idx = new Set();
+      while(idx.size < n){
+        idx.add(Math.floor(Math.random() * catalog.length));
+      }
+      return Array.from(idx).map(i => catalog[i]);
+    }
+
+    const picks = pickDistinct(6);
 
     slots.forEach((slot, k) => {
       const p = picks[k];
-      const a = $('#' + slot.a);
-      if(!a) return;
+      const a = document.getElementById(slot.a);
+      if(!a || !p) return;
+
       a.href = p.href;
 
-      const i = $('#' + slot.i);
-      const t = $('#' + slot.t);
-      const d = $('#' + slot.d);
-      const c = $('#' + slot.c);
+      const i = document.getElementById(slot.i);
+      const t = document.getElementById(slot.t);
+      const d = document.getElementById(slot.d);
+      const c = document.getElementById(slot.c);
 
-      if (i) i.textContent = p.icon;
-      if (t) t.textContent = p.title;
-      if (d && p.desc) d.textContent = p.desc;
-      if (c) c.textContent = `Use ${p.title}`;
+      if(i) i.textContent = p.icon;
+      if(t) t.textContent = p.title;
+      if(d) d.textContent = p.desc || '';
+      if(c) c.textContent = `Use ${p.title}`;
     });
   })();
+
 
   /* =========================================================
      6) COOKIE CONSENT + GOOGLE TRANSLATE
