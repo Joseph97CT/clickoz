@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Clickoz Updates – Changelog, Releases, New Tools & Improvements</title>
+  <meta name="description" content="Track Clickoz updates: new tools, improvements, fixes, performance updates, and roadmap notes. Privacy-first, fast browser tools for SEO, writing, dev and creators." />
+  <link rel="canonical" href="https://clickoz.com/updates/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b0f19" />
+
+  <meta property="og:site_name" content="Clickoz" />
+  <meta property="og:title" content="Clickoz Updates – Changelog & Releases" />
+  <meta property="og:description" content="New tools, fixes, performance improvements and roadmap notes. Follow Clickoz progress." />
+  <meta property="og:url" content="https://clickoz.com/updates/" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/assets/site.css?v=4" />
+
+  <!-- Same micro-patches as Tools -->
+  <style>
+    .nav-links a.active,
+    .m-links a.active{
+      background: rgba(var(--accent-rgb), .12);
+      border: 1px solid rgba(var(--accent-rgb), .28);
+      color: rgba(255,255,255,.96);
+    }
+
+    .tools-shell{ padding-top: 18px; }
+
+    .tools-kicker{
+      max-width: 980px;
+      margin: 0 auto 10px;
+      text-align:center;
+      color: rgba(255,255,255,.70);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .tools-kicker b{
+      color: rgba(255,255,255,.92);
+      font-weight: 900;
+    }
+
+    .pager{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content:center;
+      align-items:center;
+      margin-top: 16px;
+    }
+    .pager .btn{
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 1000;
+    }
+    .page-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.82);
+      font-weight: 1000;
+      font-size: 13px;
+      min-width: 260px;
+    }
+
+    /* Optional: date pill inside cards (uses your existing pill styles) */
+    .pill.date{
+      opacity: .9;
+    }
+  </style>
+</head>
+
+<body class="bigtext">
+  <!-- FX layers -->
+  <div id="clickozParticles" aria-hidden="true"></div>
+  <canvas id="spaceParticles" aria-hidden="true"></canvas>
+  <div class="__grain" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" aria-label="Primary navigation" id="topNav">
+    <div class="container nav-inner">
+      <a class="logo" href="/" aria-label="Clickoz Home">
+        <span class="logo-badge" id="logoBadge" aria-hidden="true">
+          <svg class="logo-mark" viewBox="0 0 48 48" width="1em" height="1em" aria-hidden="true" focusable="false">
+            <path d="M32.5 13.5c-2.4-2.2-5.4-3.3-8.9-3.3-7.2 0-12.6 5.1-12.6 13.8S16.4 37.8 23.6 37.8c3.6 0 6.7-1.2 9.2-3.6"
+                  fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="logo-text">Click<span class="logo-oz">oz</span></span>
+      </a>
+
+      <div class="nav-links" aria-label="Sections">
+        <a href="/tools.html">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/updates/" class="active" aria-current="page">Updates</a>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="nav-actions" aria-label="Preferences">
+        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="dropdown">
+          <button class="dot-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Theme color">
+            <span class="dot" id="colorDot" aria-hidden="true"></span>
+          </button>
+
+          <div class="menu" id="colorMenu" role="menu" aria-label="Pick theme color">
+            <div class="menu-title">Theme color</div>
+            <div class="color-grid">
+              <div class="color-option active" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#f59e0b" data-accent2="#fbbf24" style="background:#f59e0b" title="Yellow" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#ec4899" data-accent2="#f472b6" style="background:#ec4899" title="Pink" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" role="menuitem" tabindex="0"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="gtNavWrap" aria-label="Translate">
+          <div id="google_translate_element"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="m-overlay" id="mOverlay" hidden></div>
+  <aside class="m-menu" id="mobileMenu" aria-hidden="true">
+    <div class="m-head">
+      <div class="m-title">Menu</div>
+      <button class="m-close" id="mClose" type="button" aria-label="Close menu">×</button>
+    </div>
+
+    <div class="m-links">
+      <a class="m-link" href="/tools.html">Tools</a>
+      <a class="m-link" href="/guides/">Guides</a>
+      <a class="m-link active" href="/updates/" aria-current="page">Updates</a>
+      <a class="m-link" href="/privacy/">Privacy</a>
+    </div>
+
+    <div class="m-block">
+      <div class="m-label">Theme color</div>
+      <div class="color-grid m-colors" id="mobileColorGrid">
+        <div class="color-option active" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" tabindex="0"></div>
+        <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" tabindex="0"></div>
+        <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" tabindex="0"></div>
+        <div class="color-option" data-accent="#f59e0b" data-accent2="#fbbf24" style="background:#f59e0b" title="Yellow" tabindex="0"></div>
+        <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" tabindex="0"></div>
+        <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" tabindex="0"></div>
+        <div class="color-option" data-accent="#ec4899" data-accent2="#f472b6" style="background:#ec4899" title="Pink" tabindex="0"></div>
+        <div class="color-option" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" tabindex="0"></div>
+      </div>
+    </div>
+
+    <div class="m-block">
+      <div class="m-label">Language</div>
+      <div id="google_translate_element_mobile"></div>
+      <div style="margin-top:10px;font-size:13px;opacity:.78;line-height:1.5;">
+        Translation loads only if you accept “All” cookies.
+      </div>
+    </div>
+  </aside>
+
+  <!-- UPDATES (kept same IDs as Tools) -->
+  <section class="section container tools-shell" id="tools">
+    <h1 class="section-title">Updates</h1>
+    <div class="tools-kicker">
+      <b>Changelog & releases</b> — new tools, fixes, performance upgrades, and roadmap notes.
+    </div>
+
+    <div class="row">
+      <input class="search" id="toolsSearch" placeholder="Search updates (new tool, fix, performance, roadmap, translate…)" aria-label="Search updates" autocomplete="off" />
+    </div>
+
+    <!-- removed the “Press / to search …” line -->
+
+    <div class="chips" id="toolsChips" aria-label="Categories" style="margin-top:12px;">
+      <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
+      <div class="chip" data-filter="release" role="button" tabindex="0">Releases</div>
+      <div class="chip" data-filter="tool" role="button" tabindex="0">New tools</div>
+      <div class="chip" data-filter="fix" role="button" tabindex="0">Fixes</div>
+      <div class="chip" data-filter="perf" role="button" tabindex="0">Performance</div>
+      <div class="chip" data-filter="roadmap" role="button" tabindex="0">Roadmap</div>
+    </div>
+
+    <div class="grid" id="toolsGrid">
+      <!-- Updates cards (same card structure + visible category) -->
+
+      <a class="card" href="/updates/2026-01-22-release-notes/"
+         data-cat="release"
+         data-hay="release notes changelog january 2026 updates clickoz">
+        <div class="card-top">
+          <div class="badge">Release</div>
+          <div class="card-title">Release Notes • January 2026</div>
+          <div class="card-desc">A single snapshot of what changed: new pages, UI improvements, cookie/translate behavior, and upcoming work.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-22</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/new-tools-catalog-pages/"
+         data-cat="tool"
+         data-hay="new tools catalog tools page pagination search chips categories">
+        <div class="card-top">
+          <div class="badge">New tools</div>
+          <div class="card-title">Tools catalog: search + filters + pagination</div>
+          <div class="card-desc">Added catalog UX so the tools library can scale without slowing the page: search, category chips, paging.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-21</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/guides-hub-launch/"
+         data-cat="release"
+         data-hay="guides hub launch tutorials checklists playbooks navigation">
+        <div class="card-top">
+          <div class="badge">Release</div>
+          <div class="card-title">Guides hub is live</div>
+          <div class="card-desc">Launched the Guides section so each workflow has its own landing page (better intent + better SEO).</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-21</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/mobile-nav-stability/"
+         data-cat="fix"
+         data-hay="mobile nav bug fix sticky navigation android iphone layout">
+        <div class="card-top">
+          <div class="badge">Fix</div>
+          <div class="card-title">Mobile nav stability improvements</div>
+          <div class="card-desc">Reduced layout shifts and fixed sticky behavior on mobile browsers so scrolling feels consistent.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-20</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/particles-hero-optimization/"
+         data-cat="perf"
+         data-hay="particles performance canvas optimization fps mobile">
+        <div class="card-top">
+          <div class="badge">Performance</div>
+          <div class="card-title">Particles & background performance tuning</div>
+          <div class="card-desc">Optimized FX layers to reduce GPU spikes on mobile and keep animations smooth.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-19</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/cookie-consent-translate/"
+         data-cat="fix"
+         data-hay="cookie consent google translate load only accept all privacy choices">
+        <div class="card-top">
+          <div class="badge">Fix</div>
+          <div class="card-title">Cookie consent: Translate loads only on “Accept all”</div>
+          <div class="card-desc">Clarified privacy behavior: essential-only won’t load third-party services. Translate appears after consent.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-19</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/seo-meta-polish/"
+         data-cat="perf"
+         data-hay="seo meta tags canonical og description structured improvements">
+        <div class="card-top">
+          <div class="badge">Performance</div>
+          <div class="card-title">SEO/meta polish across pages</div>
+          <div class="card-desc">Tightened meta titles/descriptions and canonical URLs for Tools/Guides/Updates hubs.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-18</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/roadmap-next-tools/"
+         data-cat="roadmap"
+         data-hay="roadmap upcoming tools youtube seo creator json base64 url">
+        <div class="card-top">
+          <div class="badge">Roadmap</div>
+          <div class="card-title">Roadmap: what’s next</div>
+          <div class="card-desc">Upcoming: YouTube intent tools, more SEO analyzers, and better “one landing page per tool” structure.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-18</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/status-known-issues/"
+         data-cat="fix"
+         data-hay="status known issues bugs android cache desync animations">
+        <div class="card-top">
+          <div class="badge">Status</div>
+          <div class="card-title">Known issues & fixes in progress</div>
+          <div class="card-desc">Tracking edge cases: caching differences between mobile/desktop, rare animation desync, and UI tweaks.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-17</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+      <a class="card" href="/updates/branding-consistency/"
+         data-cat="release"
+         data-hay="branding consistency logo favicon cards typography spacing">
+        <div class="card-top">
+          <div class="badge">Release</div>
+          <div class="card-title">Brand consistency pass</div>
+          <div class="card-desc">Aligned card spacing, footer copy, and small UI details to keep Clickoz feeling “product-grade”.</div>
+        </div>
+        <div class="card-bot">
+          <span class="pill date">2026-01-16</span>
+          <span class="btn small">Open</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="pager" aria-label="Pagination controls">
+      <button class="btn" id="prevPage" type="button" aria-label="Previous page">← Prev</button>
+      <span class="page-pill" id="pageInfo" aria-live="polite">Page 1</span>
+      <button class="btn" id="nextPage" type="button" aria-label="Next page">Next →</button>
+    </div>
+  </section>
+
+  <!-- Footer (same structure) -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>Clickoz</h4>
+        <div class="footer-links">
+          <a href="/tools.html">Tools</a>
+          <a href="/guides/">Guides</a>
+          <a href="/updates/">Updates</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Latest updates</h4>
+        <div class="footer-links">
+          <a href="/updates/2026-01-22-release-notes/">Release Notes • January 2026</a>
+          <a href="/updates/new-tools-catalog-pages/">Tools catalog UX</a>
+          <a href="/updates/cookie-consent-translate/">Cookie consent & Translate</a>
+          <a href="/updates/roadmap-next-tools/">Roadmap</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="footer-links">
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:14px">
+      <hr class="sep" />
+      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
+        © 2026 Clickoz • Updates & changelog
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (same structure) -->
+  <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
+    <div class="cookie-card">
+      <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
+      <div class="cookie-content">
+        <div class="cookie-title">Privacy choices</div>
+        <div class="cookie-text">
+          We use essential storage for core features. If you accept all, we may load third-party services like Google Translate.
+          Read more in <a href="/privacy/">Privacy</a>.
+        </div>
+      </div>
+      <div class="cookie-actions">
+        <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
+        <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
+        <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav scroll script identical -->
+  <script>
+    (function(){
+      const nav = document.getElementById('topNav');
+      if(!nav) return;
+      let lastY = window.scrollY || 0;
+      const onScroll = () => {
+        const y = window.scrollY || 0;
+        const scrolled = y > 8;
+        nav.classList.toggle('is-scrolled', scrolled);
+        const goingDown = y > lastY + 2;
+        const goingUp = y < lastY - 2;
+        if(scrolled && goingDown) nav.classList.add('is-down');
+        if(!scrolled || goingUp) nav.classList.remove('is-down');
+        lastY = y;
+      };
+      window.addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
+    })();
+  </script>
+
+  <script src="/assets/site.js" defer></script>
+
+  <!-- Same paging/filter script -->
+  <script>
+    (function(){
+      const $  = (s, r=document) => r.querySelector(s);
+      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+      const grid   = $('#toolsGrid');
+      const chips  = $('#toolsChips');
+      const search = $('#toolsSearch');
+      const prev   = $('#prevPage');
+      const next   = $('#nextPage');
+      const info   = $('#pageInfo');
+      if(!grid || !chips || !search || !prev || !next || !info) return;
+
+      const PAGE_SIZE = 15;
+      let page = 1;
+      let filter = 'all';
+      const allCards = $$('#toolsGrid a.card');
+
+      function normalize(s){ return (s || '').toLowerCase().trim(); }
+
+      function getFiltered(){
+        const term = normalize(search.value);
+        return allCards.filter(card => {
+          const cat = normalize(card.dataset.cat || '');
+          const hay = normalize((card.dataset.hay || '') + ' ' + (card.textContent || ''));
+          const okCat = (filter === 'all') || (cat === filter);
+          const okTerm = !term || hay.includes(term);
+          return okCat && okTerm;
+        });
+      }
+
+      function render(){
+        const filtered = getFiltered();
+        const total = filtered.length;
+        const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+        if(page > pages) page = pages;
+        if(page < 1) page = 1;
+
+        allCards.forEach(c => c.style.display = 'none');
+        const start = (page - 1) * PAGE_SIZE;
+        filtered.slice(start, start + PAGE_SIZE).forEach(c => c.style.display = '');
+
+        prev.disabled = page <= 1;
+        next.disabled = page >= pages;
+        info.textContent = `Page ${page} of ${pages} • ${total} update${total === 1 ? '' : 's'}`;
+      }
+
+      chips.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip');
+        if(!chip) return;
+        chips.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+        chip.classList.add('active');
+        filter = chip.dataset.filter || 'all';
+        page = 1;
+        render();
+      });
+
+      let t = null;
+      search.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(() => { page = 1; render(); }, 60);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
+          e.preventDefault();
+          search.focus();
+        }
+      });
+
+      prev.addEventListener('click', () => { page--; render(); });
+      next.addEventListener('click', () => { page++; render(); });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
