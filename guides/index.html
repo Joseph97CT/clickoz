@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Clickoz Guides – Tutorials, Checklists & Playbooks for SEO, Writing, Dev & Creators</title>
-  <meta name="description" content="Browse Clickoz Guides: practical tutorials, checklists, and playbooks for SEO, writing, developers, and creators. Learn workflows, fix issues fast, and ship better content." />
+  <meta name="description" content="Browse Clickoz Guides: practical tutorials, checklists and playbooks for SEO, writing, developers and creators. Clear steps, fast wins, and repeatable workflows." />
   <link rel="canonical" href="https://clickoz.com/guides/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
 
   <meta property="og:site_name" content="Clickoz" />
   <meta property="og:title" content="Clickoz Guides – Tutorials & Playbooks" />
-  <meta property="og:description" content="Practical guides for SEO, writing, dev, and creators. Clear steps, copy-ready checklists, and fast wins." />
+  <meta property="og:description" content="Practical guides for SEO, writing, dev and creators — clear steps, checklists, mobile-friendly." />
   <meta property="og:url" content="https://clickoz.com/guides/" />
   <meta property="og:type" content="website" />
 
@@ -24,7 +24,7 @@
 
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- Guides page micro-patches ONLY -->
+  <!-- Tools page micro-patches ONLY (kept identical) -->
   <style>
     .nav-links a.active,
     .m-links a.active{
@@ -33,9 +33,11 @@
       color: rgba(255,255,255,.96);
     }
 
-    .guides-shell{ padding-top: 18px; }
+    .tools-shell{
+      padding-top: 18px;
+    }
 
-    .guides-kicker{
+    .tools-kicker{
       max-width: 980px;
       margin: 0 auto 10px;
       text-align:center;
@@ -43,7 +45,8 @@
       font-size: 15px;
       line-height: 1.65;
     }
-    .guides-kicker b{
+
+    .tools-kicker b{
       color: rgba(255,255,255,.92);
       font-weight: 900;
     }
@@ -88,7 +91,10 @@
       min-width: 260px;
     }
 
-    .pillar{ text-align:left; margin-top: 16px; }
+    .pillar{
+      text-align:left;
+      margin-top: 16px;
+    }
     .pillar h2{
       margin: 0 0 10px;
       font-size: clamp(22px, 2.4vw, 32px);
@@ -156,7 +162,11 @@
       font-size: 20px;
       flex: 0 0 auto;
     }
-    .lane h3{ margin: 0; font-size: 16px; font-weight: 1000; }
+    .lane h3{
+      margin: 0;
+      font-size: 16px;
+      font-weight: 1000;
+    }
     .lane p{
       margin: 10px 0 0;
       position: relative;
@@ -265,21 +275,21 @@
     </div>
   </aside>
 
-  <!-- GUIDES -->
-  <section class="section container guides-shell" id="guides">
+  <!-- GUIDES (same structure/IDs as Tools to keep CSS+JS identical) -->
+  <section class="section container tools-shell" id="tools">
     <h1 class="section-title">Guides</h1>
-    <div class="guides-kicker">
+    <div class="tools-kicker">
       <b>Practical guides</b> for SEO, writing, developers, and creators — clear steps, checklists, and repeatable workflows.
     </div>
 
     <div class="row">
-      <input class="search" id="guidesSearch" placeholder="Search guides (seo checklist, meta tags, youtube titles, json errors…)" aria-label="Search guides" autocomplete="off" />
+      <input class="search" id="toolsSearch" placeholder="Search guides (seo checklist, meta titles, youtube packaging, json errors…)" aria-label="Search guides" autocomplete="off" />
     </div>
     <div class="search-hint">
       Press <b>/</b> to search • Filter by category • <b>15 guides per page</b>
     </div>
 
-    <div class="chips" id="guidesChips" aria-label="Categories" style="margin-top:12px;">
+    <div class="chips" id="toolsChips" aria-label="Categories" style="margin-top:12px;">
       <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
       <div class="chip" data-filter="seo" role="button" tabindex="0">SEO</div>
       <div class="chip" data-filter="writing" role="button" tabindex="0">Writing</div>
@@ -287,74 +297,21 @@
       <div class="chip" data-filter="creator" role="button" tabindex="0">Creator</div>
     </div>
 
-    <div class="grid" id="guidesGrid">
-      <!-- EXAMPLE guide cards (replace/expand as you want) -->
-      <a class="card" href="/guides/seo-checklist/" data-cat="seo"
-         data-hay="seo checklist on-page audit titles meta description internal linking">
+    <div class="grid" id="toolsGrid">
+      <!-- INCOLLA QUI LE TUE 15 CARD GUIDE (stessa struttura card dei tools)
+           Ricorda: data-cat="seo|writing|dev|creator" e data-hay="..." -->
+      <!-- example (remove): -->
+      <a class="card" href="/guides/seo-checklist/" data-cat="seo" data-hay="seo checklist on-page title meta description headings internal linking">
         <div class="card-top">
           <div class="badge">SEO</div>
           <div class="card-title">On-Page SEO Checklist</div>
-          <div class="card-desc">A clean step-by-step checklist to improve titles, meta descriptions, headings, and internal links.</div>
+          <div class="card-desc">A clean checklist to improve titles, meta descriptions, headings, and internal links.</div>
         </div>
         <div class="card-bot">
           <span class="pill">10–15 min</span>
-          <span class="btn small">Read guide</span>
+          <span class="btn small">Read</span>
         </div>
       </a>
-
-      <a class="card" href="/guides/meta-title-formula/" data-cat="seo"
-         data-hay="meta title formula serp title length ctr keywords">
-        <div class="card-top">
-          <div class="badge">SEO</div>
-          <div class="card-title">Meta Title Formula (CTR)</div>
-          <div class="card-desc">How to write titles that fit SERP limits and match intent—without keyword stuffing.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">7–10 min</span>
-          <span class="btn small">Read guide</span>
-        </div>
-      </a>
-
-      <a class="card" href="/guides/readability-basics/" data-cat="writing"
-         data-hay="readability writing clarity short sentences scannable content">
-        <div class="card-top">
-          <div class="badge">Writing</div>
-          <div class="card-title">Readability Basics</div>
-          <div class="card-desc">Make text scannable on mobile: structure, spacing, sentence length, and clarity rules.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">6–9 min</span>
-          <span class="btn small">Read guide</span>
-        </div>
-      </a>
-
-      <a class="card" href="/guides/youtube-packaging/" data-cat="creator"
-         data-hay="youtube packaging titles thumbnails hook description tags keyword intent">
-        <div class="card-top">
-          <div class="badge">Creator</div>
-          <div class="card-title">YouTube Packaging Playbook</div>
-          <div class="card-desc">Titles, hooks, and descriptions that match what people actually search and click.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">10–12 min</span>
-          <span class="btn small">Read guide</span>
-        </div>
-      </a>
-
-      <a class="card" href="/guides/json-fix-common-errors/" data-cat="dev"
-         data-hay="json errors trailing comma invalid quotes validate format parse">
-        <div class="card-top">
-          <div class="badge">Dev</div>
-          <div class="card-title">Fix Common JSON Errors</div>
-          <div class="card-desc">The fastest way to debug invalid JSON: commas, quotes, encoding, and validation tips.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">5–8 min</span>
-          <span class="btn small">Read guide</span>
-        </div>
-      </a>
-
-      <!-- Add more guide cards here -->
     </div>
 
     <div class="pager" aria-label="Pagination controls">
@@ -364,84 +321,8 @@
     </div>
   </section>
 
-  <!-- BELOW: Narrative / SEO -->
-  <section class="section container" aria-label="Guides value and use cases">
-    <div class="hero-box">
-      <h2 class="section-title" style="margin-top:0;">Why Clickoz Guides exists</h2>
-      <p class="section-sub" style="margin-bottom:14px;">
-        Tools solve a task. Guides teach the workflow — the “why”, the steps, and the common mistakes that waste time.
-        Clickoz Guides are short, practical, and made for speed.
-      </p>
-
-      <div class="lanes">
-        <div class="lane">
-          <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">🧭</div>
-            <h3>Clear steps, no fluff</h3>
-          </div>
-          <p>
-            Each guide is built around a real outcome: fix SEO basics, write better titles, debug JSON, or improve packaging.
-            You can follow it fast and apply it immediately.
-          </p>
-        </div>
-
-        <div class="lane">
-          <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">✅</div>
-            <h3>Checklists you can reuse</h3>
-          </div>
-          <p>
-            The best workflows are repeatable. Use the checklist, ship the work, and come back later without re-learning everything.
-          </p>
-        </div>
-
-        <div class="lane">
-          <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">🎯</div>
-            <h3>Search intent aligned</h3>
-          </div>
-          <p>
-            Guides are written to match how people search: “meta title length”, “fix JSON”, “YouTube title ideas”, “readability score”.
-            That helps users and helps SEO.
-          </p>
-        </div>
-
-        <div class="lane">
-          <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">⚡</div>
-            <h3>Pair guides with tools</h3>
-          </div>
-          <p>
-            Each guide can link directly to the matching tool: learn the workflow, then run the check instantly.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section container" aria-label="About Clickoz Guides">
-    <div class="hero-box pillar">
-      <h2>Fast learning, built for mobile</h2>
-      <p>
-        Clickoz Guides are structured for skimming: short paragraphs, clear steps, and practical examples.
-        Perfect for creators and builders who want results, not theory.
-      </p>
-
-      <h3>Each guide can be a landing page</h3>
-      <p>
-        As the library grows, every guide becomes a focused search entry point.
-        Combined with tools, this creates a strong “intent hub” (guides = education, tools = execution).
-      </p>
-
-      <h3>Natural keyword coverage</h3>
-      <p>
-        Instead of repeating the same phrase, each guide targets a real query and uses related language naturally:
-        SEO checklist, meta titles, readability, YouTube packaging, JSON errors, encoding—used only when relevant.
-      </p>
-    </div>
-  </section>
-
-  <!-- Footer + Cookie banner (same structure as yours) -->
+  <!-- Keep your narrative/SEO blocks if you want (optional) -->
+  <!-- Footer + Cookie banner same as your structure -->
   <footer class="footer">
     <div class="container footer-grid">
       <div>
@@ -457,9 +338,9 @@
         <h4>Popular guides</h4>
         <div class="footer-links">
           <a href="/guides/seo-checklist/">On-Page SEO Checklist</a>
-          <a href="/guides/meta-title-formula/">Meta Title Formula</a>
           <a href="/guides/youtube-packaging/">YouTube Packaging</a>
           <a href="/guides/json-fix-common-errors/">Fix JSON Errors</a>
+          <a href="/guides/meta-title-formula/">Meta Title Formula</a>
         </div>
       </div>
 
@@ -499,7 +380,7 @@
     </div>
   </div>
 
-  <!-- Nav scroll micro-script (same as yours) -->
+  <!-- Keep nav scroll micro-script identical -->
   <script>
     (function(){
       const nav = document.getElementById('topNav');
@@ -522,15 +403,15 @@
 
   <script src="/assets/site.js" defer></script>
 
-  <!-- Guides search/filter/pagination (adapted from tools) -->
+  <!-- EXACT same tools paging script (works because IDs stayed the same) -->
   <script>
     (function(){
       const $  = (s, r=document) => r.querySelector(s);
       const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
-      const grid   = $('#guidesGrid');
-      const chips  = $('#guidesChips');
-      const search = $('#guidesSearch');
+      const grid   = $('#toolsGrid');
+      const chips  = $('#toolsChips');
+      const search = $('#toolsSearch');
       const prev   = $('#prevPage');
       const next   = $('#nextPage');
       const info   = $('#pageInfo');
@@ -539,7 +420,7 @@
       const PAGE_SIZE = 15;
       let page = 1;
       let filter = 'all';
-      const allCards = $$('#guidesGrid a.card');
+      const allCards = $$('#toolsGrid a.card');
 
       function normalize(s){ return (s || '').toLowerCase().trim(); }
 
@@ -548,7 +429,7 @@
         return allCards.filter(card => {
           const cat = normalize(card.dataset.cat || '');
           const hay = normalize((card.dataset.hay || '') + ' ' + (card.textContent || ''));
-          const okCat  = (filter === 'all') || (cat === filter);
+          const okCat = (filter === 'all') || (cat === filter);
           const okTerm = !term || hay.includes(term);
           return okCat && okTerm;
         });
