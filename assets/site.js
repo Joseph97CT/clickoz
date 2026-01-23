@@ -702,3 +702,17 @@
     initFX();
   }
 })();
+(function(){
+  const path = location.pathname;
+  const links = document.querySelectorAll('.nav-links a, .m-links a');
+  links.forEach(a => a.classList.remove('active'));
+  const setActive = (href) => {
+    const el = Array.from(links).find(a => a.getAttribute('href') === href);
+    if(el) el.classList.add('active');
+  };
+
+  if(path.startsWith('/tools')) setActive('/tools/');
+  else if(path.startsWith('/guides')) setActive('/guides/');
+  else if(path.startsWith('/updates')) setActive('/updates/');
+  else setActive('/');
+})();
