@@ -4,388 +4,605 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Word Counter – Count words, characters, sentences | Clickoz</title>
-  <meta name="description" content="Free word counter: count words, characters, sentences, paragraphs, and estimate reading time. Runs in your browser." />
-  <link rel="canonical" href="https://clickoz.com/tool/word-counter" />
+  <!-- ✅ SEO META (edit per tool) -->
+  <title>Word Counter – Count Words, Characters & Reading Time | Clickoz</title>
+  <meta name="description" content="Free Word Counter: count words, characters (with/without spaces), sentences, paragraphs, and estimate reading time. Runs in your browser, no signup." />
+  <link rel="canonical" href="https://clickoz.com/tools/word-counter/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b0f19" />
 
-  <meta property="og:title" content="Word Counter – Clickoz" />
-  <meta property="og:description" content="Count words, characters, sentences, paragraphs, and reading time. Free & instant." />
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="Clickoz" />
+  <meta property="og:title" content="Word Counter – Free Online Tool | Clickoz" />
+  <meta property="og:description" content="Count words, characters, sentences, paragraphs, and reading time. Privacy-first and instant." />
+  <meta property="og:url" content="https://clickoz.com/tools/word-counter/" />
   <meta property="og:type" content="website" />
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
+  <link rel="stylesheet" href="/assets/site.css?v=4" />
+
+  <!-- ✅ Tool page patches (small + reusable) -->
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    :root{
-      --bg:#0a0a0f; --panel:#16161f; --text:#e8e8f0; --muted:#8888a0;
-      --accent:#6366f1; --accent-hover:#4f46e5;
-      --radius:12px; --shadow:0 4px 20px rgba(0,0,0,.4);
-      --gap:20px; --max:1100px;
+    .tool-shell{ padding-top: 18px; }
+    .kicker{
+      max-width: 980px;
+      margin: 8px auto 0;
+      text-align:center;
+      color: rgba(255,255,255,.74);
+      line-height: 1.75;
+      font-size: 15.5px;
     }
-    html,body{height:100%;}
-    body{
-      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,sans-serif;
-      background:var(--bg); color:var(--text); line-height:1.7; font-size:16px;
+    .tool-panel{
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
+      box-shadow: 0 16px 50px rgba(0,0,0,.28);
+      position: relative;
+      overflow:hidden;
     }
-    a{color:inherit}
-    .nav{
-      position:sticky; top:0; z-index:50;
-      background:rgba(10,10,15,.95); backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(255,255,255,.08);
+    .tool-panel::after{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background: radial-gradient(720px 320px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
+      filter: blur(30px);
+      opacity: .9;
+      pointer-events:none;
     }
-    .nav-inner{
-      max-width:var(--max); margin:0 auto; padding:14px 18px;
-      display:flex; align-items:center; gap:16px;
-    }
-    .logo{
-      font-size:26px; font-weight:900; text-decoration:none; white-space:nowrap;
-    }
-    #logoAccent{color:var(--accent)}
-    .nav-links{display:flex; gap:18px; align-items:center; margin-left:8px;}
-    .nav-links a{opacity:.9; text-decoration:none; font-weight:700; font-size:14px;}
-    .nav-links a:hover{color:var(--accent); opacity:1;}
-    .spacer{flex:1}
-    .btn-primary,.btn-secondary{
-      border-radius:10px; padding:10px 14px; font-weight:900; font-size:13px;
-      text-decoration:none; display:inline-flex; align-items:center; gap:8px;
-      border:1px solid rgba(255,255,255,.10); cursor:pointer;
-      transition:transform .15s, background .15s, border-color .15s, box-shadow .15s;
-    }
-    .btn-primary{background:var(--accent); border-color:transparent; color:#fff;}
-    .btn-primary:hover{background:var(--accent-hover); transform:translateY(-1px); box-shadow:0 10px 24px rgba(99,102,241,.35);}
-    .btn-secondary{background:var(--panel); color:var(--text);}
-    .btn-secondary:hover{border-color:var(--accent); background:rgba(99,102,241,.10); transform:translateY(-1px);}
+    .tool-panel > *{ position: relative; z-index: 1; }
 
-    .container{max-width:var(--max); margin:0 auto; padding:0 18px;}
-    .hero{
-      padding:34px 0 12px; text-align:center;
+    .tool-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
     }
-    .hero h1{
-      font-size:40px; font-weight:900; line-height:1.15; margin-bottom:10px;
-      letter-spacing:-0.02em;
-      background:linear-gradient(135deg,var(--text),var(--accent));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    @media (min-width: 981px){
+      .tool-grid{ grid-template-columns: 1.35fr .65fr; }
     }
-    .hero p{color:var(--muted); max-width:760px; margin:0 auto; font-size:16px;}
 
-    .grid{
-      display:grid; gap:var(--gap);
-      grid-template-columns: 1.2fr .8fr;
-      align-items:start;
-      padding:22px 0 40px;
+    .tool-area textarea{
+      width:100%;
+      min-height: 220px;
+      resize: vertical;
+      border-radius: 16px;
+      padding: 14px 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+      outline: none;
+      line-height: 1.6;
+      font-size: 15px;
     }
-    .panel{
-      background:var(--panel); border:1px solid rgba(255,255,255,.06);
-      border-radius:var(--radius); box-shadow:var(--shadow);
-      padding:18px;
+    .tool-area textarea:focus{
+      border-color: rgba(var(--accent-rgb), .35);
+      box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
     }
-    .panel-title{font-size:14px; font-weight:900; letter-spacing:.02em; color:var(--muted); text-transform:uppercase; margin-bottom:12px;}
-    textarea{
-      width:100%; min-height:260px; resize:vertical;
-      background:rgba(255,255,255,.02);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:12px; color:var(--text);
-      padding:14px; font-size:15px; outline:none;
-      transition:border-color .15s;
-    }
-    textarea:focus{border-color:var(--accent);}
-    .toolbar{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between;
-      margin-top:12px;
-    }
-    .toolbar-left,.toolbar-right{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
-    .toggle{
-      display:flex; gap:10px; align-items:center; padding:10px 12px;
-      border-radius:10px; border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.02);
-      font-size:13px; font-weight:800; color:var(--text); cursor:pointer; user-select:none;
-    }
-    .toggle input{accent-color:var(--accent); cursor:pointer;}
 
     .stats{
-      display:grid; gap:10px;
-      grid-template-columns:repeat(2, 1fr);
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
     .stat{
-      background:rgba(255,255,255,.02);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:12px;
-      padding:12px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
     }
-    .stat .label{font-size:12px; color:var(--muted); font-weight:900; text-transform:uppercase; letter-spacing:.04em;}
-    .stat .value{font-size:22px; font-weight:900; margin-top:6px;}
-    .hint{margin-top:10px; color:var(--muted); font-size:13px;}
-    .output{
-      margin-top:12px; padding:12px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.02);
-      color:var(--muted);
-      font-size:13px;
+    .stat .label{
+      font-size: 12px;
+      opacity: .78;
+      letter-spacing: .02em;
     }
-    .section{
-      padding:10px 0 40px;
+    .stat .value{
+      margin-top: 6px;
+      font-weight: 1000;
+      font-size: 18px;
     }
-    .section h2{
-      font-size:22px; font-weight:900; margin:18px 0 10px;
-      letter-spacing:-0.01em;
-    }
-    .section p, .section li{color:var(--muted); font-size:14px;}
-    .section ul{padding-left:18px; margin-top:8px;}
-    .faq{
-      margin-top:12px;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding-top:12px;
-    }
-    details{
-      background:rgba(255,255,255,.02);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:12px;
-      padding:12px 12px;
-      margin-top:10px;
-    }
-    summary{cursor:pointer; font-weight:900;}
-    details p{margin-top:8px;}
 
-    @media (max-width: 920px){
-      .grid{grid-template-columns:1fr; }
-      .hero h1{font-size:34px;}
-      .nav-links{display:none;}
+    .tool-actions{
+      margin-top: 12px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .tool-actions .btn{ height: 44px; border-radius: 14px; font-weight: 1000; }
+    .btn.ghost{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .seo-block{
+      margin-top: 16px;
+    }
+    .seo-block h2{
+      margin: 0 0 10px;
+      font-size: clamp(22px, 2.4vw, 32px);
+      font-weight: 1000;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+    }
+    .seo-block h3{
+      margin: 18px 0 10px;
+      font-size: 18px;
+      font-weight: 1000;
+      letter-spacing: -0.01em;
+    }
+    .seo-block p, .seo-block li{
+      color: rgba(255,255,255,.76);
+      line-height: 1.8;
+      font-size: 15.5px;
+    }
+    .seo-block ul{ margin: 0; padding-left: 18px; }
+
+    .faq{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 981px){
+      .faq{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    details.faq-item{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 12px 12px;
+    }
+    details.faq-item summary{
+      cursor: pointer;
+      font-weight: 1000;
+      outline:none;
+      list-style:none;
+    }
+    details.faq-item summary::-webkit-details-marker{ display:none; }
+    .faq-item p{ margin: 10px 0 0; }
+
+    .related{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 981px){
+      .related{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .rel-box{
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .rel-links{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .rel-links a{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      text-decoration:none;
+      font-weight: 900;
+      font-size: 13px;
+      color: rgba(255,255,255,.88);
     }
   </style>
+
+  <!-- ✅ JSON-LD (edit per tool) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Counter",
+    "url": "https://clickoz.com/tools/word-counter/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Clickoz", "url": "https://clickoz.com/" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"How do you count words accurately?",
+        "acceptedAnswer":{"@type":"Answer","text":"Clickoz counts words by splitting text on whitespace and filtering empty tokens. It updates instantly as you type."}
+      },
+      {
+        "@type":"Question",
+        "name":"Does this word counter upload my text?",
+        "acceptedAnswer":{"@type":"Answer","text":"No. The tool runs in your browser. Your text stays on your device."}
+      },
+      {
+        "@type":"Question",
+        "name":"What is reading time and how is it estimated?",
+        "acceptedAnswer":{"@type":"Answer","text":"Reading time is estimated from total words using an average reading speed (commonly ~200 words per minute)."}
+      },
+      {
+        "@type":"Question",
+        "name":"Does it count characters with and without spaces?",
+        "acceptedAnswer":{"@type":"Answer","text":"Yes. You can view both character counts: including spaces and excluding spaces."}
+      }
+    ]
+  }
+  </script>
 </head>
 
-<body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a class="logo" href="/" aria-label="Clickoz home">Click<span id="logoAccent">oz</span></a>
-      <div class="nav-links">
-        <a href="/#tools">Tools</a>
-        <a href="/guides">Guides</a>
-        <a href="/updates">Updates</a>
+<body class="bigtext">
+  <!-- FX layers -->
+  <div id="clickozParticles" aria-hidden="true"></div>
+  <canvas id="spaceParticles" aria-hidden="true"></canvas>
+  <div class="__grain" aria-hidden="true"></div>
+
+  <!-- NAV (same as your site) -->
+  <nav class="nav" aria-label="Primary navigation" id="topNav">
+    <div class="container nav-inner">
+      <a class="logo" href="/" aria-label="Clickoz Home">
+        <span class="logo-badge" id="logoBadge" aria-hidden="true">
+          <svg class="logo-mark" viewBox="0 0 48 48" width="1em" height="1em" aria-hidden="true" focusable="false">
+            <path d="M32.5 13.5c-2.4-2.2-5.4-3.3-8.9-3.3-7.2 0-12.6 5.1-12.6 13.8S16.4 37.8 23.6 37.8c3.6 0 6.7-1.2 9.2-3.6"
+                  fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="logo-text">Click<span class="logo-oz">oz</span></span>
+      </a>
+
+      <div class="nav-links" aria-label="Sections">
+        <a href="/">Home</a>
+        <a class="active" href="/tools/" aria-current="page">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/updates/">Updates</a>
       </div>
+
       <div class="spacer"></div>
-      <a class="btn-secondary" href="/#tools">← Back to tools</a>
-      <a class="btn-primary" href="/submit">Submit a tool</a>
+
+      <div class="nav-actions" aria-label="Preferences">
+        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="dropdown">
+          <button class="dot-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Theme color">
+            <span class="dot" id="colorDot" aria-hidden="true"></span>
+          </button>
+
+          <div class="menu" id="colorMenu" role="menu" aria-label="Pick theme color">
+            <div class="menu-title">Theme color</div>
+            <div class="color-grid">
+              <div class="color-option active" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" role="menuitem" tabindex="0"></div>
+              <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" role="menuitem" tabindex="0"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="gtNavWrap" aria-label="Translate">
+          <div id="google_translate_element"></div>
+        </div>
+      </div>
     </div>
   </nav>
 
-  <header class="hero container">
-    <h1>Word Counter</h1>
-    <p>Count words, characters, sentences, paragraphs, and estimate reading time — instantly, right in your browser.</p>
-  </header>
+  <!-- Mobile menu (same as your site) -->
+  <div class="m-overlay" id="mOverlay" hidden></div>
+  <aside class="m-menu" id="mobileMenu" aria-hidden="true">
+    <div class="m-head">
+      <div class="m-title">Menu</div>
+      <button class="m-close" id="mClose" type="button" aria-label="Close menu">×</button>
+    </div>
 
-  <main class="container">
-    <div class="grid">
-      <!-- INPUT -->
-      <section class="panel" aria-label="Word counter input">
-        <div class="panel-title">Your text</div>
-        <textarea id="textInput" placeholder="Paste or type your text here..."></textarea>
+    <div class="m-links">
+      <a class="m-link" href="/">Home</a>
+      <a class="m-link active" href="/tools/" aria-current="page">Tools</a>
+      <a class="m-link" href="/guides/">Guides</a>
+      <a class="m-link" href="/updates/">Updates</a>
+      <a class="m-link" href="/privacy/">Privacy</a>
+    </div>
 
-        <div class="toolbar">
-          <div class="toolbar-left">
-            <label class="toggle" title="Trim & collapse multiple spaces">
-              <input id="optNormalizeSpaces" type="checkbox" checked />
-              Ignore extra spaces
-            </label>
-            <label class="toggle" title="Treat numbers as words (e.g., 2026)">
-              <input id="optCountNumbers" type="checkbox" checked />
-              Count numbers as words
-            </label>
+    <div class="m-block">
+      <div class="m-label">Theme color</div>
+      <div class="color-grid m-colors" id="mobileColorGrid">
+        <div class="color-option active" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" tabindex="0"></div>
+        <div class="color-option" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" tabindex="0"></div>
+        <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" tabindex="0"></div>
+        <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" tabindex="0"></div>
+        <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" tabindex="0"></div>
+        <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" tabindex="0"></div>
+      </div>
+    </div>
+
+    <div class="m-block">
+      <div class="m-label">Language</div>
+      <div id="google_translate_element_mobile"></div>
+      <div style="margin-top:10px;font-size:13px;opacity:.78;line-height:1.5;">
+        Translation loads only if you accept “All” cookies.
+      </div>
+    </div>
+  </aside>
+
+  <!-- TOOL HEADER -->
+  <section class="section container tool-shell">
+    <h1 class="section-title">Word Counter</h1>
+    <div class="kicker">
+      Count <b>words</b>, <b>characters</b> (with/without spaces), <b>sentences</b>, <b>paragraphs</b>, and estimate <b>reading time</b>.
+      Runs in your browser — no signup.
+    </div>
+
+    <!-- TOOL UI -->
+    <div class="tool-panel" aria-label="Word Counter tool">
+      <div class="tool-grid">
+        <div class="tool-area">
+          <label for="inputText" class="sr-only">Paste your text</label>
+          <textarea id="inputText" placeholder="Paste or type your text here…"></textarea>
+
+          <div class="tool-actions">
+            <button class="btn primary" id="copyBtn" type="button">Copy text</button>
+            <button class="btn ghost" id="clearBtn" type="button">Clear</button>
           </div>
-          <div class="toolbar-right">
-            <button class="btn-secondary" id="btnCopy" type="button">Copy</button>
-            <button class="btn-secondary" id="btnDownload" type="button">Download .txt</button>
-            <button class="btn-secondary" id="btnClear" type="button">Clear</button>
+        </div>
+
+        <div>
+          <div class="stats" aria-label="Results">
+            <div class="stat"><div class="label">Words</div><div class="value" id="w">0</div></div>
+            <div class="stat"><div class="label">Reading time</div><div class="value" id="rt">0 min</div></div>
+            <div class="stat"><div class="label">Characters</div><div class="value" id="c">0</div></div>
+            <div class="stat"><div class="label">Chars (no spaces)</div><div class="value" id="cn">0</div></div>
+            <div class="stat"><div class="label">Sentences</div><div class="value" id="s">0</div></div>
+            <div class="stat"><div class="label">Paragraphs</div><div class="value" id="p">0</div></div>
           </div>
         </div>
-
-        <div class="output" id="statusLine" role="status" aria-live="polite">
-          Tip: Try pasting a full article — stats update instantly.
-        </div>
-      </section>
-
-      <!-- STATS -->
-      <aside class="panel" aria-label="Word counter stats">
-        <div class="panel-title">Stats</div>
-        <div class="stats">
-          <div class="stat"><div class="label">Words</div><div class="value" id="statWords">0</div></div>
-          <div class="stat"><div class="label">Characters</div><div class="value" id="statChars">0</div></div>
-          <div class="stat"><div class="label">Chars (no spaces)</div><div class="value" id="statCharsNoSpaces">0</div></div>
-          <div class="stat"><div class="label">Sentences</div><div class="value" id="statSentences">0</div></div>
-          <div class="stat"><div class="label">Paragraphs</div><div class="value" id="statParagraphs">0</div></div>
-          <div class="stat"><div class="label">Reading time</div><div class="value" id="statReading">0m</div></div>
-        </div>
-        <div class="hint">
-          Reading time uses ~200 words/min. Sentences are estimated from punctuation.
-        </div>
-      </aside>
+      </div>
     </div>
 
     <!-- SEO CONTENT -->
-    <section class="section">
-      <h2>How to use the Word Counter</h2>
+    <div class="hero-box seo-block" aria-label="About this tool">
+      <h2>What is a word counter?</h2>
       <p>
-        Paste your text into the box and Clickoz will instantly count words and characters. This is useful for
-        essays, SEO drafts, social media captions, product descriptions, and email writing. The counter runs entirely
-        in your browser, so it’s fast and privacy-friendly.
+        A word counter measures how many words and characters are in a text. It’s useful for SEO drafts, school assignments,
+        blog posts, product descriptions, and any content with length constraints. Clickoz updates counts instantly as you type.
       </p>
+
+      <h3>When should you use it?</h3>
       <ul>
-        <li><strong>Words:</strong> counts separated tokens, with options to handle extra spaces and numbers.</li>
-        <li><strong>Characters:</strong> total characters including spaces.</li>
-        <li><strong>Characters (no spaces):</strong> helpful for SMS or strict limits.</li>
-        <li><strong>Reading time:</strong> quick estimate to match platform rules.</li>
+        <li><b>SEO writing:</b> match search intent, avoid thin content, and plan structure.</li>
+        <li><b>Meta descriptions & snippets:</b> keep text clean and skimmable.</li>
+        <li><b>Editing:</b> reduce fluff, improve clarity, and control reading time.</li>
+        <li><b>Platform limits:</b> stay within character caps for forms and tools.</li>
       </ul>
 
+      <h3>How reading time is calculated</h3>
+      <p>
+        Reading time is estimated from word count using a standard average speed (around 200 words per minute).
+        For technical text, reading time can be higher — use it as a quick baseline.
+      </p>
+
+      <h3>FAQ</h3>
       <div class="faq">
-        <h2>FAQ</h2>
-
-        <details>
-          <summary>Does this counter work offline?</summary>
-          <p>Yes. Once loaded, it runs locally in your browser with no server calls.</p>
+        <details class="faq-item">
+          <summary>Does this tool upload my text?</summary>
+          <p>No. The tool runs in your browser. Your text stays on your device.</p>
         </details>
 
-        <details>
-          <summary>Why do my word counts differ from Word/Google Docs?</summary>
-          <p>Different apps use slightly different rules (hyphens, apostrophes, emojis). Clickoz uses consistent, predictable parsing and gives you options.</p>
+        <details class="faq-item">
+          <summary>What counts as a “word”?</summary>
+          <p>Words are tokens separated by whitespace. Multiple spaces/new lines are ignored.</p>
         </details>
 
-        <details>
-          <summary>Is my text uploaded somewhere?</summary>
-          <p>No. Everything is processed on your device in real time.</p>
+        <details class="faq-item">
+          <summary>Characters with vs without spaces?</summary>
+          <p>“Characters” includes spaces. “Chars (no spaces)” removes all whitespace before counting.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I use this for SEO?</summary>
+          <p>Yes. Use it to plan structure, estimate reading time, and keep content clear and consistent.</p>
         </details>
       </div>
-    </section>
-  </main>
 
+      <div class="related" aria-label="Related content">
+        <div class="rel-box">
+          <h3 style="margin:0;">Related tools</h3>
+          <div class="rel-links">
+            <a href="/tools/readability-analyzer/">📚 Readability Analyzer</a>
+            <a href="/tools/keyword-density/">🔎 Keyword Density</a>
+            <a href="/tools/meta-tags/">🏷️ Meta Tag Optimizer</a>
+          </div>
+        </div>
+
+        <div class="rel-box">
+          <h3 style="margin:0;">Related guides</h3>
+          <div class="rel-links">
+            <a href="/guides/word-count-for-seo/">🧠 Word Count for SEO</a>
+            <a href="/guides/readability-for-ranking/">✅ Readability for Ranking</a>
+            <a href="/guides/meta-tags-checklist/">📌 Meta Tags Checklist</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER (same as your site) -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>Clickoz</h4>
+        <div class="footer-links">
+          <a href="/tools/">Tools</a>
+          <a href="/guides/">Guides</a>
+          <a href="/updates/">Updates</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Popular tools</h4>
+        <div class="footer-links">
+          <a href="/tools/word-counter/">Word Counter</a>
+          <a href="/tools/readability-analyzer/">Readability</a>
+          <a href="/tools/meta-tags/">Meta Tags</a>
+          <a href="/tools/json-formatter/">JSON Formatter</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="footer-links">
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:14px">
+      <hr class="sep" />
+      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
+        © 2026 Clickoz • Fast tools for SEO, writing and developers
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (same as your site) -->
+  <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
+    <div class="cookie-card">
+      <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
+      <div class="cookie-content">
+        <div class="cookie-title">Privacy choices</div>
+        <div class="cookie-text">
+          We use essential storage for core features. If you accept all, we may load third-party services like Google Translate.
+          Read more in <a href="/privacy/">Privacy</a>.
+        </div>
+      </div>
+      <div class="cookie-actions">
+        <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
+        <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
+        <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav glow on scroll -->
   <script>
-    const el = (id) => document.getElementById(id);
+    (function(){
+      const nav = document.getElementById('topNav');
+      if(!nav) return;
+      let lastY = window.scrollY || 0;
+      const onScroll = () => {
+        const y = window.scrollY || 0;
+        const scrolled = y > 8;
+        nav.classList.toggle('is-scrolled', scrolled);
+        const goingDown = y > lastY + 2;
+        const goingUp = y < lastY - 2;
+        if(scrolled && goingDown) nav.classList.add('is-down');
+        if(!scrolled || goingUp) nav.classList.remove('is-down');
+        lastY = y;
+      };
+      window.addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
+    })();
+  </script>
 
-    const textInput = el("textInput");
-    const optNormalizeSpaces = el("optNormalizeSpaces");
-    const optCountNumbers = el("optCountNumbers");
+  <script src="/assets/site.js" defer></script>
 
-    const statWords = el("statWords");
-    const statChars = el("statChars");
-    const statCharsNoSpaces = el("statCharsNoSpaces");
-    const statSentences = el("statSentences");
-    const statParagraphs = el("statParagraphs");
-    const statReading = el("statReading");
-    const statusLine = el("statusLine");
+  <!-- ✅ Tool logic (simple + fast) -->
+  <script>
+    (function(){
+      const $ = (s, r=document) => r.querySelector(s);
 
-    function normalizeText(raw) {
-      let t = raw.replace(/\r\n/g, "\n");
-      if (optNormalizeSpaces.checked) {
-        // collapse spaces/tabs but keep newlines
-        t = t.replace(/[ \t]+/g, " ").replace(/ *\n */g, "\n").trim();
+      const input = $('#inputText');
+      const w  = $('#w');
+      const rt = $('#rt');
+      const c  = $('#c');
+      const cn = $('#cn');
+      const s  = $('#s');
+      const p  = $('#p');
+      const copyBtn  = $('#copyBtn');
+      const clearBtn = $('#clearBtn');
+
+      if(!input || !w || !rt || !c || !cn || !s || !p) return;
+
+      function countWords(text){
+        const t = (text || '').trim();
+        if(!t) return 0;
+        return t.split(/\s+/).filter(Boolean).length;
       }
-      return t;
-    }
 
-    function countWords(text) {
-      const t = text.trim();
-      if (!t) return 0;
-
-      // Split by whitespace, then filter tokens
-      const tokens = t.split(/\s+/).filter(Boolean);
-
-      if (optCountNumbers.checked) return tokens.length;
-
-      // Exclude pure numbers if option disabled
-      return tokens.filter(tok => !/^\d+([.,]\d+)?$/.test(tok)).length;
-    }
-
-    function countSentences(text) {
-      const t = text.trim();
-      if (!t) return 0;
-      // Rough sentence detection by punctuation + newline boundaries
-      const parts = t
-        .replace(/\n+/g, ". ")
-        .split(/(?<=[.!?])\s+/)
-        .map(s => s.trim())
-        .filter(Boolean);
-      return parts.length;
-    }
-
-    function countParagraphs(text) {
-      const t = text.trim();
-      if (!t) return 0;
-      // Paragraph = blocks separated by blank lines
-      const paras = t.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
-      return paras.length;
-    }
-
-    function update() {
-      const raw = textInput.value || "";
-      const normalized = normalizeText(raw);
-
-      const words = countWords(normalized);
-      const chars = raw.length; // keep original chars incl. multiple spaces
-      const charsNoSpaces = raw.replace(/\s/g, "").length;
-
-      const sentences = countSentences(normalized);
-      const paragraphs = countParagraphs(normalized);
-
-      const minutes = Math.max(1, Math.round(words / 200));
-      const reading = words === 0 ? "0m" : `${minutes}m`;
-
-      statWords.textContent = String(words);
-      statChars.textContent = String(chars);
-      statCharsNoSpaces.textContent = String(charsNoSpaces);
-      statSentences.textContent = String(sentences);
-      statParagraphs.textContent = String(paragraphs);
-      statReading.textContent = reading;
-
-      statusLine.textContent = words === 0
-        ? "Tip: Paste some text to see counts instantly."
-        : `Ready — ${words} words, ${sentences} sentences, ~${reading} reading.`;
-    }
-
-    // Buttons
-    el("btnClear").addEventListener("click", () => {
-      textInput.value = "";
-      textInput.focus();
-      update();
-    });
-
-    el("btnCopy").addEventListener("click", async () => {
-      try {
-        const value = textInput.value || "";
-        if (!value.trim()) {
-          statusLine.textContent = "Nothing to copy.";
-          return;
-        }
-        await navigator.clipboard.writeText(value);
-        statusLine.textContent = "Copied to clipboard ✅";
-      } catch {
-        statusLine.textContent = "Copy failed (browser permission).";
+      function countSentences(text){
+        const t = (text || '').trim();
+        if(!t) return 0;
+        const m = t.match(/[^.!?]+[.!?]+|\s*[^.!?]+$/g);
+        return m ? m.filter(x => x.trim().length > 0).length : 0;
       }
-    });
 
-    el("btnDownload").addEventListener("click", () => {
-      const value = textInput.value || "";
-      const blob = new Blob([value], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
+      function countParagraphs(text){
+        const t = (text || '').trim();
+        if(!t) return 0;
+        return t.split(/\n{2,}/).map(x => x.trim()).filter(Boolean).length;
+      }
 
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "clickoz-word-counter.txt";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      function render(){
+        const text = input.value || '';
+        const words = countWords(text);
 
-      URL.revokeObjectURL(url);
-      statusLine.textContent = "Downloaded ✅";
-    });
+        w.textContent = String(words);
+        c.textContent = String(text.length);
+        cn.textContent = String(text.replace(/\s/g,'').length);
+        s.textContent = String(countSentences(text));
+        p.textContent = String(countParagraphs(text));
 
-    // Live update
-    textInput.addEventListener("input", update);
-    optNormalizeSpaces.addEventListener("change", update);
-    optCountNumbers.addEventListener("change", update);
+        const wpm = 200;
+        const mins = Math.max(0, Math.ceil(words / wpm));
+        rt.textContent = `${mins} min`;
+      }
 
-    update();
+      let t = null;
+      input.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(render, 40);
+      });
+
+      if(clearBtn){
+        clearBtn.addEventListener('click', () => { input.value = ''; render(); input.focus(); });
+      }
+
+      if(copyBtn){
+        copyBtn.addEventListener('click', async () => {
+          try{
+            await navigator.clipboard.writeText(input.value || '');
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => copyBtn.textContent = 'Copy text', 900);
+          }catch(e){
+            copyBtn.textContent = 'Copy failed';
+            setTimeout(() => copyBtn.textContent = 'Copy text', 900);
+          }
+        });
+      }
+
+      render();
+    })();
   </script>
 </body>
 </html>
