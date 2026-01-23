@@ -760,3 +760,44 @@
     el.setAttribute('aria-current', 'page');
   }
 })();
+(function () {
+  const path = (location.pathname || "/").toLowerCase();
+
+  // Decide which nav item should be active
+  const section =
+    path === "/" ? "home" :
+    path.startsWith("/tools") ? "tools" :
+    path.startsWith("/guides") ? "guides" :
+    path.startsWith("/updates") ? "updates" :
+    "";
+
+  function setActive(selectorRoot) {
+    const root = document.querySelector(selectorRoot);
+    if (!root) return;
+
+    const links = Array.from(root.querySelectorAll("a"));
+    links.forEach(a => {
+      a.classList.remove("active");
+      a.removeAttribute("aria-current");
+    });
+
+    if (!section) return;
+
+    const match = links.find(a => {
+      const href = (a.getAttribute("href") || "").toLowerCase();
+      if (section === "home") return href === "/" || href === "/index.html";
+      if (section === "tools") return href.startsWith("/tools");
+      if (section === "guides") return href.startsWith("/guides");
+      if (section === "updates") return href.startsWith("/updates");
+      return false;
+    });
+
+    if (match) {
+      match.classList.add("active");
+      match.setAttribute("aria-current", "page");
+    }
+  }
+
+  setActive(".nav-links");
+  setActive(".m-links");
+})();
