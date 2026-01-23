@@ -702,17 +702,61 @@
     initFX();
   }
 })();
-(function(){
-  const path = location.pathname;
-  const links = document.querySelectorAll('.nav-links a, .m-links a');
-  links.forEach(a => a.classList.remove('active'));
-  const setActive = (href) => {
-    const el = Array.from(links).find(a => a.getAttribute('href') === href);
-    if(el) el.classList.add('active');
-  };
+(function () {
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+  const mobLinks = Array.from(document.querySelectorAll('.m-links a'));
+  const links = [...navLinks, ...mobLinks];
+  if (!links.length) return;
 
-  if(path.startsWith('/tools')) setActive('/tools/');
-  else if(path.startsWith('/guides')) setActive('/guides/');
-  else if(path.startsWith('/updates')) setActive('/updates/');
-  else setActive('/');
+  // Remove existing states
+  links.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+  });
+
+  const path = (location.pathname || '/').toLowerCase();
+
+  // Map current path -> section key
+  // Supports /tools, /tools/, /tools.html, /tools/anything/...
+  let section = 'home';
+  if (path === '/' || path === '/index.html') section = 'home';
+  else if (path.startsWith('/tools') || path.endsWith('/tools.html')) section = 'tools';
+  else if (path.startsWith('/guides') || path.endsWith('/guides.html')) section = 'guides';
+  else if (path.startsWith('/updates') || path.endsWith('/updates.html')) section = 'updates';
+
+  // Helper: find a link by "section", tolerant to different href styles
+  function pickLink(target) {
+    const candidates = links.filter(a => {
+      const hrefRaw = (a.getAttribute('href') || '').toLowerCase().trim();
+      if (!hrefRaw) return false;
+
+      // normalize common variants
+      const href = hrefRaw.replace(/\/+$/, ''); // remove trailing /
+      const t = target;
+
+      if (t === 'home') {
+        return href === '' || href === '/' || href === '/index.html';
+      }
+      if (t === 'tools') {
+        return href === '/tools' || href === '/tools.html';
+      }
+      if (t === 'guides') {
+        return href === '/guides' || href === '/guides.html';
+      }
+      if (t === 'updates') {
+        return href === '/updates' || href === '/updates.html';
+      }
+      return false;
+    });
+
+    // Prefer /tools/ style if present, else any match
+    return candidates[0] || null;
+  }
+
+  // Apply state
+  const el = pickLink(section);
+  if (el) {
+    el.classList.add('active');
+    el.setAttribute('aria-current', 'page');
+  }
 })();
