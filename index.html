@@ -24,32 +24,8 @@
 
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- Small visual + layout patches (keeps your external CSS intact) -->
+  <!-- Optional: keep ONLY what is truly page-specific -->
   <style>
-    /* NAV: sticky already, add bottom glow on scroll */
-    .nav{ position: sticky; top:0; z-index: 60; }
-    .nav.is-scrolled{
-      box-shadow:
-        0 18px 36px rgba(0,0,0,.34),
-        0 8px 0 rgba(0,0,0,0) inset;
-    }
-    .nav.is-scrolled::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:-1px; height:2px;
-      background: linear-gradient(90deg, transparent, var(--accent, #6366f1), transparent);
-      filter: blur(.2px);
-      opacity:.55;
-      pointer-events:none;
-    }
-    .nav.is-down::after{
-      height:3px;
-      opacity:.95;
-      box-shadow: 0 0 18px rgba(99,102,241,.55);
-    }
-
-    /* ✅ Logo: use the SAME defaults as other pages (no overrides here) */
-
     /* Section titles: keep your pop */
     .section-title{
       font-size: clamp(34px, 3.3vw, 48px);
@@ -59,24 +35,6 @@
         0 0 18px rgba(99,102,241,.14),
         0 1px 0 rgba(0,0,0,.65);
     }
-
-    /* Make cards + guide cards align CTAs at the bottom */
-    .card{ display:flex; flex-direction:column; }
-    .card .tool-cta{ margin-top:auto; display:inline-flex; }
-    .small-card.guide-card{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      min-height: 190px;
-    }
-    .small-card.guide-card .tool-cta{
-      margin-top:auto;
-      align-self:flex-start;
-      display:inline-flex;
-    }
-    .tool-cta{ margin-top: 14px; }
-
-    .hero-box .section-title{ margin-bottom: 6px; }
 
     /* Recommended grid button (full width under the 3 columns) */
     .rec-actions{
@@ -94,7 +52,6 @@
       justify-content:center;
       font-weight: 1000;
     }
-    /* Keep it visually “one block” aligned with the rec grid width */
     .hero .hero-box{ overflow: hidden; }
   </style>
 </head>
@@ -127,12 +84,10 @@
       <div class="spacer"></div>
 
       <div class="nav-actions" aria-label="Preferences">
-        <!-- MOBILE: burger on the right -->
         <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
           <span></span><span></span><span></span>
         </button>
 
-        <!-- Accent picker -->
         <div class="dropdown">
           <button class="dot-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Theme color">
             <span class="dot" id="colorDot" aria-hidden="true"></span>
@@ -153,7 +108,6 @@
           </div>
         </div>
 
-        <!-- Google Translate (shown only after consent: all) -->
         <div id="gtNavWrap" aria-label="Translate">
           <div id="google_translate_element"></div>
         </div>
@@ -200,27 +154,65 @@
     </div>
   </aside>
 
+  <!-- HERO -->
   <header class="hero container">
-    <h1 style="margin-top:18px;">
-      Free online tools for
-      <span class="hl">SEO</span>,
-      <span class="hl">writing</span>,
-      and developers.
-    </h1>
+    <div class="hero-intro">
+      <h1 style="margin-top:18px;">
+        Free online tools to
+        <span class="hl">fix</span>,
+        <span class="hl">check</span>,
+        and <span class="hl">improve</span> your content.
+      </h1>
 
-    <p style="margin:14px auto 10px;">
-      Clickoz helps you finish everyday tasks faster: count words, improve readability, preview meta tags, format JSON,
-      and fix URL/Base64 encoding issues. No signup. No uploads. Just clean results you can copy instantly.
-    </p>
-
-    <!-- Recommended now (single box) -->
-    <div class="hero-box" style="margin-top:16px;" aria-label="Recommended now">
-      <h3 class="box-title">Recommended now</h3>
-      <p class="box-sub">
-        Quick picks to move faster today. Refresh anytime to discover new picks.
+      <p>
+        Clickoz is a simple toolbox website: paste text or data, get instant analysis, and copy clean results.
+        Use it before publishing a page, when debugging JSON, fixing broken URLs, or improving readability — no signup, no uploads.
       </p>
 
-      <!-- ✅ 6 recommended cards now -->
+      <div class="hero-cta" aria-label="Primary actions">
+        <a class="btn primary" href="/tools/" aria-label="Browse all tools">Browse all tools</a>
+        <a class="btn ghost" href="/guides/" aria-label="Read guides">Read guides</a>
+      </div>
+
+      <div class="how-grid" aria-label="What Clickoz helps you do">
+        <div class="how-card">
+          <div class="how-head">
+            <div class="how-ico" aria-hidden="true">🔎</div>
+            <h3>Before you publish</h3>
+          </div>
+          <p>Check word count, readability, and meta tags so your page is clearer and more clickable on Google.</p>
+        </div>
+
+        <div class="how-card">
+          <div class="how-head">
+            <div class="how-ico" aria-hidden="true">🧑‍💻</div>
+            <h3>When something breaks</h3>
+          </div>
+          <p>Validate/format JSON, encode/decode URLs, inspect Base64 — quick browser utilities for real dev moments.</p>
+        </div>
+
+        <div class="how-card">
+          <div class="how-head">
+            <div class="how-ico" aria-hidden="true">✍️</div>
+            <h3>When you write</h3>
+          </div>
+          <p>Keep content easy on mobile: structure, reading time, clarity improvements, and copy-ready outputs.</p>
+        </div>
+      </div>
+
+      <div class="trust-strip" style="margin-top:14px" aria-label="Trust points">
+        <span class="trust-pill">🔒 Runs in your browser</span>
+        <span class="trust-pill">⚡ Instant results</span>
+        <span class="trust-pill">📋 Copy-ready outputs</span>
+        <span class="trust-pill">📱 Mobile-friendly</span>
+      </div>
+    </div>
+
+    <!-- Recommended now -->
+    <div class="hero-box rec-wrap" aria-label="Recommended now">
+      <h3 class="box-title">Recommended now</h3>
+      <p class="box-sub">Quick picks to move faster today. Refresh anytime to discover new picks.</p>
+
       <div class="rec-grid">
         <a class="card rec-card" id="randTool1" href="/tools/word-counter/">
           <div class="rec-head">
@@ -277,26 +269,13 @@
         </a>
       </div>
 
-      <!-- ✅ Wide button under the grid (same width feel as the grid area) -->
       <div class="rec-actions">
         <a class="btn primary btn-wide" href="/tools/" aria-label="Open full tools list">
           Click to view the full tools list
         </a>
       </div>
-
-      <!-- ✅ removed: “Shortcut: press / to focus search …” -->
-    </div>
-
-    <!-- Trust pills ONLY in basso -->
-    <div class="trust-strip" style="margin-top:14px" aria-label="Trust points">
-      <span class="trust-pill">🔒 Runs in your browser</span>
-      <span class="trust-pill">⚡ Instant results</span>
-      <span class="trust-pill">📋 Copy-ready outputs</span>
-      <span class="trust-pill">📱 Mobile-friendly</span>
     </div>
   </header>
-
-  <!-- ✅ removed the entire “Tools hub” section (search + big tool cards) -->
 
   <!-- Guides in BOX -->
   <section class="section container">
@@ -346,7 +325,7 @@
     </div>
   </section>
 
-  <!-- Why Clickoz in BOX (below guides) -->
+  <!-- Why Clickoz -->
   <section class="section container" aria-label="Why Clickoz">
     <div class="hero-box why-box">
       <h2 class="section-title" style="margin-top:0">Why Clickoz</h2>
