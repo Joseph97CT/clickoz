@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ✅ SEO META (edit per tool) -->
+  <!-- ✅ SEO META -->
   <title>Word Counter – Count Words, Characters & Reading Time | Clickoz</title>
-  <meta name="description" content="Free Word Counter: count words, characters (with/without spaces), sentences, paragraphs, and estimate reading time. Runs in your browser, no signup." />
+  <meta name="description" content="Free Word Counter: count words, characters (with/without spaces), sentences, paragraphs, and estimate reading time. Runs in your browser, no signup, instant results." />
   <link rel="canonical" href="https://clickoz.com/tools/word-counter/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
@@ -14,7 +14,7 @@
   <!-- Open Graph -->
   <meta property="og:site_name" content="Clickoz" />
   <meta property="og:title" content="Word Counter – Free Online Tool | Clickoz" />
-  <meta property="og:description" content="Count words, characters, sentences, paragraphs, and reading time. Privacy-first and instant." />
+  <meta property="og:description" content="Count words, characters (with/without spaces), sentences, paragraphs, and reading time. Privacy-first and instant." />
   <meta property="og:url" content="https://clickoz.com/tools/word-counter/" />
   <meta property="og:type" content="website" />
 
@@ -26,7 +26,7 @@
 
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- ✅ Tool page patches (small + reusable) -->
+  <!-- ✅ Tool page patches (keep small + stable) -->
   <style>
     .tool-shell{ padding-top: 18px; }
     .kicker{
@@ -37,6 +37,8 @@
       line-height: 1.75;
       font-size: 15.5px;
     }
+    .kicker b{ color: rgba(255,255,255,.92); font-weight: 1000; }
+
     .tool-panel{
       margin-top: 14px;
       padding: 16px;
@@ -68,9 +70,18 @@
       .tool-grid{ grid-template-columns: 1.35fr .65fr; }
     }
 
+    .field-label{
+      display:block;
+      margin: 0 0 8px;
+      font-weight: 1000;
+      font-size: 13px;
+      letter-spacing: .02em;
+      color: rgba(255,255,255,.84);
+    }
+
     .tool-area textarea{
       width:100%;
-      min-height: 220px;
+      min-height: 240px;
       resize: vertical;
       border-radius: 16px;
       padding: 14px 14px;
@@ -115,7 +126,11 @@
       flex-wrap: wrap;
       align-items:center;
     }
-    .tool-actions .btn{ height: 44px; border-radius: 14px; font-weight: 1000; }
+    .tool-actions .btn{
+      height: 44px;
+      border-radius: 14px;
+      font-weight: 1000;
+    }
     .btn.ghost{
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.12);
@@ -123,6 +138,7 @@
 
     .seo-block{
       margin-top: 16px;
+      text-align:left;
     }
     .seo-block h2{
       margin: 0 0 10px;
@@ -137,12 +153,12 @@
       font-weight: 1000;
       letter-spacing: -0.01em;
     }
-    .seo-block p, .seo-block li{
+    .seo-block p{
+      margin: 0 0 12px;
       color: rgba(255,255,255,.76);
-      line-height: 1.8;
+      line-height: 1.85;
       font-size: 15.5px;
     }
-    .seo-block ul{ margin: 0; padding-left: 18px; }
 
     .faq{
       margin-top: 14px;
@@ -153,20 +169,24 @@
     @media (min-width: 981px){
       .faq{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    details.faq-item{
+    .faq-item{
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       padding: 12px 12px;
     }
-    details.faq-item summary{
-      cursor: pointer;
+    .faq-q{
       font-weight: 1000;
-      outline:none;
-      list-style:none;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      color: rgba(255,255,255,.92);
     }
-    details.faq-item summary::-webkit-details-marker{ display:none; }
-    .faq-item p{ margin: 10px 0 0; }
+    .faq-a{
+      margin-top: 8px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.7;
+      font-size: 14.5px;
+    }
 
     .related{
       margin-top: 14px;
@@ -204,7 +224,7 @@
     }
   </style>
 
-  <!-- ✅ JSON-LD (edit per tool) -->
+  <!-- ✅ JSON-LD: WebApplication -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -219,6 +239,7 @@
   }
   </script>
 
+  <!-- ✅ JSON-LD: FAQPage (matches the visible FAQ below) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -226,23 +247,23 @@
     "mainEntity":[
       {
         "@type":"Question",
-        "name":"How do you count words accurately?",
-        "acceptedAnswer":{"@type":"Answer","text":"Clickoz counts words by splitting text on whitespace and filtering empty tokens. It updates instantly as you type."}
+        "name":"Does this tool upload my text?",
+        "acceptedAnswer":{"@type":"Answer","text":"No. The tool runs in your browser, so your text stays on your device."}
       },
       {
         "@type":"Question",
-        "name":"Does this word counter upload my text?",
-        "acceptedAnswer":{"@type":"Answer","text":"No. The tool runs in your browser. Your text stays on your device."}
+        "name":"What counts as a word?",
+        "acceptedAnswer":{"@type":"Answer","text":"Words are tokens separated by whitespace. Extra spaces and blank lines are ignored."}
       },
       {
         "@type":"Question",
-        "name":"What is reading time and how is it estimated?",
-        "acceptedAnswer":{"@type":"Answer","text":"Reading time is estimated from total words using an average reading speed (commonly ~200 words per minute)."}
+        "name":"Characters with vs without spaces?",
+        "acceptedAnswer":{"@type":"Answer","text":"Characters includes spaces. Characters without spaces removes whitespace before counting."}
       },
       {
         "@type":"Question",
-        "name":"Does it count characters with and without spaces?",
-        "acceptedAnswer":{"@type":"Answer","text":"Yes. You can view both character counts: including spaces and excluding spaces."}
+        "name":"Can I use this for SEO?",
+        "acceptedAnswer":{"@type":"Answer","text":"Yes. Use word count and readability cues to plan structure, estimate reading time, and keep content easy to scan on mobile."}
       }
     ]
   }
@@ -255,7 +276,7 @@
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
   <div class="__grain" aria-hidden="true"></div>
 
-  <!-- NAV (same as your site) -->
+  <!-- NAV -->
   <nav class="nav" aria-label="Primary navigation" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
@@ -270,6 +291,7 @@
 
       <div class="nav-links" aria-label="Sections">
         <a href="/">Home</a>
+        <!-- your site.js now auto-highlights based on pathname, but keeping this is fine -->
         <a class="active" href="/tools/" aria-current="page">Tools</a>
         <a href="/guides/">Guides</a>
         <a href="/updates/">Updates</a>
@@ -307,7 +329,7 @@
     </div>
   </nav>
 
-  <!-- Mobile menu (same as your site) -->
+  <!-- Mobile menu -->
   <div class="m-overlay" id="mOverlay" hidden></div>
   <aside class="m-menu" id="mobileMenu" aria-hidden="true">
     <div class="m-head">
@@ -344,23 +366,23 @@
     </div>
   </aside>
 
-  <!-- TOOL HEADER -->
+  <!-- TOOL -->
   <section class="section container tool-shell">
     <h1 class="section-title">Word Counter</h1>
     <div class="kicker">
-      Count <b>words</b>, <b>characters</b> (with/without spaces), <b>sentences</b>, <b>paragraphs</b>, and estimate <b>reading time</b>.
-      Runs in your browser — no signup.
+      Paste your text to instantly count <b>words</b>, <b>characters</b> (with or without spaces), <b>sentences</b>, <b>paragraphs</b>,
+      and estimate <b>reading time</b>. Private and fast — runs in your browser.
     </div>
 
-    <!-- TOOL UI -->
     <div class="tool-panel" aria-label="Word Counter tool">
       <div class="tool-grid">
         <div class="tool-area">
-          <label for="inputText" class="sr-only">Paste your text</label>
+          <label for="inputText" class="field-label">Paste your text</label>
           <textarea id="inputText" placeholder="Paste or type your text here…"></textarea>
 
           <div class="tool-actions">
             <button class="btn primary" id="copyBtn" type="button">Copy text</button>
+            <button class="btn ghost" id="copyStatsBtn" type="button">Copy results</button>
             <button class="btn ghost" id="clearBtn" type="button">Clear</button>
           </div>
         </div>
@@ -378,50 +400,89 @@
       </div>
     </div>
 
-    <!-- SEO CONTENT -->
+    <!-- SEO + content -->
     <div class="hero-box seo-block" aria-label="About this tool">
       <h2>What is a word counter?</h2>
       <p>
-        A word counter measures how many words and characters are in a text. It’s useful for SEO drafts, school assignments,
-        blog posts, product descriptions, and any content with length constraints. Clickoz updates counts instantly as you type.
+        A word counter is a fast way to measure the real length of your text. It counts words and characters (with or without spaces),
+        plus sentences and paragraphs — so you can understand structure, not just size. It’s useful for SEO drafts, essays, blog posts,
+        product descriptions, emails, captions, and any text with limits. Clickoz updates results instantly while you type.
       </p>
 
       <h3>When should you use it?</h3>
-      <ul>
-        <li><b>SEO writing:</b> match search intent, avoid thin content, and plan structure.</li>
-        <li><b>Meta descriptions & snippets:</b> keep text clean and skimmable.</li>
-        <li><b>Editing:</b> reduce fluff, improve clarity, and control reading time.</li>
-        <li><b>Platform limits:</b> stay within character caps for forms and tools.</li>
-      </ul>
+      <p>
+        Use it while writing SEO content to keep paragraphs readable, match search intent, and avoid thin or overly long sections.
+        It’s also helpful when polishing titles and descriptions, editing a document to reduce fluff, or staying inside character limits
+        for platforms, forms, applications, and templates.
+      </p>
 
       <h3>How reading time is calculated</h3>
       <p>
-        Reading time is estimated from word count using a standard average speed (around 200 words per minute).
-        For technical text, reading time can be higher — use it as a quick baseline.
+        Reading time is estimated from the number of words using a standard average speed (about 200 words per minute).
+        For very technical content, reading time can be higher — treat it as a practical baseline.
       </p>
 
       <h3>FAQ</h3>
-      <div class="faq">
-        <details class="faq-item">
-          <summary>Does this tool upload my text?</summary>
-          <p>No. The tool runs in your browser. Your text stays on your device.</p>
-        </details>
+      <div class="faq" aria-label="Frequently asked questions">
+        <div class="faq-item">
+          <div class="faq-q">Does this tool upload my text?</div>
+          <div class="faq-a">No. The tool runs in your browser, so your text stays on your device.</div>
+        </div>
 
-        <details class="faq-item">
-          <summary>What counts as a “word”?</summary>
-          <p>Words are tokens separated by whitespace. Multiple spaces/new lines are ignored.</p>
-        </details>
+        <div class="faq-item">
+          <div class="faq-q">What counts as a “word”?</div>
+          <div class="faq-a">Words are tokens separated by whitespace. Extra spaces and blank lines are ignored.</div>
+        </div>
 
-        <details class="faq-item">
-          <summary>Characters with vs without spaces?</summary>
-          <p>“Characters” includes spaces. “Chars (no spaces)” removes all whitespace before counting.</p>
-        </details>
+        <div class="faq-item">
+          <div class="faq-q">Characters with vs without spaces?</div>
+          <div class="faq-a">“Characters” includes spaces. “Chars (no spaces)” removes whitespace before counting.</div>
+        </div>
 
-        <details class="faq-item">
-          <summary>Can I use this for SEO?</summary>
-          <p>Yes. Use it to plan structure, estimate reading time, and keep content clear and consistent.</p>
-        </details>
+        <div class="faq-item">
+          <div class="faq-q">Can I use this for SEO?</div>
+          <div class="faq-a">Yes. Use it to plan structure, estimate reading time, and keep content easy to scan on mobile.</div>
+        </div>
       </div>
+
+      <h3>Search-friendly notes (real questions people type)</h3>
+      <!-- ✅ Requested: very long SEO paragraph (>= 4000 characters) -->
+      <p>
+        People rarely search for “a platform” when they need a quick answer. They search for a specific problem, usually in the form of a question.
+        If you’ve ever typed “how to count words in a document” or “how many words are in my text”, you already know the intent: you want a fast number
+        you can trust. That’s why a free online word counter is useful in everyday work, not only for writers. Students often look for “word count for essay”
+        or “check word count for assignment” to make sure they meet minimum requirements. Professionals search “character count with spaces” or “character count
+        without spaces” when a form rejects text, when a CV field has a strict limit, or when a website editor truncates content. Creators ask “how many
+        characters in a description” or “how long should my bio be” because social platforms and dashboards have hidden caps. Developers sometimes type “count
+        characters in string online” or “quick paragraph counter” to validate copy and content before shipping a page.
+        <br/><br/>
+        The most common situation is simple: you have text and you need the exact length right now. “How can I count the words in my document?” can mean a Word file,
+        Google Docs, a PDF you copied from, an email draft, a blog post, or product copy. Instead of guessing, you paste the text once and get immediate counts:
+        words, characters, sentences, paragraphs, plus an estimated reading time. That last metric answers another search that appears a lot: “how long does it take to read
+        this text?” or “reading time calculator”. Reading time helps you plan content pacing, keep intros short, and balance sections. For example, someone might search
+        “how many words for a 3 minute read” or “word count for 5 minute article” to match a format. A word counter makes that easy without writing math or relying on rules
+        that change by industry.
+        <br/><br/>
+        For SEO and publishing workflows, queries become more specific. People look up “ideal word count for SEO”, “how many words should a blog post be”, “word count per section”,
+        or “word count for landing page”. The truth is that there isn’t one magic number that ranks, but there is a clear need: write enough to fully answer the intent, stay structured,
+        and remain skimmable on mobile. Word count, sentence count, and paragraph count give you signals you can actually act on. If the text is one huge block, you’ll see it in paragraph
+        count. If the text is too dense, sentence count rises while readability drops. That’s why users often pair a word counter with searches like “readability checker”, “improve readability score”,
+        “how to make text easier to read”, or “shorten paragraphs for mobile”. A clean structure improves engagement and makes your content feel “easy”, which is exactly what modern readers reward.
+        <br/><br/>
+        Many people also search for technical variations: “count characters without spaces”, “remove spaces character count”, “letter count tool”, “count sentences online”, or “paragraph counter”.
+        These are not separate needs — they’re part of the same workflow. When you’re writing a meta description, you care about characters (often with spaces). When you’re formatting a data field,
+        you might care about characters without spaces. When you’re editing a guide, you might care about paragraph rhythm and average sentence length. Even simple questions like “is this 500 words”
+        or “does this text exceed 1000 characters” show up daily. A good counter answers all of them instantly, with no login, and without forcing you into a heavy editor.
+        <br/><br/>
+        If you’re here because Google suggested phrases like “word counter online”, “free word counter”, “word count tool”, “word counter for SEO”, “word counter for students”, “character counter”,
+        “character count tool”, or “reading time calculator”, you’re not alone. Those searches reflect real constraints: assignments, publishing guidelines, ad copy limits, UI field limits, and content
+        quality checks. The fastest approach is always the same: paste your text, verify the counts, then make decisions based on the result — shorten, expand, split paragraphs, or simplify sentences.
+        In practice, that’s how you turn a draft into something publishable.
+        <br/><br/>
+        Clickoz keeps the experience simple: you paste your text and the metrics update immediately. If your question is “how many words is this?”, you get an answer. If your question is “how many
+        characters with spaces?”, you get an answer. If you’re asking “how long will it take to read?”, you get a quick estimate. And if you want to move faster, you can copy your text, copy the results,
+        and continue editing with confidence — whether the task is school writing, SEO drafting, product descriptions, email clarity, or preparing content for a platform that enforces strict limits.
+      </p>
 
       <div class="related" aria-label="Related content">
         <div class="rel-box">
@@ -445,7 +506,7 @@
     </div>
   </section>
 
-  <!-- FOOTER (same as your site) -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-grid">
       <div>
@@ -485,7 +546,7 @@
     </div>
   </footer>
 
-  <!-- Cookie banner (same as your site) -->
+  <!-- Cookie banner -->
   <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
     <div class="cookie-card">
       <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
@@ -504,22 +565,27 @@
     </div>
   </div>
 
-  <!-- Nav glow on scroll -->
+  <!-- Nav glow on scroll (same as your pages) -->
   <script>
     (function(){
       const nav = document.getElementById('topNav');
       if(!nav) return;
+
       let lastY = window.scrollY || 0;
       const onScroll = () => {
         const y = window.scrollY || 0;
         const scrolled = y > 8;
         nav.classList.toggle('is-scrolled', scrolled);
+
         const goingDown = y > lastY + 2;
         const goingUp = y < lastY - 2;
+
         if(scrolled && goingDown) nav.classList.add('is-down');
         if(!scrolled || goingUp) nav.classList.remove('is-down');
+
         lastY = y;
       };
+
       window.addEventListener('scroll', onScroll, { passive:true });
       onScroll();
     })();
@@ -527,7 +593,7 @@
 
   <script src="/assets/site.js" defer></script>
 
-  <!-- ✅ Tool logic (simple + fast) -->
+  <!-- ✅ Tool logic -->
   <script>
     (function(){
       const $ = (s, r=document) => r.querySelector(s);
@@ -540,6 +606,7 @@
       const s  = $('#s');
       const p  = $('#p');
       const copyBtn  = $('#copyBtn');
+      const copyStatsBtn = $('#copyStatsBtn');
       const clearBtn = $('#clearBtn');
 
       if(!input || !w || !rt || !c || !cn || !s || !p) return;
@@ -563,19 +630,31 @@
         return t.split(/\n{2,}/).map(x => x.trim()).filter(Boolean).length;
       }
 
+      function readingTime(words){
+        const wpm = 200;
+        const mins = Math.max(0, Math.ceil(words / wpm));
+        return `${mins} min`;
+      }
+
       function render(){
         const text = input.value || '';
         const words = countWords(text);
 
-        w.textContent = String(words);
-        c.textContent = String(text.length);
+        w.textContent  = String(words);
+        c.textContent  = String(text.length);
         cn.textContent = String(text.replace(/\s/g,'').length);
-        s.textContent = String(countSentences(text));
-        p.textContent = String(countParagraphs(text));
+        s.textContent  = String(countSentences(text));
+        p.textContent  = String(countParagraphs(text));
+        rt.textContent = readingTime(words);
+      }
 
-        const wpm = 200;
-        const mins = Math.max(0, Math.ceil(words / wpm));
-        rt.textContent = `${mins} min`;
+      async function copyTextSafe(str){
+        try{
+          await navigator.clipboard.writeText(str);
+          return true;
+        }catch(e){
+          return false;
+        }
       }
 
       let t = null;
@@ -585,19 +664,37 @@
       });
 
       if(clearBtn){
-        clearBtn.addEventListener('click', () => { input.value = ''; render(); input.focus(); });
+        clearBtn.addEventListener('click', () => {
+          input.value = '';
+          render();
+          input.focus();
+        });
       }
 
       if(copyBtn){
         copyBtn.addEventListener('click', async () => {
-          try{
-            await navigator.clipboard.writeText(input.value || '');
-            copyBtn.textContent = 'Copied!';
-            setTimeout(() => copyBtn.textContent = 'Copy text', 900);
-          }catch(e){
-            copyBtn.textContent = 'Copy failed';
-            setTimeout(() => copyBtn.textContent = 'Copy text', 900);
-          }
+          const ok = await copyTextSafe(input.value || '');
+          copyBtn.textContent = ok ? 'Copied!' : 'Copy failed';
+          setTimeout(() => copyBtn.textContent = 'Copy text', 900);
+        });
+      }
+
+      if(copyStatsBtn){
+        copyStatsBtn.addEventListener('click', async () => {
+          const text = input.value || '';
+          const words = countWords(text);
+          const payload =
+`Word Counter (Clickoz)
+Words: ${words}
+Reading time: ${readingTime(words)}
+Characters: ${text.length}
+Chars (no spaces): ${text.replace(/\s/g,'').length}
+Sentences: ${countSentences(text)}
+Paragraphs: ${countParagraphs(text)}
+`;
+          const ok = await copyTextSafe(payload);
+          copyStatsBtn.textContent = ok ? 'Copied!' : 'Copy failed';
+          setTimeout(() => copyStatsBtn.textContent = 'Copy results', 900);
         });
       }
 
