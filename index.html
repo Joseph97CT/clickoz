@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,170 +24,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/assets/site.css?v=4" />
-
-  <!-- Page-specific only -->
-  <style>
-    /* Stronger section title */
-    .section-title{
-      font-size: clamp(34px, 3.3vw, 48px);
-      font-weight: 1000;
-      letter-spacing: -0.03em;
-      text-shadow:
-        0 0 18px rgba(99,102,241,.14),
-        0 1px 0 rgba(0,0,0,.65);
-    }
-
-    /* Slightly bigger text on desktop (safe) */
-    @media (min-width: 980px){
-      body.bigtext{ font-size: 17px; }
-      .hero h1{
-        font-size: clamp(42px, 3.2vw, 56px);
-        line-height: 1.04;
-        letter-spacing: -0.04em;
-      }
-      .hero p{ font-size: 18px; line-height: 1.75; }
-    }
-
-    /* Recommended now button row */
-    .rec-toprow{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
-    }
-    .rec-toprow .box-title{ margin: 0; }
-    .rec-refresh{
-      height: 40px;
-      padding: 0 14px;
-      border-radius: 14px;
-      font-weight: 1000;
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(8px);
-      cursor: pointer;
-      user-select: none;
-    }
-    .rec-refresh:hover{ background: rgba(255,255,255,.09); }
-    .rec-refresh:active{ transform: translateY(1px); }
-
-    /* =========================================================
-       Recommended now — INTERNAL layout only (no global 3 col)
-    ========================================================= */
-    .rec-layout{
-      display:grid;
-      gap: 14px;
-      margin-top: 12px;
-    }
-
-    /* Mobile: rail above */
-    @media (max-width: 979px){
-      .rec-layout{ grid-template-columns: 1fr; }
-    }
-
-    /* Desktop: left rail + main tools grid */
-    @media (min-width: 980px){
-      .rec-layout{
-        grid-template-columns: 290px 1fr;
-        align-items: start;
-      }
-      /* Force tools to 2 columns inside rec only */
-      .rec-main .rec-grid{
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    /* Left rail style */
-    .rec-rail{
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .rec-brand{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .rec-brand .logo-badge{
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    .rec-brandname{
-      font-weight: 1000;
-      letter-spacing: -0.03em;
-      font-size: 18px;
-      line-height: 1;
-    }
-    .rec-brandsub{
-      margin-top: 4px;
-      font-size: 12.5px;
-      opacity: .78;
-      line-height: 1.4;
-    }
-    .rec-trust{
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .rec-trust .trust-pill{
-      justify-content: flex-start;
-      padding: 10px 12px;
-      border-radius: 14px;
-    }
-
-    /* Tool micro-SEO blocks */
-    .tool-examples{
-      margin: 10px 0 0 0;
-      padding-left: 18px;
-      font-size: 13.5px;
-      opacity: .88;
-      line-height: 1.55;
-    }
-    .tool-examples li{ margin: 6px 0; }
-    .tool-cat{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 10px;
-      font-size: 13px;
-      opacity: .82;
-    }
-    .tool-cat a{
-      text-decoration:none;
-      font-weight: 1000;
-      opacity: .95;
-    }
-    .tool-cat a:hover{ text-decoration: underline; }
-
-    /* Recommended grid button */
-    .rec-actions{
-      margin-top: 12px;
-      display:flex;
-      justify-content:center;
-    }
-    .rec-actions .btn-wide{
-      width:100%;
-      height: 46px;
-      border-radius: 14px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-weight: 1000;
-    }
-  </style>
 </head>
 
 <body class="bigtext">
@@ -217,7 +54,7 @@
       <div class="spacer"></div>
 
       <div class="nav-actions" aria-label="Preferences">
-        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <button class="burger" id="burger_1" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
           <span></span><span></span><span></span>
         </button>
 
@@ -334,46 +171,49 @@
       </div>
     </div>
 
-    <!-- Recommended now (SEMI-STATIC + Refresh button) -->
-    <div class="hero-box rec-wrap" aria-label="Recommended now">
-      <div class="rec-toprow">
-        <h3 class="box-title">Recommended now</h3>
-        <button class="rec-refresh" id="recRefresh" type="button" aria-label="Refresh picks (manual)">
-          🔄 Refresh picks
-        </button>
-      </div>
+    <!-- Recommended: rail OUTSIDE + recommended box -->
+    <div class="rec-shell" aria-label="Recommended now section">
 
-      <p class="box-sub">
-        Stable core tools (SEO-friendly). Use “Refresh picks” for extra discoveries — nothing changes automatically on page load.
-      </p>
+      <!-- LEFT rail OUTSIDE -->
+      <aside class="rec-rail rec-rail-outside" aria-label="Clickoz strengths">
+        <div class="rec-brand">
+          <div class="rec-brandname">Click<span class="logo-oz">oz</span></div>
+          <div class="rec-brandsub">Fast tools. Clean output. No friction.</div>
+        </div>
 
-      <div class="rec-layout">
-        <!-- LEFT mini column -->
-        <aside class="rec-rail" aria-label="Trust & brand">
-          <div class="rec-brand">
-            <span class="logo-badge" aria-hidden="true">
-              <svg class="logo-mark" viewBox="0 0 48 48" width="1em" height="1em" aria-hidden="true" focusable="false">
-                <path d="M32.5 13.5c-2.4-2.2-5.4-3.3-8.9-3.3-7.2 0-12.6 5.1-12.6 13.8S16.4 37.8 23.6 37.8c3.6 0 6.7-1.2 9.2-3.6"
-                      fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <div>
-              <div class="rec-brandname">Click<span class="logo-oz">oz</span></div>
-              <div class="rec-brandsub">Fast tools. Clean output. No friction.</div>
-            </div>
-          </div>
+        <div class="rec-trust" aria-label="Site strengths (two words)">
+          <div class="trust-pill">🔒 Browser-only</div>
+          <div class="trust-pill">⚡ Instant results</div>
+          <div class="trust-pill">📋 Copy-ready</div>
+          <div class="trust-pill">📱 Mobile-first</div>
 
-          <div class="rec-trust" aria-label="Trust points">
-            <div class="trust-pill">🔒 Runs in your browser</div>
-            <div class="trust-pill">⚡ Instant results</div>
-            <div class="trust-pill">📋 Copy-ready outputs</div>
-            <div class="trust-pill">📱 Mobile-friendly</div>
-          </div>
-        </aside>
+          <div class="trust-pill">🧼 Clean UI</div>
+          <div class="trust-pill">🎯 Intent-first</div>
+          <div class="trust-pill">🧩 Single-purpose</div>
+          <div class="trust-pill">🧠 Practical tips</div>
+          <div class="trust-pill">🕶️ Privacy-first</div>
+          <div class="trust-pill">🧷 Consistent output</div>
+          <div class="trust-pill">🗂️ Smart categories</div>
+          <div class="trust-pill">✨ Fast discovery</div>
+        </div>
+      </aside>
 
-        <!-- RIGHT tools grid (6 core tools, fixed) -->
+      <!-- RIGHT recommended box only -->
+      <div class="hero-box rec-wrap" aria-label="Recommended now">
+        <div class="rec-toprow">
+          <h3 class="box-title">Recommended now</h3>
+          <button class="rec-refresh" id="recRefresh" type="button" aria-label="Refresh picks (manual)">
+            🔄 Refresh picks
+          </button>
+        </div>
+
+        <p class="box-sub">
+          Stable core tools (SEO-friendly). Use “Refresh picks” for extra discoveries — nothing changes automatically on page load.
+        </p>
+
         <div class="rec-main" aria-label="Recommended tools">
           <div class="rec-grid" id="recGrid">
+
             <!-- CORE 1 -->
             <a class="card rec-card" data-slot="0" href="/tools/json-formatter/">
               <div class="rec-head">
@@ -487,10 +327,11 @@
               </div>
               <span class="tool-cta">Use Base64</span>
             </a>
+
           </div>
 
           <div class="rec-actions">
-            <a class="btn primary btn-wide" href="/tools/" aria-label="Open full tools list">
+            <a class="btn primary btn-wide list-btn" href="/tools/" aria-label="Open full tools list">
               Click to view the full tools list
             </a>
           </div>
@@ -507,66 +348,73 @@
         Search-intent guides: short, practical steps with tool links and examples you can apply immediately.
       </p>
 
-      <!-- 10 SEARCH-INTENT GUIDES (pre-launch set) -->
+      <!-- Guides grid -->
       <div class="small-grid" style="max-width:1120px;margin:0 auto;">
         <a class="small-card guide-card" href="/guides/json-formatter-online/">
           <h3>JSON Formatter Online: Prettify, Validate &amp; Minify</h3>
           <p>Fix errors fast and keep payloads clean.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/meta-tags-length/">
           <h3>Meta Title &amp; Description Length (2026)</h3>
           <p>Prevent truncation and improve CTR.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/readability-score/">
           <h3>Readability Score: What It Means &amp; How to Improve</h3>
           <p>Make content easier to scan on mobile.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/word-count-for-seo/">
           <h3>Word Count for SEO: Intent &amp; Structure</h3>
           <p>How long should a page be for its query?</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/url-encoding-explained/">
           <h3>URL Encoding Explained: When to Encode</h3>
           <p>Fix broken parameters and redirects.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/base64-encode-decode/">
           <h3>Base64 Encode/Decode: Common Use Cases</h3>
           <p>Tokens, payloads, and quick debugging.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/serp-preview/">
           <h3>SERP Preview: How to Improve Clicks</h3>
           <p>Titles that match intent and earn clicks.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/keyword-variations/">
           <h3>Keyword Variations: Avoid Stuffing</h3>
           <p>Use synonyms and intent terms naturally.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/internal-linking-tools-sites/">
           <h3>Internal Linking for Tool Websites</h3>
           <p>Categories, anchors, and topical clusters.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
         </a>
 
         <a class="small-card guide-card" href="/guides/core-web-vitals-tools-sites/">
           <h3>Core Web Vitals for Tool Sites</h3>
           <p>Fast UX + stable layout = better growth.</p>
-          <span class="tool-cta">Read full guide</span>
+          <span class="guide-cta">Read full guide</span>
+        </a>
+      </div>
+
+      <!-- Full guides list CTA -->
+      <div class="rec-actions" style="margin-top:14px;">
+        <a class="btn primary btn-wide list-btn" href="/guides/" aria-label="Open full guides list">
+          Click to view the full guides list
         </a>
       </div>
     </div>
@@ -595,7 +443,7 @@
         </div>
       </div>
 
-      <!-- SEO “hub” block (like tools index vibe) -->
+      <!-- Explore by category -->
       <div class="hero-box" style="margin-top:14px;" aria-label="Explore by category">
         <h3 class="box-title" style="margin-top:0">Explore by category</h3>
         <p class="box-sub">
@@ -720,8 +568,6 @@
       const grid = document.getElementById('recGrid');
       if(!btn || !grid) return;
 
-      // Extra picks that can replace ONLY some slots when user clicks.
-      // This does NOT run automatically (SEO stability).
       const extra = [
         {
           href:"/tools/seo-outline/",
@@ -767,9 +613,7 @@
         }
       ];
 
-      // Choose which slots are allowed to change (optional).
-      // Keep your 6 core stable by default; on refresh we rotate ONLY 2 slots.
-      const swappableSlots = [4, 5]; // replace URL Encoder + Base64 (example)
+      const swappableSlots = [4, 5];
       let idx = 0;
 
       function setCard(card, data){
@@ -803,7 +647,6 @@
       }
 
       btn.addEventListener('click', () => {
-        // rotate extra picks into the selected slots
         swappableSlots.forEach((slot, i) => {
           const card = grid.querySelector(`.rec-card[data-slot="${slot}"]`);
           const data = extra[(idx + i) % extra.length];
@@ -817,3 +660,4 @@
   <script src="/assets/site.js" defer></script>
 </body>
 </html>
+```
