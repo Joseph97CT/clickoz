@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -54,7 +53,7 @@
       <div class="spacer"></div>
 
       <div class="nav-actions" aria-label="Preferences">
-        <button class="burger" id="burger_1" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
           <span></span><span></span><span></span>
         </button>
 
@@ -171,10 +170,10 @@
       </div>
     </div>
 
-    <!-- Recommended: rail OUTSIDE + recommended box -->
+    <!-- RIGHT SIDE: rail on the LEFT of Recommended (not above) -->
     <div class="rec-shell" aria-label="Recommended now section">
 
-      <!-- LEFT rail OUTSIDE -->
+      <!-- LEFT rail -->
       <aside class="rec-rail rec-rail-outside" aria-label="Clickoz strengths">
         <div class="rec-brand">
           <div class="rec-brandname">Click<span class="logo-oz">oz</span></div>
@@ -186,7 +185,6 @@
           <div class="trust-pill">⚡ Instant results</div>
           <div class="trust-pill">📋 Copy-ready</div>
           <div class="trust-pill">📱 Mobile-first</div>
-
           <div class="trust-pill">🧼 Clean UI</div>
           <div class="trust-pill">🎯 Intent-first</div>
           <div class="trust-pill">🧩 Single-purpose</div>
@@ -198,7 +196,7 @@
         </div>
       </aside>
 
-      <!-- RIGHT recommended box only -->
+      <!-- RIGHT: Recommended tools box -->
       <div class="hero-box rec-wrap" aria-label="Recommended now">
         <div class="rec-toprow">
           <h3 class="box-title">Recommended now</h3>
@@ -214,7 +212,6 @@
         <div class="rec-main" aria-label="Recommended tools">
           <div class="rec-grid" id="recGrid">
 
-            <!-- CORE 1 -->
             <a class="card rec-card" data-slot="0" href="/tools/json-formatter/">
               <div class="rec-head">
                 <span class="rec-icon" aria-hidden="true">🧾</span>
@@ -233,7 +230,6 @@
               <span class="tool-cta">Use JSON Formatter</span>
             </a>
 
-            <!-- CORE 2 -->
             <a class="card rec-card" data-slot="1" href="/tools/meta-tags/">
               <div class="rec-head">
                 <span class="rec-icon" aria-hidden="true">🏷️</span>
@@ -252,7 +248,6 @@
               <span class="tool-cta">Use Meta Tag Optimizer</span>
             </a>
 
-            <!-- CORE 3 -->
             <a class="card rec-card" data-slot="2" href="/tools/word-counter/">
               <div class="rec-head">
                 <span class="rec-icon" aria-hidden="true">🔢</span>
@@ -271,7 +266,6 @@
               <span class="tool-cta">Use Word Counter</span>
             </a>
 
-            <!-- CORE 4 -->
             <a class="card rec-card" data-slot="3" href="/tools/readability-analyzer/">
               <div class="rec-head">
                 <span class="rec-icon" aria-hidden="true">📚</span>
@@ -290,7 +284,6 @@
               <span class="tool-cta">Use Readability Analyzer</span>
             </a>
 
-            <!-- CORE 5 -->
             <a class="card rec-card" data-slot="4" href="/tools/url-encoder/">
               <div class="rec-head">
                 <span class="rec-icon" aria-hidden="true">🔗</span>
@@ -309,7 +302,6 @@
               <span class="tool-cta">Use URL Encoder</span>
             </a>
 
-            <!-- CORE 6 -->
             <a class="card rec-card" data-slot="5" href="/tools/base64/">
               <div class="rec-head">
                 <span class="rec-icon" aria-hidden="true">🔐</span>
@@ -348,7 +340,6 @@
         Search-intent guides: short, practical steps with tool links and examples you can apply immediately.
       </p>
 
-      <!-- Guides grid -->
       <div class="small-grid" style="max-width:1120px;margin:0 auto;">
         <a class="small-card guide-card" href="/guides/json-formatter-online/">
           <h3>JSON Formatter Online: Prettify, Validate &amp; Minify</h3>
@@ -411,7 +402,6 @@
         </a>
       </div>
 
-      <!-- Full guides list CTA -->
       <div class="rec-actions" style="margin-top:14px;">
         <a class="btn primary btn-wide list-btn" href="/guides/" aria-label="Open full guides list">
           Click to view the full guides list
@@ -443,7 +433,6 @@
         </div>
       </div>
 
-      <!-- Explore by category -->
       <div class="hero-box" style="margin-top:14px;" aria-label="Explore by category">
         <h3 class="box-title" style="margin-top:0">Explore by category</h3>
         <p class="box-sub">
@@ -534,130 +523,6 @@
     </div>
   </div>
 
-  <!-- Nav glow on scroll -->
-  <script>
-    (function(){
-      const nav = document.getElementById('topNav');
-      if(!nav) return;
-
-      let lastY = window.scrollY || 0;
-
-      const onScroll = () => {
-        const y = window.scrollY || 0;
-        const scrolled = y > 8;
-        nav.classList.toggle('is-scrolled', scrolled);
-
-        const goingDown = y > lastY + 2;
-        const goingUp = y < lastY - 2;
-
-        if(scrolled && goingDown) nav.classList.add('is-down');
-        if(!scrolled || goingUp) nav.classList.remove('is-down');
-
-        lastY = y;
-      };
-
-      window.addEventListener('scroll', onScroll, { passive:true });
-      onScroll();
-    })();
-  </script>
-
-  <!-- Recommended: manual refresh only (no changes on load) -->
-  <script>
-    (function(){
-      const btn = document.getElementById('recRefresh');
-      const grid = document.getElementById('recGrid');
-      if(!btn || !grid) return;
-
-      const extra = [
-        {
-          href:"/tools/seo-outline/",
-          icon:"🧠",
-          title:"SEO Outline Helper",
-          desc:"SEO outline generator: build H1/H2/H3 structure + FAQs aligned to search intent.",
-          examples:[
-            "Create a heading structure for a ‘how to’ guide.",
-            "Add FAQ ideas that match related queries.",
-            "Map sections to the user journey and intent."
-          ],
-          catHref:"/tools/#seo",
-          catLabel:"SEO Tools",
-          cta:"Use SEO Outline Helper"
-        },
-        {
-          href:"/tools/title-description/",
-          icon:"📝",
-          title:"Title & Description",
-          desc:"SEO title & meta description generator: create multiple angles that match intent and improve clicks.",
-          examples:[
-            "Generate 10 title variations for one query.",
-            "Write descriptions for informational vs transactional intent.",
-            "Improve CTR for product pages and blog posts."
-          ],
-          catHref:"/tools/#seo",
-          catLabel:"SEO Tools",
-          cta:"Use Title & Description"
-        },
-        {
-          href:"/tools/keyword-density/",
-          icon:"🎯",
-          title:"Keyword Density Checker",
-          desc:"Keyword density checker online: analyze keyword frequency and keep writing natural (no stuffing).",
-          examples:[
-            "Detect overuse of the main keyword.",
-            "Find missing related terms and synonyms.",
-            "Balance keyword usage across headings."
-          ],
-          catHref:"/tools/#seo",
-          catLabel:"SEO Tools",
-          cta:"Use Keyword Density Checker"
-        }
-      ];
-
-      const swappableSlots = [4, 5];
-      let idx = 0;
-
-      function setCard(card, data){
-        if(!card || !data) return;
-        card.setAttribute('href', data.href);
-
-        const iconEl = card.querySelector('.rec-icon');
-        const titleEl = card.querySelector('h3');
-        const descEl  = card.querySelector('p');
-        const exUl    = card.querySelector('.tool-examples');
-        const catA    = card.querySelector('.tool-cat a');
-        const ctaEl   = card.querySelector('.tool-cta');
-
-        if(iconEl) iconEl.textContent = data.icon;
-        if(titleEl) titleEl.textContent = data.title;
-        if(descEl) descEl.textContent = data.desc;
-
-        if(exUl){
-          exUl.innerHTML = "";
-          (data.examples || []).slice(0,3).forEach(t => {
-            const li = document.createElement('li');
-            li.textContent = t;
-            exUl.appendChild(li);
-          });
-        }
-        if(catA){
-          catA.setAttribute('href', data.catHref);
-          catA.textContent = data.catLabel;
-        }
-        if(ctaEl) ctaEl.textContent = data.cta;
-      }
-
-      btn.addEventListener('click', () => {
-        swappableSlots.forEach((slot, i) => {
-          const card = grid.querySelector(`.rec-card[data-slot="${slot}"]`);
-          const data = extra[(idx + i) % extra.length];
-          setCard(card, data);
-        });
-        idx = (idx + 1) % extra.length;
-      }, { passive:true });
-    })();
-  </script>
-
   <script src="/assets/site.js" defer></script>
 </body>
 </html>
-```
