@@ -801,3 +801,163 @@
   setActive(".nav-links");
   setActive(".m-links");
 })();
+/* =========================================================
+   Clickoz — site.js additions (Nav glow + Recommended refresh)
+   Paste at END of your /assets/site.js
+========================================================= */
+
+(() => {
+  const $ = (s, r=document) => r.querySelector(s);
+
+  /* -------------------------------
+     1) NAV glow on scroll
+  -------------------------------- */
+  (function navGlowOnScroll(){
+    const nav = document.getElementById('topNav');
+    if(!nav) return;
+
+    let lastY = window.scrollY || 0;
+
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      const scrolled = y > 8;
+      nav.classList.toggle('is-scrolled', scrolled);
+
+      const goingDown = y > lastY + 2;
+      const goingUp   = y < lastY - 2;
+
+      if(scrolled && goingDown) nav.classList.add('is-down');
+      if(!scrolled || goingUp)  nav.classList.remove('is-down');
+
+      lastY = y;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  })();
+
+
+  /* -------------------------------
+     2) Recommended — manual refresh
+     - Updates only existing nodes inside each tool card
+     - Keeps Category + CTA inside the tool card
+  -------------------------------- */
+  (function recommendedRefresh(){
+    const btn  = document.getElementById('recRefresh');
+    const grid = document.getElementById('recGrid');
+    if(!btn || !grid) return;
+
+    // Extra picks (rotate into specific slots only)
+    const extra = [
+      {
+        href: "/tools/seo-outline/",
+        icon: "🧠",
+        title:"SEO Outline Helper",
+        desc:"SEO outline generator: build H1/H2/H3 structure + FAQs aligned to search intent.",
+        examples:[
+          "Create a heading structure for a ‘how to’ guide.",
+          "Add FAQ ideas that match related queries.",
+          "Map sections to the user journey and intent."
+        ],
+        catHref:"/tools/#seo",
+        catLabel:"SEO Tools",
+        cta:"Use SEO Outline Helper"
+      },
+      {
+        href: "/tools/title-description/",
+        icon: "📝",
+        title:"Title & Description",
+        desc:"SEO title & meta description generator: create multiple angles that match intent and improve clicks.",
+        examples:[
+          "Generate 10 title variations for one query.",
+          "Write descriptions for informational vs transactional intent.",
+          "Improve CTR for product pages and blog posts."
+        ],
+        catHref:"/tools/#seo",
+        catLabel:"SEO Tools",
+        cta:"Use Title & Description"
+      },
+      {
+        href: "/tools/keyword-density/",
+        icon: "🎯",
+        title:"Keyword Density Checker",
+        desc:"Keyword density checker online: analyze keyword frequency and keep writing natural (no stuffing).",
+        examples:[
+          "Detect overuse of the main keyword.",
+          "Find missing related terms and synonyms.",
+          "Balance keyword usage across headings."
+        ],
+        catHref:"/tools/#seo",
+        catLabel:"SEO Tools",
+        cta:"Use Keyword Density Checker"
+      }
+    ];
+
+    // slots that can change (keep core stable)
+    const swappableSlots = [4, 5]; // example: URL Encoder + Base64
+    let idx = 0;
+
+    function setCard(card, data){
+      if(!card || !data) return;
+
+      // update link
+      card.setAttribute('href', data.href);
+
+      // find elements (must exist in HTML)
+      const iconEl  = card.querySelector('.rec-icon');
+      const titleEl = card.querySelector('h3');
+      const descEl  = card.querySelector('p');
+      const exUl    = card.querySelector('.tool-examples');
+      const catA    = card.querySelector('.tool-cat a');
+      const ctaEl   = card.querySelector('.tool-cta');
+
+      if(iconEl)  iconEl.textContent = data.icon;
+      if(titleEl) titleEl.textContent = data.title;
+      if(descEl)  descEl.textContent = data.desc;
+
+      // examples list
+      if(exUl){
+        exUl.innerHTML = "";
+        (data.examples || []).slice(0,3).forEach(t => {
+          const li = document.createElement('li');
+          li.textContent = t;
+          exUl.appendChild(li);
+        });
+      }
+
+      // category link (stays inside card)
+      if(catA){
+        catA.setAttribute('href', data.catHref);
+        catA.textContent = data.catLabel;
+      }
+
+      // CTA text (stays inside card)
+      if(ctaEl) ctaEl.textContent = data.cta;
+    }
+
+    btn.addEventListener('click', () => {
+      swappableSlots.forEach((slot, i) => {
+        const card = grid.querySelector(`.rec-card[data-slot="${slot}"]`);
+        const data = extra[(idx + i) % extra.length];
+        setCard(card, data);
+      });
+      idx = (idx + 1) % extra.length;
+    }, { passive:true });
+  })();
+
+
+  /* -------------------------------
+     3) Mobile burger fallback id
+     (if you accidentally used burger_1)
+  -------------------------------- */
+  (function burgerIdFix(){
+    const burger = document.getElementById('burger') || document.getElementById('burger_1');
+    if(!burger) return;
+    // If your main site.js already handles burger, this does nothing harmful.
+    // We only normalize aria-controls if missing.
+    if(!burger.getAttribute('aria-controls')){
+      burger.setAttribute('aria-controls', 'mobileMenu');
+    }
+  })();
+
+})();
