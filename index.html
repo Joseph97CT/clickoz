@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Clickoz – Free Online Tools for SEO, Writing & Dev</title>
-  <meta name="description" content="Clickoz is a fast hub of free tools for SEO, writing and developers: word counter, readability score, keyword density, meta tag preview, JSON formatter, URL/Base64 encoders, and more. No signup." />
+  <meta name="description" content="Clickoz is a fast, privacy-first hub of free online tools for SEO, writing, and developers: word counter, readability score, keyword checks, meta tag preview, JSON formatting, URL/Base64 utilities, and more. No signup." />
   <link rel="canonical" href="https://clickoz.com/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
 
   <meta property="og:site_name" content="Clickoz" />
   <meta property="og:title" content="Clickoz – Free Online Tools for SEO, Writing & Dev" />
-  <meta property="og:description" content="Free, privacy-friendly tools that run in your browser: text analysis, SEO helpers, and dev utilities." />
+  <meta property="og:description" content="Free, privacy-friendly tools that run in your browser: text analysis, SEO helpers, and developer utilities." />
   <meta property="og:url" content="https://clickoz.com/" />
   <meta property="og:type" content="website" />
 
@@ -24,11 +24,40 @@
 
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- Optional: keep ONLY what is truly page-specific -->
   <style>
-    /* Section titles: keep your pop */
+    /* =========================================================
+       HOME — Page-specific upgrades (DESKTOP-FIRST; mobile safe)
+    ========================================================= */
+
+    /* Bigger, clearer typography (mostly desktop) */
+    body.bigtext{
+      font-size: 16px;
+    }
+    @media (min-width: 980px){
+      body.bigtext{
+        font-size: 17.5px; /* makes everything feel more premium */
+      }
+      .hero h1{
+        font-size: clamp(44px, 3.35vw, 58px);
+        line-height: 1.03;
+        letter-spacing: -0.04em;
+      }
+      .hero p{
+        font-size: 18px;
+        line-height: 1.75;
+      }
+    }
+
+    /* Wider container on desktop (the “3cm left/right” feel) */
+    @media (min-width: 980px){
+      .container{
+        width: min(1360px, calc(100% - 26px)) !important;
+      }
+    }
+
+    /* Section titles: keep your pop, slightly stronger */
     .section-title{
-      font-size: clamp(34px, 3.3vw, 48px);
+      font-size: clamp(34px, 3.3vw, 52px);
       font-weight: 1000;
       letter-spacing: -0.03em;
       text-shadow:
@@ -36,7 +65,132 @@
         0 1px 0 rgba(0,0,0,.65);
     }
 
-    /* Recommended grid button (full width under the 3 columns) */
+    /* HOME hero becomes a 3-col editorial grid (desktop only) */
+    .home-grid{
+      display:block;
+    }
+    @media (min-width: 980px){
+      .home-grid{
+        display:grid;
+        grid-template-columns: 300px 1fr 1fr; /* left rail + center + right */
+        gap: 18px;
+        align-items: start;
+      }
+    }
+
+    /* Left rail (logo + trust) */
+    .rail{
+      position: relative;
+    }
+    @media (min-width: 980px){
+      .rail{
+        position: sticky;
+        top: 88px; /* below your sticky nav */
+        align-self: start;
+      }
+    }
+    .rail-box{
+      padding: 18px;
+    }
+    .rail-brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .rail-brand .logo-badge{
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+    }
+    .rail-brand .logo-text{
+      font-weight: 1000;
+      letter-spacing: -0.03em;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .rail-sub{
+      font-size: 13.5px;
+      opacity: .78;
+      line-height: 1.55;
+      margin: 0 0 14px 0;
+    }
+    .rail-trust{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .rail-trust .trust-pill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      justify-content:flex-start;
+      padding: 10px 12px;
+      border-radius: 14px;
+    }
+
+    /* Recommended now box: force it to occupy center+right (desktop) */
+    @media (min-width: 980px){
+      .rec-wrap{
+        grid-column: 2 / 4; /* center + right */
+      }
+    }
+
+    /* How cards: slightly bigger and more breathable */
+    .how-card h3{
+      font-weight: 1000;
+      letter-spacing: -0.02em;
+    }
+    @media (min-width: 980px){
+      .how-grid{
+        margin-top: 18px;
+      }
+      .how-card{
+        padding: 18px;
+      }
+      .how-card p{
+        font-size: 15.5px;
+        line-height: 1.65;
+      }
+    }
+
+    /* Tool cards: SEO micro-copy blocks */
+    .tool-meta{
+      margin-top: 10px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tool-examples{
+      margin: 0;
+      padding-left: 18px;
+      opacity: .88;
+      line-height: 1.55;
+      font-size: 13.5px;
+    }
+    .tool-examples li{
+      margin: 6px 0;
+    }
+    .tool-cat{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 2px;
+      font-size: 13px;
+      opacity: .82;
+    }
+    .tool-cat a{
+      text-decoration: none;
+      font-weight: 800;
+      opacity: .95;
+    }
+    .tool-cat a:hover{
+      text-decoration: underline;
+    }
+
+    /* Recommended grid button (full width under the grid) */
     .rec-actions{
       margin-top: 12px;
       display:flex;
@@ -44,7 +198,7 @@
     }
     .rec-actions .btn-wide{
       width:100%;
-      max-width: 1120px;
+      max-width: 1360px;
       height: 46px;
       border-radius: 14px;
       display:inline-flex;
@@ -52,6 +206,8 @@
       justify-content:center;
       font-weight: 1000;
     }
+
+    /* Keep box safe */
     .hero .hero-box{ overflow: hidden; }
   </style>
 </head>
@@ -155,7 +311,32 @@
   </aside>
 
   <!-- HERO -->
-  <header class="hero container">
+  <header class="hero container home-grid">
+    <!-- LEFT RAIL (desktop) -->
+    <aside class="hero-box rail rail-box" aria-label="Clickoz summary & trust">
+      <div class="rail-brand" aria-label="Clickoz brand">
+        <span class="logo-badge" aria-hidden="true">
+          <svg class="logo-mark" viewBox="0 0 48 48" width="1em" height="1em" aria-hidden="true" focusable="false">
+            <path d="M32.5 13.5c-2.4-2.2-5.4-3.3-8.9-3.3-7.2 0-12.6 5.1-12.6 13.8S16.4 37.8 23.6 37.8c3.6 0 6.7-1.2 9.2-3.6"
+                  fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div class="logo-text">Click<span class="logo-oz">oz</span></div>
+      </div>
+
+      <p class="rail-sub">
+        A privacy-first toolbox for creators and developers: quick checks, clean outputs, and guides that explain what matters.
+      </p>
+
+      <div class="rail-trust" aria-label="Trust points">
+        <span class="trust-pill">🔒 Runs in your browser</span>
+        <span class="trust-pill">⚡ Instant results</span>
+        <span class="trust-pill">📋 Copy-ready outputs</span>
+        <span class="trust-pill">📱 Mobile-friendly</span>
+      </div>
+    </aside>
+
+    <!-- CENTER COLUMN -->
     <div class="hero-intro">
       <h1 style="margin-top:18px;">
         Free online tools to
@@ -165,8 +346,8 @@
       </h1>
 
       <p>
-        Clickoz is a simple toolbox website: paste text or data, get instant analysis, and copy clean results.
-        Use it before publishing a page, when debugging JSON, fixing broken URLs, or improving readability — no signup, no uploads.
+        Paste text or data, get instant analysis, then copy clean results.
+        Use Clickoz to improve clarity before publishing, debug JSON when something breaks, or make pages more clickable on Google — no signup, no uploads.
       </p>
 
       <div class="hero-cta" aria-label="Primary actions">
@@ -180,7 +361,7 @@
             <div class="how-ico" aria-hidden="true">🔎</div>
             <h3>Before you publish</h3>
           </div>
-          <p>Check word count, readability, and meta tags so your page is clearer and more clickable on Google.</p>
+          <p>Check word count, readability, and meta tags so your page is clearer, more scannable, and more clickable in search results.</p>
         </div>
 
         <div class="how-card">
@@ -188,7 +369,7 @@
             <div class="how-ico" aria-hidden="true">🧑‍💻</div>
             <h3>When something breaks</h3>
           </div>
-          <p>Validate/format JSON, encode/decode URLs, inspect Base64 — quick browser utilities for real dev moments.</p>
+          <p>Validate/format JSON, encode/decode URLs, inspect Base64 — fast browser utilities for real dev moments and quick fixes.</p>
         </div>
 
         <div class="how-card">
@@ -196,76 +377,149 @@
             <div class="how-ico" aria-hidden="true">✍️</div>
             <h3>When you write</h3>
           </div>
-          <p>Keep content easy on mobile: structure, reading time, clarity improvements, and copy-ready outputs.</p>
+          <p>Keep content easy on mobile: structure, reading time, clarity improvements, and copy-ready outputs you can use anywhere.</p>
         </div>
-      </div>
-
-      <div class="trust-strip" style="margin-top:14px" aria-label="Trust points">
-        <span class="trust-pill">🔒 Runs in your browser</span>
-        <span class="trust-pill">⚡ Instant results</span>
-        <span class="trust-pill">📋 Copy-ready outputs</span>
-        <span class="trust-pill">📱 Mobile-friendly</span>
       </div>
     </div>
 
-    <!-- Recommended now -->
+    <!-- Recommended now (CENTER + RIGHT on desktop) -->
     <div class="hero-box rec-wrap" aria-label="Recommended now">
       <h3 class="box-title">Recommended now</h3>
-      <p class="box-sub">Quick picks to move faster today. Refresh anytime to discover new picks.</p>
+      <p class="box-sub">
+        Quick picks to move faster today. Each tool is built for search intent (what people actually type) and delivers copy-ready results.
+      </p>
 
       <div class="rec-grid">
-        <a class="card rec-card" id="randTool1" href="/tools/word-counter/">
+        <a class="card rec-card" id="randTool1" href="/tools/json-formatter/">
           <div class="rec-head">
-            <span class="rec-icon" id="randIcon1" aria-hidden="true">🔢</span>
-            <h3 id="randTitle1">Word Counter</h3>
+            <span class="rec-icon" id="randIcon1" aria-hidden="true">🧾</span>
+            <h3 id="randTitle1">JSON Formatter</h3>
           </div>
-          <p id="randDesc1">Count words, characters, sentences, and reading time for briefs, essays, and SEO drafts.</p>
-          <span class="tool-cta" id="randCta1">Use Word Counter</span>
+          <p id="randDesc1">Prettify, validate, and minify JSON instantly for debugging APIs, fixing errors, and producing clean payloads.</p>
+
+          <div class="tool-meta" aria-label="Examples and category">
+            <ul class="tool-examples">
+              <li>Fix “Unexpected token” errors from an API response.</li>
+              <li>Minify a JSON payload before sending it to production.</li>
+              <li>Format logs to quickly spot missing commas or brackets.</li>
+            </ul>
+            <div class="tool-cat">
+              <span>Category:</span>
+              <a href="/tools/#dev" aria-label="Browse Developer Utilities">Developer Utilities</a>
+            </div>
+          </div>
+
+          <span class="tool-cta" id="randCta1">Use JSON Formatter</span>
         </a>
 
-        <a class="card rec-card" id="randTool2" href="/tools/readability-analyzer/">
+        <a class="card rec-card" id="randTool2" href="/tools/meta-tags/">
           <div class="rec-head">
-            <span class="rec-icon" id="randIcon2" aria-hidden="true">📚</span>
-            <h3 id="randTitle2">Readability Analyzer</h3>
+            <span class="rec-icon" id="randIcon2" aria-hidden="true">🏷️</span>
+            <h3 id="randTitle2">Meta Tag Optimizer</h3>
           </div>
-          <p id="randDesc2">Get a readability score and clear edits to make text easier to skim and understand.</p>
-          <span class="tool-cta" id="randCta2">Use Readability Analyzer</span>
+          <p id="randDesc2">SERP preview + length checks to improve CTR: write titles and descriptions that earn clicks on Google.</p>
+
+          <div class="tool-meta">
+            <ul class="tool-examples">
+              <li>Rewrite a title to fit the pixel limit without truncation.</li>
+              <li>Compare two meta descriptions for click clarity.</li>
+              <li>Optimize keywords while keeping it natural and readable.</li>
+            </ul>
+            <div class="tool-cat">
+              <span>Category:</span>
+              <a href="/tools/#seo" aria-label="Browse SEO Tools">SEO Tools</a>
+            </div>
+          </div>
+
+          <span class="tool-cta" id="randCta2">Use Meta Tag Optimizer</span>
         </a>
 
-        <a class="card rec-card" id="randTool3" href="/tools/meta-tags/">
+        <a class="card rec-card" id="randTool3" href="/tools/word-counter/">
           <div class="rec-head">
-            <span class="rec-icon" id="randIcon3" aria-hidden="true">🏷️</span>
-            <h3 id="randTitle3">Meta Tag Optimizer</h3>
+            <span class="rec-icon" id="randIcon3" aria-hidden="true">✨</span>
+            <h3 id="randTitle3">Word Counter Pro</h3>
           </div>
-          <p id="randDesc3">Preview SERP titles/descriptions, check length, and refine wording to improve CTR.</p>
-          <span class="tool-cta" id="randCta3">Use Meta Tag Optimizer</span>
+          <p id="randDesc3">Advanced writing stats: word & character count, reading time, speaking time, and structure hints for clarity.</p>
+
+          <div class="tool-meta">
+            <ul class="tool-examples">
+              <li>Check if a landing page is too short for its intent.</li>
+              <li>Estimate speaking time for a YouTube script.</li>
+              <li>Split content into sections for better skimming.</li>
+            </ul>
+            <div class="tool-cat">
+              <span>Category:</span>
+              <a href="/tools/#writing" aria-label="Browse Writing Tools">Writing Tools</a>
+            </div>
+          </div>
+
+          <span class="tool-cta" id="randCta3">Use Word Counter Pro</span>
         </a>
 
-        <a class="card rec-card" id="randTool4" href="/tools/json-formatter/">
+        <a class="card rec-card" id="randTool4" href="/tools/title-description/">
           <div class="rec-head">
-            <span class="rec-icon" id="randIcon4" aria-hidden="true">🧾</span>
-            <h3 id="randTitle4">JSON Formatter</h3>
+            <span class="rec-icon" id="randIcon4" aria-hidden="true">📝</span>
+            <h3 id="randTitle4">Title &amp; Description</h3>
           </div>
-          <p id="randDesc4">Format, validate, and minify JSON instantly for API debugging and clean copy-ready outputs.</p>
-          <span class="tool-cta" id="randCta4">Use JSON Formatter</span>
+          <p id="randDesc4">Generate SEO title and meta description ideas aligned to intent, with variations for different angles.</p>
+
+          <div class="tool-meta">
+            <ul class="tool-examples">
+              <li>Create 10 title options for a new blog post.</li>
+              <li>Write descriptions that match informational vs transactional intent.</li>
+              <li>Improve click appeal without keyword stuffing.</li>
+            </ul>
+            <div class="tool-cat">
+              <span>Category:</span>
+              <a href="/tools/#seo" aria-label="Browse SEO Tools">SEO Tools</a>
+            </div>
+          </div>
+
+          <span class="tool-cta" id="randCta4">Use Title &amp; Description</span>
         </a>
 
-        <a class="card rec-card" id="randTool5" href="/tools/url-encoder/">
+        <a class="card rec-card" id="randTool5" href="/tools/seo-outline/">
           <div class="rec-head">
-            <span class="rec-icon" id="randIcon5" aria-hidden="true">🔗</span>
-            <h3 id="randTitle5">URL Encoder</h3>
+            <span class="rec-icon" id="randIcon5" aria-hidden="true">🧠</span>
+            <h3 id="randTitle5">SEO Outline Helper</h3>
           </div>
-          <p id="randDesc5">Encode/decode URLs and query strings safely to fix broken parameters and redirects.</p>
-          <span class="tool-cta" id="randCta5">Use URL Encoder</span>
+          <p id="randDesc5">Build an H1/H2/H3 outline + FAQ ideas that match search intent and improve topical coverage.</p>
+
+          <div class="tool-meta">
+            <ul class="tool-examples">
+              <li>Plan headings for a “how to” article that ranks.</li>
+              <li>Add FAQ blocks to cover related queries.</li>
+              <li>Map sections to user questions for better engagement.</li>
+            </ul>
+            <div class="tool-cat">
+              <span>Category:</span>
+              <a href="/tools/#seo" aria-label="Browse SEO Tools">SEO Tools</a>
+            </div>
+          </div>
+
+          <span class="tool-cta" id="randCta5">Use SEO Outline Helper</span>
         </a>
 
-        <a class="card rec-card" id="randTool6" href="/tools/base64/">
+        <a class="card rec-card" id="randTool6" href="/tools/url-encoder/">
           <div class="rec-head">
-            <span class="rec-icon" id="randIcon6" aria-hidden="true">🔐</span>
-            <h3 id="randTitle6">Base64</h3>
+            <span class="rec-icon" id="randIcon6" aria-hidden="true">🔗</span>
+            <h3 id="randTitle6">URL Encoder</h3>
           </div>
-          <p id="randDesc6">Encode or decode Base64 strings for tokens, payloads, and quick developer checks.</p>
-          <span class="tool-cta" id="randCta6">Use Base64</span>
+          <p id="randDesc6">Encode/decode URLs and query strings safely to fix broken parameters, redirects, and tracking links.</p>
+
+          <div class="tool-meta">
+            <ul class="tool-examples">
+              <li>Encode UTM parameters for a marketing campaign link.</li>
+              <li>Fix spaces and special characters in URLs.</li>
+              <li>Decode a long redirect URL to inspect tracking values.</li>
+            </ul>
+            <div class="tool-cat">
+              <span>Category:</span>
+              <a href="/tools/#dev" aria-label="Browse Developer Utilities">Developer Utilities</a>
+            </div>
+          </div>
+
+          <span class="tool-cta" id="randCta6">Use URL Encoder</span>
         </a>
       </div>
 
@@ -282,10 +536,10 @@
     <div class="hero-box" aria-label="Guides and Updates">
       <h2 class="section-title" style="margin-top:0">Guides &amp; Updates</h2>
       <p class="section-sub" style="margin-bottom:14px">
-        Short, practical guides that explain what to do and why it matters. Each guide links to the tools that help you apply the steps.
+        Practical guides built for search intent: clear steps, examples, and tool links so you can apply improvements immediately.
       </p>
 
-      <div class="small-grid" style="max-width:1120px;margin:0 auto;">
+      <div class="small-grid" style="max-width:1360px;margin:0 auto;">
         <a class="small-card guide-card" href="/guides/word-count-for-seo/">
           <h3>Word Count for SEO (2026)</h3>
           <p>Structure, intent, and clarity: what matters now.</p>
@@ -330,23 +584,52 @@
     <div class="hero-box why-box">
       <h2 class="section-title" style="margin-top:0">Why Clickoz</h2>
       <p class="section-sub" style="margin-bottom:14px">
-        Built for real workflows: quick answers, clean output, and practical guidance. Use a tool in seconds, then improve results with examples and FAQs.
+        Built for real workflows: fast answers, clean output, and guidance that improves results. Use a tool in seconds, then learn the “why” with examples and FAQs.
       </p>
 
-      <div class="small-grid" style="max-width:1120px;margin:0 auto;">
+      <div class="small-grid" style="max-width:1360px;margin:0 auto;">
         <div class="small-card">
           <h3>One job per tool</h3>
-          <p>Fast inputs, readable outputs, consistent formatting. No clutter, no distractions.</p>
+          <p>Fast inputs, readable outputs, consistent formatting. No clutter, no distractions — just the result you came for.</p>
         </div>
         <div class="small-card">
           <h3>SEO aligned by intent</h3>
-          <p>Counters, previews, checkers, generators, formatters: what people actually search for.</p>
+          <p>Counters, previews, checkers, generators, formatters: built around what people actually search — and how they use it.</p>
         </div>
         <div class="small-card">
           <h3>Made for mobile</h3>
-          <p>Stable layout, no weird jumps, and smooth UI even on Android browsers.</p>
+          <p>Stable layout, no weird jumps, and smooth UI even on Android browsers — because most users are mobile-first.</p>
         </div>
       </div>
+
+      <!-- SEO hub style block (like tools/index.html vibe) -->
+      <div class="hero-box" style="margin-top:14px;" aria-label="Explore by intent">
+        <h3 class="box-title" style="margin-top:0;">Explore by intent</h3>
+        <p class="box-sub">
+          Browse tools the way users search: by outcome. This helps visitors find the right tool fast — and strengthens internal linking for SEO.
+        </p>
+
+        <div class="small-grid" style="max-width:1360px;margin:0 auto;">
+          <a class="small-card" href="/tools/#seo" aria-label="Explore SEO tools">
+            <h3>SEO checks & previews</h3>
+            <p>Meta tags, SERP preview, keyword signals, content structure, and click optimization.</p>
+            <span class="tool-cta">Explore SEO tools</span>
+          </a>
+
+          <a class="small-card" href="/tools/#writing" aria-label="Explore writing tools">
+            <h3>Writing clarity & structure</h3>
+            <p>Word count, readability, reading time, and clean copy-ready improvements.</p>
+            <span class="tool-cta">Explore writing tools</span>
+          </a>
+
+          <a class="small-card" href="/tools/#dev" aria-label="Explore developer utilities">
+            <h3>Developer utilities</h3>
+            <p>JSON, Base64, URL encoding, and quick debugging helpers that work instantly.</p>
+            <span class="tool-cta">Explore dev tools</span>
+          </a>
+        </div>
+      </div>
+
     </div>
   </section>
 
