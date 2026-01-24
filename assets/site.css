@@ -1256,3 +1256,152 @@ input.search{
   display:inline-flex;
 }
 
+/* ===========================
+   Recommended — Rail OUTSIDE
+   + Fix sfasamento card
+=========================== */
+
+/* Shell: rail outside + recommended box */
+.rec-shell{
+  display:grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+/* Mobile stack */
+@media (max-width: 979px){
+  .rec-shell{ grid-template-columns: 1fr; }
+  .rec-rail-outside{ order: 0; }
+  .rec-wrap{ order: 1; }
+}
+
+/* Desktop: left rail + right box */
+@media (min-width: 980px){
+  .rec-shell{
+    grid-template-columns: 290px 1fr;
+    align-items: start;
+  }
+}
+
+/* Rail outside (same card feel) */
+.rec-rail{
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+/* sticky only on desktop */
+@media (min-width: 980px){
+  .rec-rail-outside{
+    position: sticky;
+    top: 86px; /* sotto la nav */
+  }
+}
+
+/* Brand (ONLY text, centered) */
+.rec-brand{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align:center;
+  padding: 6px 6px 4px;
+  margin-bottom: 10px;
+}
+
+.rec-brandname{
+  font-weight: 1000;
+  letter-spacing: -0.04em;
+  font-size: 22px;
+  line-height: 1.05;
+  text-shadow: 0 0 18px rgba(99,102,241,.10);
+}
+
+.rec-brandsub{
+  margin-top: 8px;
+  font-size: 12.8px;
+  opacity: .80;
+  line-height: 1.45;
+  max-width: 240px;
+}
+
+/* Trust list = cards/pills */
+.rec-trust{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.rec-trust .trust-pill{
+  display:flex;
+  align-items:center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  line-height: 1.35;
+  opacity: .92;
+}
+
+.rec-trust .trust-pill strong{
+  font-weight: 900;
+  opacity: .98;
+}
+
+/* Recommended grid inside box */
+.rec-wrap .rec-grid{
+  display:grid;
+  gap: 14px;
+  margin-top: 12px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 980px){
+  .rec-wrap .rec-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* CRITICAL: prevent global .card grid inheritance from breaking layout */
+.rec-card{
+  display:flex !important;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 100%;
+}
+
+.rec-card .rec-head{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.rec-card h3{ margin:0; }
+
+/* push bottom block stable */
+.rec-card .tool-cat{
+  margin-top: auto;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 6px;
+  font-size: 13px;
+  opacity: .82;
+}
+.rec-card .tool-cta{
+  display:inline-flex;
+  margin-top: 10px;
+  align-self: stretch;
+  justify-content:center;
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+
+/* prevent odd wrapping overflow */
+.rec-card p, .rec-card li{ overflow-wrap:anywhere; }
