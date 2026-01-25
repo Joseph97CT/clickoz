@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>YouTube Video Tag Optimizer – Title Analyzer + Best Tags (Trends) | Clickoz</title>
+  <meta name="description" content="Analyze your YouTube video title, get the recommended max tag count, and generate the best tags aligned with your title + search intent. Fast, privacy-first, runs in your browser." />
+  <link rel="canonical" href="https://clickoz.com/tools/youtube-video-tag/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b0f19" />
+
+  <meta property="og:site_name" content="Clickoz" />
+  <meta property="og:title" content="YouTube Video Tag Optimizer – Title Analyzer + Best Tags (Trends)" />
+  <meta property="og:description" content="Analyze your title and generate high-signal YouTube tags aligned with search intent. Copy-ready output. Privacy-first." />
+  <meta property="og:url" content="https://clickoz.com/tools/youtube-video-tag/" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/site.css" />
+
+  <!-- Optional: preload font if you used it in wordcounter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"YouTube Video Tag Optimizer",
+    "applicationCategory":"WebApplication",
+    "operatingSystem":"Any",
+    "url":"https://clickoz.com/tools/youtube-video-tag/",
+    "description":"Analyze a YouTube title and generate optimized tags aligned with title intent, long-tail queries, and creator workflows.",
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}
+  }
+  </script>
+</head>
+
+<body>
+  <!-- background layers (keep same as wordcounter structure if you have them) -->
+  <div class="bg-glow"></div>
+  <canvas id="particles" class="particles" aria-hidden="true"></canvas>
+
+  <!-- NAV (same scale as your other tools) -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="/" aria-label="Clickoz Home">
+        <span class="logo-badge" aria-hidden="true">C</span>
+        <span class="logo-text">Clickoz</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/tools/">Tools</a>
+        <a class="nav-link" href="/guides/">Guides</a>
+        <a class="nav-link" href="/updates/">Updates</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Accent / Language (keep the same dropdown markup you use site-wide) -->
+        <div class="dropdown">
+          <button class="btn btn-ghost dropdown-btn" type="button" aria-expanded="false">
+            Accent
+            <span class="caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="menu" role="menu">
+            <button class="menu-item" type="button" data-accent="cyan">Cyan</button>
+            <button class="menu-item" type="button" data-accent="blue">Blue</button>
+            <button class="menu-item" type="button" data-accent="orange">Orange</button>
+            <button class="menu-item" type="button" data-accent="purple">Purple</button>
+          </div>
+        </div>
+
+        <button class="btn btn-ghost burger" type="button" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile drawer (keep same as wordcounter if present) -->
+    <div class="drawer" aria-hidden="true">
+      <div class="drawer-inner container">
+        <a class="drawer-link" href="/">Home</a>
+        <a class="drawer-link" href="/tools/">Tools</a>
+        <a class="drawer-link" href="/guides/">Guides</a>
+        <a class="drawer-link" href="/updates/">Updates</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- TOOL HEADER (same vibe as wordcounter) -->
+    <section class="hero tool-hero">
+      <div class="hero-topline">
+        🔒 Runs in your browser ⚡ Instant results 📋 Copy-ready outputs 📱 Mobile-friendly
+      </div>
+
+      <h1 class="hero-title">
+        YouTube Video Tag Optimizer
+      </h1>
+      <p class="hero-subtitle">
+        Paste your video title, pick a language + category, and generate tags that match intent, structure and long-tail variants.
+        Includes a recommended max tag count and a copy-ready export.
+      </p>
+
+      <div class="hero-badges">
+        <span class="pill">Creator SEO</span>
+        <span class="pill">Title Analysis</span>
+        <span class="pill">Tag Suggestions</span>
+      </div>
+    </section>
+
+    <!-- TOOL PANEL -->
+    <section class="panel tool-panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Inputs</h2>
+          <p class="panel-muted">Tip: keep titles specific (topic + angle + context). Tags work best when they mirror the title’s intent.</p>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-ghost" type="button" id="btnYtExample">Use example</button>
+          <button class="btn btn-ghost" type="button" id="btnYtReset">Reset</button>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="field">
+          <label class="label" for="ytTitle">Video title</label>
+          <input class="input" id="ytTitle" type="text" placeholder="e.g., How to rank YouTube videos in 2026 (fast checklist)" autocomplete="off" />
+          <div class="help-row">
+            <span class="help" id="ytTitleLen">0 chars</span>
+            <span class="help" id="ytTitleWords">0 words</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="ytFocusKeyword">Focus keyword (optional)</label>
+          <input class="input" id="ytFocusKeyword" type="text" placeholder="e.g., youtube seo" autocomplete="off" />
+          <p class="help">If empty, we infer the primary keyword from your title.</p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="ytLanguage">Language</label>
+          <select class="select" id="ytLanguage">
+            <option value="en" selected>English</option>
+            <option value="it">Italiano</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="de">Deutsch</option>
+          </select>
+          <p class="help">Tags and long-tail variants follow this language.</p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="ytCategory">Category</label>
+          <select class="select" id="ytCategory">
+            <option value="general" selected>General</option>
+            <option value="music">Music</option>
+            <option value="gaming">Gaming</option>
+            <option value="education">Education</option>
+            <option value="howto">How-to & Tutorials</option>
+            <option value="tech">Tech</option>
+            <option value="vlog">Vlog</option>
+            <option value="finance">Finance</option>
+            <option value="fitness">Fitness</option>
+            <option value="news">News</option>
+          </select>
+          <p class="help">Used to bias tag clusters (e.g., “tutorial”, “tips”, “guide”).</p>
+        </div>
+      </div>
+
+      <div class="tool-row">
+        <div class="field field-inline">
+          <label class="label" for="ytMaxTags">Max tags</label>
+          <input class="input input-sm" id="ytMaxTags" type="number" min="5" max="60" value="25" />
+          <span class="help">We’ll also recommend a max based on title specificity.</span>
+        </div>
+
+        <div class="tool-actions">
+          <button class="btn btn-primary" id="btnYtAnalyze" type="button">Analyze & Generate Tags</button>
+          <button class="btn" id="btnYtCopyAll" type="button" disabled>Copy all tags</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="panel tool-panel" id="ytResults" hidden>
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Results</h2>
+          <p class="panel-muted">These tags are structured in clusters: primary, supporting, long-tail, and contextual.</p>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-ghost" type="button" id="btnYtExportCsv" disabled>Export CSV</button>
+          <button class="btn btn-ghost" type="button" id="btnYtExportTxt" disabled>Export TXT</button>
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="stat">
+          <div class="stat-k">Recommended max tags</div>
+          <div class="stat-v" id="ytRecommendedMax">—</div>
+          <div class="stat-h">Based on title clarity + keyword density.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-k">Primary keyword</div>
+          <div class="stat-v" id="ytPrimaryKw">—</div>
+          <div class="stat-h">Inferred (or your focus keyword).</div>
+        </div>
+        <div class="stat">
+          <div class="stat-k">Title health</div>
+          <div class="stat-v" id="ytTitleScore">—</div>
+          <div class="stat-h">Clarity, length, specificity, intent.</div>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-head">
+            <h3 class="card-title">Title feedback</h3>
+            <p class="card-sub">Quick improvements you can apply before publishing.</p>
+          </div>
+          <div class="card-body">
+            <ul class="list" id="ytTitleFeedback">
+              <!-- JS inject -->
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3 class="card-title">Tag strategy</h3>
+            <p class="card-sub">What we prioritized and why.</p>
+          </div>
+          <div class="card-body">
+            <ul class="list" id="ytTagStrategy">
+              <!-- JS inject -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="card-title">Generated tags</h3>
+          <p class="card-sub">Click a tag to copy it. Use “Copy all” for a single comma-separated line.</p>
+        </div>
+
+        <div class="card-body">
+          <div class="chips" id="ytTagChips">
+            <!-- JS inject: <button class="chip" ...>tag</button> -->
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="field">
+            <label class="label" for="ytTagsOutput">Copy-ready output</label>
+            <textarea class="textarea" id="ytTagsOutput" rows="3" readonly placeholder="Tags will appear here..."></textarea>
+            <p class="help">Format: comma-separated (YouTube-friendly). You can also export TXT/CSV.</p>
+          </div>
+        </div>
+
+        <div class="card-cta">
+          <div class="cta-left">
+            <div class="cta-title">Want stronger tags?</div>
+            <div class="cta-sub">Try adding a focus keyword + a clearer angle (e.g., “fast”, “2026”, “beginner”).</div>
+          </div>
+          <div class="cta-right">
+            <a class="btn btn-ghost" href="/tools/" aria-label="Browse more tools">Browse tools</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ / TRUST -->
+    <section class="panel">
+      <h2 class="panel-title">FAQ</h2>
+      <div class="grid grid-2">
+        <div class="faq">
+          <h3>How many tags should I use?</h3>
+          <p>
+            More tags isn’t always better. Use fewer, higher-signal tags that match the title’s intent.
+            This tool recommends a max based on specificity and clarity.
+          </p>
+        </div>
+        <div class="faq">
+          <h3>Does this use my data?</h3>
+          <p>
+            No. The tool runs in your browser. If you later connect external APIs (trends), make it explicit and optional.
+          </p>
+        </div>
+        <div class="faq">
+          <h3>Are trends included?</h3>
+          <p>
+            The page is ready for it: your site.js can optionally fetch trend suggestions (region + language) and merge them into clusters.
+          </p>
+        </div>
+        <div class="faq">
+          <h3>What makes tags “good”?</h3>
+          <p>
+            Tags should be aligned with the title, include long-tail variants, and avoid generic spam.
+            Think: topic + format + audience + outcome.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-top">
+        <a class="logo footer-logo" href="/">
+          <span class="logo-badge" aria-hidden="true">C</span>
+          <span class="logo-text">Clickoz</span>
+        </a>
+
+        <div class="footer-links">
+          <a href="/tools/">Tools</a>
+          <a href="/guides/">Guides</a>
+          <a href="/updates/">Updates</a>
+          <a href="/privacy/">Privacy</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="muted">© <span id="year"></span> Clickoz. Privacy-first tools.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- your global js -->
+  <script src="/site.js"></script>
+
+  <!-- tool hook: site.js can detect this page and init by ids -->
+  <script>
+    // Keep tiny glue only (optional). If you prefer: remove and init from site.js entirely.
+    window.CLICKoz_TOOL = "youtube_video_tag";
+  </script>
+</body>
+</html>
