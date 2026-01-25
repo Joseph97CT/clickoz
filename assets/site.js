@@ -990,16 +990,16 @@
     // size / glow
     minR: 1.5,
     maxR: 11.9,
-    glow1: 144,               // stronger blur
-    glow2: 158,
+    glow1: 344,               // stronger blur
+    glow2: 458,
 
     // motion
     minSpeed: 1.05,
-    maxSpeed: 2.6,
-    drift: 0.26,             // random drift
+    maxSpeed: 3.6,
+    drift: 0.46,             // random drift
     friction: 0.502,         // slow down over time
     lifeMin: 90,             // frames
-    lifeMax: 220,
+    lifeMax: 420,
 
     // alpha
     alphaMin: 0.35,
