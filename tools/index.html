@@ -17,170 +17,21 @@
   <meta property="og:url" content="https://clickoz.com/tools/" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://clickoz.com/assets/og/tools.png" />
+
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Clickoz Tools – Free Online Tools for SEO, Writing & Dev" />
   <meta name="twitter:description" content="Free, privacy-first tools that run in your browser. No signup. Copy-ready outputs. Mobile-friendly." />
   <meta name="twitter:image" content="https://clickoz.com/assets/og/tools.png" />
 
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- Tools page micro-patches ONLY (keeps your base intact) -->
-  <style>
-    /* Keep Tools active */
-    .nav-links a.active,
-    .m-links a.active{
-      color: rgba(255,255,255,.96);
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
-    /* Slightly tighter top spacing */
-    .tools-shell{ padding-top: 18px; }
-
-    .crumbs{
-      max-width: 980px;
-      margin: 2px auto 10px;
-      font-size: 13px;
-      opacity: .75;
-    }
-    .crumbs a{ text-decoration:none; }
-    .crumbs a:hover{ text-decoration: underline; }
-    .crumbs .sep{ opacity:.55; padding: 0 8px; }
-
-    .tools-kicker{
-      max-width: 980px;
-      margin: 0 auto 10px;
-      font-size: 15px;
-      line-height: 1.75;
-      color: rgba(255,255,255,.78);
-    }
-    .tools-kicker b{ color: rgba(255,255,255,.92); font-weight: 900; }
-
-    .tools-actions{
-      max-width: 980px;
-      margin: 10px auto 0;
-      display:flex;
-      gap: 10px;
-      justify-content:center;
-      flex-wrap: wrap;
-    }
-    .tools-actions .btn{
-      height: 42px;
-      padding: 0 14px;
-      border-radius: 14px;
-      font-weight: 1000;
-      font-size: 13px;
-    }
-
-    .search-hint{
-      max-width: 980px;
-      margin: 8px auto 0;
-      font-size: 13px;
-      opacity: .78;
-      line-height: 1.6;
-      text-align:center;
-    }
-    .search-hint b{ color: rgba(255,255,255,.92); }
-
-    /* Chips row (if your base doesn't style it enough) */
-    .chips{
-      max-width: 980px;
-      margin: 10px auto 0;
-      display:flex;
-      gap: 8px;
-      justify-content:center;
-      flex-wrap: wrap;
-    }
-
-    /* Pager must exist for JS */
-    .pager{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-    .pager .btn{
-      height: 40px;
-      padding: 0 14px;
-      border-radius: 14px;
-      font-weight: 1000;
-      font-size: 13px;
-    }
-    .pager .page-info{
-      font-size: 13px;
-      opacity: .78;
-      min-width: 180px;
-      text-align:center;
-    }
-
-    /* Narrative lanes: make sure they render correctly */
-    .lanes{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    @media (min-width: 981px){
-      .lanes{ grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
-    }
-    .lane{
-      padding: 16px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
-      box-shadow: 0 16px 50px rgba(0,0,0,.22);
-    }
-    .lane-head{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .lane-ico{ font-size: 18px; }
-    .lane h3{
-      margin: 0;
-      font-size: 16px;
-      font-weight: 1000;
-      letter-spacing: -0.01em;
-    }
-    .lane p{
-      margin: 0;
-      color: rgba(255,255,255,.76);
-      line-height: 1.75;
-      font-size: 14.8px;
-    }
-
-    /* FAQ always open */
-    .faq-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    @media (min-width: 981px){
-      .faq-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    }
-    .faq{
-      padding: 16px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
-      box-shadow: 0 16px 50px rgba(0,0,0,.22);
-    }
-    .faq h3{
-      margin: 0 0 8px;
-      font-size: 16px;
-      font-weight: 1000;
-      letter-spacing: -0.01em;
-    }
-    .faq p{
-      margin: 0;
-      color: rgba(255,255,255,.76);
-      line-height: 1.75;
-      font-size: 14.8px;
-    }
-  </style>
+  <!-- Base site + tools micro layer -->
+  <link rel="stylesheet" href="/assets/site.css?v=5" />
+  <link rel="stylesheet" href="/tools/tools.css?v=1" />
 
   <!-- ✅ JSON-LD (VALID) -->
   <script type="application/ld+json">
@@ -251,7 +102,7 @@
       {
         "@type":"Question",
         "name":"How do I find the right tool quickly?",
-        "acceptedAnswer":{"@type":"Answer","text":"Use search with / to focus, then filter by category (SEO, Text, Dev, Creator). Open the tool page that matches your task."}
+        "acceptedAnswer":{"@type":"Answer","text":"Use category filters (SEO, Text, Dev, Creator) to jump to the right section. Each category includes the tools for that workflow."}
       }
     ]
   }
@@ -259,12 +110,12 @@
 </head>
 
 <body class="bigtext">
-  <!-- FX layers (if your base uses them; safe if styled in site.css) -->
+  <!-- FX layers -->
   <div id="clickozParticles" aria-hidden="true"></div>
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
   <div class="__grain" aria-hidden="true"></div>
 
-  <!-- NAV (same pattern as your index) -->
+  <!-- NAV -->
   <nav class="nav" aria-label="Primary navigation" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
@@ -318,7 +169,7 @@
     </div>
   </nav>
 
-  <!-- Mobile menu (safe even if your base styles it) -->
+  <!-- Mobile menu -->
   <div class="m-overlay" id="mOverlay" hidden></div>
   <aside class="m-menu" id="mobileMenu" aria-hidden="true">
     <div class="m-head">
@@ -363,167 +214,277 @@
       <a href="/">Home</a><span class="sep">›</span><span>Tools</span>
     </div>
 
-    <h1 class="section-title" style="margin-top:0;">Tools</h1>
+    <!-- HERO -->
+    <div class="tools-hero" aria-label="Tools hero">
+      <div class="tools-hero-top">
+        <div style="flex: 1 1 520px;">
+          <h1 class="tools-title">Tools built for real workflows.</h1>
+          <p class="tools-sub">
+            Pick a category, open a tool, and get clean output you can copy instantly.
+            Everything is privacy-first and designed to stay stable on mobile.
+          </p>
 
-    <div class="tools-kicker">
-      <b>Free online tools</b> for SEO, writing, developers, and creators.
-      Search by task, filter by category, and get instant results you can copy anywhere — no signup, no uploads.
+          <div class="tools-metrics" aria-label="Tools highlights">
+            <div class="metric-pill">🔒 <b>Browser-only</b> • No uploads</div>
+            <div class="metric-pill">⚡ <b>Instant</b> • Fast UI</div>
+            <div class="metric-pill">📋 <b>Copy-ready</b> • Clean output</div>
+            <div class="metric-pill">🧑‍💻 <b>Fix-it</b> • Dev moments</div>
+          </div>
+        </div>
+
+        <!-- Optional search (keep or remove) -->
+        <div class="tools-hero-row tools-search" aria-label="Tools search" style="flex:1 1 380px;">
+          <input class="search" id="toolsSearch" placeholder="Search tools (meta tags, readability, json, base64, url…)" aria-label="Search tools" autocomplete="off" />
+        </div>
+      </div>
+
+      <!-- Chips -->
+      <div class="chips" id="toolsChips" aria-label="Category filters">
+        <div class="chip active" data-filter="seo" role="button" tabindex="0">SEO</div>
+        <div class="chip" data-filter="text" role="button" tabindex="0">Text</div>
+        <div class="chip" data-filter="dev" role="button" tabindex="0">Dev</div>
+        <div class="chip" data-filter="creator" role="button" tabindex="0">Creator</div>
+      </div>
     </div>
 
-    <div class="row" style="margin-top:12px;">
-      <input class="search" id="toolsSearch" placeholder="Search tools (meta tags, readability, keyword density, json, base64, url…)" aria-label="Search tools" autocomplete="off" />
-    </div>
-
-    <div class="search-hint">
-      Press <b>/</b> to search • Filter by category • <b>15 tools per page</b>
-    </div>
-
-    <div class="chips" id="toolsChips" aria-label="Category filters">
-      <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
-      <div class="chip" data-filter="seo" role="button" tabindex="0">SEO</div>
-      <div class="chip" data-filter="text" role="button" tabindex="0">Text</div>
-      <div class="chip" data-filter="dev" role="button" tabindex="0">Dev</div>
-      <div class="chip" data-filter="creator" role="button" tabindex="0">Creator</div>
-    </div>
-
-    <div class="tools-actions" aria-label="Quick actions">
-      <a class="btn" href="/tools/word-counter/">Open Word Counter</a>
-      <a class="btn" href="/tools/meta-tags/">Open Meta Tag Optimizer</a>
-      <a class="btn primary" href="/guides/">Read Guides</a>
-    </div>
-
-    <!-- ✅ REAL TOOLS LIST (15 cards) -->
-    <div class="grid" id="toolsGrid" style="margin-top:14px;">
-      <!-- TEXT -->
-      <a class="card" href="/tools/word-counter/" data-cat="text" data-hay="word counter count words characters sentences paragraphs reading time seo">
-        <div class="tool-top">
-          <h3>Word Counter</h3>
-          <p>Count words, characters, sentences, paragraphs, and estimate reading time for SEO drafts and documents.</p>
-        </div>
-        <span class="tool-cta">Use Word Counter</span>
-      </a>
-
-      <a class="card" href="/tools/character-counter/" data-cat="text" data-hay="character counter with spaces without spaces twitter limit bio">
-        <div class="tool-top">
-          <h3>Character Counter</h3>
-          <p>Count characters with or without spaces for platform limits, forms, and snippets.</p>
-        </div>
-        <span class="tool-cta">Use Character Counter</span>
-      </a>
-
-      <a class="card" href="/tools/readability-analyzer/" data-cat="text" data-hay="readability analyzer readability score grade level clarity skimmable seo">
-        <div class="tool-top">
-          <h3>Readability Analyzer</h3>
-          <p>Get a readability score and suggestions to make writing clearer, shorter, and easier to skim.</p>
-        </div>
-        <span class="tool-cta">Use Readability Analyzer</span>
-      </a>
-
-      <a class="card" href="/tools/text-case-converter/" data-cat="text" data-hay="case converter uppercase lowercase title case sentence case">
-        <div class="tool-top">
-          <h3>Text Case Converter</h3>
-          <p>Convert text to UPPERCASE, lowercase, Title Case, or Sentence case in one click.</p>
-        </div>
-        <span class="tool-cta">Convert Text Case</span>
-      </a>
-
-      <a class="card" href="/tools/whitespace-cleaner/" data-cat="text" data-hay="whitespace cleaner remove extra spaces trim normalize lines">
-        <div class="tool-top">
-          <h3>Whitespace Cleaner</h3>
-          <p>Remove extra spaces and normalize formatting for clean documents and copy-ready text.</p>
-        </div>
-        <span class="tool-cta">Clean Text</span>
-      </a>
-
+    <!-- CATEGORY SECTIONS (chips scroll here) -->
+    <div class="tool-sections" aria-label="Tools by category">
       <!-- SEO -->
-      <a class="card" href="/tools/keyword-density/" data-cat="seo" data-hay="keyword density checker keyword frequency seo on page keywords stuffing">
-        <div class="tool-top">
-          <h3>Keyword Density Checker</h3>
-          <p>See keyword frequency and density so you can avoid stuffing and keep content natural.</p>
+      <section class="tool-section" id="seo" data-section="seo" aria-label="SEO tools">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">
+              <div class="section-ico" aria-hidden="true">🔎</div>
+              <h2 class="section-name">SEO Tools</h2>
+            </div>
+            <p class="section-desc">
+              Tools for titles, snippets, keywords, and URLs. Use them before publishing to improve clarity and CTR without stuffing.
+            </p>
+          </div>
+          <div class="section-count" aria-label="SEO tools count">4 tools</div>
         </div>
-        <span class="tool-cta">Check Keyword Density</span>
-      </a>
 
-      <a class="card" href="/tools/meta-tags/" data-cat="seo" data-hay="meta tag optimizer title description length preview ctr serp">
-        <div class="tool-top">
-          <h3>Meta Tag Optimizer</h3>
-          <p>Write better titles and descriptions with length checks and preview for search snippets.</p>
-        </div>
-        <span class="tool-cta">Optimize Meta Tags</span>
-      </a>
+        <div class="cards-grid">
+          <a class="card" href="/tools/meta-tags/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🏷️</div>
+              <div>
+                <h3>Meta Tag Optimizer</h3>
+                <p>Write better titles and descriptions with length checks and snippet intent.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Use Meta Tag Optimizer</span>
+          </a>
 
-      <a class="card" href="/tools/serp-preview/" data-cat="seo" data-hay="serp snippet preview google title description preview seo">
-        <div class="tool-top">
-          <h3>SERP Snippet Preview</h3>
-          <p>Preview how your page may look in search results before you publish.</p>
-        </div>
-        <span class="tool-cta">Open SERP Preview</span>
-      </a>
+          <a class="card" href="/tools/serp-preview/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🧩</div>
+              <div>
+                <h3>SERP Snippet Preview</h3>
+                <p>Preview how your title/description may look in Google before you publish.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Open SERP Preview</span>
+          </a>
 
-      <a class="card" href="/tools/slug-generator/" data-cat="seo" data-hay="slug generator url slug seo friendly convert title">
-        <div class="tool-top">
-          <h3>Slug Generator</h3>
-          <p>Create SEO-friendly URL slugs from titles for blogs, product pages, and landing pages.</p>
+          <a class="card" href="/tools/keyword-density/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">📈</div>
+              <div>
+                <h3>Keyword Density Checker</h3>
+                <p>Check keyword frequency to avoid stuffing and keep content natural.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Check Keyword Density</span>
+          </a>
+
+          <a class="card" href="/tools/slug-generator/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🔗</div>
+              <div>
+                <h3>Slug Generator</h3>
+                <p>Create SEO-friendly URL slugs from titles for posts and landing pages.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Generate Slug</span>
+          </a>
         </div>
-        <span class="tool-cta">Generate Slug</span>
-      </a>
+      </section>
+
+      <!-- TEXT -->
+      <section class="tool-section" id="text" data-section="text" aria-label="Text tools">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">
+              <div class="section-ico" aria-hidden="true">✍️</div>
+              <h2 class="section-name">Text Tools</h2>
+            </div>
+            <p class="section-desc">
+              Tools for writing clarity, structure, and formatting. Designed for mobile readability and clean copy.
+            </p>
+          </div>
+          <div class="section-count" aria-label="Text tools count">5 tools</div>
+        </div>
+
+        <div class="cards-grid">
+          <a class="card" href="/tools/word-counter/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🔢</div>
+              <div>
+                <h3>Word Counter</h3>
+                <p>Count words, sentences, paragraphs, and estimate reading time.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Use Word Counter</span>
+          </a>
+
+          <a class="card" href="/tools/character-counter/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🧮</div>
+              <div>
+                <h3>Character Counter</h3>
+                <p>Count characters with/without spaces for bios, forms, and limits.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Use Character Counter</span>
+          </a>
+
+          <a class="card" href="/tools/readability-analyzer/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">📚</div>
+              <div>
+                <h3>Readability Analyzer</h3>
+                <p>Get a readability score + suggestions to make text easier to scan.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Use Readability Analyzer</span>
+          </a>
+
+          <a class="card" href="/tools/text-case-converter/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🔤</div>
+              <div>
+                <h3>Text Case Converter</h3>
+                <p>Uppercase, lowercase, Title Case, Sentence case in one click.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Convert Text Case</span>
+          </a>
+
+          <a class="card" href="/tools/whitespace-cleaner/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🧼</div>
+              <div>
+                <h3>Whitespace Cleaner</h3>
+                <p>Remove extra spaces and normalize formatting for clean text.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Clean Text</span>
+          </a>
+        </div>
+      </section>
 
       <!-- DEV -->
-      <a class="card" href="/tools/json-formatter/" data-cat="dev" data-hay="json formatter validate pretty print minify parse error">
-        <div class="tool-top">
-          <h3>JSON Formatter</h3>
-          <p>Format and validate JSON instantly for debugging and clean copy-ready output.</p>
+      <section class="tool-section" id="dev" data-section="dev" aria-label="Developer utilities">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">
+              <div class="section-ico" aria-hidden="true">🖥️</div>
+              <h2 class="section-name">Developer Utilities</h2>
+            </div>
+            <p class="section-desc">
+              Quick browser utilities when something breaks: JSON parsing, encoding, payload inspection, and safe escaping.
+            </p>
+          </div>
+          <div class="section-count" aria-label="Developer tools count">5 tools</div>
         </div>
-        <span class="tool-cta">Format JSON</span>
-      </a>
 
-      <a class="card" href="/tools/json-minifier/" data-cat="dev" data-hay="json minifier compress minify json remove spaces">
-        <div class="tool-top">
-          <h3>JSON Minifier</h3>
-          <p>Minify JSON for smaller payloads and faster copy/paste into APIs and configs.</p>
-        </div>
-        <span class="tool-cta">Minify JSON</span>
-      </a>
+        <div class="cards-grid">
+          <a class="card" href="/tools/json-formatter/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🧾</div>
+              <div>
+                <h3>JSON Formatter</h3>
+                <p>Format and validate JSON instantly for debugging and clean output.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Use JSON Formatter</span>
+          </a>
 
-      <a class="card" href="/tools/url-encoder/" data-cat="dev" data-hay="url encoder decoder query string encode decode parameters">
-        <div class="tool-top">
-          <h3>URL Encoder / Decoder</h3>
-          <p>Encode or decode URLs and query strings safely to fix broken parameters and redirects.</p>
-        </div>
-        <span class="tool-cta">Use URL Encoder</span>
-      </a>
+          <a class="card" href="/tools/json-minifier/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🗜️</div>
+              <div>
+                <h3>JSON Minifier</h3>
+                <p>Minify JSON for smaller payloads and faster copy/paste into configs.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Minify JSON</span>
+          </a>
 
-      <a class="card" href="/tools/base64/" data-cat="dev" data-hay="base64 encode decode token payload jwt">
-        <div class="tool-top">
-          <h3>Base64 Encode / Decode</h3>
-          <p>Encode or decode Base64 strings for tokens, payloads, and quick developer checks.</p>
-        </div>
-        <span class="tool-cta">Use Base64 Tool</span>
-      </a>
+          <a class="card" href="/tools/url-encoder/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🔗</div>
+              <div>
+                <h3>URL Encoder / Decoder</h3>
+                <p>Encode or decode query strings safely to fix broken parameters.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Use URL Encoder</span>
+          </a>
 
-      <a class="card" href="/tools/html-entity-encoder/" data-cat="dev" data-hay="html entity encode decode escape unescape">
-        <div class="tool-top">
-          <h3>HTML Entity Encoder / Decoder</h3>
-          <p>Escape or unescape HTML entities to prevent broken markup and messy copy.</p>
+          <a class="card" href="/tools/base64/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🔐</div>
+              <div>
+                <h3>Base64 Encode / Decode</h3>
+                <p>Inspect tokens and payloads quickly with clean, readable output.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Use Base64 Tool</span>
+          </a>
+
+          <a class="card" href="/tools/html-entity-encoder/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🧷</div>
+              <div>
+                <h3>HTML Entity Encoder / Decoder</h3>
+                <p>Escape/unescape entities to prevent broken markup and messy copy.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Open HTML Entity Tool</span>
+          </a>
         </div>
-        <span class="tool-cta">Open HTML Entity Tool</span>
-      </a>
+      </section>
 
       <!-- CREATOR -->
-      <a class="card" href="/tools/utm-builder/" data-cat="creator" data-hay="utm builder campaign link tracking source medium content">
-        <div class="tool-top">
-          <h3>UTM Builder</h3>
-          <p>Build trackable links for campaigns so you can measure traffic sources accurately.</p>
+      <section class="tool-section" id="creator" data-section="creator" aria-label="Creator tools">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">
+              <div class="section-ico" aria-hidden="true">🎥</div>
+              <h2 class="section-name">Creator Tools</h2>
+            </div>
+            <p class="section-desc">
+              Tracking and campaign utilities for creators. Small changes that make performance measurable.
+            </p>
+          </div>
+          <div class="section-count" aria-label="Creator tools count">1 tool</div>
         </div>
-        <span class="tool-cta">Build UTM Link</span>
-      </a>
-    </div>
 
-    <!-- Pagination controls required by your JS -->
-    <div class="pager" aria-label="Pagination controls">
-      <button class="btn" id="prevPage" type="button">Prev</button>
-      <div class="page-info" id="pageInfo">Page 1 of 1 • 15 tools</div>
-      <button class="btn" id="nextPage" type="button">Next</button>
+        <div class="cards-grid">
+          <a class="card" href="/tools/utm-builder/">
+            <div class="card-top">
+              <div class="card-ico" aria-hidden="true">🧭</div>
+              <div>
+                <h3>UTM Builder</h3>
+                <p>Build trackable links for YouTube, TikTok, Instagram, and newsletters.</p>
+              </div>
+            </div>
+            <span class="tool-cta">Build UTM Link</span>
+          </a>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -532,9 +493,8 @@
     <div class="hero-box">
       <h2 class="section-title" style="margin-top:0;">How to use these tools in real situations</h2>
       <p class="section-sub" style="margin-bottom:14px;">
-        People don’t search for “a platform”. They search for tasks: word count, meta preview, keyword checks, JSON errors,
-        broken URLs, Base64 decoding, or trackable campaign links. Clickoz tools are built for quick workflows:
-        paste → fix → copy → move on.
+        People search for tasks: word count, snippet preview, keyword checks, JSON errors, broken URLs, Base64 decoding, or campaign tracking.
+        Clickoz tools are built for quick workflows: paste → fix → copy → move on.
       </p>
 
       <div class="lanes">
@@ -551,7 +511,7 @@
 
         <div class="lane">
           <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">🧑‍💻</div>
+            <div class="lane-ico" aria-hidden="true">🖥️</div>
             <h3>Developer utilities when something breaks</h3>
           </div>
           <p>
@@ -585,12 +545,12 @@
     </div>
   </section>
 
-  <!-- FAQ always open -->
+  <!-- FAQ -->
   <section class="section container" aria-label="Tools FAQ">
     <div class="hero-box">
       <h2 class="section-title" style="margin-top:0;">Tools FAQ</h2>
       <p class="section-sub" style="margin-bottom:14px;">
-        Short answers to common questions. Each tool page will also include examples and FAQs tailored to that tool.
+        Short answers to common questions. Each tool page can also include examples and FAQs tailored to that tool.
       </p>
 
       <div class="faq-grid">
@@ -610,8 +570,28 @@
         </div>
 
         <div class="faq">
-          <h3>How do I find the right tool quickly?</h3>
-          <p>Use search (press / to focus), then filter by category. Open the tool that matches your exact task.</p>
+          <h3>How do categories work on this page?</h3>
+          <p>Use the category chips to jump to sections. Each section groups tools by workflow, improving UX and internal linking.</p>
+        </div>
+      </div>
+
+      <!-- SEO BOOST (you asked: add a piece under Tool FAQ to increase SEO) -->
+      <div class="seo-boost" aria-label="SEO boost content">
+        <h3>Popular workflows (internal links)</h3>
+        <p>
+          If you’re building pages for search, start with <b>Meta Tag Optimizer</b> and <b>SERP Preview</b> to improve CTR,
+          then check readability and structure with <b>Word Counter</b> and <b>Readability Analyzer</b>.
+          For debugging, use <b>JSON Formatter</b>, <b>URL Encoder</b>, and <b>Base64</b> to fix common issues fast.
+        </p>
+
+        <div class="seo-boost-links" aria-label="Popular tool links">
+          <a href="/tools/meta-tags/">Meta Tag Optimizer</a>
+          <a href="/tools/serp-preview/">SERP Preview</a>
+          <a href="/tools/word-counter/">Word Counter</a>
+          <a href="/tools/readability-analyzer/">Readability Analyzer</a>
+          <a href="/tools/json-formatter/">JSON Formatter</a>
+          <a href="/tools/url-encoder/">URL Encoder</a>
+          <a href="/tools/base64/">Base64</a>
         </div>
       </div>
     </div>
@@ -656,9 +636,11 @@
     </div>
   </footer>
 
+  <!-- Cookie banner -->
   <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
     <div class="cookie-card">
       <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
+
       <div class="cookie-content">
         <div class="cookie-title">Privacy choices</div>
         <div class="cookie-text">
@@ -666,6 +648,7 @@
           Read more in <a href="/privacy/">Privacy</a>.
         </div>
       </div>
+
       <div class="cookie-actions">
         <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
         <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
@@ -674,85 +657,10 @@
     </div>
   </div>
 
+  <!-- Base site behavior -->
   <script src="/assets/site.js" defer></script>
 
-  <!-- ✅ Tools page logic (fixed to match IDs) -->
-  <script>
-    (function(){
-      const $  = (s, r=document) => r.querySelector(s);
-      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
-
-      const grid   = $('#toolsGrid');
-      const chips  = $('#toolsChips');
-      const search = $('#toolsSearch');
-      const prev   = $('#prevPage');
-      const next   = $('#nextPage');
-      const info   = $('#pageInfo');
-      if(!grid || !chips || !search || !prev || !next || !info) return;
-
-      const PAGE_SIZE = 15;
-      let page = 1;
-      let filter = 'all';
-      const allCards = $$('#toolsGrid a.card');
-
-      function normalize(s){ return (s || '').toLowerCase().trim(); }
-
-      function getFiltered(){
-        const term = normalize(search.value);
-        return allCards.filter(card => {
-          const cat = normalize(card.dataset.cat || '');
-          const hay = normalize((card.dataset.hay || '') + ' ' + (card.textContent || ''));
-          const okCat = (filter === 'all') || (cat === filter);
-          const okTerm = !term || hay.includes(term);
-          return okCat && okTerm;
-        });
-      }
-
-      function render(){
-        const filtered = getFiltered();
-        const total = filtered.length;
-        const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-        if(page > pages) page = pages;
-        if(page < 1) page = 1;
-
-        allCards.forEach(c => c.style.display = 'none');
-        const start = (page - 1) * PAGE_SIZE;
-        filtered.slice(start, start + PAGE_SIZE).forEach(c => c.style.display = '');
-
-        prev.disabled = page <= 1;
-        next.disabled = page >= pages;
-        info.textContent = `Page ${page} of ${pages} • ${total} tool${total === 1 ? '' : 's'}`;
-      }
-
-      chips.addEventListener('click', (e) => {
-        const chip = e.target.closest('.chip');
-        if(!chip) return;
-        chips.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
-        chip.classList.add('active');
-        filter = chip.dataset.filter || 'all';
-        page = 1;
-        render();
-      });
-
-      // keyboard focus: /
-      document.addEventListener('keydown', (e) => {
-        if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
-          e.preventDefault();
-          search.focus();
-        }
-      });
-
-      let t = null;
-      search.addEventListener('input', () => {
-        clearTimeout(t);
-        t = setTimeout(() => { page = 1; render(); }, 60);
-      });
-
-      prev.addEventListener('click', () => { page--; render(); });
-      next.addEventListener('click', () => { page++; render(); });
-
-      render();
-    })();
-  </script>
+  <!-- Tools behavior (chips -> sections + scroll spy + hash) -->
+  <script src="/tools/tools.js" defer></script>
 </body>
 </html>
