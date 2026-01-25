@@ -983,21 +983,21 @@
     // density / count
     baseCount: 220,          // desktop target
     mobileCount: 140,        // mobile target
-    maxCount: 320,           // hard cap
-    spawnPerFrame: 3.2,      // continuous spawn (higher => denser)
-    burstCount: 120,         // burst on load / resize
+    maxCount: 520,           // hard cap
+    spawnPerFrame: 4.2,      // continuous spawn (higher => denser)
+    burstCount: 140,         // burst on load / resize
 
     // size / glow
-    minR: 0.8,
-    maxR: 2.9,
-    glow1: 24,               // stronger blur
-    glow2: 38,
+    minR: 1.5,
+    maxR: 9.9,
+    glow1: 44,               // stronger blur
+    glow2: 58,
 
     // motion
-    minSpeed: 1.25,
+    minSpeed: 1.05,
     maxSpeed: 2.6,
-    drift: 0.22,             // random drift
-    friction: 0.592,         // slow down over time
+    drift: 0.26,             // random drift
+    friction: 0.502,         // slow down over time
     lifeMin: 90,             // frames
     lifeMax: 220,
 
@@ -1006,8 +1006,8 @@
     alphaMax: 0.85,
 
     // visuals
-    composite: "lighter",    // additive = brighter neon
-    fadeOutPower: 1.6,       // higher = punchier fade at end
+    composite: "brighter neon",    // additive = brighter neon
+    fadeOutPower: 5.6,       // higher = punchier fade at end
 
     // performance
     dprCap: 2                // cap DPR for perf
