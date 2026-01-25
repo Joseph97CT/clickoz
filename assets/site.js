@@ -961,3 +961,247 @@
   })();
 
 })();
+/* =========================================================
+   CLICKoz — PARTICLES ENGINE v2 (BOOST)
+   - Stronger glow, higher density
+   - Additive blend (lighter)
+   - Origin near hero center (nice burst feel)
+   - Mobile-safe: auto scales + caps
+========================================================= */
+(() => {
+  const canvas = document.getElementById("spaceParticles");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d", { alpha: true });
+  if (!ctx) return;
+
+  const prefersReduce = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---------- Tunables (BOOST) ----------
+  const CFG = {
+    // density / count
+    baseCount: 220,          // desktop target
+    mobileCount: 140,        // mobile target
+    maxCount: 320,           // hard cap
+    spawnPerFrame: 3.2,      // continuous spawn (higher => denser)
+    burstCount: 120,         // burst on load / resize
+
+    // size / glow
+    minR: 0.8,
+    maxR: 2.6,
+    glow1: 14,               // stronger blur
+    glow2: 28,
+
+    // motion
+    minSpeed: 0.55,
+    maxSpeed: 2.6,
+    drift: 0.12,             // random drift
+    friction: 0.992,         // slow down over time
+    lifeMin: 90,             // frames
+    lifeMax: 220,
+
+    // alpha
+    alphaMin: 0.35,
+    alphaMax: 0.85,
+
+    // visuals
+    composite: "lighter",    // additive = brighter neon
+    fadeOutPower: 1.6,       // higher = punchier fade at end
+
+    // performance
+    dprCap: 2                // cap DPR for perf
+  };
+
+  // If reduced motion, keep it subtle
+  if (prefersReduce) {
+    CFG.baseCount = 90;
+    CFG.mobileCount = 60;
+    CFG.spawnPerFrame = 1.2;
+    CFG.burstCount = 40;
+    CFG.maxSpeed = 1.6;
+  }
+
+  let W = 0, H = 0, DPR = 1;
+  let particles = [];
+  let spawnAcc = 0;
+
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+  function rnd(a, b){ return a + Math.random() * (b - a); }
+
+  function getOrigin() {
+    // Try to anchor around hero
+    const hero = document.querySelector(".hero");
+    if (hero) {
+      const r = hero.getBoundingClientRect();
+      return {
+        x: clamp(r.left + r.width * 0.62, 40, window.innerWidth - 40),
+        y: clamp(r.top  + r.height * 0.28, 60, window.innerHeight * 0.65)
+      };
+    }
+    return { x: window.innerWidth * 0.55, y: window.innerHeight * 0.22 };
+  }
+
+  function resize() {
+    DPR = clamp(window.devicePixelRatio || 1, 1, CFG.dprCap);
+    W = Math.floor(window.innerWidth);
+    H = Math.floor(window.innerHeight);
+
+    canvas.width  = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+    // add a burst after resize to avoid "empty" feeling
+    burst(CFG.burstCount);
+  }
+
+  function makeParticle(burst = false) {
+    const o = getOrigin();
+    // angle spreads like an explosion but slightly biased sideways
+    const ang = rnd(-Math.PI, Math.PI);
+    const spd = rnd(CFG.minSpeed, CFG.maxSpeed) * (burst ? 1.2 : 1);
+    const vx = Math.cos(ang) * spd;
+    const vy = Math.sin(ang) * spd;
+
+    // spawn around origin (tight start)
+    const px = o.x + rnd(-10, 10);
+    const py = o.y + rnd(-10, 10);
+
+    return {
+      x: px,
+      y: py,
+      vx: vx + rnd(-CFG.drift, CFG.drift),
+      vy: vy + rnd(-CFG.drift, CFG.drift),
+      r: rnd(CFG.minR, CFG.maxR),
+      a: rnd(CFG.alphaMin, CFG.alphaMax),
+      life: Math.floor(rnd(CFG.lifeMin, CFG.lifeMax)),
+      age: 0,
+      // choose a cool glow hue between cyan and violet
+      hue: rnd(185, 265)
+    };
+  }
+
+  function burst(n) {
+    const add = Math.floor(n);
+    for (let i=0; i<add; i++) particles.push(makeParticle(true));
+    trimToCap();
+  }
+
+  function trimToCap() {
+    const isMobile = window.matchMedia && window.matchMedia("(max-width: 900px)").matches;
+    const target = isMobile ? CFG.mobileCount : CFG.baseCount;
+    const cap = Math.min(CFG.maxCount, target + 120);
+
+    if (particles.length > cap) {
+      particles.splice(0, particles.length - cap);
+    }
+  }
+
+  function ensureBasePopulation() {
+    const isMobile = window.matchMedia && window.matchMedia("(max-width: 900px)").matches;
+    const target = isMobile ? CFG.mobileCount : CFG.baseCount;
+    if (particles.length < target) {
+      const need = Math.min(target - particles.length, 80);
+      for (let i=0; i<need; i++) particles.push(makeParticle(false));
+    }
+  }
+
+  function drawParticle(p) {
+    // life fade
+    const t = p.age / p.life;
+    const fade = Math.pow(1 - t, CFG.fadeOutPower);
+    const a = p.a * fade;
+
+    // subtle bloom core
+    ctx.beginPath();
+    ctx.globalAlpha = a;
+    ctx.fillStyle = `hsla(${p.hue}, 95%, 70%, ${a})`;
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fill();
+
+    // glow ring (strong)
+    ctx.globalAlpha = a * 0.35;
+    ctx.beginPath();
+    ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${a})`;
+    ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  function tick() {
+    // clear with tiny trail (keeps it “alive” + brighter overall)
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "rgba(0,0,0,0.18)"; // lower alpha => longer trails
+    ctx.fillRect(0,0,W,H);
+
+    ctx.globalCompositeOperation = CFG.composite;
+
+    // keep density up
+    ensureBasePopulation();
+
+    // continuous spawn accumulator
+    spawnAcc += CFG.spawnPerFrame;
+    const spawnNow = Math.floor(spawnAcc);
+    if (spawnNow > 0) {
+      spawnAcc -= spawnNow;
+      for (let i=0; i<spawnNow; i++) particles.push(makeParticle(false));
+      trimToCap();
+    }
+
+    // update + draw
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.age++;
+
+      p.vx *= CFG.friction;
+      p.vy *= CFG.friction;
+
+      // slight gravity-ish pull down for "cascade"
+      p.vy += 0.008;
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // kill if out or dead
+      if (p.age >= p.life || p.x < -80 || p.x > W + 80 || p.y < -80 || p.y > H + 120) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      drawParticle(p);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  // init
+  resize();
+  // big initial burst so it’s instantly “strong”
+  burst(CFG.burstCount + 80);
+
+  window.addEventListener("resize", () => {
+    resize();
+  }, { passive: true });
+
+  // optional: burst on click (nice effect, remove if you want)
+  document.addEventListener("pointerdown", (e) => {
+    if (prefersReduce) return;
+    // burst near click, but keep it subtle
+    const oldGetOrigin = getOrigin;
+    const clickX = e.clientX, clickY = e.clientY;
+
+    // quick override by injecting particles at click location
+    for (let i=0; i<22; i++){
+      const p = makeParticle(true);
+      p.x = clickX + rnd(-12, 12);
+      p.y = clickY + rnd(-12, 12);
+      particles.push(p);
+    }
+    trimToCap();
+  }, { passive: true });
+
+  tick();
+})();
