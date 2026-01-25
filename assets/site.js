@@ -989,9 +989,9 @@
 
     // size / glow
     minR: 1.5,
-    maxR: 9.9,
-    glow1: 44,               // stronger blur
-    glow2: 58,
+    maxR: 11.9,
+    glow1: 144,               // stronger blur
+    glow2: 158,
 
     // motion
     minSpeed: 1.05,
@@ -1007,7 +1007,7 @@
 
     // visuals
     composite: "brighter neon",    // additive = brighter neon
-    fadeOutPower: 5.6,       // higher = punchier fade at end
+    fadeOutPower: 7.6,       // higher = punchier fade at end
 
     // performance
     dprCap: 2                // cap DPR for perf
