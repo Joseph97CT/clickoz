@@ -4,15 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Clickoz Guides – Tutorials, Checklists & Playbooks for SEO, Writing, Dev & Creators</title>
-  <meta name="description" content="Browse Clickoz Guides: practical tutorials, checklists and playbooks for SEO, writing, developers and creators. Clear steps, fast wins, and repeatable workflows." />
+  <title>Clickoz Guides – Practical SEO, Writing & Dev Guides (Fast, Copy-Ready)</title>
+  <meta name="description" content="Practical guides for SEO, writing, and developer workflows. Short steps, examples, and tool links you can apply immediately. Privacy-first, mobile-friendly." />
+
   <link rel="canonical" href="https://clickoz.com/guides/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
 
   <meta property="og:site_name" content="Clickoz" />
-  <meta property="og:title" content="Clickoz Guides – Tutorials & Playbooks" />
-  <meta property="og:description" content="Practical guides for SEO, writing, dev and creators — clear steps, checklists, mobile-friendly." />
+  <meta property="og:title" content="Clickoz Guides – Practical SEO, Writing & Dev Guides" />
+  <meta property="og:description" content="Short, intent-first guides with examples + tool links. Built for fast results." />
   <meta property="og:url" content="https://clickoz.com/guides/" />
   <meta property="og:type" content="website" />
 
@@ -22,140 +23,50 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/assets/site.css?v=4" />
+  <link rel="stylesheet" href="/assets/site.css?v=5" />
+  <!-- Optional: small guides layer (below) -->
+  <link rel="stylesheet" href="/guides/guides.css?v=1" />
 
-  <!-- Same micro-patches as Tools (kept for identical look) -->
-  <style>
-    .nav-links a.active,
-    .m-links a.active{
-      background: rgba(var(--accent-rgb), .12);
-      border: 1px solid rgba(var(--accent-rgb), .28);
-      color: rgba(255,255,255,.96);
-    }
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://clickoz.com/"},
+      {"@type":"ListItem","position":2,"name":"Guides","item":"https://clickoz.com/guides/"}
+    ]
+  }
+  </script>
 
-    .tools-shell{ padding-top: 18px; }
-
-    .tools-kicker{
-      max-width: 980px;
-      margin: 0 auto 10px;
-      text-align:center;
-      color: rgba(255,255,255,.70);
-      font-size: 15px;
-      line-height: 1.65;
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    "name":"Clickoz Guides",
+    "url":"https://clickoz.com/guides/",
+    "isPartOf":{"@type":"WebSite","name":"Clickoz","url":"https://clickoz.com/"},
+    "about":["SEO guides","Writing guides","Developer guides","Tool website SEO"],
+    "mainEntity":{
+      "@type":"ItemList",
+      "name":"Clickoz Guides List",
+      "itemListOrder":"https://schema.org/ItemListUnordered",
+      "numberOfItems":10,
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"url":"https://clickoz.com/guides/meta-tags-length/","name":"Meta Title & Description Length (2026)"},
+        {"@type":"ListItem","position":2,"url":"https://clickoz.com/guides/serp-preview/","name":"SERP Preview: How to Improve Clicks"},
+        {"@type":"ListItem","position":3,"url":"https://clickoz.com/guides/word-count-for-seo/","name":"Word Count for SEO: Intent & Structure"},
+        {"@type":"ListItem","position":4,"url":"https://clickoz.com/guides/readability-score/","name":"Readability Score: What It Means & How to Improve"},
+        {"@type":"ListItem","position":5,"url":"https://clickoz.com/guides/keyword-variations/","name":"Keyword Variations: Avoid Stuffing"},
+        {"@type":"ListItem","position":6,"url":"https://clickoz.com/guides/json-formatter-online/","name":"JSON Formatter Online: Prettify, Validate & Minify"},
+        {"@type":"ListItem","position":7,"url":"https://clickoz.com/guides/base64-encode-decode/","name":"Base64 Encode/Decode: Common Use Cases"},
+        {"@type":"ListItem","position":8,"url":"https://clickoz.com/guides/url-encoding-explained/","name":"URL Encoding Explained: When to Encode"},
+        {"@type":"ListItem","position":9,"url":"https://clickoz.com/guides/internal-linking-tools-sites/","name":"Internal Linking for Tool Websites"},
+        {"@type":"ListItem","position":10,"url":"https://clickoz.com/guides/core-web-vitals-tools-sites/","name":"Core Web Vitals for Tool Sites"}
+      ]
     }
-    .tools-kicker b{
-      color: rgba(255,255,255,.92);
-      font-weight: 900;
-    }
-
-    .pager{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content:center;
-      align-items:center;
-      margin-top: 16px;
-    }
-    .pager .btn{
-      height: 40px;
-      padding: 0 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 1000;
-    }
-    .page-pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height: 40px;
-      padding: 0 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      color: rgba(255,255,255,.82);
-      font-weight: 1000;
-      font-size: 13px;
-      min-width: 260px;
-    }
-
-    .pillar{ text-align:left; margin-top: 16px; }
-    .pillar h2{
-      margin: 0 0 10px;
-      font-size: clamp(22px, 2.4vw, 32px);
-      font-weight: 1000;
-      letter-spacing: -0.02em;
-      line-height: 1.18;
-    }
-    .pillar h3{
-      margin: 18px 0 10px;
-      font-size: 18px;
-      font-weight: 1000;
-      letter-spacing: -0.01em;
-    }
-    .pillar p{
-      margin: 0 0 12px;
-      color: rgba(255,255,255,.76);
-      line-height: 1.75;
-      font-size: 15.5px;
-    }
-
-    .lanes{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    @media (min-width: 981px){
-      .lanes{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    }
-    .lane{
-      padding: 16px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
-      box-shadow: 0 16px 50px rgba(0,0,0,.28);
-      position: relative;
-      overflow:hidden;
-      text-align:left;
-    }
-    .lane::after{
-      content:"";
-      position:absolute;
-      inset:-30%;
-      background: radial-gradient(600px 240px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
-      filter: blur(26px);
-      opacity: .9;
-      pointer-events:none;
-    }
-    .lane-head{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      position: relative;
-      z-index: 1;
-    }
-    .lane-ico{
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: rgba(var(--accent-rgb), .10);
-      border: 1px solid rgba(var(--accent-rgb), .22);
-      font-size: 20px;
-      flex: 0 0 auto;
-    }
-    .lane h3{ margin: 0; font-size: 16px; font-weight: 1000; }
-    .lane p{
-      margin: 10px 0 0;
-      position: relative;
-      z-index: 1;
-      color: rgba(255,255,255,.74);
-      line-height: 1.7;
-      font-size: 14.5px;
-    }
-  </style>
+  }
+  </script>
 </head>
 
 <body class="bigtext">
@@ -164,7 +75,7 @@
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
   <div class="__grain" aria-hidden="true"></div>
 
-  <!-- NAV -->
+  <!-- NAV (HOME ADDED ✅) -->
   <nav class="nav" aria-label="Primary navigation" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
@@ -178,8 +89,9 @@
       </a>
 
       <div class="nav-links" aria-label="Sections">
-        <a href="/tools.html">Tools</a>
-        <a href="/guides/" class="active" aria-current="page">Guides</a>
+        <a href="/">Home</a>
+        <a href="/tools/">Tools</a>
+        <a class="active" href="/guides/" aria-current="page">Guides</a>
         <a href="/updates/">Updates</a>
       </div>
 
@@ -217,7 +129,7 @@
     </div>
   </nav>
 
-  <!-- Mobile menu -->
+  <!-- Mobile menu (HOME ADDED ✅) -->
   <div class="m-overlay" id="mOverlay" hidden></div>
   <aside class="m-menu" id="mobileMenu" aria-hidden="true">
     <div class="m-head">
@@ -226,7 +138,8 @@
     </div>
 
     <div class="m-links">
-      <a class="m-link" href="/tools.html">Tools</a>
+      <a class="m-link" href="/">Home</a>
+      <a class="m-link" href="/tools/">Tools</a>
       <a class="m-link active" href="/guides/" aria-current="page">Guides</a>
       <a class="m-link" href="/updates/">Updates</a>
       <a class="m-link" href="/privacy/">Privacy</a>
@@ -255,145 +168,222 @@
     </div>
   </aside>
 
-  <!-- GUIDES (kept same IDs as Tools to preserve your CSS/JS behavior) -->
-  <section class="section container tools-shell" id="tools">
-    <h1 class="section-title">Guides</h1>
-    <div class="tools-kicker">
-      <b>Practical guides</b> for SEO, writing, developers, and creators — clear steps, checklists, and repeatable workflows.
+  <!-- HERO -->
+  <header class="section container" aria-label="Guides index">
+    <div class="guides-hero hero-box">
+      <div class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span><span>Guides</span>
+      </div>
+
+      <div class="guides-hero-top">
+        <div style="flex:1 1 520px;">
+          <h1 class="section-title" style="margin-top:0;">Guides that ship results.</h1>
+          <p class="section-sub" style="margin-bottom:0;">
+            Short, intent-first playbooks with examples and direct tool links. Built for SEO clarity, writing improvements,
+            and fast dev fixes — without fluff.
+          </p>
+
+          <div class="guides-metrics" aria-label="Guide highlights">
+            <div class="metric-pill">🧠 <b>Practical</b> • steps & examples</div>
+            <div class="metric-pill">🎯 <b>Intent-first</b> • SERP aligned</div>
+            <div class="metric-pill">⚡ <b>Fast</b> • skim-friendly</div>
+            <div class="metric-pill">🔗 <b>Tool-linked</b> • apply instantly</div>
+          </div>
+        </div>
+
+        <div class="guides-search" style="flex:1 1 360px;">
+          <input class="search" id="guidesSearch" placeholder="Search guides (meta, serp, readability, json, internal links…)" aria-label="Search guides" autocomplete="off" />
+          <div class="guides-quick">
+            <a class="btn" href="/tools/">Browse Tools</a>
+            <a class="btn primary" href="/tools/meta-tags/">Open Meta Tags</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category chips (optional now, future-proof) -->
+      <div class="chips" id="guidesChips" aria-label="Guide categories">
+        <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
+        <div class="chip" data-filter="seo" role="button" tabindex="0">SEO</div>
+        <div class="chip" data-filter="writing" role="button" tabindex="0">Writing</div>
+        <div class="chip" data-filter="dev" role="button" tabindex="0">Dev</div>
+        <div class="chip" data-filter="growth" role="button" tabindex="0">Growth</div>
+      </div>
     </div>
+  </header>
 
-    <div class="row">
-      <input class="search" id="toolsSearch" placeholder="Search guides (seo checklist, meta titles, youtube packaging, json errors…)" aria-label="Search guides" autocomplete="off" />
+  <!-- GUIDES GRID -->
+  <main class="section container" aria-label="All guides">
+    <div class="hero-box">
+      <h2 class="section-title" style="margin-top:0;">Popular guides</h2>
+      <p class="section-sub" style="margin-bottom:14px;">
+        Start here. Each guide includes quick steps + a tool link so you can apply changes immediately.
+      </p>
+
+      <div class="guides-grid" id="guidesGrid">
+        <!-- SEO -->
+        <a class="card guide-x" href="/guides/meta-tags-length/" data-cat="seo" data-hay="meta tags title description length ctr snippet">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">🏷️</span>
+            <h3>Meta Title &amp; Description Length (2026)</h3>
+          </div>
+          <p>Prevent truncation, write clearer snippets, and improve CTR with intent-first messaging.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">SEO</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <a class="card guide-x" href="/guides/serp-preview/" data-cat="seo" data-hay="serp preview snippet google title description ctr">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">🧩</span>
+            <h3>SERP Preview: How to Improve Clicks</h3>
+          </div>
+          <p>Match query intent, earn clicks, and avoid vague titles that lose the user.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">SEO</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <a class="card guide-x" href="/guides/internal-linking-tools-sites/" data-cat="growth" data-hay="internal linking tool sites categories clusters anchors seo">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">🧭</span>
+            <h3>Internal Linking for Tool Websites</h3>
+          </div>
+          <p>Categories, anchors, and topical clusters that strengthen SEO and keep users moving.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">Growth</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <a class="card guide-x" href="/guides/core-web-vitals-tools-sites/" data-cat="growth" data-hay="core web vitals tools sites cls inp lcp performance">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">⚡</span>
+            <h3>Core Web Vitals for Tool Sites</h3>
+          </div>
+          <p>Fast UX + stable layout = better retention and better search performance.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">Growth</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <!-- WRITING -->
+        <a class="card guide-x" href="/guides/word-count-for-seo/" data-cat="writing" data-hay="word count seo intent structure headings length">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">🔢</span>
+            <h3>Word Count for SEO: Intent &amp; Structure</h3>
+          </div>
+          <p>How long a page should be, based on intent — not generic word targets.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">Writing</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <a class="card guide-x" href="/guides/readability-score/" data-cat="writing" data-hay="readability score grade level scan mobile clarity">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">📚</span>
+            <h3>Readability Score: Meaning &amp; Improvements</h3>
+          </div>
+          <p>Make content easier to skim: short sentences, clean sections, better flow.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">Writing</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <a class="card guide-x" href="/guides/keyword-variations/" data-cat="seo" data-hay="keyword variations synonyms avoid stuffing intent terms">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">📈</span>
+            <h3>Keyword Variations: Avoid Stuffing</h3>
+          </div>
+          <p>Use intent terms and synonyms naturally without repeating the same keyword.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">SEO</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <!-- DEV -->
+        <a class="card guide-x" href="/guides/json-formatter-online/" data-cat="dev" data-hay="json formatter validate minify parse error debugging">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">🧾</span>
+            <h3>JSON Formatter: Prettify, Validate &amp; Minify</h3>
+          </div>
+          <p>Fix parse errors fast and keep payloads clean for APIs and configs.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">Dev</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <a class="card guide-x" href="/guides/url-encoding-explained/" data-cat="dev" data-hay="url encoding encode decode query string parameters">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">🔗</span>
+            <h3>URL Encoding Explained: When to Encode</h3>
+          </div>
+          <p>Fix broken parameters, redirects, and special characters safely.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">Dev</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+
+        <a class="card guide-x" href="/guides/base64-encode-decode/" data-cat="dev" data-hay="base64 decode encode jwt token payload">
+          <div class="guide-top">
+            <span class="guide-ico" aria-hidden="true">🔐</span>
+            <h3>Base64 Encode/Decode: Common Use Cases</h3>
+          </div>
+          <p>Tokens, payloads, quick debugging, and safe copy-ready output.</p>
+          <div class="guide-bottom">
+            <span class="guide-tag">Dev</span>
+            <span class="tool-cta">Read guide</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Small internal linking block (SEO boost) -->
+      <div class="seo-boost" aria-label="Guides internal links">
+        <h3>Most-used paths (start here)</h3>
+        <p>
+          For SEO snippets: read <b>Meta Tags Length</b> → use <b>Meta Tag Optimizer</b> → verify with <b>SERP Preview</b>.
+          For content quality: read <b>Readability Score</b> → use <b>Readability Analyzer</b> + <b>Word Counter</b>.
+          For debugging: start with <b>JSON Formatter</b> → then <b>URL Encoder</b> / <b>Base64</b>.
+        </p>
+        <div class="seo-boost-links" aria-label="Popular links">
+          <a href="/tools/meta-tags/">Meta Tag Optimizer</a>
+          <a href="/tools/serp-preview/">SERP Preview</a>
+          <a href="/tools/readability-analyzer/">Readability Analyzer</a>
+          <a href="/tools/word-counter/">Word Counter</a>
+          <a href="/tools/json-formatter/">JSON Formatter</a>
+          <a href="/tools/url-encoder/">URL Encoder</a>
+          <a href="/tools/base64/">Base64</a>
+        </div>
+      </div>
     </div>
-
-    <!-- ✅ removed the “Press / to search • Filter by category • 15 guides per page” line -->
-
-    <div class="chips" id="toolsChips" aria-label="Categories" style="margin-top:12px;">
-      <div class="chip active" data-filter="all" role="button" tabindex="0">All</div>
-      <div class="chip" data-filter="seo" role="button" tabindex="0">SEO</div>
-      <div class="chip" data-filter="writing" role="button" tabindex="0">Writing</div>
-      <div class="chip" data-filter="dev" role="button" tabindex="0">Dev</div>
-      <div class="chip" data-filter="creator" role="button" tabindex="0">Creator</div>
-    </div>
-
-    <!-- Guides grid -->
-    <div class="grid" id="toolsGrid">
-
-      <!-- Replace these with your “guides from index” (same structure) -->
-
-      <a class="card" href="/guides/seo-checklist/"
-         data-cat="seo"
-         data-hay="seo checklist on-page audit title meta description headings internal links">
-        <div class="card-top">
-          <div class="badge">SEO</div>
-          <div class="card-title">On-Page SEO Checklist</div>
-          <div class="card-desc">A repeatable checklist to improve titles, meta descriptions, headings, and internal linking.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">Guide</span>
-          <span class="btn small">Read</span>
-        </div>
-      </a>
-
-      <a class="card" href="/guides/meta-title-formula/"
-         data-cat="seo"
-         data-hay="meta title formula serp length ctr keywords intent">
-        <div class="card-top">
-          <div class="badge">SEO</div>
-          <div class="card-title">Meta Title Formula (CTR)</div>
-          <div class="card-desc">Write titles that fit SERP limits and match intent—without keyword stuffing.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">Guide</span>
-          <span class="btn small">Read</span>
-        </div>
-      </a>
-
-      <a class="card" href="/guides/readability-basics/"
-         data-cat="writing"
-         data-hay="readability writing clarity short sentences structure scannable mobile">
-        <div class="card-top">
-          <div class="badge">Writing</div>
-          <div class="card-title">Readability Basics</div>
-          <div class="card-desc">Make content easier to read on mobile: structure, spacing, and clarity rules.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">Guide</span>
-          <span class="btn small">Read</span>
-        </div>
-      </a>
-
-      <a class="card" href="/guides/youtube-packaging/"
-         data-cat="creator"
-         data-hay="youtube packaging titles hooks description tags keywords intent">
-        <div class="card-top">
-          <div class="badge">Creator</div>
-          <div class="card-title">YouTube Packaging Playbook</div>
-          <div class="card-desc">Titles, hooks and descriptions that match what people actually search and click.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">Guide</span>
-          <span class="btn small">Read</span>
-        </div>
-      </a>
-
-      <a class="card" href="/guides/json-fix-common-errors/"
-         data-cat="dev"
-         data-hay="json errors validate format trailing comma quotes parse encoding">
-        <div class="card-top">
-          <div class="badge">Dev</div>
-          <div class="card-title">Fix Common JSON Errors</div>
-          <div class="card-desc">The fastest way to debug invalid JSON: commas, quotes, encoding and validation.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">Guide</span>
-          <span class="btn small">Read</span>
-        </div>
-      </a>
-
-      <a class="card" href="/guides/base64-url-basics/"
-         data-cat="dev"
-         data-hay="base64 url encode decode query string percent encoding">
-        <div class="card-top">
-          <div class="badge">Dev</div>
-          <div class="card-title">Base64 + URL Encoding Basics</div>
-          <div class="card-desc">When to encode/decode and how to avoid broken query strings and malformed URLs.</div>
-        </div>
-        <div class="card-bot">
-          <span class="pill">Guide</span>
-          <span class="btn small">Read</span>
-        </div>
-      </a>
-
-    </div>
-
-    <div class="pager" aria-label="Pagination controls">
-      <button class="btn" id="prevPage" type="button" aria-label="Previous page">← Prev</button>
-      <span class="page-pill" id="pageInfo" aria-live="polite">Page 1</span>
-      <button class="btn" id="nextPage" type="button" aria-label="Next page">Next →</button>
-    </div>
-  </section>
-
-  <!-- Optional: keep your narrative SEO sections if you want (not required) -->
+  </main>
 
   <footer class="footer">
     <div class="container footer-grid">
       <div>
         <h4>Clickoz</h4>
         <div class="footer-links">
-          <a href="/tools.html">Tools</a>
+          <a href="/">Home</a>
+          <a href="/tools/">Tools</a>
           <a href="/guides/">Guides</a>
           <a href="/updates/">Updates</a>
         </div>
       </div>
 
       <div>
-        <h4>Popular guides</h4>
+        <h4>Popular</h4>
         <div class="footer-links">
-          <a href="/guides/seo-checklist/">On-Page SEO Checklist</a>
-          <a href="/guides/youtube-packaging/">YouTube Packaging</a>
-          <a href="/guides/json-fix-common-errors/">Fix JSON Errors</a>
-          <a href="/guides/meta-title-formula/">Meta Title Formula</a>
+          <a href="/tools/word-counter/">Word Counter</a>
+          <a href="/tools/readability-analyzer/">Readability</a>
+          <a href="/tools/meta-tags/">Meta Tags</a>
+          <a href="/tools/json-formatter/">JSON Formatter</a>
         </div>
       </div>
 
@@ -410,14 +400,16 @@
     <div class="container" style="margin-top:14px">
       <hr class="sep" />
       <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
-        © 2026 Clickoz • Guides for SEO, writing and developers
+        © 2026 Clickoz • Practical guides + fast tools
       </div>
     </div>
   </footer>
 
+  <!-- Cookie banner (same as others) -->
   <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
     <div class="cookie-card">
       <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
+
       <div class="cookie-content">
         <div class="cookie-title">Privacy choices</div>
         <div class="cookie-text">
@@ -425,6 +417,7 @@
           Read more in <a href="/privacy/">Privacy</a>.
         </div>
       </div>
+
       <div class="cookie-actions">
         <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
         <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
@@ -433,101 +426,58 @@
     </div>
   </div>
 
-  <script>
-    (function(){
-      const nav = document.getElementById('topNav');
-      if(!nav) return;
-      let lastY = window.scrollY || 0;
-      const onScroll = () => {
-        const y = window.scrollY || 0;
-        const scrolled = y > 8;
-        nav.classList.toggle('is-scrolled', scrolled);
-        const goingDown = y > lastY + 2;
-        const goingUp = y < lastY - 2;
-        if(scrolled && goingDown) nav.classList.add('is-down');
-        if(!scrolled || goingUp) nav.classList.remove('is-down');
-        lastY = y;
-      };
-      window.addEventListener('scroll', onScroll, { passive:true });
-      onScroll();
-    })();
-  </script>
-
   <script src="/assets/site.js" defer></script>
 
-  <!-- Same paging/filter script (works because IDs stayed the same) -->
+  <!-- Tiny guides logic: search + chips -->
   <script>
     (function(){
       const $  = (s, r=document) => r.querySelector(s);
       const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+      const grid = $("#guidesGrid");
+      const search = $("#guidesSearch");
+      const chips = $("#guidesChips");
+      if(!grid) return;
 
-      const grid   = $('#toolsGrid');
-      const chips  = $('#toolsChips');
-      const search = $('#toolsSearch');
-      const prev   = $('#prevPage');
-      const next   = $('#nextPage');
-      const info   = $('#pageInfo');
-      if(!grid || !chips || !search || !prev || !next || !info) return;
+      const cards = $$("#guidesGrid a.card");
+      let filter = "all";
 
-      const PAGE_SIZE = 15;
-      let page = 1;
-      let filter = 'all';
-      const allCards = $$('#toolsGrid a.card');
+      const norm = (s) => (s||"").toLowerCase().trim();
 
-      function normalize(s){ return (s || '').toLowerCase().trim(); }
-
-      function getFiltered(){
-        const term = normalize(search.value);
-        return allCards.filter(card => {
-          const cat = normalize(card.dataset.cat || '');
-          const hay = normalize((card.dataset.hay || '') + ' ' + (card.textContent || ''));
-          const okCat = (filter === 'all') || (cat === filter);
+      function render(){
+        const term = search ? norm(search.value) : "";
+        cards.forEach(c => {
+          const cat = norm(c.dataset.cat || "");
+          const hay = norm((c.dataset.hay||"") + " " + (c.textContent||""));
+          const okCat = (filter === "all") || (cat === filter);
           const okTerm = !term || hay.includes(term);
-          return okCat && okTerm;
+          c.style.display = (okCat && okTerm) ? "" : "none";
         });
       }
 
-      function render(){
-        const filtered = getFiltered();
-        const total = filtered.length;
-        const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-        if(page > pages) page = pages;
-        if(page < 1) page = 1;
-
-        allCards.forEach(c => c.style.display = 'none');
-        const start = (page - 1) * PAGE_SIZE;
-        filtered.slice(start, start + PAGE_SIZE).forEach(c => c.style.display = '');
-
-        prev.disabled = page <= 1;
-        next.disabled = page >= pages;
-        info.textContent = `Page ${page} of ${pages} • ${total} guide${total === 1 ? '' : 's'}`;
+      if(chips){
+        chips.addEventListener("click", (e) => {
+          const chip = e.target.closest(".chip");
+          if(!chip) return;
+          $$("#guidesChips .chip").forEach(x => x.classList.remove("active"));
+          chip.classList.add("active");
+          filter = chip.dataset.filter || "all";
+          render();
+        });
       }
 
-      chips.addEventListener('click', (e) => {
-        const chip = e.target.closest('.chip');
-        if(!chip) return;
-        chips.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
-        chip.classList.add('active');
-        filter = chip.dataset.filter || 'all';
-        page = 1;
-        render();
-      });
-
-      let t = null;
-      search.addEventListener('input', () => {
-        clearTimeout(t);
-        t = setTimeout(() => { page = 1; render(); }, 60);
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
-          e.preventDefault();
-          search.focus();
-        }
-      });
-
-      prev.addEventListener('click', () => { page--; render(); });
-      next.addEventListener('click', () => { page++; render(); });
+      if(search){
+        let t=null;
+        search.addEventListener("input", () => {
+          clearTimeout(t);
+          t=setTimeout(render, 70);
+        });
+        document.addEventListener("keydown", (e) => {
+          if(e.key === "/" && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
+            e.preventDefault();
+            search.focus();
+          }
+        });
+      }
 
       render();
     })();
