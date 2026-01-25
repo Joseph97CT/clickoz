@@ -1,0 +1,370 @@
+/* =========================================================
+   Clickoz Tools — tools.css
+   (micro-layer sopra site.css)
+   - Hero più coinvolgente
+   - Chips premium + sticky feel
+   - Sezioni per categoria (#seo #text #dev #creator)
+   - Card stile 9.5/10: allineamento + CTA coerente
+   - SEO boost block
+========================================================= */
+
+/* ---- Safe container tightening ---- */
+.tools-shell{
+  padding-top: 18px;
+}
+
+/* ---- Hero / top head ---- */
+.tools-hero{
+  margin-top: 10px;
+  padding: 18px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(900px 320px at 18% 0%,
+      rgba(34,211,238,.16),
+      transparent 60%),
+    radial-gradient(700px 280px at 78% 10%,
+      rgba(99,102,241,.14),
+      transparent 55%),
+    linear-gradient(180deg, rgba(15,21,38,.70), rgba(0,0,0,.18));
+  box-shadow: 0 18px 60px rgba(0,0,0,.28);
+  position: relative;
+  overflow: hidden;
+}
+
+.tools-hero::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(420px 140px at 50% -10%,
+      rgba(255,255,255,.08),
+      transparent 60%);
+  pointer-events:none;
+}
+
+.tools-hero-top{
+  display:flex;
+  align-items:flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.tools-title{
+  margin: 0;
+  font-size: clamp(22px, 2.6vw, 34px);
+  font-weight: 1000;
+  letter-spacing: -0.03em;
+}
+
+.tools-sub{
+  margin: 6px 0 0;
+  color: rgba(255,255,255,.78);
+  line-height: 1.7;
+  font-size: 15.5px;
+  max-width: 76ch;
+}
+
+.tools-metrics{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.metric-pill{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  color: rgba(255,255,255,.86);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.metric-pill b{
+  font-weight: 1000;
+  color: rgba(255,255,255,.95);
+}
+
+.tools-hero-row{
+  margin-top: 14px;
+}
+
+/* ---- Search row (se la tieni) ---- */
+.tools-search{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items:center;
+  justify-content: space-between;
+}
+
+.tools-search .search{
+  flex: 1 1 380px;
+  min-width: 220px;
+}
+
+/* ---- Chips: premium ---- */
+.chips{
+  max-width: 980px;
+  margin: 12px auto 0;
+  display:flex;
+  gap: 8px;
+  justify-content:center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.chip{
+  user-select:none;
+  cursor:pointer;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.16);
+  color: rgba(255,255,255,.78);
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: -0.01em;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease, color .12s ease;
+}
+
+.chip:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.16);
+  color: rgba(255,255,255,.90);
+}
+
+.chip.active{
+  color: rgba(255,255,255,.96);
+  border-color: rgba(255,255,255,.18);
+  background:
+    radial-gradient(220px 90px at 30% 0%,
+      rgba(34,211,238,.18),
+      transparent 60%),
+    radial-gradient(220px 90px at 70% 0%,
+      rgba(99,102,241,.16),
+      transparent 62%),
+    rgba(0,0,0,.20);
+}
+
+/* ---- Category sections ---- */
+.tool-sections{
+  margin-top: 14px;
+  display: grid;
+  gap: 14px;
+}
+
+.tool-section{
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
+  box-shadow: 0 16px 50px rgba(0,0,0,.22);
+  scroll-margin-top: 84px; /* fallback; JS uses nav height */
+}
+
+.section-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.section-kicker{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.section-ico{
+  font-size: 18px;
+}
+
+.section-name{
+  margin: 0;
+  font-size: 16px;
+  font-weight: 1000;
+  letter-spacing: -0.02em;
+}
+
+.section-desc{
+  margin: 4px 0 0;
+  color: rgba(255,255,255,.74);
+  line-height: 1.7;
+  font-size: 14.8px;
+  max-width: 72ch;
+}
+
+.section-count{
+  font-size: 12.8px;
+  font-weight: 1000;
+  color: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.16);
+  padding: 9px 12px;
+  border-radius: 999px;
+}
+
+/* ---- Cards grid in each section ---- */
+.cards-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+@media (min-width: 720px){
+  .cards-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (min-width: 1040px){
+  .cards-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+
+/* Use your base .card, but tighten + make CTA consistent */
+.cards-grid .card{
+  position: relative;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(260px 90px at 18% 0%,
+      rgba(34,211,238,.10),
+      transparent 60%),
+    radial-gradient(260px 90px at 82% 0%,
+      rgba(99,102,241,.08),
+      transparent 62%),
+    rgba(0,0,0,.14);
+  box-shadow: 0 14px 46px rgba(0,0,0,.22);
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 174px;
+  text-decoration:none;
+  transition: transform .14s ease, border-color .14s ease, background .14s ease;
+}
+
+.cards-grid .card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.16);
+  background:
+    radial-gradient(300px 120px at 18% 0%,
+      rgba(34,211,238,.14),
+      transparent 62%),
+    radial-gradient(300px 120px at 82% 0%,
+      rgba(99,102,241,.10),
+      transparent 64%),
+    rgba(0,0,0,.16);
+}
+
+.card-top{
+  display:flex;
+  align-items:flex-start;
+  gap: 10px;
+}
+
+.card-ico{
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.cards-grid .card h3{
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 1000;
+  letter-spacing: -0.015em;
+}
+
+.cards-grid .card p{
+  margin: 0;
+  color: rgba(255,255,255,.74);
+  line-height: 1.7;
+  font-size: 14.6px;
+}
+
+/* CTA pinned bottom */
+.cards-grid .tool-cta{
+  margin-top: auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+  height: 42px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 1000;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  color: rgba(255,255,255,.92);
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+
+.cards-grid .card:hover .tool-cta{
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.16);
+  background: rgba(0,0,0,.22);
+}
+
+/* ---- Remove old hint/actions (you asked to remove) ---- */
+.search-hint,
+.tools-actions{
+  display:none !important;
+}
+
+/* ---- FAQ + SEO boost ---- */
+.seo-boost{
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(700px 220px at 20% 0%,
+      rgba(34,211,238,.12),
+      transparent 58%),
+    linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
+  box-shadow: 0 16px 50px rgba(0,0,0,.22);
+}
+
+.seo-boost h3{
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 1000;
+  letter-spacing: -0.01em;
+}
+
+.seo-boost p{
+  margin: 0;
+  color: rgba(255,255,255,.76);
+  line-height: 1.75;
+  font-size: 14.8px;
+}
+
+.seo-boost-links{
+  margin-top: 12px;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.seo-boost-links a{
+  text-decoration:none;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.16);
+  color: rgba(255,255,255,.88);
+  font-size: 13px;
+  font-weight: 1000;
+}
+
+.seo-boost-links a:hover{
+  border-color: rgba(255,255,255,.16);
+  background: rgba(0,0,0,.20);
+}
