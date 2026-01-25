@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ✅ Primary SEO -->
-  <title>Word Counter – Words, Characters, Sentences, Paragraphs, Reading Time | Clickoz</title>
-  <meta name="description" content="Free Word Counter by Clickoz. Count words, characters (with/without spaces), sentences, paragraphs, and estimate reading time. Runs in your browser, no signup." />
-  <link rel="canonical" href="https://clickoz.com/tools/word-counter/" />
+  <title>YouTube Video Tag Optimizer – Best Tags from Your Title + Intent | Clickoz</title>
+  <meta name="description" content="Free YouTube Tag Optimizer by Clickoz. Analyze your video title, estimate the recommended max tag count, and generate high-signal tags aligned with your title and search intent. Runs in your browser." />
+  <link rel="canonical" href="https://clickoz.com/tools/youtube-video-tag/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
 
-  <!-- ✅ Social (add og:image later if you have it) -->
+  <!-- ✅ Social -->
   <meta property="og:site_name" content="Clickoz" />
-  <meta property="og:title" content="Word Counter – Free Online Tool | Clickoz" />
-  <meta property="og:description" content="Count words, characters, sentences, paragraphs, and reading time. Instant, privacy-first, no signup." />
-  <meta property="og:url" content="https://clickoz.com/tools/word-counter/" />
+  <meta property="og:title" content="YouTube Video Tag Optimizer – Free Online Tool | Clickoz" />
+  <meta property="og:description" content="Analyze your title and generate high-signal YouTube tags aligned with intent. Copy-ready output. Privacy-first." />
+  <meta property="og:url" content="https://clickoz.com/tools/youtube-video-tag/" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://clickoz.com/assets/og/word-counter.png" />
+  <meta property="og:image" content="https://clickoz.com/assets/og/youtube-video-tag.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Word Counter – Free Online Tool | Clickoz" />
-  <meta name="twitter:description" content="Count words, characters, sentences, paragraphs, and reading time. Instant, privacy-first, no signup." />
-  <meta name="twitter:image" content="https://clickoz.com/assets/og/word-counter.png" />
+  <meta name="twitter:title" content="YouTube Video Tag Optimizer – Free Online Tool | Clickoz" />
+  <meta name="twitter:description" content="Generate YouTube tags from your title + intent. Copy-ready output. Privacy-first." />
+  <meta name="twitter:image" content="https://clickoz.com/assets/og/youtube-video-tag.png" />
 
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
@@ -38,31 +38,23 @@
 
     /* Breadcrumb */
     .crumbs{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items:center;
-      font-size: 13px;
-      color: rgba(255,255,255,.70);
+      display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+      font-size:13px; color: rgba(255,255,255,.70);
       margin: 6px 0 10px;
     }
     .crumbs a{
       color: rgba(255,255,255,.82);
       text-decoration:none;
-      border-bottom: 1px solid rgba(255,255,255,.14);
+      border-bottom:1px solid rgba(255,255,255,.14);
     }
     .crumbs .sep{ opacity:.55; }
 
     /* Hero intro */
-    .tool-hero{
-      max-width: 980px;
-      margin: 0 auto;
-      text-align:center;
-    }
+    .tool-hero{ max-width: 980px; margin: 0 auto; text-align:center; }
     .kicker{
       margin: 10px auto 0;
       color: rgba(255,255,255,.74);
-      line-height: 1.8;
+      line-height: 1.85;
       font-size: 15.5px;
     }
     .kicker b{ color: rgba(255,255,255,.92); font-weight: 1000; }
@@ -70,16 +62,11 @@
     /* Trust row */
     .mini-trust{
       margin: 14px auto 0;
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content:center;
-      align-items:center;
+      display:flex; flex-wrap:wrap; gap:10px;
+      justify-content:center; align-items:center;
     }
     .mini-pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
+      display:inline-flex; align-items:center; gap:8px;
       padding: 10px 12px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12);
@@ -104,8 +91,7 @@
     }
     .tool-panel::after{
       content:"";
-      position:absolute;
-      inset:-30%;
+      position:absolute; inset:-30%;
       background: radial-gradient(720px 320px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
       filter: blur(30px);
       opacity: .9;
@@ -119,7 +105,7 @@
       gap: 12px;
     }
     @media (min-width: 981px){
-      .tool-grid{ grid-template-columns: 1.35fr .65fr; }
+      .tool-grid{ grid-template-columns: 1.25fr .75fr; }
     }
 
     .field-label{
@@ -131,22 +117,31 @@
       color: rgba(255,255,255,.84);
     }
 
-    .tool-area textarea{
+    .input, .select, .textarea{
       width:100%;
-      min-height: 260px;
-      resize: vertical;
       border-radius: 16px;
-      padding: 14px 14px;
+      padding: 12px 14px;
       background: rgba(255,255,255,.03);
       border: 1px solid rgba(255,255,255,.12);
       color: rgba(255,255,255,.92);
-      outline: none;
-      line-height: 1.65;
+      outline:none;
+      line-height: 1.5;
       font-size: 15px;
     }
-    .tool-area textarea:focus{
+    .textarea{ min-height: 120px; resize: vertical; }
+    .input:focus, .select:focus, .textarea:focus{
       border-color: rgba(var(--accent-rgb), .35);
       box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
+    }
+
+    .row2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (min-width: 981px){
+      .row2{ grid-template-columns: 1fr 1fr; }
     }
 
     .tool-actions{
@@ -156,11 +151,7 @@
       flex-wrap: wrap;
       align-items:center;
     }
-    .tool-actions .btn{
-      height: 44px;
-      border-radius: 14px;
-      font-weight: 1000;
-    }
+    .tool-actions .btn{ height: 44px; border-radius: 14px; font-weight: 1000; }
     .btn.ghost{
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.12);
@@ -177,21 +168,12 @@
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
     }
-    .stat .label{
-      font-size: 12px;
-      opacity: .78;
-      letter-spacing: .02em;
-    }
-    .stat .value{
-      margin-top: 6px;
-      font-weight: 1000;
-      font-size: 18px;
-    }
+    .stat .label{ font-size: 12px; opacity: .78; letter-spacing: .02em; }
+    .stat .value{ margin-top: 6px; font-weight: 1000; font-size: 18px; }
 
-    /* Helpful callout + examples */
     .callout{
       margin-top: 12px;
-      padding: 12px 12px;
+      padding: 12px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
@@ -201,6 +183,54 @@
     }
     .callout b{ color: rgba(255,255,255,.92); font-weight: 1000; }
 
+    /* Tags UI */
+    .chips{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      text-decoration:none;
+      font-weight: 900;
+      font-size: 13px;
+      color: rgba(255,255,255,.88);
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .chip:hover{
+      transform: translateY(-1px);
+      border-color: rgba(var(--accent-rgb), .35);
+      background: rgba(var(--accent-rgb), .08);
+    }
+    .chip:active{ transform: translateY(0px) scale(.98); }
+    .chip small{ opacity:.72; font-weight: 900; }
+
+    .divider{
+      height:1px;
+      margin: 12px 0;
+      background: rgba(255,255,255,.10);
+    }
+
+    /* Feedback list */
+    .list{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(255,255,255,.78);
+      line-height: 1.7;
+      font-size: 14.5px;
+    }
+    .list li{ margin: 6px 0; }
+
+    /* Examples */
     .examples{
       margin-top: 14px;
       display:grid;
@@ -243,11 +273,8 @@
     }
     .ex .btn{ height: 40px; border-radius: 14px; font-weight: 1000; font-size: 13px; }
 
-    /* SEO content */
-    .seo-block{
-      margin-top: 16px;
-      text-align:left;
-    }
+    /* SEO blocks */
+    .seo-block{ margin-top: 16px; text-align:left; }
     .seo-block h2{
       margin: 0 0 10px;
       font-size: clamp(22px, 2.4vw, 32px);
@@ -282,7 +309,7 @@
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
-      padding: 12px 12px;
+      padding: 12px;
     }
     .faq-q{
       font-weight: 1000;
@@ -297,42 +324,6 @@
       font-size: 14.5px;
     }
 
-    /* Related links */
-    .related{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    @media (min-width: 981px){
-      .related{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    .rel-box{
-      padding: 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-    }
-    .rel-links{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .rel-links a{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      text-decoration:none;
-      font-weight: 900;
-      font-size: 13px;
-      color: rgba(255,255,255,.88);
-    }
-
     .meta-note{
       margin-top: 14px;
       text-align:center;
@@ -340,21 +331,21 @@
       font-size: 13px;
       line-height: 1.7;
     }
-    .meta-note a{ color: rgba(255,255,255,.78); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.14); }
+    .meta-note a{ color: rgba(255,255,255,.78); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.14); }
   </style>
 
   <!-- ✅ JSON-LD: WebApplication -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Word Counter",
-    "url": "https://clickoz.com/tools/word-counter/",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "All",
-    "browserRequirements": "Requires JavaScript",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "publisher": { "@type": "Organization", "name": "Clickoz", "url": "https://clickoz.com/" }
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"YouTube Video Tag Optimizer",
+    "url":"https://clickoz.com/tools/youtube-video-tag/",
+    "applicationCategory":"UtilitiesApplication",
+    "operatingSystem":"All",
+    "browserRequirements":"Requires JavaScript",
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+    "publisher":{"@type":"Organization","name":"Clickoz","url":"https://clickoz.com/"}
   }
   </script>
 
@@ -366,12 +357,12 @@
     "itemListElement":[
       {"@type":"ListItem","position":1,"name":"Clickoz","item":"https://clickoz.com/"},
       {"@type":"ListItem","position":2,"name":"Tools","item":"https://clickoz.com/tools/"},
-      {"@type":"ListItem","position":3,"name":"Word Counter","item":"https://clickoz.com/tools/word-counter/"}
+      {"@type":"ListItem","position":3,"name":"YouTube Video Tag Optimizer","item":"https://clickoz.com/tools/youtube-video-tag/"}
     ]
   }
   </script>
 
-  <!-- ✅ JSON-LD: FAQPage (matches visible FAQ below) -->
+  <!-- ✅ JSON-LD: FAQPage -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -379,23 +370,23 @@
     "mainEntity":[
       {
         "@type":"Question",
-        "name":"Does this tool upload my text?",
-        "acceptedAnswer":{"@type":"Answer","text":"No. The Word Counter runs in your browser, so your text stays on your device."}
+        "name":"Does this tool upload my title?",
+        "acceptedAnswer":{"@type":"Answer","text":"No. The tool runs in your browser. Your title stays on your device."}
       },
       {
         "@type":"Question",
-        "name":"What counts as a word?",
-        "acceptedAnswer":{"@type":"Answer","text":"Words are tokens separated by whitespace. Extra spaces and blank lines are ignored."}
+        "name":"How many tags should I use on YouTube?",
+        "acceptedAnswer":{"@type":"Answer","text":"Use fewer, higher-signal tags aligned with your title and intent. This tool estimates a recommended max based on clarity and specificity."}
       },
       {
         "@type":"Question",
-        "name":"Characters with vs without spaces?",
-        "acceptedAnswer":{"@type":"Answer","text":"Characters includes spaces. Characters without spaces removes whitespace before counting."}
+        "name":"Do tags still matter for YouTube SEO?",
+        "acceptedAnswer":{"@type":"Answer","text":"Tags can help with misspellings, variants, and context. They work best when they match your title and topic instead of being generic."}
       },
       {
         "@type":"Question",
-        "name":"How is reading time calculated?",
-        "acceptedAnswer":{"@type":"Answer","text":"Reading time is estimated using a typical reading speed of about 200 words per minute, rounded up."}
+        "name":"Does it include Google Trends?",
+        "acceptedAnswer":{"@type":"Answer","text":"This version generates title-aligned tags locally. You can later add an optional trends endpoint and merge suggestions as a separate section."}
       }
     ]
   }
@@ -403,12 +394,12 @@
 </head>
 
 <body class="bigtext">
-  <!-- FX layers -->
+  <!-- FX layers (same as Word Counter) -->
   <div id="clickozParticles" aria-hidden="true"></div>
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
   <div class="__grain" aria-hidden="true"></div>
 
-  <!-- NAV (your site.js will handle active state) -->
+  <!-- NAV (same as Word Counter) -->
   <nav class="nav" aria-label="Primary navigation" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
@@ -460,7 +451,7 @@
     </div>
   </nav>
 
-  <!-- Mobile menu -->
+  <!-- Mobile menu (same as Word Counter) -->
   <div class="m-overlay" id="mOverlay" hidden></div>
   <aside class="m-menu" id="mobileMenu" aria-hidden="true">
     <div class="m-head">
@@ -505,18 +496,15 @@
         <span class="sep">›</span>
         <a href="/tools/">Tools</a>
         <span class="sep">›</span>
-        <span aria-current="page">Word Counter</span>
+        <span aria-current="page">YouTube Video Tag Optimizer</span>
       </nav>
 
-      <h1 class="section-title">Word Counter</h1>
+      <h1 class="section-title">YouTube Video Tag Optimizer</h1>
 
       <div class="kicker">
-        Paste your text and get instant counts that make writing and publishing easier.<br/>
-        Track <b>words</b>, <b>characters</b> with or without spaces, <b>sentences</b>, <b>paragraphs</b>, and <b>reading time</b> in one place.<br/>
-        Use it for essays, blog posts, product descriptions, SEO drafts, captions, and forms with strict limits.<br/>
-        Results update live while you type so you can shorten, expand, or split paragraphs without guessing.<br/>
-        The tool is private and fast, it runs in your browser and does not require signup.<br/>
-        Copy your text or copy the results to share with a client, editor, teammate, or teacher.
+        Paste your <b>video title</b> and get <b>high-signal tags</b> that match your topic and search intent.<br/>
+        We estimate a <b>recommended max tag count</b>, extract a <b>primary keyword</b>, and generate <b>clusters</b> you can copy in one click.<br/>
+        Built for creators who want clean metadata without spam. Fast, private, no signup.
       </div>
 
       <div class="mini-trust" aria-label="Key benefits">
@@ -527,53 +515,120 @@
       </div>
     </div>
 
-    <div class="tool-panel" aria-label="Word Counter tool">
+    <div class="tool-panel" aria-label="YouTube Tag tool">
       <div class="tool-grid">
         <div class="tool-area">
-          <label for="inputText" class="field-label">Paste your text</label>
-          <textarea id="inputText" placeholder="Paste or type your text here…"></textarea>
+          <label for="ytTitle" class="field-label">Video title</label>
+          <input id="ytTitle" class="input" type="text" placeholder="e.g., How to rank YouTube videos in 2026 (fast checklist)" autocomplete="off" />
+
+          <div class="row2">
+            <div>
+              <label for="ytFocus" class="field-label">Focus keyword (optional)</label>
+              <input id="ytFocus" class="input" type="text" placeholder="e.g., youtube seo" autocomplete="off" />
+            </div>
+            <div>
+              <label for="ytLang" class="field-label">Language</label>
+              <select id="ytLang" class="select">
+                <option value="en" selected>English</option>
+                <option value="it">Italiano</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row2">
+            <div>
+              <label for="ytCategory" class="field-label">Category</label>
+              <select id="ytCategory" class="select">
+                <option value="general" selected>General</option>
+                <option value="music">Music</option>
+                <option value="gaming">Gaming</option>
+                <option value="education">Education</option>
+                <option value="howto">How-to & Tutorials</option>
+                <option value="tech">Tech</option>
+                <option value="vlog">Vlog</option>
+                <option value="finance">Finance</option>
+                <option value="fitness">Fitness</option>
+              </select>
+            </div>
+            <div>
+              <label for="ytMax" class="field-label">Max tags (your choice)</label>
+              <input id="ytMax" class="input" type="number" min="5" max="60" value="25" />
+            </div>
+          </div>
 
           <div class="tool-actions">
-            <button class="btn primary" id="copyBtn" type="button">Copy text</button>
-            <button class="btn ghost" id="copyStatsBtn" type="button">Copy results</button>
-            <button class="btn ghost" id="clearBtn" type="button">Clear</button>
+            <button class="btn primary" id="ytRun" type="button">Analyze & Generate</button>
+            <button class="btn ghost" id="ytCopyAll" type="button" disabled>Copy all tags</button>
+            <button class="btn ghost" id="ytReset" type="button">Reset</button>
+            <button class="btn ghost" id="ytExample" type="button">Use example</button>
           </div>
 
           <div class="callout" aria-label="Privacy note">
-            <b>Privacy note:</b> This tool processes text locally in your browser. Nothing is uploaded.
-            You can read more in <a href="/privacy/" style="color:rgba(255,255,255,.86);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.14)">Privacy</a>.
+            <b>Privacy note:</b> This tool runs locally in your browser. Nothing is uploaded.
+            <span style="opacity:.8">If you later add trends via an API, keep it optional and transparent.</span>
           </div>
         </div>
 
         <div>
-          <div class="stats" aria-label="Results">
-            <div class="stat"><div class="label">Words</div><div class="value" id="w">0</div></div>
-            <div class="stat"><div class="label">Reading time</div><div class="value" id="rt">0 min</div></div>
-            <div class="stat"><div class="label">Characters</div><div class="value" id="c">0</div></div>
-            <div class="stat"><div class="label">Chars (no spaces)</div><div class="value" id="cn">0</div></div>
-            <div class="stat"><div class="label">Sentences</div><div class="value" id="s">0</div></div>
-            <div class="stat"><div class="label">Paragraphs</div><div class="value" id="p">0</div></div>
+          <div class="stats" aria-label="Quick stats">
+            <div class="stat">
+              <div class="label">Title health</div>
+              <div class="value" id="ytScore">—</div>
+            </div>
+            <div class="stat">
+              <div class="label">Recommended max tags</div>
+              <div class="value" id="ytRecMax">—</div>
+            </div>
+            <div class="stat">
+              <div class="label">Primary keyword</div>
+              <div class="value" id="ytPrimary">—</div>
+            </div>
+            <div class="stat">
+              <div class="label">Words / chars</div>
+              <div class="value" id="ytLen">—</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Examples improve “helpfulness” + reduces template similarity across tools -->
+      <div class="divider"></div>
+
+      <div class="row2">
+        <div>
+          <div class="field-label">Title feedback</div>
+          <ul class="list" id="ytFeedback">
+            <li>Generate tags to see recommendations.</li>
+          </ul>
+        </div>
+        <div>
+          <label for="ytOut" class="field-label">Copy-ready output</label>
+          <textarea id="ytOut" class="textarea" rows="4" readonly placeholder="Tags will appear here (comma-separated)…"></textarea>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field-label">Generated tags (click to copy a single tag)</div>
+      <div class="chips" id="ytChips" aria-label="Generated tags"></div>
+
+      <!-- Examples -->
       <div class="examples" aria-label="Examples">
         <div class="ex">
-          <h3>Example: Short paragraph</h3>
-          <pre id="ex1">Writing for the web should be simple. Short sentences help readers scan fast.
-Good structure improves clarity and keeps attention on mobile.</pre>
+          <h3>Example: SEO tutorial</h3>
+          <pre id="ex1">How to Rank YouTube Videos in 2026 (Fast SEO Checklist)</pre>
           <div class="ex-actions">
-            <button class="btn ghost" type="button" data-fill="#ex1">Load into tool</button>
+            <button class="btn ghost" type="button" data-fill="#ex1">Load title</button>
           </div>
         </div>
 
         <div class="ex">
-          <h3>Example: Product description</h3>
-          <pre id="ex2">Wireless controller with responsive buttons and smooth analog sticks.
-Includes charging cable and protective case. Works great for long sessions.</pre>
+          <h3>Example: Music / drill</h3>
+          <pre id="ex2">Street Drill Napoli – Nuovo Brano 2026 (Official Video)</pre>
           <div class="ex-actions">
-            <button class="btn ghost" type="button" data-fill="#ex2">Load into tool</button>
+            <button class="btn ghost" type="button" data-fill="#ex2">Load title</button>
           </div>
         </div>
       </div>
@@ -581,104 +636,46 @@ Includes charging cable and protective case. Works great for long sessions.</pre
 
     <!-- SEO + guidance -->
     <div class="hero-box seo-block" aria-label="About this tool">
-      <h2>What is a word counter?</h2>
+      <h2>What is a YouTube tag optimizer?</h2>
       <p>
-        A word counter measures the real length of your text. It counts words and characters, including a version without spaces,
-        and it also estimates sentences and paragraphs so you can see structure at a glance. This is useful when you write for school,
-        work, SEO, or any platform that applies strict limits. Clickoz updates counts instantly while you type, so you can edit based on real numbers.
+        A YouTube tag optimizer helps you choose tags that match your video’s topic and the words people actually search.
+        Tags work best when they are aligned with your title, cover spelling variants, and add helpful context instead of generic keywords.
       </p>
 
-      <h3>When should you use it?</h3>
+      <h3>How to use this tool</h3>
       <p>
-        Use a word counter when you need to check an essay word count, confirm character limits for a form, shorten a caption, or plan the structure of an article.
-        For SEO workflows, it helps you keep paragraphs readable, verify that sections are balanced, and estimate reading time so content feels easy on mobile.
-      </p>
-
-      <h3>How reading time is calculated</h3>
-      <p>
-        Reading time is estimated from the total word count using a typical reading speed of about 200 words per minute.
-        The result is rounded up to keep it practical. Technical texts can take longer, so use it as a baseline rather than an exact prediction.
+        Paste your title, optionally add a focus keyword, and generate tags. Copy the comma-separated output into YouTube.
+        If your title is too broad, improve it first: add a specific outcome, year, format, or audience.
       </p>
 
       <h3>FAQ</h3>
       <div class="faq" aria-label="Frequently asked questions">
         <div class="faq-item">
-          <div class="faq-q">Does this tool upload my text?</div>
-          <div class="faq-a">No. The Word Counter runs in your browser, so your text stays on your device.</div>
+          <div class="faq-q">Does this tool upload my title?</div>
+          <div class="faq-a">No. It runs locally in your browser.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">What counts as a word?</div>
-          <div class="faq-a">Words are tokens separated by whitespace. Extra spaces and blank lines are ignored.</div>
+          <div class="faq-q">How many tags should I use?</div>
+          <div class="faq-a">Use fewer, better tags. This tool estimates a recommended max based on title clarity.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">Characters with vs without spaces?</div>
-          <div class="faq-a">Characters includes spaces. Characters without spaces removes whitespace before counting.</div>
+          <div class="faq-q">Are “trends” included?</div>
+          <div class="faq-a">This version generates title-aligned tags locally. You can add optional trends later.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">How is reading time calculated?</div>
-          <div class="faq-a">Reading time is estimated using about 200 words per minute and rounded up.</div>
-        </div>
-      </div>
-
-      <!-- ✅ High-quality query coverage, structured, helpful, not spam -->
-      <h3>Search-friendly guide</h3>
-      <p>
-        People rarely search for “a platform” when they need a word counter. They search for an answer, usually as a question, and they want it immediately.
-        If you typed “how to count words in a document” or “how many words are in my text”, the intent is simple: you need an accurate word count without installing anything.
-        This tool is built for that moment. You can paste text from Word, Google Docs, Notion, an email draft, a blog editor, a PDF you copied from, or a product listing.
-        The counts update instantly, which helps you decide what to do next: shorten the text, expand it, split paragraphs, or simplify sentences.
-        <br/><br/>
-        Many searches focus on limits rather than writing style. That is why queries like “character count with spaces” and “character count without spaces” are so common.
-        Forms and dashboards often reject text if it exceeds a hidden maximum. A quick character counter solves this by showing both totals. Other users search for structure checks,
-        like “sentence counter online” and “paragraph counter”. Those questions often come from writers trying to improve readability, not only length. If a page looks like one giant block,
-        paragraph count shows it immediately. If text feels dense, sentence count rises and editing becomes easier when you can track changes while rewriting.
-        <br/><br/>
-        Reading time is another frequent intent. People type “reading time calculator”, “how long does it take to read this”, or “how many words for a 3 minute read”.
-        Reading time is useful for editors, bloggers, newsletter writers, and anyone publishing on mobile. It helps you keep intros short, keep sections balanced, and avoid exhausting readers.
-        It can also guide content planning. If a guide should feel quick, you might aim for a shorter reading time. If a tutorial must be complete, you may accept a longer reading time.
-        <br/><br/>
-        For SEO, the most searched questions are often framed as rules. People ask “ideal word count for SEO”, “how many words should a blog post be”, or “how long should an article be”.
-        There is no single magic number that guarantees rankings, but word count is still a practical signal. It helps you avoid content that is too thin to answer intent, and it helps you
-        avoid rambling sections that reduce clarity. The best approach is to use counts to support structure. Break content into clear sections, keep paragraphs skimmable, and match the depth
-        of the topic. That is why many users also look for “readability checker” or “improve readability”, because clarity and structure influence engagement.
-        <br/><br/>
-        This page also covers micro intents that show up every day. People search “word count for essay”, “word counter for students”, “check word count for assignment”, “letter count tool”,
-        “count characters excluding spaces”, “count words in paragraph”, “word count in text”, and “online word counter free”. These are normal, practical needs. The tool exists to remove
-        friction from those tasks. Paste text, get counts, edit, and copy results if you need to share them. If you are preparing a landing page, rewriting product copy, drafting an email,
-        or publishing an article, accurate counts help you stay within limits while keeping the writing clean and easy to read.
-        <br/><br/>
-        If you want to keep improving after you count, the next step is usually readability and metadata. You can check clarity with a readability analyzer, verify keyword usage with keyword density,
-        and refine click potential with a meta tag optimizer. Combined, these tools cover the most common publishing workflow: write, measure, improve, and publish with confidence.
-      </p>
-
-      <div class="related" aria-label="Related content">
-        <div class="rel-box">
-          <h3 style="margin:0;">Related tools</h3>
-          <div class="rel-links">
-            <a href="/tools/readability-analyzer/">📚 Readability Analyzer</a>
-            <a href="/tools/keyword-density/">🔎 Keyword Density</a>
-            <a href="/tools/meta-tags/">🏷️ Meta Tag Optimizer</a>
-          </div>
-        </div>
-
-        <div class="rel-box">
-          <h3 style="margin:0;">Related guides</h3>
-          <div class="rel-links">
-            <a href="/guides/word-count-for-seo/">🧠 Word Count for SEO</a>
-            <a href="/guides/readability-for-ranking/">✅ Readability for Ranking</a>
-            <a href="/guides/meta-tags-checklist/">📌 Meta Tags Checklist</a>
-          </div>
+          <div class="faq-q">What makes a tag strong?</div>
+          <div class="faq-a">It matches your title intent, includes long-tail variants, and avoids generic spam.</div>
         </div>
       </div>
 
       <div class="meta-note">
-        Last updated: <span id="lastUpdated">2026-01-24</span> ·
+        Last updated: <span id="lastUpdated">2026-01-25</span> ·
         <a href="/tools/">Browse all tools</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER (keep your standard footer structure) -->
+  <!-- FOOTER (same style as your current footer) -->
   <footer class="footer">
     <div class="container footer-grid">
       <div>
@@ -718,144 +715,10 @@ Includes charging cable and protective case. Works great for long sessions.</pre
     </div>
   </footer>
 
-  <!-- Cookie banner (keep your standard cookie banner markup if needed) -->
-  <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
-    <div class="cookie-card">
-      <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
-      <div class="cookie-content">
-        <div class="cookie-title">Privacy choices</div>
-        <div class="cookie-text">
-          We use essential storage for core features. If you accept all, we may load third-party services like Google Translate.
-          Read more in <a href="/privacy/">Privacy</a>.
-        </div>
-      </div>
-      <div class="cookie-actions">
-        <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
-        <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
-        <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
-      </div>
-    </div>
-  </div>
-
+  <!-- Global site.js -->
   <script src="/assets/site.js" defer></script>
 
-  <!-- ✅ Page-only JS -->
-  <script>
-    (function(){
-      const $ = (s, r=document) => r.querySelector(s);
-      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
-
-      const input = $('#inputText');
-      const w  = $('#w');
-      const rt = $('#rt');
-      const c  = $('#c');
-      const cn = $('#cn');
-      const s  = $('#s');
-      const p  = $('#p');
-      const copyBtn  = $('#copyBtn');
-      const copyStatsBtn = $('#copyStatsBtn');
-      const clearBtn = $('#clearBtn');
-
-      if(!input || !w || !rt || !c || !cn || !s || !p) return;
-
-      function countWords(text){
-        const t = (text || '').trim();
-        if(!t) return 0;
-        return t.split(/\s+/).filter(Boolean).length;
-      }
-
-      function countSentences(text){
-        const t = (text || '').trim();
-        if(!t) return 0;
-        const m = t.match(/[^.!?]+[.!?]+|\s*[^.!?]+$/g);
-        return m ? m.filter(x => x.trim().length > 0).length : 0;
-      }
-
-      function countParagraphs(text){
-        const t = (text || '').trim();
-        if(!t) return 0;
-        return t.split(/\n{2,}/).map(x => x.trim()).filter(Boolean).length;
-      }
-
-      function readingTime(words){
-        const wpm = 200;
-        const mins = Math.max(0, Math.ceil(words / wpm));
-        return `${mins} min`;
-      }
-
-      function render(){
-        const text = input.value || '';
-        const words = countWords(text);
-
-        w.textContent  = String(words);
-        c.textContent  = String(text.length);
-        cn.textContent = String(text.replace(/\s/g,'').length);
-        s.textContent  = String(countSentences(text));
-        p.textContent  = String(countParagraphs(text));
-        rt.textContent = readingTime(words);
-      }
-
-      async function copyTextSafe(str){
-        try{ await navigator.clipboard.writeText(str); return true; }
-        catch(e){ return false; }
-      }
-
-      let t = null;
-      input.addEventListener('input', () => {
-        clearTimeout(t);
-        t = setTimeout(render, 40);
-      });
-
-      if(clearBtn){
-        clearBtn.addEventListener('click', () => {
-          input.value = '';
-          render();
-          input.focus();
-        });
-      }
-
-      if(copyBtn){
-        copyBtn.addEventListener('click', async () => {
-          const ok = await copyTextSafe(input.value || '');
-          copyBtn.textContent = ok ? 'Copied!' : 'Copy failed';
-          setTimeout(() => copyBtn.textContent = 'Copy text', 900);
-        });
-      }
-
-      if(copyStatsBtn){
-        copyStatsBtn.addEventListener('click', async () => {
-          const text = input.value || '';
-          const words = countWords(text);
-          const payload =
-`Word Counter (Clickoz)
-Words: ${words}
-Reading time: ${readingTime(words)}
-Characters: ${text.length}
-Chars (no spaces): ${text.replace(/\\s/g,'').length}
-Sentences: ${countSentences(text)}
-Paragraphs: ${countParagraphs(text)}
-`;
-          const ok = await copyTextSafe(payload);
-          copyStatsBtn.textContent = ok ? 'Copied!' : 'Copy failed';
-          setTimeout(() => copyStatsBtn.textContent = 'Copy results', 900);
-        });
-      }
-
-      // Example loaders
-      $$('.ex .btn[data-fill]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const sel = btn.getAttribute('data-fill');
-          const pre = sel ? $(sel) : null;
-          if(!pre) return;
-          input.value = (pre.textContent || '').trim();
-          render();
-          input.focus();
-          input.scrollIntoView({ behavior:'smooth', block:'center' });
-        });
-      });
-
-      render();
-    })();
-  </script>
+  <!-- Tool script (same folder) -->
+  <script src="./toolscript.js" defer></script>
 </body>
 </html>
