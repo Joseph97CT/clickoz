@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/assets/site.css?v=4" />
+  <link rel="stylesheet" href="/assets/site.css?v=5" />
 </head>
 
 <body class="bigtext">
@@ -170,7 +170,7 @@
       </div>
     </div>
 
-    <!-- RIGHT SIDE: rail on the LEFT of Recommended (not above) -->
+    <!-- LEFT: Clickoz rail | RIGHT: Recommended now -->
     <div class="rec-shell" aria-label="Recommended now section">
 
       <!-- LEFT rail -->
@@ -196,7 +196,7 @@
         </div>
       </aside>
 
-      <!-- RIGHT: Recommended tools box -->
+      <!-- RIGHT recommended -->
       <div class="hero-box rec-wrap" aria-label="Recommended now">
         <div class="rec-toprow">
           <h3 class="box-title">Recommended now</h3>
@@ -212,112 +212,160 @@
         <div class="rec-main" aria-label="Recommended tools">
           <div class="rec-grid" id="recGrid">
 
+            <!-- TOOL 1 -->
             <a class="card rec-card" data-slot="0" href="/tools/json-formatter/">
-              <div class="rec-head">
-                <span class="rec-icon" aria-hidden="true">🧾</span>
-                <h3>JSON Formatter</h3>
+              <div class="rec-card-inner">
+                <div class="rec-head">
+                  <span class="rec-icon" aria-hidden="true">🧾</span>
+                  <h3>JSON Formatter</h3>
+                </div>
+
+                <p>JSON formatter online: prettify, validate, and minify JSON instantly for debugging and clean copy-ready output.</p>
+
+                <ul class="tool-examples">
+                  <li>Fix “Unexpected token” errors from API responses.</li>
+                  <li>Minify JSON payloads for production requests.</li>
+                  <li>Format logs to spot missing commas or brackets.</li>
+                </ul>
+
+                <div class="rec-card-bottom">
+                  <div class="tool-cat">
+                    <span>Category:</span>
+                    <strong>Developer Utilities</strong>
+                  </div>
+                  <span class="tool-cta">Use JSON Formatter</span>
+                </div>
               </div>
-              <p>JSON formatter online: prettify, validate, and minify JSON instantly for debugging and clean copy-ready output.</p>
-              <ul class="tool-examples">
-                <li>Fix “Unexpected token” errors from API responses.</li>
-                <li>Minify JSON payloads for production requests.</li>
-                <li>Format logs to spot missing commas or brackets.</li>
-              </ul>
-              <div class="tool-cat">
-                <span>Category:</span>
-                <a href="/tools/#dev">Developer Utilities</a>
-              </div>
-              <span class="tool-cta">Use JSON Formatter</span>
             </a>
 
+            <!-- TOOL 2 -->
             <a class="card rec-card" data-slot="1" href="/tools/meta-tags/">
-              <div class="rec-head">
-                <span class="rec-icon" aria-hidden="true">🏷️</span>
-                <h3>Meta Tag Optimizer</h3>
+              <div class="rec-card-inner">
+                <div class="rec-head">
+                  <span class="rec-icon" aria-hidden="true">🏷️</span>
+                  <h3>Meta Tag Optimizer</h3>
+                </div>
+
+                <p>Meta tags checker: preview SERP titles/descriptions, validate length, and improve CTR with clearer messaging.</p>
+
+                <ul class="tool-examples">
+                  <li>Rewrite titles to avoid truncation in Google.</li>
+                  <li>Compare two descriptions for clarity and intent.</li>
+                  <li>Improve click appeal without keyword stuffing.</li>
+                </ul>
+
+                <div class="rec-card-bottom">
+                  <div class="tool-cat">
+                    <span>Category:</span>
+                    <strong>SEO Tools</strong>
+                  </div>
+                  <span class="tool-cta">Use Meta Tag Optimizer</span>
+                </div>
               </div>
-              <p>Meta tags checker: preview SERP titles/descriptions, validate length, and improve CTR with clearer messaging.</p>
-              <ul class="tool-examples">
-                <li>Rewrite titles to avoid truncation in Google.</li>
-                <li>Compare two descriptions for clarity and intent.</li>
-                <li>Improve click appeal without keyword stuffing.</li>
-              </ul>
-              <div class="tool-cat">
-                <span>Category:</span>
-                <a href="/tools/#seo">SEO Tools</a>
-              </div>
-              <span class="tool-cta">Use Meta Tag Optimizer</span>
             </a>
 
+            <!-- TOOL 3 -->
             <a class="card rec-card" data-slot="2" href="/tools/word-counter/">
-              <div class="rec-head">
-                <span class="rec-icon" aria-hidden="true">🔢</span>
-                <h3>Word Counter</h3>
+              <div class="rec-card-inner">
+                <div class="rec-head">
+                  <span class="rec-icon" aria-hidden="true">🔢</span>
+                  <h3>Word Counter</h3>
+                </div>
+
+                <p>Word counter online: words, characters, sentences, and reading time for content briefs, blogs, and SEO drafts.</p>
+
+                <ul class="tool-examples">
+                  <li>Check content length vs the query intent.</li>
+                  <li>Estimate reading time for mobile users.</li>
+                  <li>Keep headings and sections balanced.</li>
+                </ul>
+
+                <div class="rec-card-bottom">
+                  <div class="tool-cat">
+                    <span>Category:</span>
+                    <strong>Writing Tools</strong>
+                  </div>
+                  <span class="tool-cta">Use Word Counter</span>
+                </div>
               </div>
-              <p>Word counter online: words, characters, sentences, and reading time for content briefs, blogs, and SEO drafts.</p>
-              <ul class="tool-examples">
-                <li>Check content length vs the query intent.</li>
-                <li>Estimate reading time for mobile users.</li>
-                <li>Keep headings and sections balanced.</li>
-              </ul>
-              <div class="tool-cat">
-                <span>Category:</span>
-                <a href="/tools/#writing">Writing Tools</a>
-              </div>
-              <span class="tool-cta">Use Word Counter</span>
             </a>
 
+            <!-- TOOL 4 -->
             <a class="card rec-card" data-slot="3" href="/tools/readability-analyzer/">
-              <div class="rec-head">
-                <span class="rec-icon" aria-hidden="true">📚</span>
-                <h3>Readability Analyzer</h3>
+              <div class="rec-card-inner">
+                <div class="rec-head">
+                  <span class="rec-icon" aria-hidden="true">📚</span>
+                  <h3>Readability Analyzer</h3>
+                </div>
+
+                <p>Readability checker: get a readability score and clear edits to make text easier to skim, understand, and engage with.</p>
+
+                <ul class="tool-examples">
+                  <li>Simplify long sentences for better UX.</li>
+                  <li>Reduce bounce rate on informational pages.</li>
+                  <li>Make YouTube descriptions clearer and shorter.</li>
+                </ul>
+
+                <div class="rec-card-bottom">
+                  <div class="tool-cat">
+                    <span>Category:</span>
+                    <strong>Writing Tools</strong>
+                  </div>
+                  <span class="tool-cta">Use Readability Analyzer</span>
+                </div>
               </div>
-              <p>Readability checker: get a readability score and clear edits to make text easier to skim, understand, and engage with.</p>
-              <ul class="tool-examples">
-                <li>Simplify long sentences for better UX.</li>
-                <li>Reduce bounce rate on informational pages.</li>
-                <li>Make YouTube descriptions clearer and shorter.</li>
-              </ul>
-              <div class="tool-cat">
-                <span>Category:</span>
-                <a href="/tools/#writing">Writing Tools</a>
-              </div>
-              <span class="tool-cta">Use Readability Analyzer</span>
             </a>
 
+            <!-- TOOL 5 -->
             <a class="card rec-card" data-slot="4" href="/tools/url-encoder/">
-              <div class="rec-head">
-                <span class="rec-icon" aria-hidden="true">🔗</span>
-                <h3>URL Encoder</h3>
+              <div class="rec-card-inner">
+                <div class="rec-head">
+                  <span class="rec-icon" aria-hidden="true">🔗</span>
+                  <h3>URL Encoder</h3>
+                </div>
+
+                <p>URL encoder/decoder: fix query strings, encode tracking parameters, and safely decode redirects to inspect values.</p>
+
+                <ul class="tool-examples">
+                  <li>Encode UTM parameters for ad campaigns.</li>
+                  <li>Fix spaces and special characters in links.</li>
+                  <li>Decode redirect URLs to verify tracking.</li>
+                </ul>
+
+                <div class="rec-card-bottom">
+                  <div class="tool-cat">
+                    <span>Category:</span>
+                    <strong>Developer Utilities</strong>
+                  </div>
+                  <span class="tool-cta">Use URL Encoder</span>
+                </div>
               </div>
-              <p>URL encoder/decoder: fix query strings, encode tracking parameters, and safely decode redirects to inspect values.</p>
-              <ul class="tool-examples">
-                <li>Encode UTM parameters for ad campaigns.</li>
-                <li>Fix spaces and special characters in links.</li>
-                <li>Decode redirect URLs to verify tracking.</li>
-              </ul>
-              <div class="tool-cat">
-                <span>Category:</span>
-                <a href="/tools/#dev">Developer Utilities</a>
-              </div>
-              <span class="tool-cta">Use URL Encoder</span>
             </a>
 
+            <!-- TOOL 6 -->
             <a class="card rec-card" data-slot="5" href="/tools/base64/">
-              <div class="rec-head">
-                <span class="rec-icon" aria-hidden="true">🔐</span>
-                <h3>Base64</h3>
+              <div class="rec-card-inner">
+                <div class="rec-head">
+                  <span class="rec-icon" aria-hidden="true">🔐</span>
+                  <h3>Base64</h3>
+                </div>
+
+                <p>Base64 encoder/decoder: decode tokens, test payloads, and quickly inspect encoded strings with clean output.</p>
+
+                <ul class="tool-examples">
+                  <li>Decode a JWT payload segment (base64url).</li>
+                  <li>Encode small snippets for config files.</li>
+                  <li>Inspect data returned by APIs or logs.</li>
+                </ul>
+
+                <div class="rec-card-bottom">
+                  <div class="tool-cat">
+                    <span>Category:</span>
+                    <strong>Developer Utilities</strong>
+                  </div>
+                  <span class="tool-cta">Use Base64</span>
+                </div>
               </div>
-              <p>Base64 encoder/decoder: decode tokens, test payloads, and quickly inspect encoded strings with clean output.</p>
-              <ul class="tool-examples">
-                <li>Decode a JWT payload segment (base64url).</li>
-                <li>Encode small snippets for config files.</li>
-                <li>Inspect data returned by APIs or logs.</li>
-              </ul>
-              <div class="tool-cat">
-                <span>Category:</span>
-                <a href="/tools/#dev">Developer Utilities</a>
-              </div>
-              <span class="tool-cta">Use Base64</span>
             </a>
 
           </div>
@@ -459,7 +507,6 @@
           </a>
         </div>
       </div>
-
     </div>
   </section>
 
