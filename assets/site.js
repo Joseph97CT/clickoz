@@ -43,8 +43,8 @@
   }
 
   function setAccent(a1, a2){
-    const accent = a1 || '#6366f1';
-    const accent2 = a2 || accent;
+   const accent  = a1 || '#22d3ee';   // cyan default
+  const accent2 = a2 || '#06b6d4';   // oppure accent
 
     document.documentElement.style.setProperty('--accent', accent);
     document.documentElement.style.setProperty('--accent2', accent2);
@@ -128,12 +128,13 @@
         setAccent(saved.a1, saved.a2);
         markActiveSwatches(saved.a1);
       }else{
-        const a = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6366f1';
-        document.documentElement.style.setProperty('--accent-rgb', hexToRgbTriplet(a));
-        const dot = $('#colorDot');
-        if (dot) dot.style.background = a;
-        markActiveSwatches(a);
-      }
+       // FIRST VISIT default = CYANO (last theme)
+      const CYAN  = '#22d3ee';
+       const CYAN2 = '#06b6d4';
+      setAccent(CYAN, CYAN2);
+        markActiveSwatches(CYAN);
+        }
+
     }catch(_){}
 
     const toggle = $('#colorToggle');
