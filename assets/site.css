@@ -1671,3 +1671,26 @@ input.search{
 
 /* Prevent odd wrapping overflow */
 .rec-card p, .rec-card li{ overflow-wrap:anywhere; }
+/* ===== HOTFIX: Force rail LEFT of recommended on desktop ===== */
+@media (min-width: 860px){
+  .rec-shell{
+    display: grid !important;
+    grid-template-columns: 290px minmax(0, 1fr) !important;
+    align-items: start !important;
+  }
+}
+
+/* fallback if something breaks grid */
+@media (min-width: 860px){
+  .rec-shell{
+    display: flex !important;
+    gap: 14px !important;
+  }
+  .rec-shell > .rec-rail-outside{
+    flex: 0 0 290px !important;
+  }
+  .rec-shell > .rec-wrap{
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+}
