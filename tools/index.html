@@ -4,365 +4,208 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ✅ Primary SEO -->
-  <title>YouTube Video Tag Optimizer – Best Tags from Your Title + Intent | Clickoz</title>
-  <meta name="description" content="Free YouTube Tag Optimizer by Clickoz. Analyze your video title, estimate the recommended max tag count, and generate high-signal tags aligned with your title and search intent. Runs in your browser." />
-  <link rel="canonical" href="https://clickoz.com/tools/youtube-video-tag/" />
+  <title>Clickoz Tools – Free Online Tools for SEO, Writing, Developers & Creators</title>
+  <meta name="description" content="Browse Clickoz Tools: free online utilities for SEO, writing, developers, and creators. Word counter, readability, keyword checks, meta preview, JSON tools, Base64 and URL utilities. Privacy-first, no signup, copy-ready outputs." />
+
+  <!-- ✅ canonical for tools index -->
+  <link rel="canonical" href="https://clickoz.com/tools/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
-
-  <!-- ✅ Social -->
-  <meta property="og:site_name" content="Clickoz" />
-  <meta property="og:title" content="YouTube Video Tag Optimizer – Free Online Tool | Clickoz" />
-  <meta property="og:description" content="Analyze your title and generate high-signal YouTube tags aligned with intent. Copy-ready output. Privacy-first." />
-  <meta property="og:url" content="https://clickoz.com/tools/youtube-video-tag/" />
+@@ -17,11 +16,8 @@
+  <meta property="og:description" content="Free, privacy-first tools that run in your browser. No signup. Copy-ready outputs. Mobile-friendly." />
+  <meta property="og:url" content="https://clickoz.com/tools/" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://clickoz.com/assets/og/youtube-video-tag.png" />
+  <!-- optional (safe even if missing) -->
+  <meta property="og:image" content="https://clickoz.com/assets/og/tools.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="YouTube Video Tag Optimizer – Free Online Tool | Clickoz" />
-  <meta name="twitter:description" content="Generate YouTube tags from your title + intent. Copy-ready output. Privacy-first." />
-  <meta name="twitter:image" content="https://clickoz.com/assets/og/youtube-video-tag.png" />
+  <meta name="twitter:title" content="Clickoz Tools – Free Online Tools for SEO, Writing & Dev" />
+  <meta name="twitter:description" content="Free, privacy-first tools that run in your browser. No signup. Copy-ready outputs. Mobile-friendly." />
+  <meta name="twitter:image" content="https://clickoz.com/assets/og/tools.png" />
 
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
+@@ -33,7 +29,7 @@
 
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- ✅ Tool page patches only (keep small, stable) -->
+  <!-- Tools page micro-patches ONLY (no nav resizing here) -->
+  <!-- Tools page micro-patches ONLY (keeps your base intact) -->
   <style>
-    .tool-shell{ padding-top: 18px; }
-
-    /* Breadcrumb */
-    .crumbs{
-      display:flex; flex-wrap:wrap; gap:8px; align-items:center;
-      font-size:13px; color: rgba(255,255,255,.70);
-      margin: 6px 0 10px;
+    .nav-links a.active,
+    .m-links a.active{
+@@ -42,7 +38,8 @@
+      color: rgba(255,255,255,.96);
     }
-    .crumbs a{
-      color: rgba(255,255,255,.82);
-      text-decoration:none;
-      border-bottom:1px solid rgba(255,255,255,.14);
+
+    /* Small breadcrumb (safe) */
+    .tools-shell{ padding-top: 18px; }
+
+    .crumbs{
+      max-width: 980px;
+      margin: 2px auto 10px;
+@@ -61,12 +58,6 @@
     }
     .crumbs .sep{ opacity:.55; }
 
-    /* Hero intro */
-    .tool-hero{ max-width: 980px; margin: 0 auto; text-align:center; }
-    .kicker{
+    /* Make the top of the page feel “product-grade” */
+    .tools-shell{
+      padding-top: 18px;
+    }
+
+    /* Clean header — tools are still immediately below */
+    .tools-kicker{
+      max-width: 980px;
+      margin: 0 auto 10px;
+@@ -75,13 +66,24 @@
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .tools-kicker b{ color: rgba(255,255,255,.92); font-weight: 900; }
+
+    .tools-kicker b{
+      color: rgba(255,255,255,.92);
+      font-weight: 900;
+    .tools-actions{
+      max-width: 980px;
       margin: 10px auto 0;
-      color: rgba(255,255,255,.74);
-      line-height: 1.85;
+      display:flex;
+      gap: 10px;
+      justify-content:center;
+      flex-wrap: wrap;
+    }
+    .tools-actions .btn{
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 14px;
+      font-weight: 1000;
+      font-size: 13px;
+    }
+
+    /* Search hint: neat and compact */
+    .search-hint{
+      max-width: 920px;
+      margin: 8px auto 0;
+@@ -92,7 +94,6 @@
+    }
+    .search-hint b{ color: rgba(255,255,255,.92); }
+
+    /* Pagination block */
+    .pager{
+      display:flex;
+      flex-wrap: wrap;
+@@ -123,11 +124,7 @@
+      min-width: 260px;
+    }
+
+    /* Editorial section typography */
+    .pillar{
+      text-align:left;
+      margin-top: 16px;
+    }
+    .pillar{ text-align:left; margin-top: 16px; }
+    .pillar h2{
+      margin: 0 0 10px;
+      font-size: clamp(22px, 2.4vw, 32px);
+@@ -148,7 +145,6 @@
       font-size: 15.5px;
     }
-    .kicker b{ color: rgba(255,255,255,.92); font-weight: 1000; }
 
-    /* Trust row */
-    .mini-trust{
-      margin: 14px auto 0;
-      display:flex; flex-wrap:wrap; gap:10px;
-      justify-content:center; align-items:center;
+    /* “Lanes”: better scanning + less chunky */
+    .lanes{
+      display:grid;
+      grid-template-columns: 1fr;
+@@ -196,11 +192,7 @@
+      font-size: 20px;
+      flex: 0 0 auto;
     }
-    .mini-pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      color: rgba(255,255,255,.86);
-      font-weight: 900;
-      font-size: 13px;
-      line-height: 1;
-      white-space: nowrap;
+    .lane h3{
+      margin: 0;
+      font-size: 16px;
+      font-weight: 1000;
+    }
+    .lane h3{ margin: 0; font-size: 16px; font-weight: 1000; }
+    .lane p{
+      margin: 10px 0 0;
+      position: relative;
+@@ -209,15 +201,45 @@
+      line-height: 1.7;
+      font-size: 14.5px;
     }
 
-    /* Tool panel */
-    .tool-panel{
-      margin-top: 16px;
+    /* ✅ FAQ always open, no accordions */
+    .faq-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    @media (min-width: 981px){
+      .faq-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    }
+    .faq{
       padding: 16px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.10);
       background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
-      box-shadow: 0 16px 50px rgba(0,0,0,.28);
-      position: relative;
-      overflow:hidden;
+      box-shadow: 0 16px 50px rgba(0,0,0,.22);
     }
-    .tool-panel::after{
-      content:"";
-      position:absolute; inset:-30%;
-      background: radial-gradient(720px 320px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
-      filter: blur(30px);
-      opacity: .9;
-      pointer-events:none;
-    }
-    .tool-panel > *{ position: relative; z-index: 1; }
-
-    .tool-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    @media (min-width: 981px){
-      .tool-grid{ grid-template-columns: 1.25fr .75fr; }
-    }
-
-    .field-label{
-      display:block;
+    .faq h3{
       margin: 0 0 8px;
-      font-weight: 1000;
-      font-size: 13px;
-      letter-spacing: .02em;
-      color: rgba(255,255,255,.84);
-    }
-
-    .input, .select, .textarea{
-      width:100%;
-      border-radius: 16px;
-      padding: 12px 14px;
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.92);
-      outline:none;
-      line-height: 1.5;
-      font-size: 15px;
-    }
-    .textarea{ min-height: 120px; resize: vertical; }
-    .input:focus, .select:focus, .textarea:focus{
-      border-color: rgba(var(--accent-rgb), .35);
-      box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
-    }
-
-    .row2{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    @media (min-width: 981px){
-      .row2{ grid-template-columns: 1fr 1fr; }
-    }
-
-    .tool-actions{
-      margin-top: 12px;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items:center;
-    }
-    .tool-actions .btn{ height: 44px; border-radius: 14px; font-weight: 1000; }
-    .btn.ghost{
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .stat{
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-    }
-    .stat .label{ font-size: 12px; opacity: .78; letter-spacing: .02em; }
-    .stat .value{ margin-top: 6px; font-weight: 1000; font-size: 18px; }
-
-    .callout{
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      color: rgba(255,255,255,.78);
-      line-height: 1.65;
-      font-size: 14px;
-    }
-    .callout b{ color: rgba(255,255,255,.92); font-weight: 1000; }
-
-    /* Tags UI */
-    .chips{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      text-decoration:none;
-      font-weight: 900;
-      font-size: 13px;
-      color: rgba(255,255,255,.88);
-      cursor: pointer;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      user-select:none;
-    }
-    .chip:hover{
-      transform: translateY(-1px);
-      border-color: rgba(var(--accent-rgb), .35);
-      background: rgba(var(--accent-rgb), .08);
-    }
-    .chip:active{ transform: translateY(0px) scale(.98); }
-    .chip small{ opacity:.72; font-weight: 900; }
-
-    .divider{
-      height:1px;
-      margin: 12px 0;
-      background: rgba(255,255,255,.10);
-    }
-
-    /* Feedback list */
-    .list{
-      margin: 0;
-      padding-left: 18px;
-      color: rgba(255,255,255,.78);
-      line-height: 1.7;
-      font-size: 14.5px;
-    }
-    .list li{ margin: 6px 0; }
-
-    /* Examples */
-    .examples{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    @media (min-width: 981px){
-      .examples{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    .ex{
-      padding: 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-    }
-    .ex h3{
-      margin: 0 0 10px;
       font-size: 16px;
       font-weight: 1000;
       letter-spacing: -0.01em;
     }
-    .ex pre{
+    .faq p{
       margin: 0;
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.22);
-      overflow:auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      color: rgba(255,255,255,.86);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-    .ex .ex-actions{
-      margin-top: 10px;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .ex .btn{ height: 40px; border-radius: 14px; font-weight: 1000; font-size: 13px; }
-
-    /* SEO blocks */
-    .seo-block{ margin-top: 16px; text-align:left; }
-    .seo-block h2{
-      margin: 0 0 10px;
-      font-size: clamp(22px, 2.4vw, 32px);
-      font-weight: 1000;
-      letter-spacing: -0.02em;
-      line-height: 1.18;
-    }
-    .seo-block h3{
-      margin: 18px 0 10px;
-      font-size: 18px;
-      font-weight: 1000;
-      letter-spacing: -0.01em;
-    }
-    .seo-block p{
-      margin: 0 0 12px;
       color: rgba(255,255,255,.76);
-      line-height: 1.88;
-      font-size: 15.5px;
+      line-height: 1.75;
+      font-size: 14.8px;
     }
-
-    /* Always-open FAQ */
-    .faq{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    @media (min-width: 981px){
-      .faq{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    .faq-item{
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      padding: 12px;
-    }
-    .faq-q{
-      font-weight: 1000;
-      font-size: 14px;
-      letter-spacing: -0.01em;
-      color: rgba(255,255,255,.92);
-    }
-    .faq-a{
-      margin-top: 8px;
-      color: rgba(255,255,255,.76);
-      line-height: 1.7;
-      font-size: 14.5px;
-    }
-
-    .meta-note{
-      margin-top: 14px;
-      text-align:center;
-      color: rgba(255,255,255,.62);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-    .meta-note a{ color: rgba(255,255,255,.78); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.14); }
   </style>
 
-  <!-- ✅ JSON-LD: WebApplication -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebApplication",
-    "name":"YouTube Video Tag Optimizer",
-    "url":"https://clickoz.com/tools/youtube-video-tag/",
-    "applicationCategory":"UtilitiesApplication",
-    "operatingSystem":"All",
-    "browserRequirements":"Requires JavaScript",
-    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
-    "publisher":{"@type":"Organization","name":"Clickoz","url":"https://clickoz.com/"}
-  }
-  </script>
-
-  <!-- ✅ JSON-LD: Breadcrumb -->
+  <!-- ✅ JSON-LD: Breadcrumb + CollectionPage -->
+  <!-- ✅ JSON-LD: Breadcrumb + CollectionPage + ItemList + FAQPage -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"BreadcrumbList",
     "itemListElement":[
       {"@type":"ListItem","position":1,"name":"Clickoz","item":"https://clickoz.com/"},
-      {"@type":"ListItem","position":2,"name":"Tools","item":"https://clickoz.com/tools/"},
-      {"@type":"ListItem","position":3,"name":"YouTube Video Tag Optimizer","item":"https://clickoz.com/tools/youtube-video-tag/"}
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://clickoz.com/"},
+      {"@type":"ListItem","position":2,"name":"Tools","item":"https://clickoz.com/tools/"}
     ]
+  }
+@@ -230,7 +252,59 @@
+    "name":"Clickoz Tools",
+    "url":"https://clickoz.com/tools/",
+    "isPartOf":{"@type":"WebSite","name":"Clickoz","url":"https://clickoz.com/"},
+    "about":["SEO tools","Writing tools","Developer tools","Creator tools"]
+    "about":["SEO tools","Writing tools","Developer tools","Creator tools"],
+    "mainEntity":{
+      "@type":"ItemList",
+      "name":"Clickoz Tools List",
+      "itemListOrder":"https://schema.org/ItemListUnordered",
+      "numberOfItems":15,
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"url":"https://clickoz.com/tools/word-counter/","name":"Word Counter"},
+        {"@type":"ListItem","position":2,"url":"https://clickoz.com/tools/character-counter/","name":"Character Counter"},
+        {"@type":"ListItem","position":3,"url":"https://clickoz.com/tools/readability-analyzer/","name":"Readability Analyzer"},
+        {"@type":"ListItem","position":4,"url":"https://clickoz.com/tools/keyword-density/","name":"Keyword Density Checker"},
+        {"@type":"ListItem","position":5,"url":"https://clickoz.com/tools/meta-tags/","name":"Meta Tag Optimizer"},
+        {"@type":"ListItem","position":6,"url":"https://clickoz.com/tools/serp-preview/","name":"SERP Snippet Preview"},
+        {"@type":"ListItem","position":7,"url":"https://clickoz.com/tools/json-formatter/","name":"JSON Formatter"},
+        {"@type":"ListItem","position":8,"url":"https://clickoz.com/tools/json-minifier/","name":"JSON Minifier"},
+        {"@type":"ListItem","position":9,"url":"https://clickoz.com/tools/url-encoder/","name":"URL Encoder / Decoder"},
+        {"@type":"ListItem","position":10,"url":"https://clickoz.com/tools/base64/","name":"Base64 Encode / Decode"},
+        {"@type":"ListItem","position":11,"url":"https://clickoz.com/tools/text-case-converter/","name":"Text Case Converter"},
+        {"@type":"ListItem","position":12,"url":"https://clickoz.com/tools/slug-generator/","name":"Slug Generator"},
+        {"@type":"ListItem","position":13,"url":"https://clickoz.com/tools/utm-builder/","name":"UTM Builder"},
+        {"@type":"ListItem","position":14,"url":"https://clickoz.com/tools/html-entity-encoder/","name":"HTML Entity Encoder / Decoder"},
+        {"@type":"ListItem","position":15,"url":"https://clickoz.com/tools/whitespace-cleaner/","name":"Whitespace Cleaner"}
+      ]
+    }
   }
   </script>
 
-  <!-- ✅ JSON-LD: FAQPage -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -370,312 +213,319 @@
     "mainEntity":[
       {
         "@type":"Question",
-        "name":"Does this tool upload my title?",
-        "acceptedAnswer":{"@type":"Answer","text":"No. The tool runs in your browser. Your title stays on your device."}
+        "name":"Do Clickoz tools upload my text or files?",
+        "acceptedAnswer":{"@type":"Answer","text":"No. Tools are designed to run in your browser. Your text stays on your device unless a specific page clearly says otherwise."}
       },
       {
         "@type":"Question",
-        "name":"How many tags should I use on YouTube?",
-        "acceptedAnswer":{"@type":"Answer","text":"Use fewer, higher-signal tags aligned with your title and intent. This tool estimates a recommended max based on clarity and specificity."}
+        "name":"Which tools are best for SEO writing?",
+        "acceptedAnswer":{"@type":"Answer","text":"Start with Word Counter, Readability Analyzer, Keyword Density Checker, and Meta Tag Optimizer. These cover length, clarity, keyword usage, and snippet quality."}
       },
       {
         "@type":"Question",
-        "name":"Do tags still matter for YouTube SEO?",
-        "acceptedAnswer":{"@type":"Answer","text":"Tags can help with misspellings, variants, and context. They work best when they match your title and topic instead of being generic."}
+        "name":"Can I use the tools on mobile?",
+        "acceptedAnswer":{"@type":"Answer","text":"Yes. The UI is built to be stable on mobile browsers, with copy-ready outputs and fast interactions."}
       },
       {
         "@type":"Question",
-        "name":"Does it include Google Trends?",
-        "acceptedAnswer":{"@type":"Answer","text":"This version generates title-aligned tags locally. You can later add an optional trends endpoint and merge suggestions as a separate section."}
+        "name":"How do I find the right tool quickly?",
+        "acceptedAnswer":{"@type":"Answer","text":"Use search with / to focus, then filter by category (SEO, Text, Dev, Creator). Open the tool page that matches your task."}
       }
     ]
   }
   </script>
 </head>
-
-<body class="bigtext">
-  <!-- FX layers (same as Word Counter) -->
-  <div id="clickozParticles" aria-hidden="true"></div>
-  <canvas id="spaceParticles" aria-hidden="true"></canvas>
-  <div class="__grain" aria-hidden="true"></div>
-
-  <!-- NAV (same as Word Counter) -->
-  <nav class="nav" aria-label="Primary navigation" id="topNav">
-    <div class="container nav-inner">
-      <a class="logo" href="/" aria-label="Clickoz Home">
-        <span class="logo-badge" id="logoBadge" aria-hidden="true">
-          <svg class="logo-mark" viewBox="0 0 48 48" width="1em" height="1em" aria-hidden="true" focusable="false">
-            <path d="M32.5 13.5c-2.4-2.2-5.4-3.3-8.9-3.3-7.2 0-12.6 5.1-12.6 13.8S16.4 37.8 23.6 37.8c3.6 0 6.7-1.2 9.2-3.6"
-                  fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
+@@ -254,7 +328,6 @@
         <span class="logo-text">Click<span class="logo-oz">oz</span></span>
       </a>
 
+      <!-- ✅ Added Home (Tools stays active on this page) -->
       <div class="nav-links" aria-label="Sections">
         <a href="/">Home</a>
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/updates/">Updates</a>
-      </div>
+        <a href="/tools/" class="active" aria-current="page">Tools</a>
+@@ -344,14 +417,21 @@
+    </nav>
 
-      <div class="spacer"></div>
+    <h1 class="section-title">Tools</h1>
 
-      <div class="nav-actions" aria-label="Preferences">
-        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-          <span></span><span></span><span></span>
-        </button>
-
-        <div class="dropdown">
-          <button class="dot-btn" id="colorToggle" type="button" aria-haspopup="true" aria-expanded="false" title="Theme color">
-            <span class="dot" id="colorDot" aria-hidden="true"></span>
-          </button>
-
-          <div class="menu" id="colorMenu" role="menu" aria-label="Pick theme color">
-            <div class="menu-title">Theme color</div>
-            <div class="color-grid">
-              <div class="color-option active" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" role="menuitem" tabindex="0"></div>
-              <div class="color-option" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" role="menuitem" tabindex="0"></div>
-              <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" role="menuitem" tabindex="0"></div>
-              <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" role="menuitem" tabindex="0"></div>
-              <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" role="menuitem" tabindex="0"></div>
-              <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" role="menuitem" tabindex="0"></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="gtNavWrap" aria-label="Translate">
-          <div id="google_translate_element"></div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Mobile menu (same as Word Counter) -->
-  <div class="m-overlay" id="mOverlay" hidden></div>
-  <aside class="m-menu" id="mobileMenu" aria-hidden="true">
-    <div class="m-head">
-      <div class="m-title">Menu</div>
-      <button class="m-close" id="mClose" type="button" aria-label="Close menu">×</button>
+    <div class="tools-kicker">
+      <b>Free online tools</b> for SEO, writing, developers, and creators. Find what you need fast, get instant results,
+      and copy clean outputs without signup or uploads. Use Clickoz to count words, check readability, preview meta tags,
+      validate JSON, decode Base64, and fix URL parameters in seconds.
+      <b>Free online tools</b> that solve small problems fast.<br/>
+      Use Clickoz when you need to count words, improve readability, check keyword usage, preview meta tags, or clean developer text like JSON, Base64, and URLs.<br/>
+      Everything runs in your browser with copy-ready outputs, so you can paste, fix, and move on in seconds.
     </div>
 
-    <div class="m-links">
-      <a class="m-link" href="/">Home</a>
-      <a class="m-link" href="/tools/">Tools</a>
-      <a class="m-link" href="/guides/">Guides</a>
-      <a class="m-link" href="/updates/">Updates</a>
-      <a class="m-link" href="/privacy/">Privacy</a>
+    <div class="row">
+      <input class="search" id="toolsSearch" placeholder="Search tools (meta tags, readability, keyword density, json, base64, url…)" aria-label="Search tools" autocomplete="off" />
+    <div class="tools-actions" aria-label="Quick actions">
+      <a class="btn" href="/tools/word-counter/">Open Word Counter</a>
+      <a class="btn" href="/tools/meta-tags/">Open Meta Tag Optimizer</a>
+      <a class="btn primary" href="/guides/">Read Guides</a>
     </div>
 
-    <div class="m-block">
-      <div class="m-label">Theme color</div>
-      <div class="color-grid m-colors" id="mobileColorGrid">
-        <div class="color-option active" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" tabindex="0"></div>
-        <div class="color-option" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" tabindex="0"></div>
-        <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" tabindex="0"></div>
-        <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" tabindex="0"></div>
-        <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" tabindex="0"></div>
-        <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" tabindex="0"></div>
-      </div>
+    <div class="row" style="margin-top:12px;">
+      <input class="search" id="toolsSearch" placeholder="Search tools (word count, meta tags, readability, keyword density, json, base64, url…)" aria-label="Search tools" autocomplete="off" />
+    </div>
+    <div class="search-hint">
+      Press <b>/</b> to search • Filter by category • <b>15 tools per page</b>
+@@ -365,8 +445,130 @@
+      <div class="chip" data-filter="creator" role="button" tabindex="0">Creator</div>
     </div>
 
-    <div class="m-block">
-      <div class="m-label">Language</div>
-      <div id="google_translate_element_mobile"></div>
-      <div style="margin-top:10px;font-size:13px;opacity:.78;line-height:1.5;">
-        Translation loads only if you accept “All” cookies.
-      </div>
-    </div>
-  </aside>
-
-  <!-- CONTENT -->
-  <section class="section container tool-shell">
-    <div class="tool-hero">
-      <nav class="crumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a>
-        <span class="sep">›</span>
-        <a href="/tools/">Tools</a>
-        <span class="sep">›</span>
-        <span aria-current="page">YouTube Video Tag Optimizer</span>
-      </nav>
-
-      <h1 class="section-title">YouTube Video Tag Optimizer</h1>
-
-      <div class="kicker">
-        Paste your <b>video title</b> and get <b>high-signal tags</b> that match your topic and search intent.<br/>
-        We estimate a <b>recommended max tag count</b>, extract a <b>primary keyword</b>, and generate <b>clusters</b> you can copy in one click.<br/>
-        Built for creators who want clean metadata without spam. Fast, private, no signup.
-      </div>
-
-      <div class="mini-trust" aria-label="Key benefits">
-        <span class="mini-pill">🔒 Runs in your browser</span>
-        <span class="mini-pill">⚡ Instant results</span>
-        <span class="mini-pill">📋 Copy-ready outputs</span>
-        <span class="mini-pill">📱 Mobile-friendly</span>
-      </div>
-    </div>
-
-    <div class="tool-panel" aria-label="YouTube Tag tool">
-      <div class="tool-grid">
-        <div class="tool-area">
-          <label for="ytTitle" class="field-label">Video title</label>
-          <input id="ytTitle" class="input" type="text" placeholder="e.g., How to rank YouTube videos in 2026 (fast checklist)" autocomplete="off" />
-
-          <div class="row2">
-            <div>
-              <label for="ytFocus" class="field-label">Focus keyword (optional)</label>
-              <input id="ytFocus" class="input" type="text" placeholder="e.g., youtube seo" autocomplete="off" />
-            </div>
-            <div>
-              <label for="ytLang" class="field-label">Language</label>
-              <select id="ytLang" class="select">
-                <option value="en" selected>English</option>
-                <option value="it">Italiano</option>
-                <option value="fr">Français</option>
-                <option value="es">Español</option>
-                <option value="de">Deutsch</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row2">
-            <div>
-              <label for="ytCategory" class="field-label">Category</label>
-              <select id="ytCategory" class="select">
-                <option value="general" selected>General</option>
-                <option value="music">Music</option>
-                <option value="gaming">Gaming</option>
-                <option value="education">Education</option>
-                <option value="howto">How-to & Tutorials</option>
-                <option value="tech">Tech</option>
-                <option value="vlog">Vlog</option>
-                <option value="finance">Finance</option>
-                <option value="fitness">Fitness</option>
-              </select>
-            </div>
-            <div>
-              <label for="ytMax" class="field-label">Max tags (your choice)</label>
-              <input id="ytMax" class="input" type="number" min="5" max="60" value="25" />
-            </div>
-          </div>
-
-          <div class="tool-actions">
-            <button class="btn primary" id="ytRun" type="button">Analyze & Generate</button>
-            <button class="btn ghost" id="ytCopyAll" type="button" disabled>Copy all tags</button>
-            <button class="btn ghost" id="ytReset" type="button">Reset</button>
-            <button class="btn ghost" id="ytExample" type="button">Use example</button>
-          </div>
-
-          <div class="callout" aria-label="Privacy note">
-            <b>Privacy note:</b> This tool runs locally in your browser. Nothing is uploaded.
-            <span style="opacity:.8">If you later add trends via an API, keep it optional and transparent.</span>
-          </div>
+    <!-- ✅ REAL TOOLS LIST (15 cards) -->
+    <div class="grid" id="toolsGrid">
+      <!-- ✅ incolla qui le tue card -->
+      <!-- SEO -->
+      <a class="card" href="/tools/word-counter/" data-cat="text" data-hay="word counter count words characters sentences paragraphs reading time seo">
+        <div class="tool-top">
+          <h3>Word Counter</h3>
+          <p>Count words, characters, sentences, paragraphs, and estimate reading time for SEO drafts and documents.</p>
         </div>
+        <span class="tool-cta">Use Word Counter</span>
+      </a>
 
-        <div>
-          <div class="stats" aria-label="Quick stats">
-            <div class="stat">
-              <div class="label">Title health</div>
-              <div class="value" id="ytScore">—</div>
-            </div>
-            <div class="stat">
-              <div class="label">Recommended max tags</div>
-              <div class="value" id="ytRecMax">—</div>
-            </div>
-            <div class="stat">
-              <div class="label">Primary keyword</div>
-              <div class="value" id="ytPrimary">—</div>
-            </div>
-            <div class="stat">
-              <div class="label">Words / chars</div>
-              <div class="value" id="ytLen">—</div>
-            </div>
-          </div>
+      <a class="card" href="/tools/readability-analyzer/" data-cat="text" data-hay="readability analyzer readability score grade level clarity skimmable seo">
+        <div class="tool-top">
+          <h3>Readability Analyzer</h3>
+          <p>Get a readability score and suggestions to make writing clearer, shorter, and easier to skim.</p>
         </div>
-      </div>
+        <span class="tool-cta">Use Readability Analyzer</span>
+      </a>
 
-      <div class="divider"></div>
-
-      <div class="row2">
-        <div>
-          <div class="field-label">Title feedback</div>
-          <ul class="list" id="ytFeedback">
-            <li>Generate tags to see recommendations.</li>
-          </ul>
+      <a class="card" href="/tools/keyword-density/" data-cat="seo" data-hay="keyword density checker keyword frequency seo on page keywords stuffing">
+        <div class="tool-top">
+          <h3>Keyword Density Checker</h3>
+          <p>See keyword frequency and density so you can avoid stuffing and keep content natural.</p>
         </div>
-        <div>
-          <label for="ytOut" class="field-label">Copy-ready output</label>
-          <textarea id="ytOut" class="textarea" rows="4" readonly placeholder="Tags will appear here (comma-separated)…"></textarea>
+        <span class="tool-cta">Check Keyword Density</span>
+      </a>
+
+      <a class="card" href="/tools/meta-tags/" data-cat="seo" data-hay="meta tag optimizer title description length preview ctr serp">
+        <div class="tool-top">
+          <h3>Meta Tag Optimizer</h3>
+          <p>Write better titles and descriptions with length checks and preview for search snippets.</p>
         </div>
-      </div>
+        <span class="tool-cta">Optimize Meta Tags</span>
+      </a>
 
-      <div class="divider"></div>
-
-      <div class="field-label">Generated tags (click to copy a single tag)</div>
-      <div class="chips" id="ytChips" aria-label="Generated tags"></div>
-
-      <!-- Examples -->
-      <div class="examples" aria-label="Examples">
-        <div class="ex">
-          <h3>Example: SEO tutorial</h3>
-          <pre id="ex1">How to Rank YouTube Videos in 2026 (Fast SEO Checklist)</pre>
-          <div class="ex-actions">
-            <button class="btn ghost" type="button" data-fill="#ex1">Load title</button>
-          </div>
+      <a class="card" href="/tools/serp-preview/" data-cat="seo" data-hay="serp snippet preview google title description preview seo">
+        <div class="tool-top">
+          <h3>SERP Snippet Preview</h3>
+          <p>Preview how your page may look in search results before you publish.</p>
         </div>
+        <span class="tool-cta">Open SERP Preview</span>
+      </a>
 
-        <div class="ex">
-          <h3>Example: Music / drill</h3>
-          <pre id="ex2">Street Drill Napoli – Nuovo Brano 2026 (Official Video)</pre>
-          <div class="ex-actions">
-            <button class="btn ghost" type="button" data-fill="#ex2">Load title</button>
-          </div>
+      <!-- Dev -->
+      <a class="card" href="/tools/json-formatter/" data-cat="dev" data-hay="json formatter validate pretty print minify parse error">
+        <div class="tool-top">
+          <h3>JSON Formatter</h3>
+          <p>Format and validate JSON instantly for debugging and clean copy-ready output.</p>
         </div>
-      </div>
+        <span class="tool-cta">Format JSON</span>
+      </a>
+
+      <a class="card" href="/tools/json-minifier/" data-cat="dev" data-hay="json minifier compress minify json remove spaces">
+        <div class="tool-top">
+          <h3>JSON Minifier</h3>
+          <p>Minify JSON for smaller payloads and faster copy/paste into APIs and configs.</p>
+        </div>
+        <span class="tool-cta">Minify JSON</span>
+      </a>
+
+      <a class="card" href="/tools/url-encoder/" data-cat="dev" data-hay="url encoder decoder query string encode decode parameters">
+        <div class="tool-top">
+          <h3>URL Encoder / Decoder</h3>
+          <p>Encode or decode URLs and query strings safely to fix broken parameters and redirects.</p>
+        </div>
+        <span class="tool-cta">Use URL Encoder</span>
+      </a>
+
+      <a class="card" href="/tools/base64/" data-cat="dev" data-hay="base64 encode decode token payload jwt">
+        <div class="tool-top">
+          <h3>Base64 Encode / Decode</h3>
+          <p>Encode or decode Base64 strings for tokens, payloads, and quick developer checks.</p>
+        </div>
+        <span class="tool-cta">Use Base64 Tool</span>
+      </a>
+
+      <a class="card" href="/tools/html-entity-encoder/" data-cat="dev" data-hay="html entity encode decode escape unescape">
+        <div class="tool-top">
+          <h3>HTML Entity Encoder / Decoder</h3>
+          <p>Escape or unescape HTML entities to prevent broken markup and messy copy.</p>
+        </div>
+        <span class="tool-cta">Open HTML Entity Tool</span>
+      </a>
+
+      <!-- Text utilities -->
+      <a class="card" href="/tools/character-counter/" data-cat="text" data-hay="character counter with spaces without spaces twitter limit bio">
+        <div class="tool-top">
+          <h3>Character Counter</h3>
+          <p>Count characters with or without spaces for platform limits, forms, and snippets.</p>
+        </div>
+        <span class="tool-cta">Use Character Counter</span>
+      </a>
+
+      <a class="card" href="/tools/text-case-converter/" data-cat="text" data-hay="case converter uppercase lowercase title case sentence case">
+        <div class="tool-top">
+          <h3>Text Case Converter</h3>
+          <p>Convert text to UPPERCASE, lowercase, Title Case, or Sentence case in one click.</p>
+        </div>
+        <span class="tool-cta">Convert Text Case</span>
+      </a>
+
+      <a class="card" href="/tools/whitespace-cleaner/" data-cat="text" data-hay="whitespace cleaner remove extra spaces trim normalize lines">
+        <div class="tool-top">
+          <h3>Whitespace Cleaner</h3>
+          <p>Remove extra spaces and normalize formatting for clean documents and copy-ready text.</p>
+        </div>
+        <span class="tool-cta">Clean Text</span>
+      </a>
+
+      <a class="card" href="/tools/slug-generator/" data-cat="seo" data-hay="slug generator url slug seo friendly convert title">
+        <div class="tool-top">
+          <h3>Slug Generator</h3>
+          <p>Create SEO-friendly URL slugs from titles for blogs, product pages, and landing pages.</p>
+        </div>
+        <span class="tool-cta">Generate Slug</span>
+      </a>
+
+      <a class="card" href="/tools/utm-builder/" data-cat="creator" data-hay="utm builder campaign link tracking source medium content">
+        <div class="tool-top">
+          <h3>UTM Builder</h3>
+          <p>Build trackable links for campaigns so you can measure traffic sources accurately.</p>
+        </div>
+        <span class="tool-cta">Build UTM Link</span>
+      </a>
     </div>
 
-    <!-- SEO + guidance -->
-    <div class="hero-box seo-block" aria-label="About this tool">
-      <h2>What is a YouTube tag optimizer?</h2>
-      <p>
-        A YouTube tag optimizer helps you choose tags that match your video’s topic and the words people actually search.
-        Tags work best when they are aligned with your title, cover spelling variants, and add helpful context instead of generic keywords.
+    <div class="pager" aria-label="Pagination controls">
+@@ -376,13 +578,13 @@
+    </div>
+  </section>
+
+  <!-- BELOW: Narrative / SEO -->
+  <!-- Narrative / SEO -->
+  <section class="section container" aria-label="Tools value and use cases">
+    <div class="hero-box">
+      <h2 class="section-title" style="margin-top:0;">Why Clickoz Tools exists</h2>
+      <h2 class="section-title" style="margin-top:0;">How to use these tools in real situations</h2>
+      <p class="section-sub" style="margin-bottom:14px;">
+        People don’t search for “a platform”. They search for problems like word count, meta preview, keyword checks,
+        JSON errors, broken URLs, Base64 decoding, and creator packaging.
+        If you searched “how to count words”, “meta tag preview”, “json formatter”, or “url encoder”, you’re in the right place.
+        Clickoz tools are built for quick workflows: paste your text, get the result instantly, and copy a clean output that you can reuse.
       </p>
 
-      <h3>How to use this tool</h3>
-      <p>
-        Paste your title, optionally add a focus keyword, and generate tags. Copy the comma-separated output into YouTube.
-        If your title is too broad, improve it first: add a specific outcome, year, format, or audience.
-      </p>
+      <div class="lanes">
+@@ -392,86 +594,97 @@
+            <h3>SEO checks before publishing</h3>
+          </div>
+          <p>
+            Titles, descriptions, and content clarity are small details that decide clicks. Clickoz tools help you measure and fix those details fast:
+            snippet length, readability, keyword usage, and on-page structure.
+            Use Word Counter and Readability Analyzer to keep content structured and scannable. Then refine titles and descriptions with Meta Tag Optimizer and SERP Preview.
+            This helps you avoid thin pages and improve click potential without stuffing keywords.
+          </p>
+        </div>
 
-      <h3>FAQ</h3>
-      <div class="faq" aria-label="Frequently asked questions">
-        <div class="faq-item">
-          <div class="faq-q">Does this tool upload my title?</div>
-          <div class="faq-a">No. It runs locally in your browser.</div>
+        <div class="lane">
+          <div class="lane-head">
+            <div class="lane-ico" aria-hidden="true">🎥</div>
+            <h3>Creator packaging (YouTube and beyond)</h3>
+            <div class="lane-ico" aria-hidden="true">🧑‍💻</div>
+            <h3>Developer utilities when something breaks</h3>
+          </div>
+          <p>
+            “Why do I get 0 views on YouTube?” is often packaging: unclear titles, weak hooks, messy descriptions, and keywords that don’t match intent.
+            Creator tools focus on titles, descriptions, tags, and repeatable templates.
+            When JSON won’t parse, format it and validate quickly. If a link breaks because of special characters, encode the URL safely.
+            If you received a Base64 token or payload, decode it to inspect the content.
+          </p>
         </div>
-        <div class="faq-item">
-          <div class="faq-q">How many tags should I use?</div>
-          <div class="faq-a">Use fewer, better tags. This tool estimates a recommended max based on title clarity.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Are “trends” included?</div>
-          <div class="faq-a">This version generates title-aligned tags locally. You can add optional trends later.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">What makes a tag strong?</div>
-          <div class="faq-a">It matches your title intent, includes long-tail variants, and avoids generic spam.</div>
-        </div>
-      </div>
 
-      <div class="meta-note">
-        Last updated: <span id="lastUpdated">2026-01-25</span> ·
-        <a href="/tools/">Browse all tools</a>
+        <div class="lane">
+          <div class="lane-head">
+            <div class="lane-ico" aria-hidden="true">🧑‍💻</div>
+            <h3>Developer utilities when stuff breaks</h3>
+            <div class="lane-ico" aria-hidden="true">✍️</div>
+            <h3>Writing, editing, and platform limits</h3>
+          </div>
+          <p>
+            When JSON is invalid, query strings are malformed, or Base64 needs inspection, you want a fast browser tool.
+            Format, validate, encode, decode — done.
+            Check word count for briefs and assignments, then use a character counter for bios, forms, or social media limits.
+            Clean formatting with Whitespace Cleaner and standardize casing with Text Case Converter for professional copy.
+          </p>
+        </div>
+
+        <div class="lane">
+          <div class="lane-head">
+            <div class="lane-ico" aria-hidden="true">✍️</div>
+            <h3>Writing workflows that stay clean</h3>
+            <div class="lane-ico" aria-hidden="true">🎥</div>
+            <h3>Creators and tracking</h3>
+          </div>
+          <p>
+            Good writing wins because it’s easy to understand. Tools like word count and readability help you keep content scannable, structured,
+            and mobile-friendly.
+            UTM Builder makes it easy to track which link drove clicks from TikTok, Instagram, YouTube, or newsletters.
+            It’s a simple upgrade that helps you understand what content actually performs.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER (same style as your current footer) -->
+  <section class="section container" aria-label="About Clickoz Tools">
+  <!-- FAQ always open -->
+  <section class="section container" aria-label="Tools FAQ">
+    <div class="hero-box pillar">
+      <h2>Free, privacy-first, and built to scale</h2>
+      <p>
+        Clickoz is designed around “one job per tool”. That makes the site fast, predictable, and easy to use — especially on mobile.
+        Tools run in your browser, outputs are copy-ready, and you don’t need an account.
+      </p>
+      <h2>Tools FAQ</h2>
+      <p>
+        The library will expand into more categories (YouTube tools, social tools, marketing utilities, website tools, developer tools).
+        Search, filters, and pagination keep this page quick as the catalog grows — and each tool can become its own landing page for real search intent.
+        These answers are visible by default so you can understand the site instantly. If you want more detail, each tool page includes examples and common use cases.
+      </p>
+
+      <h3>Multiple keywords without spam</h3>
+      <p>
+        Keyword coverage becomes spam when it repeats the same phrase unnaturally. Clickoz aims for natural language tied to real tasks:
+        free online tools, browser tools, SEO tools, writing tools, developer utilities, creator tools, and YouTube tools —
+        mentioned where they fit, not stuffed.
+      </p>
+      <div class="faq-grid">
+        <div class="faq">
+          <h3>Do Clickoz tools upload my text or files?</h3>
+          <p>No. Tools are designed to run in your browser. Your text stays on your device unless a specific tool clearly says otherwise.</p>
+        </div>
+
+        <div class="faq">
+          <h3>Which tools should I start with for SEO?</h3>
+          <p>Start with Word Counter, Readability Analyzer, Keyword Density Checker, and Meta Tag Optimizer. These cover structure, clarity, keyword usage, and snippet quality.</p>
+        </div>
+
+        <div class="faq">
+          <h3>Can I use Clickoz on mobile?</h3>
+          <p>Yes. The UI is built to be stable on mobile browsers, with fast interactions and copy-ready outputs.</p>
+        </div>
+
+        <div class="faq">
+          <h3>How do I find the right tool quickly?</h3>
+          <p>Use search (press / to focus), then filter by category. Open the tool page that matches your exact task and copy the clean output.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer + Cookie banner -->
   <footer class="footer">
     <div class="container footer-grid">
       <div>
@@ -696,29 +546,108 @@
           <a href="/tools/json-formatter/">JSON Formatter</a>
         </div>
       </div>
-
-      <div>
-        <h4>Legal</h4>
-        <div class="footer-links">
-          <a href="/privacy/">Privacy</a>
-          <a href="/terms/">Terms</a>
-          <a href="/contact/">Contact</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="container" style="margin-top:14px">
-      <hr class="sep" />
-      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
-        © 2026 Clickoz • Fast tools for SEO, writing and developers
+@@ -493,103 +706,103 @@
       </div>
     </div>
   </footer>
 
-  <!-- Global site.js -->
+  <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
+    <div class="cookie-card">
+      <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
+      <div class="cookie-content">
+        <div class="cookie-title">Privacy choices</div>
+        <div class="cookie-text">
+          We use essential storage for core features. If you accept all, we may load third-party services like Google Translate.
+          Read more in <a href="/privacy/">Privacy</a>.
+        </div>
+      </div>
+      <div class="cookie-actions">
+        <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
+        <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
+        <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
+      </div>
+    </div>
+  </div>
+
   <script src="/assets/site.js" defer></script>
 
-  <!-- Tool script (same folder) -->
-  <script src="./toolscript.js" defer></script>
+  <!-- ✅ Tools page logic (unchanged) -->
+  <!-- Your pagination/filter/search logic (unchanged) -->
+  <script>
+    (function(){
+      const $  = (s, r=document) => r.querySelector(s);
+      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+      const grid   = $('#toolsGrid');
+      const chips  = $('#toolsChips');
+      const search = $('#toolsSearch');
+      const prev   = $('#prevPage');
+      const next   = $('#nextPage');
+      const info   = $('#pageInfo');
+      if(!grid || !chips || !search || !prev || !next || !info) return;
+
+      const PAGE_SIZE = 15;
+      let page = 1;
+      let filter = 'all';
+      const allCards = $$('#toolsGrid a.card');
+
+      function normalize(s){ return (s || '').toLowerCase().trim(); }
+
+      function getFiltered(){
+        const term = normalize(search.value);
+        return allCards.filter(card => {
+          const cat = normalize(card.dataset.cat || '');
+          const hay = normalize((card.dataset.hay || '') + ' ' + (card.textContent || ''));
+          const okCat = (filter === 'all') || (cat === filter);
+          const okTerm = !term || hay.includes(term);
+          return okCat && okTerm;
+        });
+      }
+
+      function render(){
+        const filtered = getFiltered();
+        const total = filtered.length;
+        const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+        if(page > pages) page = pages;
+        if(page < 1) page = 1;
+
+        allCards.forEach(c => c.style.display = 'none');
+        const start = (page - 1) * PAGE_SIZE;
+        filtered.slice(start, start + PAGE_SIZE).forEach(c => c.style.display = '');
+
+        prev.disabled = page <= 1;
+        next.disabled = page >= pages;
+        info.textContent = `Page ${page} of ${pages} • ${total} tool${total === 1 ? '' : 's'}`;
+      }
+
+      chips.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip');
+        if(!chip) return;
+        chips.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+        chip.classList.add('active');
+        filter = chip.dataset.filter || 'all';
+        page = 1;
+        render();
+      });
+
+      let t = null;
+      search.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(() => { page = 1; render(); }, 60);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
+          e.preventDefault();
+          search.focus();
+        }
+      });
+
+      prev.addEventListener('click', () => { page--; render(); });
+      next.addEventListener('click', () => { page++; render(); });
+
+      render();
+    })();
+  </script>
 </body>
 </html>
