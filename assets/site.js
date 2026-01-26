@@ -1,5 +1,22 @@
+/* =========================================================
+   Clickoz — site.js (CLEAN + PRO)
+   - One file, used across all pages
+   - Cyan default accent on first visit
+   - Mobile drawer + dropdown close helpers
+   - Search + chips (only if present)
+   - Recommended random picks (home) + manual refresh (if present)
+   - Cookie consent + optional Google Translate
+   - DOM particles (idle + burst) — NO click effects
+   - Space canvas "starfield" — NO click effects, follows --accent-rgb
+   - Active nav link (single, non-duplicated)
+========================================================= */
 
 (() => {
+  "use strict";
+
+  /* ---------------------------
+     Helpers
+  --------------------------- */
   const $  = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
   const rnd = (a,b)=>Math.random()*(b-a)+a;
@@ -7,20 +24,22 @@
   const prefersReduce = window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* =========================================================
-     0) GLOBAL HELPERS
-  ========================================================= */
   function closeAllMenus(){
     $$('.menu.active').forEach(m => m.classList.remove('active'));
     $$('[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
   }
+
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.dropdown')) closeAllMenus();
   });
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeAllMenus();
   });
 
+  /* ---------------------------
+     Accent (theme color)
+  --------------------------- */
   function hexToRgbTriplet(hex){
     const h = (hex || '').replace('#','').trim();
     if (h.length === 3){
@@ -35,16 +54,12 @@
       const b = parseInt(h.slice(4,6), 16);
       return `${r},${g},${b}`;
     }
-    return "99,102,241";
-  }
-
-  function currentAccentRgb(){
-    return (getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "99,102,241");
+    return "34,211,238"; // cyan fallback
   }
 
   function setAccent(a1, a2){
-   const accent  = a1 || '#22d3ee';   // cyan default
-  const accent2 = a2 || '#06b6d4';   // oppure accent
+    const accent  = a1 || '#22d3ee'; // cyan default
+    const accent2 = a2 || '#06b6d4';
 
     document.documentElement.style.setProperty('--accent', accent);
     document.documentElement.style.setProperty('--accent2', accent2);
@@ -59,8 +74,6 @@
     try{
       localStorage.setItem('clickoz_accent', JSON.stringify({a1: accent, a2: accent2}));
     }catch(_){}
-
-    // Update canvas color smoothly (next frame reads CSS vars)
   }
 
   function markActiveSwatches(accent){
@@ -71,7 +84,8 @@
      1) MOBILE MENU (DRAWER)
   ========================================================= */
   (function initMobileMenu(){
-    const burger  = $('#burger');
+    // tolerate accidental burger_1
+    const burger  = $('#burger') || $('#burger_1');
     const menu    = $('#mobileMenu');
     const overlay = $('#mOverlay');
     const closeBtn= $('#mClose');
@@ -86,6 +100,7 @@
       burger.setAttribute('aria-expanded','true');
       root.classList.add('no-scroll');
     }
+
     function closeMenu(){
       menu.classList.remove('open');
       overlay.hidden = true;
@@ -97,6 +112,7 @@
     burger.addEventListener('click', () => {
       menu.classList.contains('open') ? closeMenu() : openMenu();
     });
+
     closeBtn.addEventListener('click', closeMenu);
     overlay.addEventListener('click', closeMenu);
 
@@ -112,15 +128,18 @@
     if(!$('#__noScrollStyle')){
       const style = document.createElement('style');
       style.id = "__noScrollStyle";
-      style.textContent = `.no-scroll{ overflow:hidden; }`;
+      style.textContent = `.no-scroll{ overflow:hidden !important; }`;
       document.head.appendChild(style);
     }
   })();
 
   /* =========================================================
-     2) ACCENT MENU (DESKTOP) + SYNC WITH MOBILE GRID
+     2) ACCENT MENU (DESKTOP + MOBILE GRID)
   ========================================================= */
   (function initAccent(){
+    const CYAN  = '#22d3ee';
+    const CYAN2 = '#06b6d4';
+
     // restore saved accent first
     try{
       const saved = JSON.parse(localStorage.getItem('clickoz_accent') || 'null');
@@ -128,14 +147,14 @@
         setAccent(saved.a1, saved.a2);
         markActiveSwatches(saved.a1);
       }else{
-       // FIRST VISIT default = CYANO (last theme)
-      const CYAN  = '#22d3ee';
-       const CYAN2 = '#06b6d4';
-      setAccent(CYAN, CYAN2);
+        // first visit default
+        setAccent(CYAN, CYAN2);
         markActiveSwatches(CYAN);
-        }
-
-    }catch(_){}
+      }
+    }catch(_){
+      setAccent(CYAN, CYAN2);
+      markActiveSwatches(CYAN);
+    }
 
     const toggle = $('#colorToggle');
     const menu   = $('#colorMenu');
@@ -157,7 +176,7 @@
         setAccent(opt.dataset.accent, opt.dataset.accent2);
         markActiveSwatches(opt.dataset.accent);
         closeAllMenus();
-        burstParticles();
+        burstParticles(); // quick burst on theme change
       });
     }
 
@@ -174,11 +193,12 @@
   })();
 
   /* =========================================================
-     3) "/" FOCUSES SEARCH
+     3) "/" FOCUSES SEARCH (only if #toolSearch exists)
   ========================================================= */
   (function slashFocus(){
     const search = $('#toolSearch');
     if(!search) return;
+
     document.addEventListener('keydown', (e) => {
       if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement !== search){
         e.preventDefault();
@@ -188,7 +208,7 @@
   })();
 
   /* =========================================================
-     4) SEARCH + CHIPS FILTER
+     4) SEARCH + CHIPS FILTER (Tools page)
   ========================================================= */
   (function searchAndChips(){
     const grid  = $('#grid');
@@ -204,6 +224,7 @@
       "title-description","alt-text","seo-outline"
     ]);
     const TEXT = new Set(["word-counter","readability-analyzer"]);
+
     function catFromSlug(slug){
       if (SEO.has(slug)) return "seo";
       if (TEXT.has(slug)) return "text";
@@ -238,13 +259,10 @@
     apply();
   })();
 
-    /* =========================================================
-     5) RECOMMENDED NOW RANDOM PICKS (6 cards)
-     - Works on Tools pages (uses #grid if present)
-     - Works on Home even without #grid (fallback catalog list)
+  /* =========================================================
+     5) RECOMMENDED NOW — RANDOM PICKS (Home slots)
   ========================================================= */
   (function recommendedRandom(){
-    // Slots available on Home (and can exist elsewhere too)
     const slots = [
       {a:'randTool1', i:'randIcon1', t:'randTitle1', d:'randDesc1', c:'randCta1'},
       {a:'randTool2', i:'randIcon2', t:'randTitle2', d:'randDesc2', c:'randCta2'},
@@ -254,12 +272,9 @@
       {a:'randTool6', i:'randIcon6', t:'randTitle6', d:'randDesc6', c:'randCta6'},
     ];
 
-    // If the page doesn't have these elements, do nothing
     const anySlot = document.getElementById(slots[0].a);
     if(!anySlot) return;
 
-    // Fallback catalog (used on Home when #grid is removed)
-    // IMPORTANT: uses /tools/ routes
     const FALLBACK = [
       { href:'/tools/word-counter/',          icon:'🔢', title:'Word Counter',          desc:'Count words, characters, sentences, paragraphs and reading time.' },
       { href:'/tools/word-counter-pro/',      icon:'✨', title:'Word Counter Pro',      desc:'Advanced stats: speaking time, section breakdown and keyword hints.' },
@@ -274,7 +289,6 @@
       { href:'/tools/seo-outline/',           icon:'🧠', title:'SEO Outline Helper',    desc:'Build H1/H2/H3 outline + FAQ ideas that match intent.' },
     ];
 
-    // If a Tools page has #grid, extract from real cards (best source of truth)
     const grid = document.getElementById('grid');
     const cards = grid ? Array.from(grid.querySelectorAll('a.card')) : [];
 
@@ -286,25 +300,18 @@
       return { href, icon, title, desc };
     }
 
-    // Build catalog:
-    // - if #grid exists and has enough cards, use it
-    // - else use FALLBACK
     let catalog = [];
     if(cards.length >= 6){
       catalog = cards.map(extractFromCard)
-        // ensure we prefer /tools/ in case some old /tool/ slipped in
         .map(x => ({...x, href: x.href.replace(/^\/tool\//, '/tools/')}));
     }else{
       catalog = FALLBACK.slice();
     }
-
     if(catalog.length < 6) return;
 
     function pickDistinct(n){
       const idx = new Set();
-      while(idx.size < n){
-        idx.add(Math.floor(Math.random() * catalog.length));
-      }
+      while(idx.size < n) idx.add(Math.floor(Math.random() * catalog.length));
       return Array.from(idx).map(i => catalog[i]);
     }
 
@@ -329,9 +336,8 @@
     });
   })();
 
-
   /* =========================================================
-     6) COOKIE CONSENT + GOOGLE TRANSLATE
+     6) COOKIE CONSENT + GOOGLE TRANSLATE (optional)
   ========================================================= */
   (function consentAndGT(){
     const KEY = "clickoz_consent";
@@ -353,9 +359,7 @@
     function readStored(){
       try { return localStorage.getItem(KEY); } catch(e){ return null; }
     }
-    function hideBanner(){
-      banner?.classList.remove('show');
-    }
+    function hideBanner(){ banner?.classList.remove('show'); }
 
     function mirrorGTToMobile(){
       const desktop = $('#google_translate_element');
@@ -373,6 +377,7 @@
       if (gtWrap) gtWrap.classList.add('show');
 
       window.googleTranslateElementInit = function(){
+        // eslint-disable-next-line no-new
         new window.google.translate.TranslateElement(
           { pageLanguage: 'en', autoDisplay: false },
           'google_translate_element'
@@ -408,11 +413,11 @@
     $('#cookieReject')?.addEventListener('click', () => {
       store("none"); hideBanner();
     });
-    $('#cookieClose')?.addEventListener('click', () => hideBanner());
+    $('#cookieClose')?.addEventListener('click', hideBanner);
   })();
 
   /* =========================================================
-     7) DOM PARTICLES (idle + burst) — stable
+     7) DOM PARTICLES (idle + burst) — NO CLICK
   ========================================================= */
   function ensureParticlesLayer(){
     if (prefersReduce) return null;
@@ -456,6 +461,7 @@
     const isMobile = window.matchMedia("(max-width: 720px)").matches;
     const COUNT = isMobile ? 90 : 180;
 
+    // origin near hero top-center
     const ORIGIN_X = 50;
     const ORIGIN_Y = 22;
     const MAX_DELAY = 0.50;
@@ -488,331 +494,246 @@
     }
   }
 
- /* =========================================================
-   8) SPACE CANVAS — BIG burst to near edges, then drift
-   - burst once on load (no re-burst on accent change)
-   - color always follows --accent-rgb live
+  /* =========================================================
+     8) SPACE CANVAS — PRO (NO CLICK)
+     - One burst on load/resize
+     - Stable drift + subtle swirl
+     - Color follows --accent-rgb (no random violet)
 ========================================================= */
-(function spaceCanvas(){
-  if (prefersReduce) return;
+  (function spaceCanvas(){
+    if (prefersReduce) return;
 
-  const canvas = document.getElementById('spaceParticles');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d', { alpha:true });
+    const canvas = document.getElementById('spaceParticles');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha:true });
 
-  let w=0,h=0,dpr=1;
-  let stars = [];
-  let running = true;
+    let w=0,h=0,dpr=1;
+    let stars = [];
+    let running = true;
+    let last = performance.now();
 
-  function accentRGB(){
-    return (getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "99,102,241");
-  }
-  function isMobile(){
-    return window.matchMedia("(max-width: 720px)").matches;
-  }
-  function origin(){
-    // hero center-ish
-    return { x: w*0.5, y: h*(isMobile() ? 0.30 : 0.26) };
-  }
-
-  function resize(){
-    dpr = Math.min(2, window.devicePixelRatio || 1);
-    w = canvas.width  = Math.floor(window.innerWidth * dpr);
-    h = canvas.height = Math.floor(window.innerHeight * dpr);
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height= window.innerHeight + 'px';
-
-    // Base starfield (always there)
-    const baseCount = isMobile() ? 22 : 50;
-    stars = [];
-    for(let i=0;i<baseCount;i++){
-      stars.push(spawnDriftStar(true));
+    function accentRGB(){
+      return (getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "34,211,238");
+    }
+    function isMobile(){
+      return window.matchMedia("(max-width: 720px)").matches;
+    }
+    function origin(){
+      return { x: w*0.5, y: h*(isMobile() ? 0.30 : 0.26) };
     }
 
-    // One BIG explosion on load
-    bigBurst();
-  }
+    function spawnDrift(randomField=true){
+      const r = (Math.random() < 0.12 ? rnd(1.7, 3.4) : rnd(0.9, 2.0)) * dpr;
+      const x = randomField ? rnd(0, w) : origin().x;
+      const y = randomField ? rnd(0, h) : origin().y;
 
-  // Drift star (already distributed)
-  function spawnDriftStar(randomField=false){
-    const rgb = accentRGB(); // (not stored, just for defaults)
-    const r = (Math.random() < 0.12 ? rnd(1.8, 3.4) : rnd(0.9, 2.0)) * dpr;
+      const sp = (isMobile() ? rnd(0.10, 0.26) : rnd(0.12, 0.32)) * dpr;
+      const a = Math.random()*Math.PI*2;
 
-    const x = randomField ? rnd(0, w) : origin().x;
-    const y = randomField ? rnd(0, h) : origin().y;
+      return {
+        mode: "drift",
+        x, y,
+        vx: Math.cos(a)*sp,
+        vy: Math.sin(a)*sp,
+        r,
+        a: rnd(0.06, 0.16),
+        life: 0,
+        max: rnd(900, 1700),
+        swirl: (isMobile() ? 0.00060 : 0.00085) * dpr
+      };
+    }
 
-    // gentle random drift
-    const sp = (isMobile() ? rnd(0.08, 0.22) : rnd(0.10, 0.28)) * dpr;
-    const a = Math.random()*Math.PI*2;
+    function spawnBurst(){
+      const o = origin();
+      const ang = Math.random()*Math.PI*2 + rnd(-0.10, 0.10);
 
-    return {
-      mode: "drift",
-      x, y,
-      vx: Math.cos(a)*sp,
-      vy: Math.sin(a)*sp,
-      r,
-      a: rnd(0.05, 0.14),      // alpha
-      life: 0,
-      max: rnd(900, 1500),
-      // swirl strength
-      swirl: (isMobile() ? 0.00055 : 0.00080) * dpr,
-    };
-  }
+      const vBase = isMobile() ? rnd(2.4, 3.9) : rnd(3.1, 5.0);
+      const vx0 = Math.cos(ang) * vBase * dpr;
+      const vy0 = Math.sin(ang) * vBase * dpr;
 
-  // Burst star (starts at origin, goes to edges fast, then transitions to drift)
-  function spawnBurstStar(){
-    const o = origin();
+      const big = Math.random() < 0.20;
+      const r = (big ? rnd(2.2, 4.2) : rnd(1.0, 2.2)) * dpr;
 
-    // angle outward (uniform) + slight noise
-    const ang = Math.random()*Math.PI*2 + rnd(-0.12, 0.12);
+      return {
+        mode: "burst",
+        x: o.x + rnd(-3,3)*dpr,
+        y: o.y + rnd(-3,3)*dpr,
+        vx: vx0,
+        vy: vy0,
+        r,
+        a: isMobile() ? rnd(0.18, 0.30) : rnd(0.20, 0.34),
+        life: 0,
+        burstFrames: isMobile() ? 85 : 120,
+        swirl: (isMobile() ? 0.00060 : 0.00085) * dpr
+      };
+    }
 
-    // BURST speed (strong) → so it reaches near margins
-    const vBase = isMobile() ? rnd(2.2, 3.6) : rnd(2.8, 4.6);
-    const vx0 = Math.cos(ang) * vBase * dpr;
-    const vy0 = Math.sin(ang) * vBase * dpr;
+    function bigBurst(){
+      const count = isMobile() ? 150 : 260;
+      for(let i=0;i<count;i++) stars.push(spawnBurst());
 
-    const big = Math.random() < 0.20;
-    const r = (big ? rnd(2.2, 4.4) : rnd(1.0, 2.2)) * dpr;
+      const cap = isMobile() ? 320 : 520;
+      if(stars.length > cap) stars.splice(0, stars.length - cap);
+    }
 
-    // Burst frames: longer = reaches edges
-    const burstFrames = isMobile() ? 90 : 120;
+    function resize(){
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = canvas.width  = Math.floor(window.innerWidth * dpr);
+      h = canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width  = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
 
-    return {
-      mode: "burst",
-      x: o.x + rnd(-3,3)*dpr,
-      y: o.y + rnd(-3,3)*dpr,
-      vx: vx0,
-      vy: vy0,
-      r,
-      a: isMobile() ? rnd(0.16, 0.28) : rnd(0.18, 0.32),
-      life: 0,
-      burstFrames,
-      // after burst, drift params
-      swirl: (isMobile() ? 0.00055 : 0.00080) * dpr,
-    };
-  }
+      const base = isMobile() ? 70 : 120;
+      stars = [];
+      for(let i=0;i<base;i++) stars.push(spawnDrift(true));
 
-  function bigBurst(){
-    // number of burst stars
-    const count = isMobile() ? 120 : 220;
-    for(let i=0;i<count;i++) stars.push(spawnBurstStar());
+      bigBurst();
+    }
 
-    // keep cap (performance)
-    const cap = isMobile() ? 220 : 420;
-    if(stars.length > cap) stars.splice(0, stars.length - cap);
-  }
+    function step(now){
+      if(!running) return;
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
 
-  function step(){
-    if(!running) return;
+      ctx.clearRect(0,0,w,h);
+      const rgb = accentRGB();
+      const o = origin();
+      const margin = 140*dpr;
 
-    ctx.clearRect(0,0,w,h);
-    const rgb = accentRGB();
+      // soft haze (no fixed "ball")
+      ctx.fillStyle = `rgba(${rgb},0.055)`;
+      ctx.fillRect(0,0,w,h);
 
-    // soft haze to avoid “dead black” on desktop
-    ctx.fillStyle = `rgba(${rgb},0.09)`;
-    ctx.fillRect(0,0,w,h);
+      for(let i=0;i<stars.length;i++){
+        const s = stars[i];
+        s.life++;
 
-    const o = origin();
-    const margin = 140*dpr;
+        if(s.mode === "burst"){
+          s.x += s.vx;
+          s.y += s.vy;
 
-    for(let i=0;i<stars.length;i++){
-      const s = stars[i];
-      s.life++;
+          const t = Math.min(1, s.life / s.burstFrames);
+          const alpha = s.a * (1 - t*0.35);
 
-      if(s.mode === "burst"){
-        // Move fast outward
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(${rgb},${Math.max(0, alpha)})`;
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+          ctx.fill();
+
+          if(s.life >= s.burstFrames){
+            s.mode = "drift";
+            s.vx *= isMobile() ? 0.10 : 0.12;
+            s.vy *= isMobile() ? 0.10 : 0.12;
+            s.life = 0;
+            s.max = rnd(900, 1700);
+            s.a = rnd(0.06, 0.16);
+          }
+          continue;
+        }
+
+        // drift swirl
+        const dx = s.x - o.x;
+        const dy = s.y - o.y;
+        s.vx += (-dy) * s.swirl * 0.0009;
+        s.vy += ( dx) * s.swirl * 0.0009;
+
+        // micro damping (prevents runaway)
+        s.vx *= (1 - dt*0.015);
+        s.vy *= (1 - dt*0.015);
+
         s.x += s.vx;
         s.y += s.vy;
 
-        // very light fade during burst
-        const burstT = Math.min(1, s.life / s.burstFrames);
-        const alpha = s.a * (1 - burstT*0.35);
+        const fade = 1 - (s.life / s.max);
+        const alpha = Math.max(0, s.a * Math.min(1, fade));
 
-        // draw
         ctx.beginPath();
-        ctx.fillStyle = `rgba(${rgb},${Math.max(0, alpha)})`;
+        ctx.fillStyle = `rgba(${rgb},${alpha})`;
         ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
         ctx.fill();
 
-        // Transition to drift AFTER it already spread near edges
-        if(s.life >= s.burstFrames){
-          s.mode = "drift";
-          // damp speed to “space drift”
-          s.vx *= isMobile() ? 0.10 : 0.12;
-          s.vy *= isMobile() ? 0.10 : 0.12;
-          s.life = 0;
-          s.max = rnd(900, 1600);
-          // lower alpha for drift
-          s.a = rnd(0.05, 0.14);
+        if(s.life > s.max || s.x < -margin || s.x > w+margin || s.y < -margin || s.y > h+margin){
+          stars[i] = spawnDrift(true);
         }
-        continue;
       }
 
-      // DRIFT mode (space feel)
-      // swirl around origin
-      const dx = s.x - o.x;
-      const dy = s.y - o.y;
-      s.vx += (-dy) * s.swirl * 0.0009;
-      s.vy += ( dx) * s.swirl * 0.0009;
-
-      s.x += s.vx;
-      s.y += s.vy;
-
-      // fade slowly
-      const fade = 1 - (s.life / s.max);
-      const alpha = Math.max(0, s.a * Math.min(1, fade));
-
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(${rgb},${alpha})`;
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-      ctx.fill();
-
-      // respawn if out/expired (keep field stable)
-      if(s.life > s.max || s.x < -margin || s.x > w+margin || s.y < -margin || s.y > h+margin){
-        stars[i] = spawnDriftStar(true);
-      }
+      requestAnimationFrame(step);
     }
 
+    document.addEventListener("visibilitychange", () => {
+      running = !document.hidden;
+      if(running){
+        last = performance.now();
+        requestAnimationFrame(step);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      resize();
+    }, { passive:true });
+
+    resize();
     requestAnimationFrame(step);
-  }
-
-  document.addEventListener("visibilitychange", () => {
-    running = !document.hidden;
-    if(running) requestAnimationFrame(step);
-  });
-
-  window.addEventListener('resize', resize, { passive:true });
-
-  resize();
-  requestAnimationFrame(step);
-})();
-
+  })();
 
   /* =========================================================
-     9) INIT FX
+     9) INIT FX (particles on load)
   ========================================================= */
-  function initFX(){
+  (function initFX(){
     if (prefersReduce) return;
-    buildIdleParticles();
-    burstParticles();
-  }
-
-  if (document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", initFX, { once:true });
-  } else {
-    initFX();
-  }
-})();
-(function () {
-  const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
-  const mobLinks = Array.from(document.querySelectorAll('.m-links a'));
-  const links = [...navLinks, ...mobLinks];
-  if (!links.length) return;
-
-  // Remove existing states
-  links.forEach(a => {
-    a.classList.remove('active');
-    if (a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
-  });
-
-  const path = (location.pathname || '/').toLowerCase();
-
-  // Map current path -> section key
-  // Supports /tools, /tools/, /tools.html, /tools/anything/...
-  let section = 'home';
-  if (path === '/' || path === '/index.html') section = 'home';
-  else if (path.startsWith('/tools') || path.endsWith('/tools.html')) section = 'tools';
-  else if (path.startsWith('/guides') || path.endsWith('/guides.html')) section = 'guides';
-  else if (path.startsWith('/updates') || path.endsWith('/updates.html')) section = 'updates';
-
-  // Helper: find a link by "section", tolerant to different href styles
-  function pickLink(target) {
-    const candidates = links.filter(a => {
-      const hrefRaw = (a.getAttribute('href') || '').toLowerCase().trim();
-      if (!hrefRaw) return false;
-
-      // normalize common variants
-      const href = hrefRaw.replace(/\/+$/, ''); // remove trailing /
-      const t = target;
-
-      if (t === 'home') {
-        return href === '' || href === '/' || href === '/index.html';
-      }
-      if (t === 'tools') {
-        return href === '/tools' || href === '/tools.html';
-      }
-      if (t === 'guides') {
-        return href === '/guides' || href === '/guides.html';
-      }
-      if (t === 'updates') {
-        return href === '/updates' || href === '/updates.html';
-      }
-      return false;
-    });
-
-    // Prefer /tools/ style if present, else any match
-    return candidates[0] || null;
-  }
-
-  // Apply state
-  const el = pickLink(section);
-  if (el) {
-    el.classList.add('active');
-    el.setAttribute('aria-current', 'page');
-  }
-})();
-(function () {
-  const path = (location.pathname || "/").toLowerCase();
-
-  // Decide which nav item should be active
-  const section =
-    path === "/" ? "home" :
-    path.startsWith("/tools") ? "tools" :
-    path.startsWith("/guides") ? "guides" :
-    path.startsWith("/updates") ? "updates" :
-    "";
-
-  function setActive(selectorRoot) {
-    const root = document.querySelector(selectorRoot);
-    if (!root) return;
-
-    const links = Array.from(root.querySelectorAll("a"));
-    links.forEach(a => {
-      a.classList.remove("active");
-      a.removeAttribute("aria-current");
-    });
-
-    if (!section) return;
-
-    const match = links.find(a => {
-      const href = (a.getAttribute("href") || "").toLowerCase();
-      if (section === "home") return href === "/" || href === "/index.html";
-      if (section === "tools") return href.startsWith("/tools");
-      if (section === "guides") return href.startsWith("/guides");
-      if (section === "updates") return href.startsWith("/updates");
-      return false;
-    });
-
-    if (match) {
-      match.classList.add("active");
-      match.setAttribute("aria-current", "page");
+    if (document.readyState === "loading"){
+      document.addEventListener("DOMContentLoaded", () => {
+        buildIdleParticles();
+        burstParticles();
+      }, { once:true });
+    } else {
+      buildIdleParticles();
+      burstParticles();
     }
-  }
+  })();
 
-  setActive(".nav-links");
-  setActive(".m-links");
-})();
-/* =========================================================
-   Clickoz — site.js additions (Nav glow + Recommended refresh)
-   Paste at END of your /assets/site.js
-========================================================= */
+  /* =========================================================
+     10) NAV ACTIVE LINK (single)
+  ========================================================= */
+  (function navActive(){
+    const links = [
+      ...Array.from(document.querySelectorAll('.nav-links a')),
+      ...Array.from(document.querySelectorAll('.m-links a'))
+    ];
+    if (!links.length) return;
 
-(() => {
-  const $ = (s, r=document) => r.querySelector(s);
+    links.forEach(a => {
+      a.classList.remove('active');
+      a.removeAttribute('aria-current');
+    });
 
-  /* -------------------------------
-     1) NAV glow on scroll
-  -------------------------------- */
+    const path = (location.pathname || '/').toLowerCase();
+
+    let section = 'home';
+    if (path === '/' || path === '/index.html') section = 'home';
+    else if (path.startsWith('/tools') || path.endsWith('/tools.html')) section = 'tools';
+    else if (path.startsWith('/guides') || path.endsWith('/guides.html')) section = 'guides';
+    else if (path.startsWith('/updates') || path.endsWith('/updates.html')) section = 'updates';
+
+    function matchLink(a){
+      const href = (a.getAttribute('href') || '').toLowerCase().replace(/\/+$/, '');
+      if (section === 'home')   return href === '' || href === '/' || href === '/index.html';
+      if (section === 'tools')  return href === '/tools'  || href === '/tools.html'  || href.startsWith('/tools/');
+      if (section === 'guides') return href === '/guides' || href === '/guides.html' || href.startsWith('/guides/');
+      if (section === 'updates') return href === '/updates' || href === '/updates.html' || href.startsWith('/updates/');
+      return false;
+    }
+
+    const el = links.find(matchLink);
+    if (el){
+      el.classList.add('active');
+      el.setAttribute('aria-current', 'page');
+    }
+  })();
+
+  /* =========================================================
+     11) NAV GLOW ON SCROLL (optional, safe)
+  ========================================================= */
   (function navGlowOnScroll(){
     const nav = document.getElementById('topNav');
     if(!nav) return;
@@ -837,29 +758,21 @@
     onScroll();
   })();
 
-
-  /* -------------------------------
-     2) Recommended — manual refresh
-     - Updates only existing nodes inside each tool card
-     - Keeps Category + CTA inside the tool card
-  -------------------------------- */
+  /* =========================================================
+     12) RECOMMENDED — manual refresh (if #recRefresh + #recGrid exist)
+  ========================================================= */
   (function recommendedRefresh(){
     const btn  = document.getElementById('recRefresh');
     const grid = document.getElementById('recGrid');
     if(!btn || !grid) return;
 
-    // Extra picks (rotate into specific slots only)
     const extra = [
       {
         href: "/tools/seo-outline/",
         icon: "🧠",
         title:"SEO Outline Helper",
-        desc:"SEO outline generator: build H1/H2/H3 structure + FAQs aligned to search intent.",
-        examples:[
-          "Create a heading structure for a ‘how to’ guide.",
-          "Add FAQ ideas that match related queries.",
-          "Map sections to the user journey and intent."
-        ],
+        desc:"Build H1/H2/H3 outline + FAQs aligned to search intent.",
+        examples:["Create a heading structure for a ‘how to’ guide.","Add FAQ ideas that match related queries.","Map sections to user intent."],
         catHref:"/tools/#seo",
         catLabel:"SEO Tools",
         cta:"Use SEO Outline Helper"
@@ -868,12 +781,8 @@
         href: "/tools/title-description/",
         icon: "📝",
         title:"Title & Description",
-        desc:"SEO title & meta description generator: create multiple angles that match intent and improve clicks.",
-        examples:[
-          "Generate 10 title variations for one query.",
-          "Write descriptions for informational vs transactional intent.",
-          "Improve CTR for product pages and blog posts."
-        ],
+        desc:"Generate SEO titles + meta descriptions for higher CTR.",
+        examples:["Generate 10 title angles.","Write meta for info vs transactional intent.","Improve CTR for key pages."],
         catHref:"/tools/#seo",
         catLabel:"SEO Tools",
         cta:"Use Title & Description"
@@ -882,29 +791,22 @@
         href: "/tools/keyword-density/",
         icon: "🎯",
         title:"Keyword Density Checker",
-        desc:"Keyword density checker online: analyze keyword frequency and keep writing natural (no stuffing).",
-        examples:[
-          "Detect overuse of the main keyword.",
-          "Find missing related terms and synonyms.",
-          "Balance keyword usage across headings."
-        ],
+        desc:"Analyze keyword frequency and keep text natural (no stuffing).",
+        examples:["Detect keyword overuse.","Find missing related terms.","Balance keywords in headings."],
         catHref:"/tools/#seo",
         catLabel:"SEO Tools",
         cta:"Use Keyword Density Checker"
       }
     ];
 
-    // slots that can change (keep core stable)
-    const swappableSlots = [4, 5]; // example: URL Encoder + Base64
+    const swappableSlots = [4, 5];
     let idx = 0;
 
     function setCard(card, data){
       if(!card || !data) return;
 
-      // update link
       card.setAttribute('href', data.href);
 
-      // find elements (must exist in HTML)
       const iconEl  = card.querySelector('.rec-icon');
       const titleEl = card.querySelector('h3');
       const descEl  = card.querySelector('p');
@@ -916,7 +818,6 @@
       if(titleEl) titleEl.textContent = data.title;
       if(descEl)  descEl.textContent = data.desc;
 
-      // examples list
       if(exUl){
         exUl.innerHTML = "";
         (data.examples || []).slice(0,3).forEach(t => {
@@ -926,13 +827,11 @@
         });
       }
 
-      // category link (stays inside card)
       if(catA){
         catA.setAttribute('href', data.catHref);
         catA.textContent = data.catLabel;
       }
 
-      // CTA text (stays inside card)
       if(ctaEl) ctaEl.textContent = data.cta;
     }
 
@@ -946,263 +845,4 @@
     }, { passive:true });
   })();
 
-
-  /* -------------------------------
-     3) Mobile burger fallback id
-     (if you accidentally used burger_1)
-  -------------------------------- */
-  (function burgerIdFix(){
-    const burger = document.getElementById('burger') || document.getElementById('burger_1');
-    if(!burger) return;
-    // If your main site.js already handles burger, this does nothing harmful.
-    // We only normalize aria-controls if missing.
-    if(!burger.getAttribute('aria-controls')){
-      burger.setAttribute('aria-controls', 'mobileMenu');
-    }
-  })();
-
-})();
-/* =========================================================
-   CLICKoz — PARTICLES ENGINE v2 (BOOST)
-   - Stronger glow, higher density
-   - Additive blend (lighter)
-   - Origin near hero center (nice burst feel)
-   - Mobile-safe: auto scales + caps
-========================================================= */
-(() => {
-  const canvas = document.getElementById("spaceParticles");
-  if (!canvas) return;
-
-  const ctx = canvas.getContext("2d", { alpha: true });
-  if (!ctx) return;
-
-  const prefersReduce = window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // ---------- Tunables (BOOST) ----------
-  const CFG = {
-    // density / count
-    baseCount: 220,          // desktop target
-    mobileCount: 140,        // mobile target
-    maxCount: 520,           // hard cap
-    spawnPerFrame: 4.2,      // continuous spawn (higher => denser)
-    burstCount: 140,         // burst on load / resize
-
-    // size / glow
-    minR: 1.5,
-    maxR: 11.9,
-    glow1: 344,               // stronger blur
-    glow2: 458,
-
-    // motion
-    minSpeed: 1.05,
-    maxSpeed: 3.6,
-    drift: 0.46,             // random drift
-    friction: 0.502,         // slow down over time
-    lifeMin: 90,             // frames
-    lifeMax: 420,
-
-    // alpha
-    alphaMin: 0.35,
-    alphaMax: 0.85,
-
-    // visuals
-    composite: "brighter neon",    // additive = brighter neon
-    fadeOutPower: 7.6,       // higher = punchier fade at end
-
-    // performance
-    dprCap: 2                // cap DPR for perf
-  };
-
-  // If reduced motion, keep it subtle
-  if (prefersReduce) {
-    CFG.baseCount = 90;
-    CFG.mobileCount = 60;
-    CFG.spawnPerFrame = 1.2;
-    CFG.burstCount = 40;
-    CFG.maxSpeed = 1.6;
-  }
-
-  let W = 0, H = 0, DPR = 1;
-  let particles = [];
-  let spawnAcc = 0;
-
-  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
-  function rnd(a, b){ return a + Math.random() * (b - a); }
-
-  function getOrigin() {
-    // Try to anchor around hero
-    const hero = document.querySelector(".hero");
-    if (hero) {
-      const r = hero.getBoundingClientRect();
-      return {
-        x: clamp(r.left + r.width * 0.62, 40, window.innerWidth - 40),
-        y: clamp(r.top  + r.height * 0.28, 60, window.innerHeight * 0.65)
-      };
-    }
-    return { x: window.innerWidth * 0.55, y: window.innerHeight * 0.22 };
-  }
-
-  function resize() {
-    DPR = clamp(window.devicePixelRatio || 1, 1, CFG.dprCap);
-    W = Math.floor(window.innerWidth);
-    H = Math.floor(window.innerHeight);
-
-    canvas.width  = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
-
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-
-    // add a burst after resize to avoid "empty" feeling
-    burst(CFG.burstCount);
-  }
-
-  function makeParticle(burst = false) {
-    const o = getOrigin();
-    // angle spreads like an explosion but slightly biased sideways
-    const ang = rnd(-Math.PI, Math.PI);
-    const spd = rnd(CFG.minSpeed, CFG.maxSpeed) * (burst ? 1.2 : 1);
-    const vx = Math.cos(ang) * spd;
-    const vy = Math.sin(ang) * spd;
-
-    // spawn around origin (tight start)
-    const px = o.x + rnd(-10, 10);
-    const py = o.y + rnd(-10, 10);
-
-    return {
-      x: px,
-      y: py,
-      vx: vx + rnd(-CFG.drift, CFG.drift),
-      vy: vy + rnd(-CFG.drift, CFG.drift),
-      r: rnd(CFG.minR, CFG.maxR),
-      a: rnd(CFG.alphaMin, CFG.alphaMax),
-      life: Math.floor(rnd(CFG.lifeMin, CFG.lifeMax)),
-      age: 0,
-      // choose a cool glow hue between cyan and violet
-      hue: rnd(185, 265)
-    };
-  }
-
-  function burst(n) {
-    const add = Math.floor(n);
-    for (let i=0; i<add; i++) particles.push(makeParticle(true));
-    trimToCap();
-  }
-
-  function trimToCap() {
-    const isMobile = window.matchMedia && window.matchMedia("(max-width: 900px)").matches;
-    const target = isMobile ? CFG.mobileCount : CFG.baseCount;
-    const cap = Math.min(CFG.maxCount, target + 120);
-
-    if (particles.length > cap) {
-      particles.splice(0, particles.length - cap);
-    }
-  }
-
-  function ensureBasePopulation() {
-    const isMobile = window.matchMedia && window.matchMedia("(max-width: 900px)").matches;
-    const target = isMobile ? CFG.mobileCount : CFG.baseCount;
-    if (particles.length < target) {
-      const need = Math.min(target - particles.length, 80);
-      for (let i=0; i<need; i++) particles.push(makeParticle(false));
-    }
-  }
-
-  function drawParticle(p) {
-    // life fade
-    const t = p.age / p.life;
-    const fade = Math.pow(1 - t, CFG.fadeOutPower);
-    const a = p.a * fade;
-
-    // subtle bloom core
-    ctx.beginPath();
-    ctx.globalAlpha = a;
-    ctx.fillStyle = `hsla(${p.hue}, 95%, 70%, ${a})`;
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-    ctx.fill();
-
-    // glow ring (strong)
-    ctx.globalAlpha = a * 0.35;
-    ctx.beginPath();
-    ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${a})`;
-    ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  function tick() {
-    // clear with tiny trail (keeps it “alive” + brighter overall)
-    ctx.globalCompositeOperation = "source-over";
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = "rgba(0,0,0,0.18)"; // lower alpha => longer trails
-    ctx.fillRect(0,0,W,H);
-
-    ctx.globalCompositeOperation = CFG.composite;
-
-    // keep density up
-    ensureBasePopulation();
-
-    // continuous spawn accumulator
-    spawnAcc += CFG.spawnPerFrame;
-    const spawnNow = Math.floor(spawnAcc);
-    if (spawnNow > 0) {
-      spawnAcc -= spawnNow;
-      for (let i=0; i<spawnNow; i++) particles.push(makeParticle(false));
-      trimToCap();
-    }
-
-    // update + draw
-    for (let i = particles.length - 1; i >= 0; i--) {
-      const p = particles[i];
-      p.age++;
-
-      p.vx *= CFG.friction;
-      p.vy *= CFG.friction;
-
-      // slight gravity-ish pull down for "cascade"
-      p.vy += 0.008;
-
-      p.x += p.vx;
-      p.y += p.vy;
-
-      // kill if out or dead
-      if (p.age >= p.life || p.x < -80 || p.x > W + 80 || p.y < -80 || p.y > H + 120) {
-        particles.splice(i, 1);
-        continue;
-      }
-
-      drawParticle(p);
-    }
-
-    requestAnimationFrame(tick);
-  }
-
-  // init
-  resize();
-  // big initial burst so it’s instantly “strong”
-  burst(CFG.burstCount + 80);
-
-  window.addEventListener("resize", () => {
-    resize();
-  }, { passive: true });
-
-  // optional: burst on click (nice effect, remove if you want)
-  document.addEventListener("pointerdown", (e) => {
-    if (prefersReduce) return;
-    // burst near click, but keep it subtle
-    const oldGetOrigin = getOrigin;
-    const clickX = e.clientX, clickY = e.clientY;
-
-    // quick override by injecting particles at click location
-    for (let i=0; i<22; i++){
-      const p = makeParticle(true);
-      p.x = clickX + rnd(-12, 12);
-      p.y = clickY + rnd(-12, 12);
-      particles.push(p);
-    }
-    trimToCap();
-  }, { passive: true });
-
-  tick();
 })();
