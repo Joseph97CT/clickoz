@@ -1,53 +1,9 @@
 /* =========================================================
-   Clickoz — Word Counter (page-only, conflict-free)
-   Namespace: body.wc
+   Word Counter — conflict-free (unique classes)
 ========================================================= */
 
 .wc .tool-shell{ padding-top: 18px; }
 
-/* Breadcrumb */
-.wc .crumbs{
-  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
-  font-size:13px; color: rgba(255,255,255,.70);
-  margin: 6px 0 10px;
-}
-.wc .crumbs a{
-  color: rgba(255,255,255,.82);
-  text-decoration:none;
-  border-bottom: 1px solid rgba(255,255,255,.14);
-}
-.wc .crumbs .sep{ opacity:.55; }
-
-/* Hero intro */
-.wc .tool-hero{ max-width: 980px; margin: 0 auto; text-align:center; }
-.wc .kicker{
-  margin: 10px auto 0;
-  color: rgba(255,255,255,.74);
-  line-height: 1.8;
-  font-size: 15.5px;
-}
-.wc .kicker b{ color: rgba(255,255,255,.92); font-weight: 1000; }
-
-/* Trust row */
-.wc .mini-trust{
-  margin: 14px auto 0;
-  display:flex; flex-wrap:wrap; gap:10px;
-  justify-content:center; align-items:center;
-}
-.wc .mini-pill{
-  display:inline-flex; align-items:center; gap:8px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.03);
-  color: rgba(255,255,255,.86);
-  font-weight: 900;
-  font-size: 13px;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-/* Tool panel */
 .wc .tool-panel{
   margin-top: 16px;
   padding: 16px;
@@ -70,7 +26,6 @@
 }
 .wc .tool-panel > *{ position: relative; z-index: 1; }
 
-/* Grid layout */
 .wc .tool-grid{
   display:grid;
   grid-template-columns: 1fr;
@@ -81,52 +36,6 @@
   .wc .tool-grid{ grid-template-columns: 1.35fr .65fr; }
 }
 
-/* Examples above textarea */
-.wc .examples-top{
-  margin-bottom: 12px;
-  display:grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-.wc .ex{
-  padding: 12px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
-}
-.wc .ex h3{
-  margin: 0 0 10px;
-  font-size: 15px;
-  font-weight: 1000;
-  letter-spacing: -0.01em;
-}
-.wc .ex pre{
-  margin: 0;
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.22);
-  overflow:auto;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: rgba(255,255,255,.86);
-  font-size: 13px;
-  line-height: 1.65;
-}
-.wc .ex .ex-actions{
-  margin-top: 10px;
-  display:flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.wc .ex .btn{
-  height: 40px;
-  border-radius: 14px;
-  font-weight: 1000;
-  font-size: 13px;
-}
-
-/* Textarea + actions */
 .wc .field-label{
   display:block;
   margin: 0 0 8px;
@@ -135,12 +44,13 @@
   letter-spacing: .02em;
   color: rgba(255,255,255,.84);
 }
+
 .wc .tool-area textarea{
   width:100%;
   min-height: 260px;
   resize: vertical;
   border-radius: 16px;
-  padding: 14px 14px;
+  padding: 14px;
   background: rgba(255,255,255,.03);
   border: 1px solid rgba(255,255,255,.12);
   color: rgba(255,255,255,.92);
@@ -153,6 +63,7 @@
   border-color: rgba(var(--accent-rgb), .35);
   box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
 }
+
 .wc .tool-actions{
   margin-top: 12px;
   display:flex;
@@ -170,7 +81,6 @@
   border: 1px solid rgba(255,255,255,.12);
 }
 
-/* Privacy callout */
 .wc .callout{
   margin-top: 12px;
   padding: 12px;
@@ -181,44 +91,76 @@
   line-height: 1.65;
   font-size: 14px;
 }
-.wc .callout b{ color: rgba(255,255,255,.92); font-weight: 1000; }
 
-/* Stats column */
-.wc .stats-wrap{ align-self:start; }
-.wc .stats{
+/* Examples (unique) */
+.wc .wc-examples{
+  margin-bottom: 12px;
   display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
-.wc .stat{
+.wc .wc-ex{
   padding: 12px;
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.03);
 }
-.wc .stat .label{
-  font-size: 12px;
-  opacity: .78;
-  letter-spacing: .02em;
-}
-.wc .stat .value{
-  margin-top: 6px;
+.wc .wc-ex h3{
+  margin: 0 0 10px;
+  font-size: 15px;
   font-weight: 1000;
-  font-size: 18px;
 }
-.wc .stats .btn{
+.wc .wc-ex pre{
+  margin: 0;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.22);
+  overflow:auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: rgba(255,255,255,.86);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.wc .wc-ex-actions{
+  margin-top: 10px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.wc .wc-ex .btn{
   height: 40px;
   border-radius: 14px;
   font-weight: 1000;
   font-size: 13px;
 }
-.wc .stat.stat-wide{ grid-column: 1 / -1; }
 
-/* Mobile tweaks */
-@media (max-width: 520px){
-  .wc .stats{ grid-template-columns: 1fr; }
+/* Stats (unique) */
+.wc .wc-stats-wrap{ align-self:start; }
+.wc .wc-stats{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
+.wc .wc-stat{
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+}
+.wc .wc-stat .label{
+  font-size: 12px;
+  opacity: .78;
+  letter-spacing: .02em;
+}
+.wc .wc-stat .value{
+  margin-top: 6px;
+  font-weight: 1000;
+  font-size: 18px;
+}
+.wc .wc-stat-wide{ grid-column: 1 / -1; }
 
-/* SEO block minimal (keep your base styles too) */
-.wc .seo-block{ margin-top: 16px; text-align:left; }
-.wc .seo-block p{ color: rgba(255,255,255,.76); line-height: 1.88; font-size: 15.5px; }
+@media (max-width: 520px){
+  .wc .wc-stats{ grid-template-columns: 1fr; }
+}
