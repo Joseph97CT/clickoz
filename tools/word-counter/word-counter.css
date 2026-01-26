@@ -1,166 +1,89 @@
 /* =========================================================
-   Word Counter — conflict-free (unique classes)
+   Word Counter — UX upgrades (clarity + utilities + voice)
+   (append at bottom)
 ========================================================= */
 
-.wc .tool-shell{ padding-top: 18px; }
-
-.wc .tool-panel{
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
-  box-shadow: 0 16px 50px rgba(0,0,0,.28);
-  position: relative;
-  overflow:hidden;
-  text-align:left;
-}
-.wc .tool-panel::after{
-  content:"";
-  position:absolute;
-  inset:-30%;
-  background: radial-gradient(720px 320px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
-  filter: blur(30px);
-  opacity: .9;
-  pointer-events:none;
-}
-.wc .tool-panel > *{ position: relative; z-index: 1; }
-
-.wc .tool-grid{
-  display:grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  align-items:start;
-}
-@media (min-width: 981px){
-  .wc .tool-grid{ grid-template-columns: 1.35fr .65fr; }
-}
-
+/* Make "Paste your text" feel like the main action */
 .wc .field-label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.wc .field-label::after{
+  content:"Step 1: paste / type →";
+  font-size: 12px;
+  opacity: .70;
+  font-weight: 900;
+  letter-spacing: .01em;
+}
+@media (max-width:520px){
+  .wc .field-label{ flex-direction:column; align-items:flex-start; }
+  .wc .field-label::after{ content:"Step 1: paste or type below"; }
+}
+
+/* Stronger textarea focus ring + subtle hint glow */
+.wc #inputText{
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+}
+.wc #inputText:focus{
+  box-shadow:
+    0 0 0 4px rgba(var(--accent-rgb), .12),
+    0 0 0 1px rgba(var(--accent-rgb), .22) inset !important;
+}
+
+/* Examples clarity: show as "Step 0: quick samples" */
+.wc .wc-examples{
+  position: relative;
+}
+.wc .wc-examples::before{
+  content:"Step 0: load a sample (optional)";
   display:block;
   margin: 0 0 8px;
   font-weight: 1000;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: .02em;
-  color: rgba(255,255,255,.84);
+  color: rgba(255,255,255,.72);
 }
 
-.wc .tool-area textarea{
-  width:100%;
-  min-height: 260px;
-  resize: vertical;
-  border-radius: 16px;
-  padding: 14px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.12);
-  color: rgba(255,255,255,.92);
-  outline: none;
-  line-height: 1.65;
-  font-size: 15px;
-  display:block;
-}
-.wc .tool-area textarea:focus{
-  border-color: rgba(var(--accent-rgb), .35);
-  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
-}
-
-.wc .tool-actions{
-  margin-top: 12px;
-  display:flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items:center;
-}
-.wc .tool-actions .btn{
-  height: 44px;
-  border-radius: 14px;
-  font-weight: 1000;
-}
-.wc .btn.ghost{
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-}
-
+/* Make privacy callout full-width and easier to scan */
 .wc .callout{
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
-  color: rgba(255,255,255,.78);
-  line-height: 1.65;
-  font-size: 14px;
+  width: 100%;
+  padding: 14px;
+  font-size: 14.5px;
+  color: rgba(255,255,255,.82);
 }
-
-/* Examples (unique) */
-.wc .wc-examples{
-  margin-bottom: 12px;
-  display:grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-.wc .wc-ex{
-  padding: 12px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
-}
-.wc .wc-ex h3{
-  margin: 0 0 10px;
-  font-size: 15px;
+.wc .callout b{
+  color: rgba(255,255,255,.92);
   font-weight: 1000;
 }
-.wc .wc-ex pre{
-  margin: 0;
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.22);
-  overflow:auto;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: rgba(255,255,255,.86);
-  font-size: 13px;
-  line-height: 1.65;
+.wc .callout a{
+  color: rgba(255,255,255,.90);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.16);
 }
-.wc .wc-ex-actions{
-  margin-top: 10px;
+
+/* Voice section polish */
+.wc .wc-voice-row{
   display:flex;
+  align-items:center;
+  justify-content:space-between;
   gap:10px;
   flex-wrap:wrap;
+  margin-top: 10px;
 }
-.wc .wc-ex .btn{
+.wc .wc-voice-select{
+  min-width: 220px;
+  max-width: 100%;
   height: 40px;
-  border-radius: 14px;
-  font-weight: 1000;
-  font-size: 13px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.92);
+  padding: 0 10px;
+  outline: none;
 }
-
-/* Stats (unique) */
-.wc .wc-stats-wrap{ align-self:start; }
-.wc .wc-stats{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.wc .wc-stat{
-  padding: 12px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
-}
-.wc .wc-stat .label{
-  font-size: 12px;
-  opacity: .78;
-  letter-spacing: .02em;
-}
-.wc .wc-stat .value{
-  margin-top: 6px;
-  font-weight: 1000;
-  font-size: 18px;
-}
-.wc .wc-stat-wide{ grid-column: 1 / -1; }
-
-@media (max-width: 520px){
-  .wc .wc-stats{ grid-template-columns: 1fr; }
+.wc .wc-voice-select:focus{
+  border-color: rgba(var(--accent-rgb), .35);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
 }
