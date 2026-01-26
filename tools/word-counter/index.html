@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- ✅ Primary SEO -->
   <title>Word Counter – Words, Characters, Sentences, Paragraphs, Reading Time | Clickoz</title>
   <meta name="description" content="Free Word Counter by Clickoz. Count words, characters (with/without spaces), sentences, paragraphs, and estimate reading time. Runs in your browser, no signup." />
   <link rel="canonical" href="https://clickoz.com/tools/word-counter/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
 
+  <!-- ✅ Social -->
   <meta property="og:site_name" content="Clickoz" />
   <meta property="og:title" content="Word Counter – Free Online Tool | Clickoz" />
   <meta property="og:description" content="Count words, characters, sentences, paragraphs, and reading time. Instant, privacy-first, no signup." />
@@ -24,17 +26,56 @@
 
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
-  <!-- Base -->
+  <!-- Base site CSS -->
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- ✅ BULLETPROOF TOOL CSS (inline, scoped, overrides conflicts) -->
+  <!-- ✅ Bulletproof CSS (scoped) -->
   <style>
-    /* scope */
     body.wc .tool-shell{ padding-top:18px; }
+
+    body.wc .crumbs{
+      display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+      font-size:13px; color: rgba(255,255,255,.70);
+      margin: 6px 0 10px;
+    }
+    body.wc .crumbs a{
+      color: rgba(255,255,255,.82);
+      text-decoration:none;
+      border-bottom: 1px solid rgba(255,255,255,.14);
+    }
+    body.wc .crumbs .sep{ opacity:.55; }
+
+    body.wc .tool-hero{ max-width: 980px; margin: 0 auto; text-align:center; }
+    body.wc .kicker{
+      margin: 10px auto 0;
+      color: rgba(255,255,255,.74);
+      line-height: 1.8;
+      font-size: 15.5px;
+    }
+    body.wc .kicker b{ color: rgba(255,255,255,.92); font-weight: 1000; }
+    body.wc .mini-trust{
+      margin: 14px auto 0;
+      display:flex; flex-wrap:wrap; gap:10px;
+      justify-content:center; align-items:center;
+    }
+    body.wc .mini-pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.86);
+      font-weight: 900;
+      font-size: 13px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
     body.wc .tool-panel{
       margin-top:16px;
       padding:16px;
@@ -58,7 +99,6 @@
     body.wc .tool-panel > *{ position:relative; z-index:1; }
     body.wc .tool-panel, body.wc .tool-panel *{ box-sizing:border-box !important; }
 
-    /* ✅ grid layout forced */
     body.wc .tool-grid{
       display:grid !important;
       grid-template-columns: 1fr !important;
@@ -68,10 +108,8 @@
     @media (min-width:981px){
       body.wc .tool-grid{ grid-template-columns: 1.35fr .65fr !important; }
     }
-
     body.wc .tool-area, body.wc .wc-stats-wrap{ min-width:0 !important; }
 
-    /* examples */
     body.wc .wc-examples{
       margin-bottom:12px;
       display:grid !important;
@@ -115,7 +153,6 @@
       font-size:13px;
     }
 
-    /* textarea + actions */
     body.wc .field-label{
       display:block;
       margin:0 0 8px;
@@ -142,6 +179,7 @@
       border-color: rgba(var(--accent-rgb), .35);
       box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
     }
+
     body.wc .tool-actions{
       margin-top:12px;
       display:flex;
@@ -158,6 +196,7 @@
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.12);
     }
+
     body.wc .callout{
       margin-top:12px;
       padding:12px;
@@ -169,7 +208,6 @@
       font-size:14px;
     }
 
-    /* ✅ stats forced 2 columns */
     body.wc .wc-stats{
       display:grid !important;
       grid-template-columns: 1fr 1fr !important;
@@ -197,7 +235,114 @@
     @media (max-width:520px){
       body.wc .wc-stats{ grid-template-columns: 1fr !important; }
     }
+
+    /* SEO content / FAQ / Related (keep simple, compatible) */
+    body.wc .seo-block{ margin-top: 16px; text-align:left; }
+    body.wc .seo-block h2{
+      margin: 0 0 10px;
+      font-size: clamp(22px, 2.4vw, 32px);
+      font-weight: 1000;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+    }
+    body.wc .seo-block h3{
+      margin: 18px 0 10px;
+      font-size: 18px;
+      font-weight: 1000;
+      letter-spacing: -0.01em;
+    }
+    body.wc .seo-block p{
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.88;
+      font-size: 15.5px;
+    }
+
+    body.wc .faq{ margin-top: 14px; display:grid; grid-template-columns: 1fr; gap: 10px; }
+    @media (min-width:981px){ body.wc .faq{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    body.wc .faq-item{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 12px;
+    }
+    body.wc .faq-q{ font-weight: 1000; font-size: 14px; color: rgba(255,255,255,.92); }
+    body.wc .faq-a{ margin-top: 8px; color: rgba(255,255,255,.76); line-height: 1.7; font-size: 14.5px; }
+
+    body.wc .related{ margin-top: 14px; display:grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width:981px){ body.wc .related{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    body.wc .rel-box{
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    body.wc .rel-links{ display:flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    body.wc .rel-links a{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      text-decoration:none;
+      font-weight: 900;
+      font-size: 13px;
+      color: rgba(255,255,255,.88);
+    }
+
+    body.wc .meta-note{
+      margin-top: 14px;
+      text-align:center;
+      color: rgba(255,255,255,.62);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    body.wc .meta-note a{
+      color: rgba(255,255,255,.78);
+      text-decoration:none;
+      border-bottom: 1px solid rgba(255,255,255,.14);
+    }
   </style>
+
+  <!-- ✅ JSON-LD (kept) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"Word Counter",
+    "url":"https://clickoz.com/tools/word-counter/",
+    "applicationCategory":"UtilitiesApplication",
+    "operatingSystem":"All",
+    "browserRequirements":"Requires JavaScript",
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+    "publisher":{"@type":"Organization","name":"Clickoz","url":"https://clickoz.com/"}
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Clickoz","item":"https://clickoz.com/"},
+      {"@type":"ListItem","position":2,"name":"Tools","item":"https://clickoz.com/tools/"},
+      {"@type":"ListItem","position":3,"name":"Word Counter","item":"https://clickoz.com/tools/word-counter/"}
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"Does this tool upload my text?","acceptedAnswer":{"@type":"Answer","text":"No. The Word Counter runs in your browser, so your text stays on your device."}},
+      {"@type":"Question","name":"What counts as a word?","acceptedAnswer":{"@type":"Answer","text":"Words are tokens separated by whitespace. Extra spaces and blank lines are ignored."}},
+      {"@type":"Question","name":"Characters with vs without spaces?","acceptedAnswer":{"@type":"Answer","text":"Characters includes spaces. Characters without spaces removes whitespace before counting."}},
+      {"@type":"Question","name":"How is reading time calculated?","acceptedAnswer":{"@type":"Answer","text":"Human reading time is estimated from words per minute. AI voice reading is slower and based on typical speech pace."}}
+    ]
+  }
+  </script>
 </head>
 
 <body class="bigtext wc">
@@ -206,7 +351,7 @@
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
   <div class="__grain" aria-hidden="true"></div>
 
-  <!-- NAV (unchanged) -->
+  <!-- NAV (your standard nav; site.js handles menu + theme) -->
   <nav class="nav" aria-label="Primary navigation" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
@@ -258,6 +403,40 @@
     </div>
   </nav>
 
+  <!-- Mobile menu (keep your site structure) -->
+  <div class="m-overlay" id="mOverlay" hidden></div>
+  <aside class="m-menu" id="mobileMenu" aria-hidden="true">
+    <div class="m-head">
+      <div class="m-title">Menu</div>
+      <button class="m-close" id="mClose" type="button" aria-label="Close menu">×</button>
+    </div>
+    <div class="m-links">
+      <a class="m-link" href="/">Home</a>
+      <a class="m-link" href="/tools/">Tools</a>
+      <a class="m-link" href="/guides/">Guides</a>
+      <a class="m-link" href="/updates/">Updates</a>
+      <a class="m-link" href="/privacy/">Privacy</a>
+    </div>
+    <div class="m-block">
+      <div class="m-label">Theme color</div>
+      <div class="color-grid m-colors" id="mobileColorGrid">
+        <div class="color-option active" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" tabindex="0"></div>
+        <div class="color-option" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" tabindex="0"></div>
+        <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" tabindex="0"></div>
+        <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" tabindex="0"></div>
+        <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" tabindex="0"></div>
+        <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" tabindex="0"></div>
+      </div>
+    </div>
+    <div class="m-block">
+      <div class="m-label">Language</div>
+      <div id="google_translate_element_mobile"></div>
+      <div style="margin-top:10px;font-size:13px;opacity:.78;line-height:1.5;">
+        Translation loads only if you accept “All” cookies.
+      </div>
+    </div>
+  </aside>
+
   <!-- CONTENT -->
   <section class="section container tool-shell">
     <div class="tool-hero">
@@ -274,7 +453,8 @@
       <div class="kicker">
         Paste your text and get instant counts that make writing and publishing easier.<br/>
         Track <b>words</b>, <b>characters</b> with or without spaces, <b>sentences</b>, <b>paragraphs</b>, and <b>reading time</b> in one place.<br/>
-        Results update live while you type so you can shorten, expand, or split paragraphs without guessing.
+        Results update live while you type so you can shorten, expand, or split paragraphs without guessing.<br/>
+        The tool is private and fast, it runs in your browser and does not require signup.
       </div>
 
       <div class="mini-trust" aria-label="Key benefits">
@@ -291,7 +471,6 @@
 
         <!-- LEFT -->
         <div class="tool-area">
-
           <div class="wc-examples" aria-label="Examples">
             <div class="wc-ex">
               <h3>Example: Short paragraph</h3>
@@ -321,7 +500,8 @@
 
           <div class="callout" aria-label="Privacy note">
             <b>Privacy note:</b> This tool processes text locally in your browser. Nothing is uploaded.
-            You can read more in <a href="/privacy/" style="color:rgba(255,255,255,.86);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.14)">Privacy</a>.
+            You can read more in
+            <a href="/privacy/" style="color:rgba(255,255,255,.86);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.14)">Privacy</a>.
           </div>
         </div>
 
@@ -357,9 +537,373 @@
 
       </div>
     </div>
+
+    <!-- SEO + guidance -->
+    <div class="hero-box seo-block" aria-label="About this tool">
+      <h2>What is a word counter?</h2>
+      <p>
+        A word counter measures the real length of your text. It counts words and characters, including a version without spaces,
+        and it also estimates sentences and paragraphs so you can see structure at a glance. This is useful when you write for school,
+        work, SEO, or any platform that applies strict limits.
+      </p>
+
+      <h3>When should you use it?</h3>
+      <p>
+        Use a word counter when you need to check an essay word count, confirm character limits for a form, shorten a caption,
+        or plan the structure of an article. For SEO workflows, it helps you keep paragraphs readable and estimate reading time for mobile.
+      </p>
+
+      <h3>How reading time is calculated</h3>
+      <p>
+        Human reading is based on a faster typical silent reading pace. AI voice reading is slower because speech is usually slower than reading.
+        Both are estimates and are shown in seconds to stay precise.
+      </p>
+
+      <h3>FAQ</h3>
+      <div class="faq" aria-label="Frequently asked questions">
+        <div class="faq-item">
+          <div class="faq-q">Does this tool upload my text?</div>
+          <div class="faq-a">No. The Word Counter runs in your browser, so your text stays on your device.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What counts as a word?</div>
+          <div class="faq-a">Words are tokens separated by whitespace. Extra spaces and blank lines are ignored.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Characters with vs without spaces?</div>
+          <div class="faq-a">Characters includes spaces. Characters without spaces removes whitespace before counting.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How is reading time calculated?</div>
+          <div class="faq-a">Human reading uses reading speed. AI voice reading uses a typical speech pace and is slower.</div>
+        </div>
+      </div>
+
+      <div class="related" aria-label="Related content">
+        <div class="rel-box">
+          <h3 style="margin:0;">Related tools</h3>
+          <div class="rel-links">
+            <a href="/tools/readability-analyzer/">📚 Readability Analyzer</a>
+            <a href="/tools/keyword-density/">🔎 Keyword Density</a>
+            <a href="/tools/meta-tags/">🏷️ Meta Tag Optimizer</a>
+          </div>
+        </div>
+        <div class="rel-box">
+          <h3 style="margin:0;">Related guides</h3>
+          <div class="rel-links">
+            <a href="/guides/word-count-for-seo/">🧠 Word Count for SEO</a>
+            <a href="/guides/readability-for-ranking/">✅ Readability for Ranking</a>
+            <a href="/guides/meta-tags-checklist/">📌 Meta Tags Checklist</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="meta-note">
+        Last updated: <span id="lastUpdated">2026-01-24</span> · <a href="/tools/">Browse all tools</a>
+      </div>
+    </div>
   </section>
 
-  <script src="/assets/site.js" defer></script>
-  <script src="/assets/tools/word-counter.js?v=1" defer></script>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>Clickoz</h4>
+        <div class="footer-links">
+          <a href="/tools/">Tools</a>
+          <a href="/guides/">Guides</a>
+          <a href="/updates/">Updates</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Popular tools</h4>
+        <div class="footer-links">
+          <a href="/tools/word-counter/">Word Counter</a>
+          <a href="/tools/readability-analyzer/">Readability</a>
+          <a href="/tools/meta-tags/">Meta Tags</a>
+          <a href="/tools/json-formatter/">JSON Formatter</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="footer-links">
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:14px">
+      <hr class="sep" />
+      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
+        © 2026 Clickoz • Fast tools for SEO, writing and developers
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (your site.js can manage these ids if you already have logic) -->
+  <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
+    <div class="cookie-card">
+      <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
+      <div class="cookie-content">
+        <div class="cookie-title">Privacy choices</div>
+        <div class="cookie-text">
+          We use essential storage for core features. If you accept all, we may load third-party services like Google Translate.
+          Read more in <a href="/privacy/">Privacy</a>.
+        </div>
+      </div>
+      <div class="cookie-actions">
+        <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
+        <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
+        <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Base site JS (menu/theme/cookies, etc.) -->
+  <script src="/assets/site.js"></script>
+
+  <!-- ✅ TOOL JS INLINE (so it always runs) -->
+  <script>
+  (() => {
+    "use strict";
+
+    const $  = (s, r=document) => r.querySelector(s);
+    const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+    const input = $("#inputText");
+
+    const elWords = $("#w");
+    const elChars = $("#c");
+    const elCharsNoSpaces = $("#cn");
+    const elSentences = $("#s");
+    const elParagraphs = $("#p");
+    const elAWS = $("#aws");
+    const elRtHuman = $("#rtHuman");
+    const elRtAI = $("#rtAI");
+
+    const copyBtn = $("#copyBtn");
+    const copyStatsBtn = $("#copyStatsBtn");
+    const clearBtn = $("#clearBtn");
+
+    const aiSpeakBtn = $("#aiSpeakBtn");
+    const aiStopBtn = $("#aiStopBtn");
+
+    if (!input) return;
+
+    function normalizeText(t){
+      return (t || "")
+        .replace(/\u00A0/g, " ")
+        .replace(/\r\n/g, "\n");
+    }
+
+    function wordCount(text){
+      const t = normalizeText(text).trim();
+      if (!t) return 0;
+      const words = t.match(/[^\s]+/g);
+      return words ? words.length : 0;
+    }
+
+    function sentenceCount(text){
+      const t = normalizeText(text).trim();
+      if (!t) return 0;
+      const parts = t
+        .split(/(?<=[.!?])\s+/g)
+        .map(x => x.trim())
+        .filter(Boolean);
+      return Math.max(1, parts.length);
+    }
+
+    function paragraphCount(text){
+      const t = normalizeText(text).trim();
+      if (!t) return 0;
+      return t
+        .split(/\n{2,}/g)
+        .map(x => x.trim())
+        .filter(Boolean).length;
+    }
+
+    function formatDuration(seconds){
+      const s = Math.max(0, Math.round(seconds || 0));
+      if (s < 60) return `${s} sec`;
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return r ? `${m} min ${r} sec` : `${m} min`;
+    }
+
+    function humanSeconds(words){
+      const wpm = 235;
+      return (words / wpm) * 60;
+    }
+
+    function aiSeconds(words){
+      const wpm = 155;
+      return (words / wpm) * 60;
+    }
+
+    async function copyToClipboard(str){
+      const text = String(str ?? "");
+      try{
+        if (navigator.clipboard && window.isSecureContext){
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      }catch(e){}
+
+      try{
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "-9999px";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return !!ok;
+      }catch(e){
+        return false;
+      }
+    }
+
+    function flash(btn, ok){
+      if(!btn) return;
+      const base = btn.getAttribute("data-base") || btn.textContent;
+      btn.setAttribute("data-base", base);
+      btn.textContent = ok ? "Copied!" : "Copy failed";
+      setTimeout(() => btn.textContent = base, 900);
+    }
+
+    function render(){
+      const text = input.value || "";
+      const words = wordCount(text);
+      const chars = text.length;
+      const charsNoSpaces = text.replace(/\s/g, "").length;
+      const sentences = sentenceCount(text);
+      const paragraphs = paragraphCount(text);
+      const aws = sentences > 0 ? (words / sentences) : 0;
+
+      if (elWords) elWords.textContent = String(words);
+      if (elChars) elChars.textContent = String(chars);
+      if (elCharsNoSpaces) elCharsNoSpaces.textContent = String(charsNoSpaces);
+      if (elSentences) elSentences.textContent = String(sentences);
+      if (elParagraphs) elParagraphs.textContent = String(paragraphs);
+      if (elAWS) elAWS.textContent = (Math.round(aws * 10) / 10).toFixed(1);
+
+      if (elRtHuman) elRtHuman.textContent = formatDuration(humanSeconds(words));
+      if (elRtAI) elRtAI.textContent = formatDuration(aiSeconds(words));
+    }
+
+    let debounce = null;
+    input.addEventListener("input", () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(render, 30);
+    });
+
+    if (clearBtn){
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        render();
+        input.focus();
+        stopVoice();
+      });
+    }
+
+    if (copyBtn){
+      copyBtn.addEventListener("click", async () => {
+        const ok = await copyToClipboard(input.value || "");
+        flash(copyBtn, ok);
+      });
+    }
+
+    if (copyStatsBtn){
+      copyStatsBtn.addEventListener("click", async () => {
+        const text = input.value || "";
+        const words = wordCount(text);
+        const sentences = sentenceCount(text);
+
+        const payload =
+`Word Counter (Clickoz)
+Words: ${words}
+Human reading: ${formatDuration(humanSeconds(words))}
+AI voice reading: ${formatDuration(aiSeconds(words))}
+Characters: ${text.length}
+Chars (no spaces): ${text.replace(/\\s/g, "")}
+Sentences: ${sentences}
+Paragraphs: ${paragraphCount(text)}
+Avg words/sentence: ${(sentences ? (words / sentences) : 0).toFixed(1)}`;
+
+        const ok = await copyToClipboard(payload);
+        flash(copyStatsBtn, ok);
+      });
+    }
+
+    $$("[data-fill]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const sel = btn.getAttribute("data-fill");
+        const pre = sel ? $(sel) : null;
+        if(!pre) return;
+        input.value = (pre.textContent || "").trim();
+        render();
+        input.focus();
+        stopVoice();
+      });
+    });
+
+    // Voice
+    let utter = null;
+
+    function stopVoice(){
+      try{ window.speechSynthesis.cancel(); }catch(e){}
+      utter = null;
+      if(aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+    }
+
+    function speak(){
+      const t = normalizeText(input.value).trim();
+      if(!t) return;
+
+      stopVoice();
+
+      utter = new SpeechSynthesisUtterance(t);
+      utter.rate = 0.92;
+      utter.pitch = 1.0;
+
+      utter.onend = () => {
+        utter = null;
+        if(aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+      };
+      utter.onerror = () => {
+        utter = null;
+        if(aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+      };
+
+      try{
+        window.speechSynthesis.speak(utter);
+        if(aiSpeakBtn) aiSpeakBtn.textContent = "Playing…";
+      }catch(e){}
+    }
+
+    if(aiSpeakBtn){
+      aiSpeakBtn.addEventListener("click", () => {
+        if(utter) return;
+        speak();
+      });
+    }
+    if(aiStopBtn){
+      aiStopBtn.addEventListener("click", stopVoice);
+    }
+    document.addEventListener("visibilitychange", () => {
+      if(document.hidden) stopVoice();
+    });
+
+    render();
+  })();
+  </script>
 </body>
 </html>
