@@ -1,223 +1,284 @@
 (() => {
+  "use strict";
+
   const $  = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
-  const input = $('#inputText');
+  const input = $("#inputText");
 
-  const w  = $('#w');
-  const c  = $('#c');
-  const cn = $('#cn');
-  const s  = $('#s');
-  const p  = $('#p');
+  const elWords = $("#w");
+  const elChars = $("#c");
+  const elCharsNoSpaces = $("#cn");
+  const elSentences = $("#s");
+  const elParagraphs = $("#p");
+  const elAWS = $("#aws");
+  const elRtHuman = $("#rtHuman");
+  const elRtAI = $("#rtAI");
 
-  const rtHuman = $('#rtHuman');
-  const rtAI    = $('#rtAI');
-  const aws     = $('#aws');
+  const copyBtn = $("#copyBtn");
+  const copyStatsBtn = $("#copyStatsBtn");
+  const clearBtn = $("#clearBtn");
 
-  const copyBtn      = $('#copyBtn');
-  const copyStatsBtn = $('#copyStatsBtn');
-  const clearBtn     = $('#clearBtn');
+  const aiSpeakBtn = $("#aiSpeakBtn");
+  const aiStopBtn = $("#aiStopBtn");
 
-  const aiSpeakBtn = $('#aiSpeakBtn');
-  const aiStopBtn  = $('#aiStopBtn');
-
-  if (!input) return;
-
-  /* ---------- helpers ---------- */
-
-  function safeTrim(text){
-    return (text || '').replace(/\u00A0/g, ' ').trim();
+  // ✅ quick guard
+  if (!input) {
+    console.warn("[WordCounter] Missing #inputText");
+    return;
   }
 
-  function countWords(text){
-    const t = safeTrim(text);
-    if(!t) return 0;
-    return t.split(/\s+/).filter(Boolean).length;
+  // ✅ DEBUG (optional): remove later
+  console.log("[WordCounter] JS loaded ✅");
+
+  /* ---------------------------
+     Helpers
+  --------------------------- */
+
+  function normalizeText(t){
+    return (t || "")
+      .replace(/\u00A0/g, " ")
+      .replace(/\r\n/g, "\n");
   }
 
-  function countSentences(text){
-    const t = safeTrim(text);
-    if(!t) return 0;
-    // simple + stable: counts sentence-like segments
-    const parts = t.match(/[^.!?]+[.!?]+|\s*[^.!?]+$/g);
-    const n = parts ? parts.map(x => x.trim()).filter(Boolean).length : 0;
-    return n || (t ? 1 : 0);
+  function wordCount(text){
+    const t = normalizeText(text).trim();
+    if (!t) return 0;
+    // keeps apostrophes inside words
+    const words = t.match(/[^\s]+/g);
+    return words ? words.length : 0;
   }
 
-  function countParagraphs(text){
-    const t = (text || '').trim();
-    if(!t) return 0;
-    return t.split(/\n{2,}/).map(x => x.trim()).filter(Boolean).length;
+  function sentenceCount(text){
+    const t = normalizeText(text).trim();
+    if (!t) return 0;
+
+    // simple + robust: count punctuation boundaries, fallback to 1
+    const parts = t
+      .split(/(?<=[.!?])\s+/g)
+      .map(x => x.trim())
+      .filter(Boolean);
+
+    return Math.max(1, parts.length);
   }
 
-  function fmtDuration(seconds){
-    const sec = Math.max(0, Math.round(seconds || 0));
-    if (sec < 60) return `${sec} sec`;
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    return `${m} min ${s} sec`;
+  function paragraphCount(text){
+    const t = normalizeText(text).trim();
+    if (!t) return 0;
+
+    return t
+      .split(/\n{2,}/g)
+      .map(x => x.trim())
+      .filter(Boolean).length;
   }
 
-  // Human reading: faster (silent reading)
-  function humanReadingSeconds(words){
-    const wpm = 230;
+  function formatDuration(seconds){
+    const s = Math.max(0, Math.round(seconds || 0));
+    if (s < 60) return `${s} sec`;
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return r ? `${m} min ${r} sec` : `${m} min`;
+  }
+
+  // ✅ Human silent reading (fast)
+  function humanSeconds(words){
+    const wpm = 235;
     return (words / wpm) * 60;
   }
 
-  // AI voice reading: slower (spoken)
-  function aiReadingSeconds(words){
-    const wpm = 150;
+  // ✅ AI voice speaking (slower)
+  function aiSeconds(words){
+    const wpm = 155;
     return (words / wpm) * 60;
   }
 
-  async function copyTextSafe(str){
-    try{
-      await navigator.clipboard.writeText(str);
-      return true;
-    }catch(e){
+  async function copyToClipboard(str){
+    const text = String(str ?? "");
+    // Try modern clipboard first
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch(e){ /* ignore */ }
+
+    // Fallback
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "-9999px";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return !!ok;
+    } catch(e){
       return false;
     }
   }
 
-  /* ---------- AI Voice ---------- */
-
-  let utter = null;
-
-  function stopVoice(){
-    try{ window.speechSynthesis.cancel(); }catch(e){}
-    utter = null;
-    if(aiSpeakBtn) aiSpeakBtn.textContent = 'Play voice';
+  function flashBtn(btn, okText, failText, resetText){
+    if (!btn) return;
+    const prev = btn.textContent;
+    btn.textContent = okText;
+    setTimeout(() => {
+      btn.textContent = resetText || prev;
+    }, 900);
   }
 
-  function speakText(text){
-    const t = safeTrim(text);
-    if(!t) return;
-
-    stopVoice();
-
-    utter = new SpeechSynthesisUtterance(t);
-    utter.rate  = 0.90; // slightly slower
-    utter.pitch = 1.00;
-
-    utter.onend = () => {
-      utter = null;
-      if(aiSpeakBtn) aiSpeakBtn.textContent = 'Play voice';
-    };
-    utter.onerror = () => {
-      utter = null;
-      if(aiSpeakBtn) aiSpeakBtn.textContent = 'Play voice';
-    };
-
-    try{
-      window.speechSynthesis.speak(utter);
-      if(aiSpeakBtn) aiSpeakBtn.textContent = 'Playing…';
-    }catch(e){
-      // ignore
-    }
-  }
-
-  /* ---------- render ---------- */
+  /* ---------------------------
+     Render
+  --------------------------- */
 
   function render(){
-    const text = input.value || '';
-    const words = countWords(text);
+    const text = input.value || "";
+    const words = wordCount(text);
     const chars = text.length;
-    const charsNoSpaces = text.replace(/\s/g,'').length;
-    const sentences = countSentences(text);
-    const paragraphs = countParagraphs(text);
+    const charsNoSpaces = text.replace(/\s/g, "").length;
+    const sentences = sentenceCount(text);
+    const paragraphs = paragraphCount(text);
+    const aws = sentences > 0 ? (words / sentences) : 0;
 
-    if(w)  w.textContent  = String(words);
-    if(c)  c.textContent  = String(chars);
-    if(cn) cn.textContent = String(charsNoSpaces);
-    if(s)  s.textContent  = String(sentences);
-    if(p)  p.textContent  = String(paragraphs);
+    if (elWords) elWords.textContent = String(words);
+    if (elChars) elChars.textContent = String(chars);
+    if (elCharsNoSpaces) elCharsNoSpaces.textContent = String(charsNoSpaces);
+    if (elSentences) elSentences.textContent = String(sentences);
+    if (elParagraphs) elParagraphs.textContent = String(paragraphs);
+    if (elAWS) elAWS.textContent = (Math.round(aws * 10) / 10).toFixed(1);
 
-    if(rtHuman) rtHuman.textContent = fmtDuration(humanReadingSeconds(words));
-    if(rtAI)    rtAI.textContent    = fmtDuration(aiReadingSeconds(words));
-
-    if(aws){
-      const val = sentences > 0 ? (words / sentences) : 0;
-      aws.textContent = (Math.round(val * 10) / 10).toFixed(1);
-    }
+    if (elRtHuman) elRtHuman.textContent = formatDuration(humanSeconds(words));
+    if (elRtAI) elRtAI.textContent = formatDuration(aiSeconds(words));
   }
 
-  /* ---------- events ---------- */
-
-  let t = null;
-  input.addEventListener('input', () => {
-    clearTimeout(t);
-    t = setTimeout(render, 40);
+  let debounce = null;
+  input.addEventListener("input", () => {
+    clearTimeout(debounce);
+    debounce = setTimeout(render, 30);
   });
 
-  if(clearBtn){
-    clearBtn.addEventListener('click', () => {
-      input.value = '';
+  /* ---------------------------
+     Buttons
+  --------------------------- */
+
+  if (clearBtn){
+    clearBtn.addEventListener("click", () => {
+      input.value = "";
       render();
       input.focus();
       stopVoice();
     });
   }
 
-  if(copyBtn){
-    copyBtn.addEventListener('click', async () => {
-      const ok = await copyTextSafe(input.value || '');
-      copyBtn.textContent = ok ? 'Copied!' : 'Copy failed';
-      setTimeout(() => (copyBtn.textContent = 'Copy text'), 900);
+  if (copyBtn){
+    copyBtn.addEventListener("click", async () => {
+      const ok = await copyToClipboard(input.value || "");
+      flashBtn(copyBtn, ok ? "Copied!" : "Copy failed", "Copy failed", "Copy text");
     });
   }
 
-  if(copyStatsBtn){
-    copyStatsBtn.addEventListener('click', async () => {
-      const text = input.value || '';
-      const words = countWords(text);
-      const sentences = countSentences(text);
+  if (copyStatsBtn){
+    copyStatsBtn.addEventListener("click", async () => {
+      const text = input.value || "";
+      const words = wordCount(text);
+      const sentences = sentenceCount(text);
 
       const payload =
 `Word Counter (Clickoz)
 Words: ${words}
-Human reading: ${fmtDuration(humanReadingSeconds(words))}
-AI voice reading: ${fmtDuration(aiReadingSeconds(words))}
+Human reading: ${formatDuration(humanSeconds(words))}
+AI voice reading: ${formatDuration(aiSeconds(words))}
 Characters: ${text.length}
-Chars (no spaces): ${text.replace(/\s/g,'').length}
+Chars (no spaces): ${text.replace(/\\s/g, "").length}
 Sentences: ${sentences}
-Paragraphs: ${countParagraphs(text)}
-Avg words/sentence: ${(sentences > 0 ? (words / sentences) : 0).toFixed(1)}`;
+Paragraphs: ${paragraphCount(text)}
+Avg words/sentence: ${(sentences ? (words / sentences) : 0).toFixed(1)}`;
 
-      const ok = await copyTextSafe(payload);
-      copyStatsBtn.textContent = ok ? 'Copied!' : 'Copy failed';
-      setTimeout(() => (copyStatsBtn.textContent = 'Copy results'), 900);
+      const ok = await copyToClipboard(payload);
+      flashBtn(copyStatsBtn, ok ? "Copied!" : "Copy failed", "Copy failed", "Copy results");
     });
   }
 
-  // Example loaders
-  $$('.ex .btn[data-fill]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const sel = btn.getAttribute('data-fill');
-      const pre = sel ? $(sel) : null;
-      if(!pre) return;
+  /* ---------------------------
+     Examples
+  --------------------------- */
 
-      input.value = (pre.textContent || '').trim();
+  $$("[data-fill]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const sel = btn.getAttribute("data-fill");
+      const pre = sel ? $(sel) : null;
+      if (!pre) return;
+
+      input.value = (pre.textContent || "").trim();
       render();
       input.focus();
-      input.scrollIntoView({ behavior:'smooth', block:'center' });
       stopVoice();
     });
   });
 
-  // AI voice buttons
-  if(aiSpeakBtn){
-    aiSpeakBtn.addEventListener('click', () => {
+  /* ---------------------------
+     AI Voice (SpeechSynthesis)
+     - Works only after user interaction
+  --------------------------- */
+
+  let utter = null;
+
+  function stopVoice(){
+    try { window.speechSynthesis.cancel(); } catch(e) {}
+    utter = null;
+    if (aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+  }
+
+  function speak(){
+    const t = normalizeText(input.value).trim();
+    if (!t) return;
+
+    stopVoice();
+
+    utter = new SpeechSynthesisUtterance(t);
+
+    // Stable settings
+    utter.rate = 0.92;
+    utter.pitch = 1.0;
+
+    utter.onend = () => {
+      utter = null;
+      if (aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+    };
+    utter.onerror = () => {
+      utter = null;
+      if (aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+    };
+
+    try {
+      window.speechSynthesis.speak(utter);
+      if (aiSpeakBtn) aiSpeakBtn.textContent = "Playing…";
+    } catch(e) {
+      // ignore
+    }
+  }
+
+  if (aiSpeakBtn){
+    aiSpeakBtn.addEventListener("click", () => {
+      // If already speaking, do nothing
       if (utter) return;
-      speakText(input.value || '');
+      speak();
     });
   }
-  if(aiStopBtn){
-    aiStopBtn.addEventListener('click', stopVoice);
+
+  if (aiStopBtn){
+    aiStopBtn.addEventListener("click", stopVoice);
   }
 
-  document.addEventListener('visibilitychange', () => {
-    if(document.hidden) stopVoice();
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopVoice();
   });
 
+  /* ---------------------------
+     Init
+  --------------------------- */
   render();
 })();
