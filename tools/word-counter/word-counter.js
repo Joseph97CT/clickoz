@@ -1,238 +1,201 @@
-(() => {
-  const $  = (s, r=document) => r.querySelector(s);
-  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+/* =========================================================
+   Word Counter — page scoped styles (NO conflicts)
+   Namespace: body.wc
+========================================================= */
 
-  const input = $('#inputText');
+.wc .tool-shell{ padding-top: 18px; }
 
-  const w  = $('#w');
-  const c  = $('#c');
-  const cn = $('#cn');
-  const s  = $('#s');
-  const p  = $('#p');
+/* Breadcrumb */
+.wc .crumbs{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  font-size:13px; color: rgba(255,255,255,.70);
+  margin: 6px 0 10px;
+}
+.wc .crumbs a{
+  color: rgba(255,255,255,.82);
+  text-decoration:none;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+.wc .crumbs .sep{ opacity:.55; }
 
-  const rtHuman = $('#rtHuman');
-  const rtAI    = $('#rtAI');
-  const aws     = $('#aws');
+/* Hero intro */
+.wc .tool-hero{ max-width: 980px; margin: 0 auto; text-align:center; }
+.wc .kicker{
+  margin: 10px auto 0;
+  color: rgba(255,255,255,.74);
+  line-height: 1.8;
+  font-size: 15.5px;
+}
+.wc .kicker b{ color: rgba(255,255,255,.92); font-weight: 1000; }
 
-  const copyBtn      = $('#copyBtn');
-  const copyStatsBtn = $('#copyStatsBtn');
-  const clearBtn     = $('#clearBtn');
+/* Trust row */
+.wc .mini-trust{
+  margin: 14px auto 0;
+  display:flex; flex-wrap:wrap; gap:10px;
+  justify-content:center; align-items:center;
+}
+.wc .mini-pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.86);
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+}
 
-  const aiSpeakBtn = $('#aiSpeakBtn');
-  const aiStopBtn  = $('#aiStopBtn');
+/* Tool panel */
+.wc .tool-panel{
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
+  box-shadow: 0 16px 50px rgba(0,0,0,.28);
+  position: relative;
+  overflow:hidden;
+  text-align:left;
+}
+.wc .tool-panel::after{
+  content:"";
+  position:absolute;
+  inset:-30%;
+  background: radial-gradient(720px 320px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
+  filter: blur(30px);
+  opacity: .9;
+  pointer-events:none;
+}
+.wc .tool-panel > *{ position: relative; z-index: 1; }
 
-  if (!input) return;
+/* Layout grid */
+.wc .tool-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items:start;
+}
+@media (min-width: 981px){
+  .wc .tool-grid{ grid-template-columns: 1.35fr .65fr; }
+}
 
-  /* ---------------- Counting helpers ---------------- */
+/* Left column */
+.wc .field-label{
+  display:block;
+  margin: 0 0 8px;
+  font-weight: 1000;
+  font-size: 13px;
+  letter-spacing: .02em;
+  color: rgba(255,255,255,.84);
+}
+.wc .tool-area textarea{
+  width:100%;
+  min-height: 260px;
+  resize: vertical;
+  border-radius: 16px;
+  padding: 14px 14px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.92);
+  outline: none;
+  line-height: 1.65;
+  font-size: 15px;
+}
+.wc .tool-area textarea:focus{
+  border-color: rgba(var(--accent-rgb), .35);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
+}
+.wc .tool-actions{
+  margin-top: 12px;
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items:center;
+}
+.wc .tool-actions .btn{
+  height: 44px;
+  border-radius: 14px;
+  font-weight: 1000;
+}
+.wc .btn.ghost{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+}
 
-  function safeTrim(text){
-    return (text || '').replace(/\u00A0/g, ' ').trim();
-  }
+/* Privacy callout */
+.wc .callout{
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.78);
+  line-height: 1.65;
+  font-size: 14px;
+}
+.wc .callout b{ color: rgba(255,255,255,.92); font-weight: 1000; }
 
-  function countWords(text){
-    const t = safeTrim(text);
-    if(!t) return 0;
-    return t.split(/\s+/).filter(Boolean).length;
-  }
+/* Examples (above textarea) */
+.wc .examples-top{
+  margin-bottom: 12px;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.wc .ex{
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+}
+.wc .ex h3{
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 1000;
+  letter-spacing: -0.01em;
+}
+.wc .ex pre{
+  margin: 0;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.22);
+  overflow:auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: rgba(255,255,255,.86);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.wc .ex .ex-actions{ margin-top: 10px; display:flex; gap:10px; flex-wrap:wrap; }
+.wc .ex .btn{ height: 40px; border-radius: 14px; font-weight: 1000; font-size: 13px; }
 
-  function countSentences(text){
-    const t = safeTrim(text);
-    if(!t) return 0;
-    // robust enough for normal text (handles abbreviations decently)
-    const parts = t.match(/[^.!?]+[.!?]+|\s*[^.!?]+$/g);
-    const n = parts ? parts.map(x => x.trim()).filter(Boolean).length : 0;
-    return n || (t ? 1 : 0);
-  }
+/* Right column */
+.wc .stats-wrap{ align-self:start; }
 
-  function countParagraphs(text){
-    const t = (text || '').trim();
-    if(!t) return 0;
-    return t
-      .split(/\n{2,}/)
-      .map(x => x.trim())
-      .filter(Boolean).length;
-  }
+/* ✅ stats in 2 columns */
+.wc .stats{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.wc .stat{
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+}
+.wc .stat .label{ font-size: 12px; opacity: .78; letter-spacing: .02em; }
+.wc .stat .value{ margin-top: 6px; font-weight: 1000; font-size: 18px; }
 
-  function fmtDuration(seconds){
-    const sec = Math.max(0, Math.round(seconds || 0));
-    if (sec < 60) return `${sec} sec`;
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    return `${m} min ${s} sec`;
-  }
+/* Buttons inside stats */
+.wc .stats .btn{ height: 40px; border-radius: 14px; font-weight: 1000; font-size: 13px; }
 
-  // ✅ Human reading: faster (default ~230 wpm)
-  function humanReadingSeconds(words){
-    const wpm = 230;
-    const secs = (words / wpm) * 60;
-    // show real seconds (no “stuck at 1 min”)
-    return Math.max(0, secs);
-  }
+/* Make AI voice stat full width (if you added stat-wide) */
+.wc .stat.stat-wide{ grid-column: 1 / -1; }
 
-  // ✅ AI voice reading: slower (default ~150 wpm)
-  function aiReadingSeconds(words){
-    const wpm = 150;
-    const secs = (words / wpm) * 60;
-    return Math.max(0, secs);
-  }
-
-  /* ---------------- Clipboard ---------------- */
-
-  async function copyTextSafe(str){
-    try{
-      await navigator.clipboard.writeText(str);
-      return true;
-    }catch(e){
-      return false;
-    }
-  }
-
-  /* ---------------- AI voice (speechSynthesis) ---------------- */
-
-  let utter = null;
-
-  function stopVoice(){
-    try{
-      window.speechSynthesis.cancel();
-    }catch(e){}
-    utter = null;
-    if(aiSpeakBtn) aiSpeakBtn.textContent = 'Play voice';
-  }
-
-  function speakText(text){
-    const t = safeTrim(text);
-    if(!t) return;
-
-    stopVoice();
-
-    utter = new SpeechSynthesisUtterance(t);
-
-    // Slightly slower for "AI voice"
-    utter.rate = 0.9;   // 1.0 default, lower = slower
-    utter.pitch = 1.0;
-
-    utter.onend = () => {
-      utter = null;
-      if(aiSpeakBtn) aiSpeakBtn.textContent = 'Play voice';
-    };
-    utter.onerror = () => {
-      utter = null;
-      if(aiSpeakBtn) aiSpeakBtn.textContent = 'Play voice';
-    };
-
-    try{
-      window.speechSynthesis.speak(utter);
-      if(aiSpeakBtn) aiSpeakBtn.textContent = 'Playing…';
-    }catch(e){
-      // ignore
-    }
-  }
-
-  /* ---------------- Render ---------------- */
-
-  function render(){
-    const text = input.value || '';
-    const words = countWords(text);
-    const chars = text.length;
-    const charsNoSpaces = text.replace(/\s/g,'').length;
-    const sentences = countSentences(text);
-    const paragraphs = countParagraphs(text);
-
-    if(w)  w.textContent = String(words);
-    if(c)  c.textContent = String(chars);
-    if(cn) cn.textContent = String(charsNoSpaces);
-    if(s)  s.textContent = String(sentences);
-    if(p)  p.textContent = String(paragraphs);
-
-    // ✅ improved reading time (not stuck)
-    if(rtHuman) rtHuman.textContent = fmtDuration(humanReadingSeconds(words));
-    if(rtAI)    rtAI.textContent    = fmtDuration(aiReadingSeconds(words));
-
-    // ✅ extra useful tool metric
-    if(aws){
-      const val = sentences > 0 ? (words / sentences) : 0;
-      aws.textContent = (Math.round(val * 10) / 10).toFixed(1);
-    }
-  }
-
-  /* ---------------- Events ---------------- */
-
-  let t = null;
-  input.addEventListener('input', () => {
-    clearTimeout(t);
-    t = setTimeout(render, 40);
-  });
-
-  if(clearBtn){
-    clearBtn.addEventListener('click', () => {
-      input.value = '';
-      render();
-      input.focus();
-      stopVoice();
-    });
-  }
-
-  if(copyBtn){
-    copyBtn.addEventListener('click', async () => {
-      const ok = await copyTextSafe(input.value || '');
-      copyBtn.textContent = ok ? 'Copied!' : 'Copy failed';
-      setTimeout(() => copyBtn.textContent = 'Copy text', 900);
-    });
-  }
-
-  if(copyStatsBtn){
-    copyStatsBtn.addEventListener('click', async () => {
-      const text = input.value || '';
-      const words = countWords(text);
-
-      const payload =
-`Word Counter (Clickoz)
-Words: ${words}
-Human reading: ${fmtDuration(humanReadingSeconds(words))}
-AI voice reading: ${fmtDuration(aiReadingSeconds(words))}
-Characters: ${text.length}
-Chars (no spaces): ${text.replace(/\s/g,'').length}
-Sentences: ${countSentences(text)}
-Paragraphs: ${countParagraphs(text)}
-Avg words/sentence: ${((countSentences(text) > 0) ? (words / countSentences(text)) : 0).toFixed(1)}`;
-
-      const ok = await copyTextSafe(payload);
-      copyStatsBtn.textContent = ok ? 'Copied!' : 'Copy failed';
-      setTimeout(() => copyStatsBtn.textContent = 'Copy results', 900);
-    });
-  }
-
-  // Example loaders
-  $$('.ex .btn[data-fill]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const sel = btn.getAttribute('data-fill');
-      const pre = sel ? $(sel) : null;
-      if(!pre) return;
-
-      input.value = (pre.textContent || '').trim();
-      render();
-      input.focus();
-      input.scrollIntoView({ behavior:'smooth', block:'center' });
-      stopVoice();
-    });
-  });
-
-  // AI voice buttons
-  if(aiSpeakBtn){
-    aiSpeakBtn.addEventListener('click', () => {
-      const text = input.value || '';
-      if (utter) return; // already speaking
-      speakText(text);
-    });
-  }
-  if(aiStopBtn){
-    aiStopBtn.addEventListener('click', stopVoice);
-  }
-
-  // If user navigates away / hides tab
-  document.addEventListener('visibilitychange', () => {
-    if(document.hidden) stopVoice();
-  });
-
-  render();
-})();
+/* SEO block */
+.wc .seo-block{ margin-top: 16px; text-align:left; }
+.wc .seo-block p{ color: rgba(255,255,255,.76); line-height: 1.88; font-size: 15.5px; }
