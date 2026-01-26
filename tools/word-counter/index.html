@@ -33,8 +33,7 @@
 
   <!-- Base site CSS -->
   <link rel="stylesheet" href="/assets/site.css?v=4" />
-
-  <!-- ✅ Page-only patches (you created this) -->
+  <!-- ✅ Page-only Word Counter CSS -->
   <link rel="stylesheet" href="/assets/tools/word-counter.css?v=1" />
 
   <!-- ✅ JSON-LD: WebApplication -->
@@ -96,7 +95,8 @@
   </script>
 </head>
 
-<body class="bigtext">
+<!-- ✅ IMPORTANT: wc namespace prevents site.css conflicts -->
+<body class="bigtext wc">
   <!-- FX layers -->
   <div id="clickozParticles" aria-hidden="true"></div>
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
@@ -221,14 +221,12 @@
       </div>
     </div>
 
-    <!-- TOOL PANEL -->
+    <!-- TOOL -->
     <div class="tool-panel" aria-label="Word Counter tool">
       <div class="tool-grid">
 
         <!-- LEFT -->
         <div class="tool-area">
-
-          <!-- Examples ABOVE textarea -->
           <div class="examples-top" aria-label="Examples">
             <div class="ex">
               <h3>Example: Short paragraph</h3>
@@ -267,17 +265,18 @@
         <div class="stats-wrap">
           <div class="stats" aria-label="Results">
             <div class="stat"><div class="label">Words</div><div class="value" id="w">0</div></div>
-
             <div class="stat"><div class="label">Human reading</div><div class="value" id="rtHuman">0 sec</div></div>
 
             <div class="stat"><div class="label">Characters</div><div class="value" id="c">0</div></div>
             <div class="stat"><div class="label">Chars (no spaces)</div><div class="value" id="cn">0</div></div>
+
             <div class="stat"><div class="label">Sentences</div><div class="value" id="s">0</div></div>
             <div class="stat"><div class="label">Paragraphs</div><div class="value" id="p">0</div></div>
 
             <div class="stat"><div class="label">Avg words / sentence</div><div class="value" id="aws">0.0</div></div>
 
-            <div class="stat">
+            <!-- full width -->
+            <div class="stat stat-wide">
               <div class="label">Reading time by AI (voice)</div>
               <div class="value" id="rtAI">0 sec</div>
 
@@ -296,26 +295,25 @@
       </div>
     </div>
 
-    <!-- SEO + guidance -->
+    <!-- SEO + content -->
     <div class="hero-box seo-block" aria-label="About this tool">
       <h2>What is a word counter?</h2>
       <p>
         A word counter measures the real length of your text. It counts words and characters, including a version without spaces,
         and it also estimates sentences and paragraphs so you can see structure at a glance. This is useful when you write for school,
-        work, SEO, or any platform that applies strict limits. Clickoz updates counts instantly while you type, so you can edit based on real numbers.
+        work, SEO, or any platform that applies strict limits.
       </p>
 
       <h3>When should you use it?</h3>
       <p>
         Use a word counter when you need to check an essay word count, confirm character limits for a form, shorten a caption,
-        or plan the structure of an article. For SEO workflows, it helps you keep paragraphs readable, verify that sections are balanced,
-        and estimate reading time so content feels easy on mobile.
+        or plan the structure of an article. For SEO workflows, it helps you keep paragraphs readable and estimate reading time for mobile.
       </p>
 
       <h3>How reading time is calculated</h3>
       <p>
-        Human reading time is based on a faster typical reading pace (words per minute). AI voice reading is slower because speech is usually slower than silent reading.
-        Both are estimates and are shown in seconds so they don’t “stick” at 1 minute.
+        Human reading is based on a faster typical silent reading pace. AI voice reading is slower because speech is usually slower than reading.
+        Both are estimates and are shown in seconds to stay precise.
       </p>
 
       <h3>FAQ</h3>
@@ -334,50 +332,7 @@
         </div>
         <div class="faq-item">
           <div class="faq-q">How is reading time calculated?</div>
-          <div class="faq-a">Human reading is based on reading speed. AI voice reading is slower and uses a typical speech pace.</div>
-        </div>
-      </div>
-
-      <h3>Search-friendly guide</h3>
-      <p>
-        People rarely search for “a platform” when they need a word counter. They search for an answer, usually as a question, and they want it immediately.
-        If you typed “how to count words in a document” or “how many words are in my text”, the intent is simple: you need an accurate word count without installing anything.
-        This tool is built for that moment. You can paste text from Word, Google Docs, Notion, an email draft, a blog editor, a PDF you copied from,
-        or a product listing. The counts update instantly, which helps you decide what to do next: shorten the text, expand it, split paragraphs, or simplify sentences.
-        <br/><br/>
-        Many searches focus on limits rather than writing style. That is why queries like “character count with spaces” and “character count without spaces” are so common.
-        Forms and dashboards often reject text if it exceeds a hidden maximum. A quick character counter solves this by showing both totals.
-        Other users search for structure checks, like “sentence counter online” and “paragraph counter”. Those questions often come from writers trying to improve readability, not only length.
-        <br/><br/>
-        Reading time is another frequent intent. People type “reading time calculator”, “how long does it take to read this”, or “how many words for a 3 minute read”.
-        Reading time is useful for editors, bloggers, newsletter writers, and anyone publishing on mobile. It helps you keep intros short, keep sections balanced,
-        and avoid exhausting readers.
-        <br/><br/>
-        For SEO, the most searched questions are often framed as rules. People ask “ideal word count for SEO”, “how many words should a blog post be”, or “how long should an article be”.
-        There is no single magic number that guarantees rankings, but word count is still a practical signal. It helps you avoid content that is too thin to answer intent,
-        and it helps you avoid rambling sections that reduce clarity.
-        <br/><br/>
-        If you want to keep improving after you count, the next step is usually readability and metadata. You can check clarity with a readability analyzer,
-        verify keyword usage with keyword density, and refine click potential with a meta tag optimizer.
-      </p>
-
-      <div class="related" aria-label="Related content">
-        <div class="rel-box">
-          <h3 style="margin:0;">Related tools</h3>
-          <div class="rel-links">
-            <a href="/tools/readability-analyzer/">📚 Readability Analyzer</a>
-            <a href="/tools/keyword-density/">🔎 Keyword Density</a>
-            <a href="/tools/meta-tags/">🏷️ Meta Tag Optimizer</a>
-          </div>
-        </div>
-
-        <div class="rel-box">
-          <h3 style="margin:0;">Related guides</h3>
-          <div class="rel-links">
-            <a href="/guides/word-count-for-seo/">🧠 Word Count for SEO</a>
-            <a href="/guides/readability-for-ranking/">✅ Readability for Ranking</a>
-            <a href="/guides/meta-tags-checklist/">📌 Meta Tags Checklist</a>
-          </div>
+          <div class="faq-a">Human reading uses reading speed. AI voice reading uses a typical speech pace and is slower.</div>
         </div>
       </div>
 
@@ -427,11 +382,10 @@
     </div>
   </footer>
 
-  <!-- Cookie banner -->
+  <!-- Cookie banner (keep your existing logic in site.js) -->
   <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
     <div class="cookie-card">
       <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
-
       <div class="cookie-content">
         <div class="cookie-title">Privacy choices</div>
         <div class="cookie-text">
@@ -439,7 +393,6 @@
           Read more in <a href="/privacy/">Privacy</a>.
         </div>
       </div>
-
       <div class="cookie-actions">
         <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
         <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
@@ -450,8 +403,7 @@
 
   <!-- Base site JS -->
   <script src="/assets/site.js" defer></script>
-
-  <!-- ✅ Page-only JS (you created this) -->
+  <!-- Word Counter JS -->
   <script src="/assets/tools/word-counter.js?v=1" defer></script>
 </body>
 </html>
