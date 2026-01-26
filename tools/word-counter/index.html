@@ -34,7 +34,7 @@
   <!-- Base site CSS -->
   <link rel="stylesheet" href="/assets/site.css?v=4" />
 
-  <!-- ✅ Bulletproof CSS (scoped) -->
+  <!-- ✅ Tool CSS (bulletproof + UX improvements) -->
   <style>
     body.wc .tool-shell{ padding-top:18px; }
 
@@ -110,11 +110,22 @@
     }
     body.wc .tool-area, body.wc .wc-stats-wrap{ min-width:0 !important; }
 
+    /* Examples clarity */
     body.wc .wc-examples{
       margin-bottom:12px;
       display:grid !important;
       grid-template-columns:1fr !important;
       gap:12px !important;
+      position:relative;
+    }
+    body.wc .wc-examples::before{
+      content:"Step 0: load a sample (optional)";
+      display:block;
+      margin: 0 0 8px;
+      font-weight: 1000;
+      font-size: 12px;
+      letter-spacing: .02em;
+      color: rgba(255,255,255,.72);
     }
     body.wc .wc-ex{
       padding:12px;
@@ -153,17 +164,33 @@
       font-size:13px;
     }
 
+    /* Main action clarity */
     body.wc .field-label{
-      display:block;
-      margin:0 0 8px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin: 6px 0 8px;
       font-weight:1000;
       font-size:13px;
       letter-spacing:.02em;
       color: rgba(255,255,255,.84);
     }
+    body.wc .field-label::after{
+      content:"Step 1: paste / type →";
+      font-size: 12px;
+      opacity: .70;
+      font-weight: 900;
+      letter-spacing: .01em;
+    }
+    @media (max-width:520px){
+      body.wc .field-label{ flex-direction:column; align-items:flex-start; }
+      body.wc .field-label::after{ content:"Step 1: paste or type below"; }
+    }
+
     body.wc #inputText{
       width:100% !important;
-      min-height:260px;
+      min-height:280px;
       resize:vertical;
       border-radius:16px;
       padding:14px;
@@ -174,10 +201,13 @@
       line-height:1.65;
       font-size:15px;
       display:block;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
     }
     body.wc #inputText:focus{
       border-color: rgba(var(--accent-rgb), .35);
-      box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
+      box-shadow:
+        0 0 0 4px rgba(var(--accent-rgb), .12),
+        0 0 0 1px rgba(var(--accent-rgb), .22) inset !important;
     }
 
     body.wc .tool-actions{
@@ -197,17 +227,26 @@
       border:1px solid rgba(255,255,255,.12);
     }
 
+    /* Privacy note improved */
     body.wc .callout{
       margin-top:12px;
-      padding:12px;
-      border-radius:16px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 16px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
-      color: rgba(255,255,255,.78);
-      line-height:1.65;
-      font-size:14px;
+      color: rgba(255,255,255,.82);
+      line-height:1.75;
+      font-size: 14.5px;
+    }
+    body.wc .callout b{ color: rgba(255,255,255,.92); font-weight: 1000; }
+    body.wc .callout a{
+      color: rgba(255,255,255,.90);
+      text-decoration:none;
+      border-bottom:1px solid rgba(255,255,255,.16);
     }
 
+    /* Stats */
     body.wc .wc-stats{
       display:grid !important;
       grid-template-columns: 1fr 1fr !important;
@@ -229,6 +268,7 @@
       margin-top:6px;
       font-weight:1000;
       font-size:18px;
+      word-break: break-word;
     }
     body.wc .wc-stat-wide{ grid-column: 1 / -1 !important; }
 
@@ -236,7 +276,32 @@
       body.wc .wc-stats{ grid-template-columns: 1fr !important; }
     }
 
-    /* SEO content / FAQ / Related (keep simple, compatible) */
+    /* Voice row */
+    body.wc .wc-voice-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    body.wc .wc-voice-select{
+      min-width: 240px;
+      max-width: 100%;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+      padding: 0 10px;
+      outline: none;
+    }
+    body.wc .wc-voice-select:focus{
+      border-color: rgba(var(--accent-rgb), .35);
+      box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
+    }
+
+    /* SEO content */
     body.wc .seo-block{ margin-top: 16px; text-align:left; }
     body.wc .seo-block h2{
       margin: 0 0 10px;
@@ -304,7 +369,7 @@
     }
   </style>
 
-  <!-- ✅ JSON-LD (kept) -->
+  <!-- ✅ JSON-LD -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -351,7 +416,7 @@
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
   <div class="__grain" aria-hidden="true"></div>
 
-  <!-- NAV (your standard nav; site.js handles menu + theme) -->
+  <!-- NAV -->
   <nav class="nav" aria-label="Primary navigation" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
@@ -403,7 +468,7 @@
     </div>
   </nav>
 
-  <!-- Mobile menu (keep your site structure) -->
+  <!-- Mobile menu -->
   <div class="m-overlay" id="mOverlay" hidden></div>
   <aside class="m-menu" id="mobileMenu" aria-hidden="true">
     <div class="m-head">
@@ -451,17 +516,15 @@
       <h1 class="section-title">Word Counter</h1>
 
       <div class="kicker">
-        Paste your text and get instant counts that make writing and publishing easier.<br/>
-        Track <b>words</b>, <b>characters</b> with or without spaces, <b>sentences</b>, <b>paragraphs</b>, and <b>reading time</b> in one place.<br/>
-        Results update live while you type so you can shorten, expand, or split paragraphs without guessing.<br/>
-        The tool is private and fast, it runs in your browser and does not require signup.
+        <b>Step 1:</b> Paste or type your text. <b>Step 2:</b> Get instant counts + reading time.<br/>
+        Perfect for essays, blog posts, SEO drafts, product descriptions, captions, and strict character limits.
       </div>
 
       <div class="mini-trust" aria-label="Key benefits">
-        <span class="mini-pill">🔒 Runs in your browser</span>
-        <span class="mini-pill">⚡ Instant results</span>
-        <span class="mini-pill">📋 Copy-ready outputs</span>
-        <span class="mini-pill">📱 Mobile-friendly</span>
+        <span class="mini-pill">🔒 Browser-only</span>
+        <span class="mini-pill">⚡ Live updates</span>
+        <span class="mini-pill">📋 Copy results</span>
+        <span class="mini-pill">📱 Mobile-first</span>
       </div>
     </div>
 
@@ -471,18 +534,19 @@
 
         <!-- LEFT -->
         <div class="tool-area">
+
           <div class="wc-examples" aria-label="Examples">
             <div class="wc-ex">
-              <h3>Example: Short paragraph</h3>
-              <pre id="ex1">Writing for the web should be simple. Short sentences help readers scan fast. Good structure improves clarity and keeps attention on mobile.</pre>
+              <h3>Example: Blog intro (clear + scannable)</h3>
+              <pre id="ex1">Most people skim on mobile. Use short sentences, clear headings, and spacing. Cut filler words, keep the point, and your content becomes easier to read—and easier to share.</pre>
               <div class="wc-ex-actions">
                 <button class="btn ghost" type="button" data-fill="#ex1">Load into tool</button>
               </div>
             </div>
 
             <div class="wc-ex">
-              <h3>Example: Product description</h3>
-              <pre id="ex2">Wireless controller with responsive buttons and smooth analog sticks. Includes charging cable and protective case. Works great for long sessions.</pre>
+              <h3>Example: Product description (e-commerce)</h3>
+              <pre id="ex2">Wireless controller with responsive buttons and smooth analog sticks. Includes charging cable + protective case. Great battery life for long sessions and fast pairing on PC / console.</pre>
               <div class="wc-ex-actions">
                 <button class="btn ghost" type="button" data-fill="#ex2">Load into tool</button>
               </div>
@@ -490,7 +554,7 @@
           </div>
 
           <label for="inputText" class="field-label">Paste your text</label>
-          <textarea id="inputText" placeholder="Paste or type your text here…"></textarea>
+          <textarea id="inputText" placeholder="Paste or type your text here… (counts update instantly)"></textarea>
 
           <div class="tool-actions">
             <button class="btn primary" id="copyBtn" type="button">Copy text</button>
@@ -499,39 +563,55 @@
           </div>
 
           <div class="callout" aria-label="Privacy note">
-            <b>Privacy note:</b> This tool processes text locally in your browser. Nothing is uploaded.
-            You can read more in
-            <a href="/privacy/" style="color:rgba(255,255,255,.86);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.14)">Privacy</a>.
+            <b>Privacy, simple:</b> Your text stays on your device. This page runs the counters locally in your browser—no uploads, no account, no server processing.
+            You can clear the text anytime. Read details in <a href="/privacy/">Privacy</a>.
           </div>
         </div>
 
         <!-- RIGHT -->
         <div class="wc-stats-wrap">
           <div class="wc-stats" aria-label="Results">
-            <div class="wc-stat"><div class="label">Words</div><div class="value" id="w">0</div></div>
-            <div class="wc-stat"><div class="label">Human reading</div><div class="value" id="rtHuman">0 sec</div></div>
 
+            <!-- Core -->
+            <div class="wc-stat"><div class="label">Words</div><div class="value" id="w">0</div></div>
             <div class="wc-stat"><div class="label">Characters</div><div class="value" id="c">0</div></div>
             <div class="wc-stat"><div class="label">Chars (no spaces)</div><div class="value" id="cn">0</div></div>
-
             <div class="wc-stat"><div class="label">Sentences</div><div class="value" id="s">0</div></div>
             <div class="wc-stat"><div class="label">Paragraphs</div><div class="value" id="p">0</div></div>
-
             <div class="wc-stat"><div class="label">Avg words / sentence</div><div class="value" id="aws">0.0</div></div>
 
-            <div class="wc-stat wc-stat-wide">
-              <div class="label">Reading time by AI (voice)</div>
-              <div class="value" id="rtAI">0 sec</div>
+            <!-- ✅ Reading boxes ABOVE voice -->
+            <div class="wc-stat"><div class="label">Human reading</div><div class="value" id="rtHuman">0 sec</div></div>
+            <div class="wc-stat"><div class="label">AI voice reading</div><div class="value" id="rtAI">0 sec</div></div>
 
-              <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
-                <button class="btn ghost" id="aiSpeakBtn" type="button">Play voice</button>
-                <button class="btn ghost" id="aiStopBtn" type="button">Stop</button>
+            <!-- ✅ 3 related utilities (high intent) -->
+            <div class="wc-stat"><div class="label">Unique words</div><div class="value" id="unique">0</div></div>
+            <div class="wc-stat"><div class="label">Longest word</div><div class="value" id="longest">—</div></div>
+            <div class="wc-stat"><div class="label">Avg word length</div><div class="value" id="awl">0.0</div></div>
+
+            <!-- Voice box -->
+            <div class="wc-stat wc-stat-wide">
+              <div class="label">AI voice (listen to your text)</div>
+              <div class="value" style="margin-top:6px;opacity:.86;font-size:13px;line-height:1.5;">
+                Choose a better voice (if available) and play. Runs on your device (no upload).
+              </div>
+
+              <div class="wc-voice-row">
+                <select id="voiceSelect" class="wc-voice-select" aria-label="Voice selection">
+                  <option value="">Loading voices…</option>
+                </select>
+
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                  <button class="btn ghost" id="aiSpeakBtn" type="button">Play voice</button>
+                  <button class="btn ghost" id="aiStopBtn" type="button">Stop</button>
+                </div>
               </div>
 
               <div style="margin-top:10px;font-size:12.5px;opacity:.72;line-height:1.5;">
-                Uses your device voice (no upload). If it’s blocked, interact once (click) then try again.
+                Note: browsers allow audio only after a user click. If Play does nothing, click once anywhere and try again.
               </div>
             </div>
+
           </div>
         </div>
 
@@ -556,26 +636,26 @@
       <h3>How reading time is calculated</h3>
       <p>
         Human reading is based on a faster typical silent reading pace. AI voice reading is slower because speech is usually slower than reading.
-        Both are estimates and are shown in seconds to stay precise.
+        Both are estimates and shown in seconds to stay precise.
       </p>
 
       <h3>FAQ</h3>
       <div class="faq" aria-label="Frequently asked questions">
         <div class="faq-item">
           <div class="faq-q">Does this tool upload my text?</div>
-          <div class="faq-a">No. The Word Counter runs in your browser, so your text stays on your device.</div>
+          <div class="faq-a">No. It runs locally in your browser. Your text stays on your device.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">What counts as a word?</div>
-          <div class="faq-a">Words are tokens separated by whitespace. Extra spaces and blank lines are ignored.</div>
+          <div class="faq-a">Words are tokens separated by spaces. Extra spaces and blank lines are ignored.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Characters with vs without spaces?</div>
-          <div class="faq-a">Characters includes spaces. Characters without spaces removes whitespace before counting.</div>
+          <div class="faq-a">“Characters” includes spaces. “Chars (no spaces)” removes whitespace before counting.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">How is reading time calculated?</div>
-          <div class="faq-a">Human reading uses reading speed. AI voice reading uses a typical speech pace and is slower.</div>
+          <div class="faq-q">Is reading time exact?</div>
+          <div class="faq-a">It’s an estimate. Human reading is faster than voice speaking, so AI voice time is longer.</div>
         </div>
       </div>
 
@@ -644,7 +724,7 @@
     </div>
   </footer>
 
-  <!-- Cookie banner (your site.js can manage these ids if you already have logic) -->
+  <!-- Cookie banner -->
   <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
     <div class="cookie-card">
       <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
@@ -663,10 +743,10 @@
     </div>
   </div>
 
-  <!-- Base site JS (menu/theme/cookies, etc.) -->
+  <!-- Base site JS -->
   <script src="/assets/site.js"></script>
 
-  <!-- ✅ TOOL JS INLINE (so it always runs) -->
+  <!-- ✅ TOOL JS (inline, improved voice + 3 utilities) -->
   <script>
   (() => {
     "use strict";
@@ -682,8 +762,13 @@
     const elSentences = $("#s");
     const elParagraphs = $("#p");
     const elAWS = $("#aws");
+
     const elRtHuman = $("#rtHuman");
     const elRtAI = $("#rtAI");
+
+    const elUnique = $("#unique");
+    const elLongest = $("#longest");
+    const elAWL = $("#awl");
 
     const copyBtn = $("#copyBtn");
     const copyStatsBtn = $("#copyStatsBtn");
@@ -691,6 +776,7 @@
 
     const aiSpeakBtn = $("#aiSpeakBtn");
     const aiStopBtn = $("#aiStopBtn");
+    const voiceSelect = $("#voiceSelect");
 
     if (!input) return;
 
@@ -700,11 +786,10 @@
         .replace(/\r\n/g, "\n");
     }
 
-    function wordCount(text){
-      const t = normalizeText(text).trim();
-      if (!t) return 0;
-      const words = t.match(/[^\s]+/g);
-      return words ? words.length : 0;
+    function extractWords(text){
+      const t = normalizeText(text).toLowerCase();
+      const m = t.match(/[a-z0-9]+(?:['’-][a-z0-9]+)*/gi);
+      return m ? m : [];
     }
 
     function sentenceCount(text){
@@ -720,10 +805,7 @@
     function paragraphCount(text){
       const t = normalizeText(text).trim();
       if (!t) return 0;
-      return t
-        .split(/\n{2,}/g)
-        .map(x => x.trim())
-        .filter(Boolean).length;
+      return t.split(/\n{2,}/g).map(x => x.trim()).filter(Boolean).length;
     }
 
     function formatDuration(seconds){
@@ -771,19 +853,40 @@
       }
     }
 
-    function flash(btn, ok){
+    function flash(btn, ok, baseText){
       if(!btn) return;
-      const base = btn.getAttribute("data-base") || btn.textContent;
+      const base = baseText || btn.getAttribute("data-base") || btn.textContent;
       btn.setAttribute("data-base", base);
       btn.textContent = ok ? "Copied!" : "Copy failed";
       setTimeout(() => btn.textContent = base, 900);
     }
 
+    function uniqueWords(wordsArr){
+      return new Set(wordsArr).size;
+    }
+
+    function longestWord(wordsArr){
+      let best = "";
+      for (const w of wordsArr){
+        if (w.length > best.length) best = w;
+      }
+      return best || "—";
+    }
+
+    function avgWordLength(wordsArr){
+      if (!wordsArr.length) return 0;
+      const sum = wordsArr.reduce((a,w)=>a+w.length, 0);
+      return sum / wordsArr.length;
+    }
+
     function render(){
       const text = input.value || "";
-      const words = wordCount(text);
+      const wordsArr = extractWords(text);
+      const words = wordsArr.length;
+
       const chars = text.length;
       const charsNoSpaces = text.replace(/\s/g, "").length;
+
       const sentences = sentenceCount(text);
       const paragraphs = paragraphCount(text);
       const aws = sentences > 0 ? (words / sentences) : 0;
@@ -797,12 +900,16 @@
 
       if (elRtHuman) elRtHuman.textContent = formatDuration(humanSeconds(words));
       if (elRtAI) elRtAI.textContent = formatDuration(aiSeconds(words));
+
+      if (elUnique) elUnique.textContent = String(uniqueWords(wordsArr));
+      if (elLongest) elLongest.textContent = longestWord(wordsArr);
+      if (elAWL) elAWL.textContent = (Math.round(avgWordLength(wordsArr) * 10) / 10).toFixed(1);
     }
 
-    let debounce = null;
+    let tmr = null;
     input.addEventListener("input", () => {
-      clearTimeout(debounce);
-      debounce = setTimeout(render, 30);
+      clearTimeout(tmr);
+      tmr = setTimeout(render, 25);
     });
 
     if (clearBtn){
@@ -817,14 +924,15 @@
     if (copyBtn){
       copyBtn.addEventListener("click", async () => {
         const ok = await copyToClipboard(input.value || "");
-        flash(copyBtn, ok);
+        flash(copyBtn, ok, "Copy text");
       });
     }
 
     if (copyStatsBtn){
       copyStatsBtn.addEventListener("click", async () => {
         const text = input.value || "";
-        const words = wordCount(text);
+        const wordsArr = extractWords(text);
+        const words = wordsArr.length;
         const sentences = sentenceCount(text);
 
         const payload =
@@ -833,13 +941,16 @@ Words: ${words}
 Human reading: ${formatDuration(humanSeconds(words))}
 AI voice reading: ${formatDuration(aiSeconds(words))}
 Characters: ${text.length}
-Chars (no spaces): ${text.replace(/\\s/g, "")}
+Chars (no spaces): ${text.replace(/\\s/g, "").length}
 Sentences: ${sentences}
 Paragraphs: ${paragraphCount(text)}
-Avg words/sentence: ${(sentences ? (words / sentences) : 0).toFixed(1)}`;
+Avg words/sentence: ${(sentences ? (words / sentences) : 0).toFixed(1)}
+Unique words: ${uniqueWords(wordsArr)}
+Longest word: ${longestWord(wordsArr)}
+Avg word length: ${avgWordLength(wordsArr).toFixed(1)}`;
 
         const ok = await copyToClipboard(payload);
-        flash(copyStatsBtn, ok);
+        flash(copyStatsBtn, ok, "Copy results");
       });
     }
 
@@ -857,11 +968,54 @@ Avg words/sentence: ${(sentences ? (words / sentences) : 0).toFixed(1)}`;
 
     // Voice
     let utter = null;
+    let voices = [];
 
     function stopVoice(){
       try{ window.speechSynthesis.cancel(); }catch(e){}
       utter = null;
-      if(aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+      if (aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+    }
+
+    function pickBestVoice(){
+      const preferredNames = ["Google","Microsoft","Samantha","Daniel","Alex","Karen","Moira","Serena"];
+      const en = voices.filter(v => /^en(-|_)?/i.test(v.lang || ""));
+      const pool = en.length ? en : voices;
+
+      for (const key of preferredNames){
+        const found = pool.find(v => (v.name || "").toLowerCase().includes(key.toLowerCase()));
+        if (found) return found;
+      }
+      return pool[0] || null;
+    }
+
+    function populateVoices(){
+      try { voices = window.speechSynthesis.getVoices() || []; } catch(e){ voices = []; }
+
+      if (!voiceSelect) return;
+
+      if (!voices.length){
+        voiceSelect.innerHTML = `<option value="">Default voice</option>`;
+        voiceSelect.disabled = true;
+        return;
+      }
+
+      voiceSelect.disabled = false;
+
+      const best = pickBestVoice();
+      const opts = voices.map((v, i) => {
+        const label = `${v.name} — ${v.lang}${v.localService ? " (local)" : ""}`;
+        const selected = best && v.name === best.name && v.lang === best.lang ? "selected" : "";
+        return `<option value="${i}" ${selected}>${label}</option>`;
+      }).join("");
+
+      voiceSelect.innerHTML = opts;
+    }
+
+    function getSelectedVoice(){
+      if (!voiceSelect || !voices.length) return pickBestVoice();
+      const idx = Number(voiceSelect.value);
+      if (Number.isFinite(idx) && voices[idx]) return voices[idx];
+      return pickBestVoice();
     }
 
     function speak(){
@@ -871,33 +1025,53 @@ Avg words/sentence: ${(sentences ? (words / sentences) : 0).toFixed(1)}`;
       stopVoice();
 
       utter = new SpeechSynthesisUtterance(t);
-      utter.rate = 0.92;
+      utter.rate = 0.95;
       utter.pitch = 1.0;
+      utter.volume = 1.0;
+
+      const v = getSelectedVoice();
+      if (v) utter.voice = v;
 
       utter.onend = () => {
         utter = null;
-        if(aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+        if (aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
       };
       utter.onerror = () => {
         utter = null;
-        if(aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
+        if (aiSpeakBtn) aiSpeakBtn.textContent = "Play voice";
       };
 
       try{
         window.speechSynthesis.speak(utter);
-        if(aiSpeakBtn) aiSpeakBtn.textContent = "Playing…";
+        if (aiSpeakBtn) aiSpeakBtn.textContent = "Playing…";
       }catch(e){}
     }
 
-    if(aiSpeakBtn){
+    if (aiSpeakBtn){
       aiSpeakBtn.addEventListener("click", () => {
-        if(utter) return;
+        if (utter) return;
         speak();
       });
     }
-    if(aiStopBtn){
+    if (aiStopBtn){
       aiStopBtn.addEventListener("click", stopVoice);
     }
+    if (voiceSelect){
+      voiceSelect.addEventListener("change", () => {
+        if (utter){
+          stopVoice();
+          speak();
+        }
+      });
+    }
+
+    if ("speechSynthesis" in window){
+      window.speechSynthesis.onvoiceschanged = populateVoices;
+      populateVoices();
+      setTimeout(populateVoices, 250);
+      setTimeout(populateVoices, 1200);
+    }
+
     document.addEventListener("visibilitychange", () => {
       if(document.hidden) stopVoice();
     });
