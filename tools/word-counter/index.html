@@ -33,69 +33,10 @@
 
   <!-- Base site CSS -->
   <link rel="stylesheet" href="/assets/site.css?v=4" />
-  <!-- ✅ Page-only Word Counter CSS -->
-  <link rel="stylesheet" href="/assets/tools/word-counter.css?v=1" />
-
-  <!-- ✅ JSON-LD: WebApplication -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Word Counter",
-    "url": "https://clickoz.com/tools/word-counter/",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "All",
-    "browserRequirements": "Requires JavaScript",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "publisher": { "@type": "Organization", "name": "Clickoz", "url": "https://clickoz.com/" }
-  }
-  </script>
-
-  <!-- ✅ JSON-LD: Breadcrumb -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"BreadcrumbList",
-    "itemListElement":[
-      {"@type":"ListItem","position":1,"name":"Clickoz","item":"https://clickoz.com/"},
-      {"@type":"ListItem","position":2,"name":"Tools","item":"https://clickoz.com/tools/"},
-      {"@type":"ListItem","position":3,"name":"Word Counter","item":"https://clickoz.com/tools/word-counter/"}
-    ]
-  }
-  </script>
-
-  <!-- ✅ JSON-LD: FAQPage -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {
-        "@type":"Question",
-        "name":"Does this tool upload my text?",
-        "acceptedAnswer":{"@type":"Answer","text":"No. The Word Counter runs in your browser, so your text stays on your device."}
-      },
-      {
-        "@type":"Question",
-        "name":"What counts as a word?",
-        "acceptedAnswer":{"@type":"Answer","text":"Words are tokens separated by whitespace. Extra spaces and blank lines are ignored."}
-      },
-      {
-        "@type":"Question",
-        "name":"Characters with vs without spaces?",
-        "acceptedAnswer":{"@type":"Answer","text":"Characters includes spaces. Characters without spaces removes whitespace before counting."}
-      },
-      {
-        "@type":"Question",
-        "name":"How is reading time calculated?",
-        "acceptedAnswer":{"@type":"Answer","text":"Human reading time is estimated from words per minute. AI voice reading is slower and based on typical speech pace."}
-      }
-    ]
-  }
-  </script>
+  <!-- ✅ Page-only Word Counter CSS (must include wc-* classes) -->
+  <link rel="stylesheet" href="/assets/tools/word-counter.css?v=99" />
 </head>
 
-<!-- ✅ IMPORTANT: wc namespace prevents site.css conflicts -->
 <body class="bigtext wc">
   <!-- FX layers -->
   <div id="clickozParticles" aria-hidden="true"></div>
@@ -154,43 +95,6 @@
     </div>
   </nav>
 
-  <!-- Mobile menu -->
-  <div class="m-overlay" id="mOverlay" hidden></div>
-  <aside class="m-menu" id="mobileMenu" aria-hidden="true">
-    <div class="m-head">
-      <div class="m-title">Menu</div>
-      <button class="m-close" id="mClose" type="button" aria-label="Close menu">×</button>
-    </div>
-
-    <div class="m-links">
-      <a class="m-link" href="/">Home</a>
-      <a class="m-link" href="/tools/">Tools</a>
-      <a class="m-link" href="/guides/">Guides</a>
-      <a class="m-link" href="/updates/">Updates</a>
-      <a class="m-link" href="/privacy/">Privacy</a>
-    </div>
-
-    <div class="m-block">
-      <div class="m-label">Theme color</div>
-      <div class="color-grid m-colors" id="mobileColorGrid">
-        <div class="color-option active" data-accent="#06b6d4" data-accent2="#22d3ee" style="background:#06b6d4" title="Cyan" tabindex="0"></div>
-        <div class="color-option" data-accent="#6366f1" data-accent2="#8b5cf6" style="background:#6366f1" title="Purple" tabindex="0"></div>
-        <div class="color-option" data-accent="#3b82f6" data-accent2="#60a5fa" style="background:#3b82f6" title="Blue" tabindex="0"></div>
-        <div class="color-option" data-accent="#10b981" data-accent2="#34d399" style="background:#10b981" title="Green" tabindex="0"></div>
-        <div class="color-option" data-accent="#f97316" data-accent2="#fb923c" style="background:#f97316" title="Orange" tabindex="0"></div>
-        <div class="color-option" data-accent="#ef4444" data-accent2="#f87171" style="background:#ef4444" title="Red" tabindex="0"></div>
-      </div>
-    </div>
-
-    <div class="m-block">
-      <div class="m-label">Language</div>
-      <div id="google_translate_element_mobile"></div>
-      <div style="margin-top:10px;font-size:13px;opacity:.78;line-height:1.5;">
-        Translation loads only if you accept “All” cookies.
-      </div>
-    </div>
-  </aside>
-
   <!-- CONTENT -->
   <section class="section container tool-shell">
     <div class="tool-hero">
@@ -221,25 +125,26 @@
       </div>
     </div>
 
-    <!-- TOOL -->
+    <!-- ✅ TOOL (fixed classes: wc-*) -->
     <div class="tool-panel" aria-label="Word Counter tool">
       <div class="tool-grid">
 
         <!-- LEFT -->
         <div class="tool-area">
-          <div class="examples-top" aria-label="Examples">
-            <div class="ex">
+
+          <div class="wc-examples" aria-label="Examples">
+            <div class="wc-ex">
               <h3>Example: Short paragraph</h3>
               <pre id="ex1">Writing for the web should be simple. Short sentences help readers scan fast. Good structure improves clarity and keeps attention on mobile.</pre>
-              <div class="ex-actions">
+              <div class="wc-ex-actions">
                 <button class="btn ghost" type="button" data-fill="#ex1">Load into tool</button>
               </div>
             </div>
 
-            <div class="ex">
+            <div class="wc-ex">
               <h3>Example: Product description</h3>
               <pre id="ex2">Wireless controller with responsive buttons and smooth analog sticks. Includes charging cable and protective case. Works great for long sessions.</pre>
-              <div class="ex-actions">
+              <div class="wc-ex-actions">
                 <button class="btn ghost" type="button" data-fill="#ex2">Load into tool</button>
               </div>
             </div>
@@ -262,21 +167,20 @@
         </div>
 
         <!-- RIGHT -->
-        <div class="stats-wrap">
-          <div class="stats" aria-label="Results">
-            <div class="stat"><div class="label">Words</div><div class="value" id="w">0</div></div>
-            <div class="stat"><div class="label">Human reading</div><div class="value" id="rtHuman">0 sec</div></div>
+        <div class="wc-stats-wrap">
+          <div class="wc-stats" aria-label="Results">
+            <div class="wc-stat"><div class="label">Words</div><div class="value" id="w">0</div></div>
+            <div class="wc-stat"><div class="label">Human reading</div><div class="value" id="rtHuman">0 sec</div></div>
 
-            <div class="stat"><div class="label">Characters</div><div class="value" id="c">0</div></div>
-            <div class="stat"><div class="label">Chars (no spaces)</div><div class="value" id="cn">0</div></div>
+            <div class="wc-stat"><div class="label">Characters</div><div class="value" id="c">0</div></div>
+            <div class="wc-stat"><div class="label">Chars (no spaces)</div><div class="value" id="cn">0</div></div>
 
-            <div class="stat"><div class="label">Sentences</div><div class="value" id="s">0</div></div>
-            <div class="stat"><div class="label">Paragraphs</div><div class="value" id="p">0</div></div>
+            <div class="wc-stat"><div class="label">Sentences</div><div class="value" id="s">0</div></div>
+            <div class="wc-stat"><div class="label">Paragraphs</div><div class="value" id="p">0</div></div>
 
-            <div class="stat"><div class="label">Avg words / sentence</div><div class="value" id="aws">0.0</div></div>
+            <div class="wc-stat"><div class="label">Avg words / sentence</div><div class="value" id="aws">0.0</div></div>
 
-            <!-- full width -->
-            <div class="stat stat-wide">
+            <div class="wc-stat wc-stat-wide">
               <div class="label">Reading time by AI (voice)</div>
               <div class="value" id="rtAI">0 sec</div>
 
@@ -310,100 +214,14 @@
         or plan the structure of an article. For SEO workflows, it helps you keep paragraphs readable and estimate reading time for mobile.
       </p>
 
-      <h3>How reading time is calculated</h3>
-      <p>
-        Human reading is based on a faster typical silent reading pace. AI voice reading is slower because speech is usually slower than reading.
-        Both are estimates and are shown in seconds to stay precise.
-      </p>
-
-      <h3>FAQ</h3>
-      <div class="faq" aria-label="Frequently asked questions">
-        <div class="faq-item">
-          <div class="faq-q">Does this tool upload my text?</div>
-          <div class="faq-a">No. The Word Counter runs in your browser, so your text stays on your device.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">What counts as a word?</div>
-          <div class="faq-a">Words are tokens separated by whitespace. Extra spaces and blank lines are ignored.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Characters with vs without spaces?</div>
-          <div class="faq-a">Characters includes spaces. Characters without spaces removes whitespace before counting.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">How is reading time calculated?</div>
-          <div class="faq-a">Human reading uses reading speed. AI voice reading uses a typical speech pace and is slower.</div>
-        </div>
-      </div>
-
       <div class="meta-note">
         Last updated: <span id="lastUpdated">2026-01-24</span> · <a href="/tools/">Browse all tools</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div>
-        <h4>Clickoz</h4>
-        <div class="footer-links">
-          <a href="/tools/">Tools</a>
-          <a href="/guides/">Guides</a>
-          <a href="/updates/">Updates</a>
-        </div>
-      </div>
-
-      <div>
-        <h4>Popular tools</h4>
-        <div class="footer-links">
-          <a href="/tools/word-counter/">Word Counter</a>
-          <a href="/tools/readability-analyzer/">Readability</a>
-          <a href="/tools/meta-tags/">Meta Tags</a>
-          <a href="/tools/json-formatter/">JSON Formatter</a>
-        </div>
-      </div>
-
-      <div>
-        <h4>Legal</h4>
-        <div class="footer-links">
-          <a href="/privacy/">Privacy</a>
-          <a href="/terms/">Terms</a>
-          <a href="/contact/">Contact</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="container" style="margin-top:14px">
-      <hr class="sep" />
-      <div style="text-align:center;font-size:13px;color:rgba(242,242,255,.60)">
-        © 2026 Clickoz • Fast tools for SEO, writing and developers
-      </div>
-    </div>
-  </footer>
-
-  <!-- Cookie banner (keep your existing logic in site.js) -->
-  <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
-    <div class="cookie-card">
-      <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
-      <div class="cookie-content">
-        <div class="cookie-title">Privacy choices</div>
-        <div class="cookie-text">
-          We use essential storage for core features. If you accept all, we may load third-party services like Google Translate.
-          Read more in <a href="/privacy/">Privacy</a>.
-        </div>
-      </div>
-      <div class="cookie-actions">
-        <button class="btn cookie-btn" id="cookieReject" type="button">Refuse</button>
-        <button class="btn cookie-btn" id="cookieEssential" type="button">Essential only</button>
-        <button class="btn primary cookie-btn" id="cookieAccept" type="button">Accept all</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Base site JS -->
   <script src="/assets/site.js" defer></script>
-  <!-- Word Counter JS -->
   <script src="/assets/tools/word-counter.js?v=1" defer></script>
 </body>
 </html>
