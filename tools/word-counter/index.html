@@ -4,14 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ✅ Primary SEO -->
   <title>Word Counter – Words, Characters, Sentences, Paragraphs, Reading Time | Clickoz</title>
   <meta name="description" content="Free Word Counter by Clickoz. Count words, characters (with/without spaces), sentences, paragraphs, and estimate reading time. Runs in your browser, no signup." />
   <link rel="canonical" href="https://clickoz.com/tools/word-counter/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
 
-  <!-- ✅ Social -->
   <meta property="og:site_name" content="Clickoz" />
   <meta property="og:title" content="Word Counter – Free Online Tool | Clickoz" />
   <meta property="og:description" content="Count words, characters, sentences, paragraphs, and reading time. Instant, privacy-first, no signup." />
@@ -26,15 +24,180 @@
 
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
-  <!-- Base site CSS -->
+  <!-- Base -->
   <link rel="stylesheet" href="/assets/site.css?v=4" />
-  <!-- ✅ Page-only Word Counter CSS (must include wc-* classes) -->
-  <link rel="stylesheet" href="/assets/tools/word-counter.css?v=99" />
+
+  <!-- ✅ BULLETPROOF TOOL CSS (inline, scoped, overrides conflicts) -->
+  <style>
+    /* scope */
+    body.wc .tool-shell{ padding-top:18px; }
+    body.wc .tool-panel{
+      margin-top:16px;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
+      box-shadow: 0 16px 50px rgba(0,0,0,.28);
+      position:relative;
+      overflow:hidden;
+      text-align:left !important;
+    }
+    body.wc .tool-panel::after{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background: radial-gradient(720px 320px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
+      filter: blur(30px);
+      opacity:.9;
+      pointer-events:none;
+    }
+    body.wc .tool-panel > *{ position:relative; z-index:1; }
+    body.wc .tool-panel, body.wc .tool-panel *{ box-sizing:border-box !important; }
+
+    /* ✅ grid layout forced */
+    body.wc .tool-grid{
+      display:grid !important;
+      grid-template-columns: 1fr !important;
+      gap:12px !important;
+      align-items:start !important;
+    }
+    @media (min-width:981px){
+      body.wc .tool-grid{ grid-template-columns: 1.35fr .65fr !important; }
+    }
+
+    body.wc .tool-area, body.wc .wc-stats-wrap{ min-width:0 !important; }
+
+    /* examples */
+    body.wc .wc-examples{
+      margin-bottom:12px;
+      display:grid !important;
+      grid-template-columns:1fr !important;
+      gap:12px !important;
+    }
+    body.wc .wc-ex{
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    body.wc .wc-ex h3{
+      margin:0 0 10px;
+      font-size:15px;
+      font-weight:1000;
+    }
+    body.wc .wc-ex pre{
+      margin:0;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      overflow:auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: rgba(255,255,255,.86);
+      font-size:13px;
+      line-height:1.65;
+    }
+    body.wc .wc-ex-actions{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    body.wc .wc-ex .btn{
+      height:40px;
+      border-radius:14px;
+      font-weight:1000;
+      font-size:13px;
+    }
+
+    /* textarea + actions */
+    body.wc .field-label{
+      display:block;
+      margin:0 0 8px;
+      font-weight:1000;
+      font-size:13px;
+      letter-spacing:.02em;
+      color: rgba(255,255,255,.84);
+    }
+    body.wc #inputText{
+      width:100% !important;
+      min-height:260px;
+      resize:vertical;
+      border-radius:16px;
+      padding:14px;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+      outline:none;
+      line-height:1.65;
+      font-size:15px;
+      display:block;
+    }
+    body.wc #inputText:focus{
+      border-color: rgba(var(--accent-rgb), .35);
+      box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
+    }
+    body.wc .tool-actions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    body.wc .tool-actions .btn{
+      height:44px;
+      border-radius:14px;
+      font-weight:1000;
+    }
+    body.wc .btn.ghost{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    body.wc .callout{
+      margin-top:12px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.78);
+      line-height:1.65;
+      font-size:14px;
+    }
+
+    /* ✅ stats forced 2 columns */
+    body.wc .wc-stats{
+      display:grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap:10px !important;
+    }
+    body.wc .wc-stat{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      text-align:left !important;
+    }
+    body.wc .wc-stat .label{
+      font-size:12px;
+      opacity:.78;
+      letter-spacing:.02em;
+    }
+    body.wc .wc-stat .value{
+      margin-top:6px;
+      font-weight:1000;
+      font-size:18px;
+    }
+    body.wc .wc-stat-wide{ grid-column: 1 / -1 !important; }
+
+    @media (max-width:520px){
+      body.wc .wc-stats{ grid-template-columns: 1fr !important; }
+    }
+  </style>
 </head>
 
 <body class="bigtext wc">
@@ -43,7 +206,7 @@
   <canvas id="spaceParticles" aria-hidden="true"></canvas>
   <div class="__grain" aria-hidden="true"></div>
 
-  <!-- NAV -->
+  <!-- NAV (unchanged) -->
   <nav class="nav" aria-label="Primary navigation" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="Clickoz Home">
@@ -111,10 +274,7 @@
       <div class="kicker">
         Paste your text and get instant counts that make writing and publishing easier.<br/>
         Track <b>words</b>, <b>characters</b> with or without spaces, <b>sentences</b>, <b>paragraphs</b>, and <b>reading time</b> in one place.<br/>
-        Use it for essays, blog posts, product descriptions, SEO drafts, captions, and forms with strict limits.<br/>
-        Results update live while you type so you can shorten, expand, or split paragraphs without guessing.<br/>
-        The tool is private and fast, it runs in your browser and does not require signup.<br/>
-        Copy your text or copy the results to share with a client, editor, teammate, or teacher.
+        Results update live while you type so you can shorten, expand, or split paragraphs without guessing.
       </div>
 
       <div class="mini-trust" aria-label="Key benefits">
@@ -125,7 +285,7 @@
       </div>
     </div>
 
-    <!-- ✅ TOOL (fixed classes: wc-*) -->
+    <!-- TOOL -->
     <div class="tool-panel" aria-label="Word Counter tool">
       <div class="tool-grid">
 
@@ -161,8 +321,7 @@
 
           <div class="callout" aria-label="Privacy note">
             <b>Privacy note:</b> This tool processes text locally in your browser. Nothing is uploaded.
-            You can read more in
-            <a href="/privacy/" style="color:rgba(255,255,255,.86);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.14)">Privacy</a>.
+            You can read more in <a href="/privacy/" style="color:rgba(255,255,255,.86);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.14)">Privacy</a>.
           </div>
         </div>
 
@@ -198,29 +357,8 @@
 
       </div>
     </div>
-
-    <!-- SEO + content -->
-    <div class="hero-box seo-block" aria-label="About this tool">
-      <h2>What is a word counter?</h2>
-      <p>
-        A word counter measures the real length of your text. It counts words and characters, including a version without spaces,
-        and it also estimates sentences and paragraphs so you can see structure at a glance. This is useful when you write for school,
-        work, SEO, or any platform that applies strict limits.
-      </p>
-
-      <h3>When should you use it?</h3>
-      <p>
-        Use a word counter when you need to check an essay word count, confirm character limits for a form, shorten a caption,
-        or plan the structure of an article. For SEO workflows, it helps you keep paragraphs readable and estimate reading time for mobile.
-      </p>
-
-      <div class="meta-note">
-        Last updated: <span id="lastUpdated">2026-01-24</span> · <a href="/tools/">Browse all tools</a>
-      </div>
-    </div>
   </section>
 
-  <!-- Base site JS -->
   <script src="/assets/site.js" defer></script>
   <script src="/assets/tools/word-counter.js?v=1" defer></script>
 </body>
