@@ -1,0 +1,325 @@
+/* =========================================================
+   Clickoz — UTM Builder (tool micro-layer)
+   Drop this in: /tools/utm-builder/utm-builder.css
+========================================================= */
+
+body.ub .tool-shell{ padding-top:18px; }
+
+/* Breadcrumbs */
+body.ub .crumbs{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  font-size:13px; color: rgba(255,255,255,.70);
+  margin: 6px 0 10px;
+}
+body.ub .crumbs a{
+  color: rgba(255,255,255,.82);
+  text-decoration:none;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+body.ub .crumbs .sep{ opacity:.55; }
+
+/* Hero */
+body.ub .tool-hero{ max-width: 980px; margin: 0 auto; text-align:center; }
+body.ub .kicker{
+  margin: 10px auto 0;
+  color: rgba(255,255,255,.74);
+  line-height: 1.8;
+  font-size: 15.5px;
+}
+body.ub .kicker b{ color: rgba(255,255,255,.92); font-weight: 1000; }
+
+body.ub .mini-trust{
+  margin: 14px auto 0;
+  display:flex; flex-wrap:wrap; gap:10px;
+  justify-content:center; align-items:center;
+}
+body.ub .mini-pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.86);
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Panel */
+body.ub .tool-panel{
+  margin-top:16px;
+  padding:16px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(15,21,38,.62), rgba(0,0,0,.18));
+  box-shadow: 0 16px 50px rgba(0,0,0,.28);
+  position:relative;
+  overflow:hidden;
+  text-align:left !important;
+}
+body.ub .tool-panel::after{
+  content:"";
+  position:absolute;
+  inset:-30%;
+  background: radial-gradient(720px 320px at 18% 30%, rgba(var(--accent-rgb), .12), transparent 60%);
+  filter: blur(30px);
+  opacity:.9;
+  pointer-events:none;
+}
+body.ub .tool-panel > *{ position:relative; z-index:1; }
+body.ub .tool-panel, body.ub .tool-panel *{ box-sizing:border-box !important; }
+
+body.ub .tool-grid{
+  display:grid !important;
+  grid-template-columns: 1fr !important;
+  gap:12px !important;
+  align-items:start !important;
+}
+@media (min-width:981px){
+  body.ub .tool-grid{ grid-template-columns: 1.1fr .9fr !important; }
+}
+body.ub .tool-area, body.ub .ub-out-wrap{ min-width:0 !important; }
+
+/* Stepbar */
+body.ub .stepbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin: 0 0 10px;
+}
+body.ub .stepbadge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  font-weight: 1000;
+  color: rgba(255,255,255,.90);
+  line-height: 1;
+  font-size: 13px;
+  white-space: nowrap;
+}
+body.ub .stepbadge .tag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height: 20px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(var(--accent-rgb), .10);
+  color: rgba(255,255,255,.92);
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+
+/* Fields */
+body.ub .field{
+  margin: 10px 0 0;
+}
+body.ub .field-label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin: 6px 0 8px;
+  font-weight:1000;
+  font-size:13px;
+  letter-spacing:.02em;
+  color: rgba(255,255,255,.88);
+}
+body.ub .input, body.ub .select{
+  width:100%;
+  height: 46px;
+  border-radius: 14px;
+  padding: 0 14px;
+  background: rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.92);
+  outline:none;
+  font-size: 14.5px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+}
+body.ub .input:focus, body.ub .select:focus{
+  border-color: rgba(var(--accent-rgb), .38);
+  box-shadow:
+    0 0 0 4px rgba(var(--accent-rgb), .14),
+    0 0 0 1px rgba(var(--accent-rgb), .24) inset !important;
+}
+body.ub .hint{
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: .72;
+  line-height: 1.55;
+}
+
+/* Preset row */
+body.ub .preset-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+body.ub .preset-row .select{ flex: 1 1 240px; }
+
+/* Output */
+body.ub .ub-out{
+  width:100%;
+  min-height: 160px;
+  resize: vertical;
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.92);
+  outline:none;
+  line-height:1.65;
+  font-size:14.5px;
+  display:block;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+}
+body.ub .ub-out:focus{
+  border-color: rgba(var(--accent-rgb), .30);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
+}
+
+/* Buttons */
+body.ub .tool-actions{
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+body.ub .tool-actions .btn{
+  height: 46px;
+  border-radius: 14px;
+  font-weight: 1000;
+  padding: 0 16px;
+}
+body.ub .btn.ghost{
+  background: rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+}
+@media (max-width:520px){
+  body.ub .tool-actions .btn{
+    width: 100%;
+    justify-content:center;
+  }
+}
+
+/* Small stats */
+body.ub .ub-stats{
+  margin-top: 10px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+@media (max-width:520px){
+  body.ub .ub-stats{ grid-template-columns: 1fr; }
+}
+body.ub .ub-stat{
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+}
+body.ub .ub-stat .label{
+  font-size:12px;
+  opacity:.78;
+  letter-spacing:.02em;
+}
+body.ub .ub-stat .value{
+  margin-top:6px;
+  font-weight:1000;
+  font-size:18px;
+  word-break: break-word;
+}
+
+/* Examples box (single, like WC) */
+body.ub .ub-examples{ margin-bottom: 12px; }
+body.ub .ub-ex{
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+}
+body.ub .ub-ex h3{
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 1000;
+}
+body.ub .ub-ex pre{
+  margin: 0;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.22);
+  overflow:auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: rgba(255,255,255,.90);
+  font-size: 13px;
+  line-height: 1.65;
+  min-height: 86px;
+}
+body.ub .ub-ex-actions{
+  margin-top: 10px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+body.ub .ub-ex-actions .btn{
+  height: 40px;
+  border-radius: 14px;
+  font-weight: 1000;
+  font-size: 13px;
+}
+
+/* Preview strip */
+body.ub .ub-preview{
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 16px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.14);
+}
+body.ub .ub-preview .row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  color: rgba(255,255,255,.84);
+  font-weight: 900;
+}
+body.ub .ub-preview code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12.5px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+}
+
+/* Privacy callout */
+body.ub .callout{
+  margin-top:12px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 16px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.84);
+  line-height:1.75;
+  font-size: 14.5px;
+}
+body.ub .callout b{ color: rgba(255,255,255,.92); font-weight: 1000; }
+body.ub .callout a{
+  color: rgba(255,255,255,.90);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.16);
+}
