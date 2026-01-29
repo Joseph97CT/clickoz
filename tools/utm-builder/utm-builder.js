@@ -1,89 +1,102 @@
-/* =========================================================
-   Clickoz — UTM Builder (browser-only)
-   - Build UTM URLs fast
-   - Copy-ready link + params
-   - Presets + examples
-   - Safe URL normalization
-========================================================= */
-
 (() => {
   "use strict";
 
-  const $ = (s, r = document) => r.querySelector(s);
+  const $  = (s, r=document) => r.querySelector(s);
 
-  const els = {
-    url: $("#ubUrl"),
-    source: $("#ubSource"),
-    medium: $("#ubMedium"),
-    campaign: $("#ubCampaign"),
-    term: $("#ubTerm"),
-    content: $("#ubContent"),
+  // Inputs
+  const urlEl      = $("#ubUrl");
+  const presetEl   = $("#ubPreset");
+  const srcEl      = $("#ubSource");
+  const medEl      = $("#ubMedium");
+  const campEl     = $("#ubCampaign");
+  const termEl     = $("#ubTerm");
+  const contEl     = $("#ubContent");
 
-    out: $("#ubOutput"),
-    previewHost: $("#ubHost"),
-    previewPath: $("#ubPath"),
+  // Output + UI
+  const outEl      = $("#ubOutput");
+  const hostEl     = $("#ubHost");
+  const pathEl     = $("#ubPath");
+  const lenEl      = $("#ubLen");
+  const paramsEl   = $("#ubParamsCount");
 
-    btnCopyLink: $("#ubCopyLink"),
-    btnCopyParams: $("#ubCopyParams"),
-    btnClear: $("#ubClear"),
+  // Buttons
+  const copyLinkBtn   = $("#ubCopyLink");
+  const copyParamsBtn = $("#ubCopyParams");
+  const clearBtn      = $("#ubClear");
 
-    btnLoadExample: $("#ubLoadExample"),
-    btnNewExample: $("#ubNewExample"),
+  // Examples
+  const exBox       = $("#ubExampleBox");
+  const exLoadBtn   = $("#ubLoadExample");
+  const exNewBtn    = $("#ubNewExample");
 
-    preset: $("#ubPreset"),
+  if (!urlEl || !outEl) return;
 
-    statLen: $("#ubLen"),
-    statParams: $("#ubParamsCount"),
-  };
+  /* =========================================================
+     0) Helpers
+  ========================================================= */
 
-  if (!els.url || !els.out) return;
+  function normalizeSpaces(v){
+    return String(v ?? "")
+      .replace(/\u00A0/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
 
-  // --- Helpers ---
-  const normalizeSpaces = (s) => String(s ?? "").replace(/\u00A0/g, " ").trim();
-
-  // Minimal slugify for utm fields (doesn't break user intent)
-  function cleanUtmValue(raw) {
-    let s = normalizeSpaces(raw);
-    if (!s) return "";
-    // Keep letters/numbers/._- and convert spaces to -
-    s = s
+  // Keep UTMs readable: lowercase + hyphen (optional but good practice)
+  function normalizeUtmValue(v){
+    const t = normalizeSpaces(v);
+    if(!t) return "";
+    // safe normalize: keep letters/numbers, convert spaces to hyphen
+    return t
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^\p{L}\p{N}\-_.~ ]/gu, "") // allow unicode letters/numbers + safe url chars + space
       .replace(/\s+/g, "-")
-      .replace(/[^\p{L}\p{N}._-]/gu, "-")
       .replace(/-+/g, "-")
-      .replace(/^-+|-+$/g, "");
-    return s;
+      .replace(/^-|-$/g, "");
   }
 
-  function ensureUrl(raw) {
-    const t = normalizeSpaces(raw);
-    if (!t) return "";
-    // If missing scheme, assume https
-    if (!/^https?:\/\//i.test(t)) return `https://${t}`;
-    return t;
+  function ensureProtocol(raw){
+    const t = String(raw ?? "").trim();
+    if(!t) return "";
+    if (/^https?:\/\//i.test(t)) return t;
+    if (/^[a-z]+:\/\//i.test(t)) return t; // other schemes
+    // allow "example.com/path"
+    return "https://" + t.replace(/^\/+/, "");
   }
 
-  function safeParseUrl(raw) {
-    try {
-      return new URL(raw);
-    } catch (_) {
+  function safeURL(raw){
+    const withProto = ensureProtocol(raw);
+    if(!withProto) return null;
+    try{
+      return new URL(withProto);
+    }catch(e){
       return null;
     }
   }
 
-  function setText(el, v) {
-    if (!el) return;
-    el.textContent = String(v ?? "");
+  function setOrDeleteParam(u, key, value){
+    const v = normalizeUtmValue(value);
+    if(v) u.searchParams.set(key, v);
+    else u.searchParams.delete(key);
   }
 
-  async function copyToClipboard(str) {
+  function countUtmParams(u){
+    const keys = ["utm_source","utm_medium","utm_campaign","utm_term","utm_content"];
+    let n = 0;
+    for(const k of keys) if(u.searchParams.get(k)) n++;
+    return n;
+  }
+
+  async function copyToClipboard(str){
     const text = String(str ?? "");
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
+    try{
+      if(navigator.clipboard && window.isSecureContext){
         await navigator.clipboard.writeText(text);
         return true;
       }
-    } catch (e) {}
-    try {
+    }catch(e){}
+    try{
       const ta = document.createElement("textarea");
       ta.value = text;
       ta.setAttribute("readonly", "");
@@ -96,230 +109,281 @@
       const ok = document.execCommand("copy");
       document.body.removeChild(ta);
       return !!ok;
-    } catch (e) {
+    }catch(e){
       return false;
     }
   }
 
-  function flash(btn, ok, baseText) {
-    if (!btn) return;
+  function flash(btn, ok, baseText){
+    if(!btn) return;
     const base = baseText || btn.getAttribute("data-base") || btn.textContent;
     btn.setAttribute("data-base", base);
     btn.textContent = ok ? "Copied!" : "Copy failed";
     setTimeout(() => (btn.textContent = base), 900);
   }
 
-  function buildParams() {
-    // clean fields but DO NOT force if user wants raw -> only for UTM values
-    const source = cleanUtmValue(els.source.value);
-    const medium = cleanUtmValue(els.medium.value);
-    const campaign = cleanUtmValue(els.campaign.value);
-    const term = cleanUtmValue(els.term.value);
-    const content = cleanUtmValue(els.content.value);
-
-    const params = new URLSearchParams();
-    if (source) params.set("utm_source", source);
-    if (medium) params.set("utm_medium", medium);
-    if (campaign) params.set("utm_campaign", campaign);
-    if (term) params.set("utm_term", term);
-    if (content) params.set("utm_content", content);
-
-    return params;
+  function cleanPreview(u){
+    if(!hostEl || !pathEl) return;
+    hostEl.textContent = u ? (u.host || "—") : "—";
+    pathEl.textContent = u ? (u.pathname || "/") : "—";
   }
 
-  function mergeUrlWithParams(baseUrlRaw, params) {
-    const fixed = ensureUrl(baseUrlRaw);
-    const u = safeParseUrl(fixed);
-    if (!u) return { finalUrl: "", host: "—", path: "—" };
-
-    // Merge: keep existing params, override same keys with new UTM
-    params.forEach((v, k) => u.searchParams.set(k, v));
-
-    const host = u.host || "—";
-    const path = (u.pathname || "/") + (u.search ? u.search : "");
-    return { finalUrl: u.toString(), host, path };
+  function updateStats(finalUrl){
+    const t = String(finalUrl ?? "");
+    if(lenEl) lenEl.textContent = String(t.length || 0);
+    if(paramsEl){
+      const u = safeURL(t);
+      paramsEl.textContent = u ? String(countUtmParams(u)) : "0";
+    }
   }
 
-  function countParams(params) {
-    let n = 0;
-    params.forEach(() => n++);
-    return n;
-  }
+  /* =========================================================
+     1) Presets + Examples
+  ========================================================= */
 
-  function render() {
-    const params = buildParams();
-    const merged = mergeUrlWithParams(els.url.value, params);
-
-    els.out.value = merged.finalUrl || "";
-    setText(els.previewHost, merged.host);
-    setText(els.previewPath, merged.path);
-
-    setText(els.statLen, (merged.finalUrl || "").length);
-    setText(els.statParams, countParams(params));
-  }
-
-  function clearAll() {
-    els.url.value = "";
-    els.source.value = "";
-    els.medium.value = "";
-    els.campaign.value = "";
-    els.term.value = "";
-    els.content.value = "";
-    render();
-    els.url.focus();
-  }
-
-  // --- Presets (common UTM mediums + quick setups) ---
-  const PRESETS = {
-    youtube: { source: "youtube", medium: "video", campaign: "channel", term: "", content: "description" },
-    instagram: { source: "instagram", medium: "social", campaign: "profile", term: "", content: "bio" },
-    tiktok: { source: "tiktok", medium: "social", campaign: "profile", term: "", content: "bio" },
-    newsletter: { source: "newsletter", medium: "email", campaign: "weekly", term: "", content: "cta" },
-    ads: { source: "google", medium: "cpc", campaign: "search", term: "keyword", content: "ad-1" },
+  const presets = {
+    youtube:     { utm_source: "youtube",    utm_medium: "video",  utm_campaign: "", utm_term: "", utm_content: "description" },
+    instagram:   { utm_source: "instagram",  utm_medium: "social", utm_campaign: "", utm_term: "", utm_content: "bio" },
+    tiktok:      { utm_source: "tiktok",     utm_medium: "social", utm_campaign: "", utm_term: "", utm_content: "profile" },
+    newsletter:  { utm_source: "newsletter", utm_medium: "email",  utm_campaign: "", utm_term: "", utm_content: "cta" },
+    ads:         { utm_source: "google",     utm_medium: "cpc",    utm_campaign: "", utm_term: "", utm_content: "ad-variant-a" }
   };
 
-  function applyPreset(key) {
-    const p = PRESETS[key];
-    if (!p) return;
-    els.source.value = p.source;
-    els.medium.value = p.medium;
-    els.campaign.value = p.campaign;
-    els.term.value = p.term;
-    els.content.value = p.content;
-    render();
-  }
-
-  // --- Examples ---
-  const EXAMPLES = [
+  const examples = [
     {
-      title: "YouTube description link",
-      url: "https://clickoz.com/tools/word-counter/",
+      title: "YouTube video description",
+      url: "https://clickoz.com/tools/",
       preset: "youtube",
-      campaign: "word-counter-launch",
-      content: "yt-description",
-    },
-    {
-      title: "Instagram bio link",
-      url: "clickoz.com/tools/",
-      preset: "instagram",
       campaign: "tools-directory",
-      content: "bio-link",
+      content: "description"
     },
     {
-      title: "TikTok profile link",
+      title: "Instagram bio",
       url: "https://clickoz.com/",
-      preset: "tiktok",
-      campaign: "brand-home",
-      content: "profile",
+      preset: "instagram",
+      campaign: "brand-profile",
+      content: "bio"
     },
     {
       title: "Newsletter CTA",
-      url: "https://clickoz.com/tools/meta-tags/",
+      url: "https://clickoz.com/tools/utm-builder/",
       preset: "newsletter",
       campaign: "jan-update",
-      content: "cta-button",
+      content: "top-cta"
     },
     {
-      title: "Ads landing page",
-      url: "clickoz.com/tools/serp-preview/",
+      title: "Paid ads landing page",
+      url: "https://clickoz.com/tools/meta-tags/",
       preset: "ads",
-      campaign: "serp-preview-cpc",
-      term: "serp-preview",
-      content: "text-ad-1",
+      campaign: "meta-tags-launch",
+      term: "meta tags tool",
+      content: "headline-a"
     },
     {
       title: "Partner referral",
-      url: "https://clickoz.com/tools/readability-analyzer/",
+      url: "https://clickoz.com/tools/word-counter/",
       preset: "",
       source: "partner-site",
       medium: "referral",
-      campaign: "partner-mentions",
-      content: "article-link",
+      campaign: "partner-mention",
+      content: "sidebar-link"
     },
     {
-      title: "QR code poster",
-      url: "https://clickoz.com/tools/utm-builder/",
+      title: "QR poster (offline)",
+      url: "https://clickoz.com/tools/",
       preset: "",
       source: "poster",
       medium: "offline",
-      campaign: "flyer-geneva",
-      content: "qr",
+      campaign: "event-booth",
+      content: "qr-code"
     },
+    {
+      title: "TikTok profile link",
+      url: "https://clickoz.com/tools/utm-builder/",
+      preset: "tiktok",
+      campaign: "creator-profile",
+      content: "profile"
+    }
   ];
 
   let exIndex = 0;
 
-  function loadExample(idx) {
-    const ex = EXAMPLES[idx % EXAMPLES.length];
-    if (!ex) return;
-
-    els.url.value = ex.url || "";
-    if (ex.preset) applyPreset(ex.preset);
-
-    // override / fill
-    if (ex.source) els.source.value = ex.source;
-    if (ex.medium) els.medium.value = ex.medium;
-    if (ex.campaign) els.campaign.value = ex.campaign;
-    if (ex.term) els.term.value = ex.term;
-    if (ex.content) els.content.value = ex.content;
-
-    render();
-    els.url.focus();
+  function renderExampleBox(idx){
+    if(!exBox) return;
+    const ex = examples[idx % examples.length];
+    exBox.textContent =
+`${ex.title}
+URL: ${ex.url}
+Preset: ${ex.preset || "custom"}
+Campaign: ${ex.campaign || "(set your name)"}
+Tip: use utm_content for placement/variant`;
   }
 
-  function nextExample() {
-    exIndex = (exIndex + 1) % EXAMPLES.length;
-    // Do not auto-fill (keeps UX); only changes "example hint"
-    // We'll show example name in placeholder (handled by HTML later)
-    loadExample(exIndex);
+  function applyExample(idx){
+    const ex = examples[idx % examples.length];
+    urlEl.value = ex.url;
+
+    if(ex.preset){
+      presetEl && (presetEl.value = ex.preset);
+      applyPreset(ex.preset, { silent: true });
+    }else{
+      presetEl && (presetEl.value = "");
+      srcEl.value  = ex.source  || "";
+      medEl.value  = ex.medium  || "";
+      campEl.value = ex.campaign || "";
+      termEl.value = ex.term || "";
+      contEl.value = ex.content || "";
+    }
+
+    // overwrite some fields if present
+    if(ex.campaign) campEl.value = ex.campaign;
+    if(ex.term) termEl.value = ex.term;
+    if(ex.content) contEl.value = ex.content;
+
+    build();
+    urlEl.focus();
   }
 
-  // --- Events ---
+  function nextExample(){
+    exIndex = (exIndex + 1) % examples.length;
+    renderExampleBox(exIndex);
+  }
+
+  function applyPreset(key, opts = {}){
+    const p = presets[key];
+    if(!p) return;
+
+    // Only fill blanks (so user doesn’t lose custom values)
+    const fillIfEmpty = (el, v) => {
+      if(!el) return;
+      const cur = normalizeSpaces(el.value);
+      if(!cur) el.value = v || "";
+    };
+
+    fillIfEmpty(srcEl, p.utm_source);
+    fillIfEmpty(medEl, p.utm_medium);
+    fillIfEmpty(campEl, p.utm_campaign);
+    fillIfEmpty(termEl, p.utm_term);
+    fillIfEmpty(contEl, p.utm_content);
+
+    if(!opts.silent) build();
+  }
+
+  /* =========================================================
+     2) Builder
+  ========================================================= */
+
+  function build(){
+    const raw = normalizeSpaces(urlEl.value);
+    const u = safeURL(raw);
+
+    if(!u){
+      outEl.value = "";
+      cleanPreview(null);
+      updateStats("");
+      return;
+    }
+
+    // apply UTMs
+    setOrDeleteParam(u, "utm_source",   srcEl.value);
+    setOrDeleteParam(u, "utm_medium",   medEl.value);
+    setOrDeleteParam(u, "utm_campaign", campEl.value);
+    setOrDeleteParam(u, "utm_term",     termEl.value);
+    setOrDeleteParam(u, "utm_content",  contEl.value);
+
+    // produce final
+    const finalUrl = u.toString();
+    outEl.value = finalUrl;
+
+    cleanPreview(u);
+    updateStats(finalUrl);
+  }
+
+  function clearAll(){
+    urlEl.value = "";
+    presetEl && (presetEl.value = "");
+    srcEl.value = "";
+    medEl.value = "";
+    campEl.value = "";
+    termEl.value = "";
+    contEl.value = "";
+    outEl.value = "";
+    cleanPreview(null);
+    updateStats("");
+    urlEl.focus();
+  }
+
+  function currentParamsText(){
+    const u = safeURL(outEl.value);
+    if(!u) return "";
+    const keys = ["utm_source","utm_medium","utm_campaign","utm_term","utm_content"];
+    const rows = [];
+    for(const k of keys){
+      const v = u.searchParams.get(k);
+      if(v) rows.push(`${k}=${v}`);
+    }
+    return rows.join("\n");
+  }
+
+  /* =========================================================
+     3) Events
+  ========================================================= */
+
   let tmr = null;
-  const onAnyInput = () => {
+  function scheduleBuild(){
     clearTimeout(tmr);
-    tmr = setTimeout(render, 30);
-  };
+    tmr = setTimeout(build, 20);
+  }
 
-  ["input", "change"].forEach((evt) => {
-    els.url.addEventListener(evt, onAnyInput);
-    els.source.addEventListener(evt, onAnyInput);
-    els.medium.addEventListener(evt, onAnyInput);
-    els.campaign.addEventListener(evt, onAnyInput);
-    els.term.addEventListener(evt, onAnyInput);
-    els.content.addEventListener(evt, onAnyInput);
-  });
+  urlEl.addEventListener("input", scheduleBuild);
+  srcEl.addEventListener("input", scheduleBuild);
+  medEl.addEventListener("input", scheduleBuild);
+  campEl.addEventListener("input", scheduleBuild);
+  termEl.addEventListener("input", scheduleBuild);
+  contEl.addEventListener("input", scheduleBuild);
 
-  if (els.preset) {
-    els.preset.addEventListener("change", () => {
-      const key = els.preset.value;
-      if (key) applyPreset(key);
+  if(presetEl){
+    presetEl.addEventListener("change", () => {
+      const key = presetEl.value;
+      if(!key) return build();
+      applyPreset(key);
     });
   }
 
-  if (els.btnClear) els.btnClear.addEventListener("click", clearAll);
-
-  if (els.btnCopyLink) {
-    els.btnCopyLink.addEventListener("click", async () => {
-      const ok = await copyToClipboard(els.out.value || "");
-      flash(els.btnCopyLink, ok, "📋 Copy link");
+  if(copyLinkBtn){
+    copyLinkBtn.addEventListener("click", async () => {
+      const t = String(outEl.value ?? "").trim();
+      if(!t){
+        flash(copyLinkBtn, false, "📋 Copy link");
+        return;
+      }
+      const ok = await copyToClipboard(t);
+      flash(copyLinkBtn, ok, "📋 Copy link");
     });
   }
 
-  if (els.btnCopyParams) {
-    els.btnCopyParams.addEventListener("click", async () => {
-      const params = buildParams();
-      const pairs = [];
-      params.forEach((v, k) => pairs.push(`${k}=${v}`));
-      const payload = pairs.length ? pairs.join("\n") : "";
-      const ok = await copyToClipboard(payload);
-      flash(els.btnCopyParams, ok, "✅ Copy UTM params");
+  if(copyParamsBtn){
+    copyParamsBtn.addEventListener("click", async () => {
+      const t = currentParamsText();
+      if(!t){
+        flash(copyParamsBtn, false, "✅ Copy UTM params");
+        return;
+      }
+      const ok = await copyToClipboard(t);
+      flash(copyParamsBtn, ok, "✅ Copy UTM params");
     });
   }
 
-  if (els.btnLoadExample) els.btnLoadExample.addEventListener("click", () => loadExample(exIndex));
-  if (els.btnNewExample) els.btnNewExample.addEventListener("click", nextExample);
+  if(clearBtn){
+    clearBtn.addEventListener("click", clearAll);
+  }
 
-  // init
-  render();
+  // Examples
+  renderExampleBox(exIndex);
+
+  if(exNewBtn) exNewBtn.addEventListener("click", nextExample);
+  if(exLoadBtn) exLoadBtn.addEventListener("click", () => applyExample(exIndex));
+
+  // Initial render
+  build();
 })();
