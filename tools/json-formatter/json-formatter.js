@@ -243,13 +243,52 @@
     showExample(exIndex);
   }
 
-  function loadExample(){
-    const ex = examples[exIndex % examples.length];
-    inTa.value = ex.text;
-    // Auto-format (pretty) immediately
-    formatJSON(true);
+ function loadExample(){
+  const ex = examples[exIndex % examples.length];
+  inTa.value = ex.text;
+
+  // Broken JSON: no auto-format, show a helpful tip
+  if(ex.broken){
+    outTa.value = "";
+    validateOnly(); // sets status + focuses near error when possible
+
+    // Add a precise, human tip for the common mistakes in this sample
+    if(stMeta){
+      stMeta.textContent =
+        "Tip: this sample is intentionally broken → remove trailing commas (like [1,2,]) and the extra comma before the closing brace (… , }).";
+    }
+    if(stBadge){
+      stBadge.classList.remove("ok");
+      stBadge.classList.add("bad");
+      stBadge.textContent = "⚠️ Invalid JSON (example)";
+    }
+
     inTa.focus();
+    return;
   }
+
+  // Valid example: auto-format immediately
+  formatJSON(true);
+  inTa.focus();
+}
+
+function selectFirstTrailingComma(text){
+  try{
+    const t = normalize(text);
+
+    // Find first ", ]" or ", }" (optionally with spaces/newlines)
+    const re = /,\s*([\]}])/g;
+    const m = re.exec(t);
+    if(!m) return false;
+
+    const commaIndex = m.index; // position of comma
+    inTa.focus();
+    inTa.setSelectionRange(commaIndex, Math.min(t.length, commaIndex + 1)); // select comma only
+    return true;
+  }catch(e){
+    return false;
+  }
+}
 
   if(exBox){
     // initial message
