@@ -328,20 +328,22 @@
             </div>
           </div>
 
-          <!-- Related quick boxes -->
-          <div class="related" aria-label="Related">
-            <div class="rel-box">
-              <h4 style="margin:0;font-size:16px;font-weight:1000;">Related tools</h4>
-              <div class="rel-links">
+          <!-- ✅ Curated related boxes (your requested style) -->
+          <div class="ub-related" aria-label="Related">
+            <div class="ub-relbox">
+              <h4>Related tools</h4>
+              <p>More URL + SEO utilities that pair well with UTMs.</p>
+              <div class="ub-rellinks">
                 <a href="/tools/slug-generator/">🔗 Slug Generator</a>
                 <a href="/tools/url-encoder/">🧩 URL Encoder</a>
                 <a href="/tools/meta-tags/">🏷️ Meta Tags</a>
               </div>
             </div>
 
-            <div class="rel-box">
-              <h4 style="margin:0;font-size:16px;font-weight:1000;">Related guides</h4>
-              <div class="rel-links">
+            <div class="ub-relbox">
+              <h4>Related guides</h4>
+              <p>Clean conventions + tracking setups you can copy.</p>
+              <div class="ub-rellinks">
                 <a href="/guides/utm-best-practices/">🧠 UTM Best Practices</a>
                 <a href="/guides/youtube-tracking-links/">🎥 YouTube Tracking Links</a>
                 <a href="/guides/instagram-bio-utm/">📌 Instagram Bio UTM</a>
@@ -353,19 +355,31 @@
       </div>
     </div>
 
-    <!-- SEO / Guidance -->
+    <!-- ✅ SEO / Guidance (improved, similar vibe to Word Counter) -->
     <div class="hero-box seo-block" aria-label="About UTM links">
       <h2>What is a UTM Builder?</h2>
       <p>
-        A UTM Builder adds tracking parameters to a URL so analytics tools can attribute clicks to the right
-        channel and campaign. It’s the clean way to measure performance for social profiles, video descriptions,
-        newsletters, ads, and partner mentions.
+        A UTM Builder adds tracking parameters to a URL so analytics platforms can attribute clicks to the right
+        channel and campaign. It’s a simple way to measure performance across social profiles, video descriptions,
+        newsletters, ads, QR codes, and partner mentions.
+      </p>
+
+      <h3>Which UTM fields should you use?</h3>
+      <p>
+        Most tracking setups work best with the “core three”:
+        <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>.
+        Use <code>utm_content</code> to separate placements (bio vs description) or variants (A/B tests).
+        Use <code>utm_term</code> mainly for paid search keywords or ad groups.
       </p>
 
       <h3>How to name UTMs (clean + consistent)</h3>
       <p>
-        Keep values short, consistent, and readable. Example: <b>utm_source=instagram</b>, <b>utm_medium=social</b>,
-        <b>utm_campaign=tools-directory</b>. Use <b>utm_content</b> when you have multiple links or variants.
+        Keep values short, lowercase, and consistent across channels. Avoid spaces (use hyphens).
+        Example:
+        <code>utm_source=instagram</code>,
+        <code>utm_medium=social</code>,
+        <code>utm_campaign=tools-directory</code>,
+        <code>utm_content=bio</code>.
       </p>
 
       <h3>Practical use cases</h3>
@@ -373,44 +387,54 @@
         <div class="lane">
           <div class="lane-head">
             <div class="lane-ico" aria-hidden="true">🎥</div>
-            <h3>YouTube + TikTok</h3>
+            <h4>YouTube + TikTok</h4>
           </div>
           <p>
-            Track clicks from video descriptions and profile links. Use <b>utm_content</b> like “description” or “profile”
-            to separate placements.
+            Track clicks from descriptions, pinned comments, and profile links. Use
+            <code>utm_content</code> like <b>description</b>, <b>pinned</b>, or <b>profile</b> to separate placements.
           </p>
         </div>
 
         <div class="lane">
           <div class="lane-head">
             <div class="lane-ico" aria-hidden="true">📨</div>
-            <h3>Newsletter campaigns</h3>
+            <h4>Newsletter campaigns</h4>
           </div>
           <p>
-            Use <b>utm_medium=email</b> and a campaign name like “jan-update”. Track which CTA performs with <b>utm_content</b>.
+            Use <code>utm_medium=email</code> and a campaign name like <b>jan-update</b>. Track which CTA performs with
+            <code>utm_content</code> (button-1 vs button-2).
           </p>
         </div>
 
         <div class="lane">
           <div class="lane-head">
             <div class="lane-ico" aria-hidden="true">📈</div>
-            <h3>Ads and keywords</h3>
+            <h4>Ads and keywords</h4>
           </div>
           <p>
-            Use <b>utm_medium=cpc</b> and fill <b>utm_term</b> with a keyword or ad group. Add <b>utm_content</b> for ad variants.
+            Use <code>utm_medium=cpc</code> and put a keyword/ad group in <code>utm_term</code>.
+            Add <code>utm_content</code> for creatives (banner-a vs banner-b).
           </p>
         </div>
 
         <div class="lane">
           <div class="lane-head">
             <div class="lane-ico" aria-hidden="true">🤝</div>
-            <h3>Partners and referrals</h3>
+            <h4>Partners and referrals</h4>
           </div>
           <p>
-            Track mentions from other sites with <b>utm_medium=referral</b> and a source like “partner-site”.
+            Track mentions from other sites with <code>utm_medium=referral</code> and a source like <b>partner-site</b>.
+            Great for affiliates, PR, and collaborations.
           </p>
         </div>
       </div>
+
+      <h3>Common mistakes (and quick fixes)</h3>
+      <p>
+        Avoid inconsistent naming (instagram vs ig vs insta). Don’t put full sentences in UTMs. Keep the campaign stable
+        across platforms, then separate placements with <code>utm_content</code>. If your destination URL already has parameters,
+        this tool preserves them and appends UTMs correctly.
+      </p>
 
       <h3>FAQ</h3>
       <div class="faq" aria-label="Frequently asked questions">
@@ -424,7 +448,7 @@
         </div>
         <div class="faq-item">
           <div class="faq-q">Can I paste a URL without https?</div>
-          <div class="faq-a">Yes. The tool will assume https automatically so the final link is valid.</div>
+          <div class="faq-a">Yes. The tool assumes https so the final link is valid.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Does it keep my existing parameters?</div>
@@ -498,44 +522,7 @@
   </div>
 
   <!-- Base site behavior -->
-  <script src="/assets/site.js" defer></script>
-
-  <!-- Tool behavior -->
-  <script src="/tools/utm-builder/utm-builder.js?v=1" defer></script>
-
-  <!-- Example box sync (tiny helper) -->
-  <script>
-    // Optional: keep the example box message aligned with loaded preset (pure UI)
-    // The main logic stays in utm-builder.js
-    (function(){
-      const box = document.getElementById("ubExampleBox");
-      const loadBtn = document.getElementById("ubLoadExample");
-      const newBtn = document.getElementById("ubNewExample");
-      if(!box || !loadBtn || !newBtn) return;
-
-      // If you want: just a nicer static hint
-      const hints = [
-        "YouTube description → track clicks from your video link.",
-        "Instagram bio → track profile traffic.",
-        "Newsletter CTA → track which button converts.",
-        "Ads landing page → separate keywords and variants.",
-        "Partner referral → measure mentions that perform.",
-        "QR poster → track offline scans.",
-        "TikTok profile → separate profile vs pinned video links."
-      ];
-      let i = 0;
-
-      function rotate(){
-        i = (i + 1) % hints.length;
-        box.textContent = hints[i];
-      }
-      newBtn.addEventListener("click", rotate);
-      // Load example already fills fields (handled by main JS)
-      // Keep the box readable:
-      loadBtn.addEventListener("click", () => {
-        box.textContent = "Example loaded → edit values if needed, then copy the link.";
-      });
-    })();
-  </script>
+  <script src="/assets/site.js">
+</script>
 </body>
 </html>
