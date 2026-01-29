@@ -1,6 +1,7 @@
 /* =========================================================
-   Clickoz — UTM Builder (tool micro-layer)
-   Drop this in: /tools/utm-builder/utm-builder.css
+   Clickoz — UTM Builder (tool micro CSS)
+   File: /tools/utm-builder/utm-builder.css
+   Scope: body.ub (non rompe altri tool)
 ========================================================= */
 
 body.ub .tool-shell{ padding-top:18px; }
@@ -46,7 +47,7 @@ body.ub .mini-pill{
   white-space: nowrap;
 }
 
-/* Panel */
+/* Main panel */
 body.ub .tool-panel{
   margin-top:16px;
   padding:16px;
@@ -70,6 +71,7 @@ body.ub .tool-panel::after{
 body.ub .tool-panel > *{ position:relative; z-index:1; }
 body.ub .tool-panel, body.ub .tool-panel *{ box-sizing:border-box !important; }
 
+/* Grid */
 body.ub .tool-grid{
   display:grid !important;
   grid-template-columns: 1fr !important;
@@ -77,116 +79,105 @@ body.ub .tool-grid{
   align-items:start !important;
 }
 @media (min-width:981px){
-  body.ub .tool-grid{ grid-template-columns: 1.1fr .9fr !important; }
+  body.ub .tool-grid{ grid-template-columns: 1.25fr .75fr !important; }
 }
-body.ub .tool-area, body.ub .ub-out-wrap{ min-width:0 !important; }
+body.ub .tool-area, body.ub .tool-side{ min-width:0 !important; }
 
-/* Stepbar */
-body.ub .stepbar{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin: 0 0 10px;
-}
-body.ub .stepbadge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.04);
-  font-weight: 1000;
-  color: rgba(255,255,255,.90);
-  line-height: 1;
-  font-size: 13px;
-  white-space: nowrap;
-}
-body.ub .stepbadge .tag{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height: 20px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(var(--accent-rgb), .10);
-  color: rgba(255,255,255,.92);
-  font-size: 12px;
-  letter-spacing: .02em;
-}
-
-/* Fields */
-body.ub .field{
-  margin: 10px 0 0;
-}
+/* Labels + fields */
 body.ub .field-label{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:10px;
-  margin: 6px 0 8px;
+  margin: 10px 0 8px;
   font-weight:1000;
   font-size:13px;
   letter-spacing:.02em;
   color: rgba(255,255,255,.88);
 }
-body.ub .input, body.ub .select{
+body.ub .hint{
+  font-size: 12px;
+  opacity: .70;
+  font-weight: 900;
+}
+
+body.ub .input,
+body.ub input[type="text"],
+body.ub input[type="url"],
+body.ub textarea{
   width:100%;
-  height: 46px;
-  border-radius: 14px;
-  padding: 0 14px;
+  border-radius:16px;
+  padding:12px 14px;
   background: rgba(255,255,255,.03);
   border:1px solid rgba(255,255,255,.12);
   color: rgba(255,255,255,.92);
   outline:none;
-  font-size: 14.5px;
+  line-height:1.6;
+  font-size: 15px;
   box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
 }
-body.ub .input:focus, body.ub .select:focus{
+body.ub textarea{ min-height: 92px; resize: vertical; }
+
+body.ub .input:focus,
+body.ub input:focus,
+body.ub textarea:focus{
   border-color: rgba(var(--accent-rgb), .38);
   box-shadow:
     0 0 0 4px rgba(var(--accent-rgb), .14),
     0 0 0 1px rgba(var(--accent-rgb), .24) inset !important;
 }
-body.ub .hint{
-  margin-top: 6px;
-  font-size: 13px;
-  opacity: .72;
-  line-height: 1.55;
+
+/* Dark select — Quick preset */
+body.ub select,
+body.ub #ubPreset{
+  background: rgba(0,0,0,.35) !important;
+  color: rgba(255,255,255,.92) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-radius: 14px;
+  outline: none;
+  padding: 10px 12px;
+  height: 44px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+body.ub select:focus,
+body.ub #ubPreset:focus{
+  border-color: rgba(var(--accent-rgb), .40) !important;
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .12) !important;
+}
+body.ub select option{
+  background: #0b0f19 !important;
+  color: rgba(255,255,255,.92) !important;
 }
 
-/* Preset row */
-body.ub .preset-row{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
+/* Rows for UTM fields */
+body.ub .rows{
+  margin-top: 10px;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
-body.ub .preset-row .select{ flex: 1 1 240px; }
+@media (min-width:981px){
+  body.ub .rows{ grid-template-columns: 1fr 1fr; }
+}
+body.ub .row-wide{ grid-column: 1 / -1; }
 
-/* Output */
-body.ub .ub-out{
-  width:100%;
-  min-height: 160px;
-  resize: vertical;
-  border-radius: 16px;
-  padding: 14px;
+/* Output block */
+body.ub .out-wrap{
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.12);
-  color: rgba(255,255,255,.92);
-  outline:none;
-  line-height:1.65;
-  font-size:14.5px;
-  display:block;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
 }
-body.ub .ub-out:focus{
-  border-color: rgba(var(--accent-rgb), .30);
-  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10);
+body.ub .out-wrap .field-label{ margin-top:0; }
+body.ub #ubOutput{
+  min-height: 90px;
+  font-size: 14px;
+  line-height: 1.65;
 }
 
-/* Buttons */
+/* CTA buttons */
 body.ub .tool-actions{
   margin-top:12px;
   display:flex;
@@ -200,6 +191,9 @@ body.ub .tool-actions .btn{
   font-weight: 1000;
   padding: 0 16px;
 }
+body.ub .tool-actions .btn.primary{
+  box-shadow: 0 12px 30px rgba(var(--accent-rgb), .12);
+}
 body.ub .btn.ghost{
   background: rgba(255,255,255,.07);
   border:1px solid rgba(255,255,255,.14);
@@ -211,48 +205,70 @@ body.ub .btn.ghost{
   }
 }
 
-/* Small stats */
-body.ub .ub-stats{
-  margin-top: 10px;
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:10px;
-}
-@media (max-width:520px){
-  body.ub .ub-stats{ grid-template-columns: 1fr; }
-}
-body.ub .ub-stat{
-  padding:12px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.10);
+/* Small stats in side */
+body.ub .side-card{
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.03);
+  position: relative;
+  overflow: hidden;
 }
-body.ub .ub-stat .label{
-  font-size:12px;
-  opacity:.78;
-  letter-spacing:.02em;
+body.ub .side-card::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: radial-gradient(620px 260px at 22% 30%, rgba(var(--accent-rgb), .10), transparent 60%);
+  filter: blur(34px);
+  opacity:.9;
+  pointer-events:none;
 }
-body.ub .ub-stat .value{
-  margin-top:6px;
-  font-weight:1000;
-  font-size:18px;
+body.ub .side-card > *{ position:relative; z-index:1; }
+
+body.ub .side-card h3{
+  margin:0;
+  font-size: 16px;
+  font-weight: 1000;
+  letter-spacing: -0.01em;
+}
+body.ub .kv{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+body.ub .kv .item{
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.16);
+  padding: 12px;
+}
+body.ub .kv .k{
+  font-size: 12px;
+  opacity: .78;
+  letter-spacing: .02em;
+}
+body.ub .kv .v{
+  margin-top: 6px;
+  font-weight: 1000;
+  font-size: 14.5px;
   word-break: break-word;
 }
 
-/* Examples box (single, like WC) */
-body.ub .ub-examples{ margin-bottom: 12px; }
-body.ub .ub-ex{
+/* Examples box */
+body.ub .ex-box{
+  margin-top: 12px;
   padding: 12px;
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.03);
 }
-body.ub .ub-ex h3{
+body.ub .ex-box h3{
   margin: 0 0 10px;
   font-size: 15px;
   font-weight: 1000;
 }
-body.ub .ub-ex pre{
+body.ub .ex-box pre{
   margin: 0;
   padding: 12px;
   border-radius: 14px;
@@ -264,45 +280,20 @@ body.ub .ub-ex pre{
   color: rgba(255,255,255,.90);
   font-size: 13px;
   line-height: 1.65;
-  min-height: 86px;
+  min-height: 92px;
 }
-body.ub .ub-ex-actions{
+body.ub .ex-actions{
   margin-top: 10px;
   display:flex;
   gap:10px;
   flex-wrap:wrap;
   align-items:center;
 }
-body.ub .ub-ex-actions .btn{
+body.ub .ex-actions .btn{
   height: 40px;
   border-radius: 14px;
   font-weight: 1000;
   font-size: 13px;
-}
-
-/* Preview strip */
-body.ub .ub-preview{
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 16px;
-  border:1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.14);
-}
-body.ub .ub-preview .row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-  color: rgba(255,255,255,.84);
-  font-weight: 900;
-}
-body.ub .ub-preview code{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 12.5px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.03);
 }
 
 /* Privacy callout */
@@ -322,4 +313,225 @@ body.ub .callout a{
   color: rgba(255,255,255,.90);
   text-decoration:none;
   border-bottom:1px solid rgba(255,255,255,.16);
+}
+
+/* =========================================================
+   Related tools / guides — pretty cards
+========================================================= */
+body.ub .rel-zone{
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width:981px){
+  body.ub .rel-zone{ grid-template-columns: 1fr 1fr; }
+}
+body.ub .rel-card{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+body.ub .rel-card::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: radial-gradient(620px 260px at 22% 30%, rgba(var(--accent-rgb), .10), transparent 60%);
+  filter: blur(34px);
+  opacity:.9;
+  pointer-events:none;
+}
+body.ub .rel-card > *{ position:relative; z-index:1; }
+
+body.ub .rel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom: 10px;
+}
+body.ub .rel-head h3{
+  margin:0;
+  font-size: 16px;
+  font-weight: 1000;
+  letter-spacing: -0.01em;
+}
+body.ub .rel-head .mini{
+  font-size: 12.5px;
+  opacity: .72;
+  font-weight: 900;
+}
+body.ub .rel-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+body.ub .rel-item{
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.16);
+  text-decoration:none;
+  color: rgba(255,255,255,.90);
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+body.ub .rel-item:hover{
+  transform: translateY(-1px);
+  border-color: rgba(var(--accent-rgb), .28);
+  background: rgba(0,0,0,.22);
+}
+body.ub .rel-ico{
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(var(--accent-rgb), .10);
+  flex: 0 0 auto;
+}
+body.ub .rel-txt{ min-width:0; }
+body.ub .rel-title{
+  margin:0;
+  font-weight:1000;
+  font-size: 14px;
+  line-height: 1.25;
+}
+body.ub .rel-desc{
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: .74;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   SEO / guidance block (cards + chips)
+========================================================= */
+body.ub .seo-block{ margin-top: 16px; text-align:left; }
+body.ub .seo-block h2{
+  margin: 0 0 10px;
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 1000;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+}
+body.ub .seo-block h3{
+  margin: 18px 0 10px;
+  font-size: 18px;
+  font-weight: 1000;
+  letter-spacing: -0.01em;
+}
+body.ub .seo-block p{
+  margin: 0 0 12px;
+  color: rgba(255,255,255,.76);
+  line-height: 1.88;
+  font-size: 15.5px;
+}
+
+body.ub .how-fast{
+  margin-top: 10px;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+body.ub .how-step{
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.16);
+  padding: 12px;
+}
+body.ub .how-step .t{
+  font-weight: 1000;
+  color: rgba(255,255,255,.92);
+  font-size: 14px;
+}
+body.ub .how-step .d{
+  margin-top: 6px;
+  color: rgba(255,255,255,.74);
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+body.ub .seo-intent{
+  margin-top: 14px;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width:981px){
+  body.ub .seo-intent{ grid-template-columns: 1fr 1fr; }
+}
+body.ub .seo-card{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+body.ub .seo-card::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: radial-gradient(620px 260px at 22% 30%, rgba(var(--accent-rgb), .10), transparent 60%);
+  filter: blur(34px);
+  opacity:.9;
+  pointer-events:none;
+}
+body.ub .seo-card > *{ position:relative; z-index:1; }
+body.ub .seo-card h4{
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 1000;
+}
+body.ub .seo-card p{
+  margin: 0 0 10px;
+  color: rgba(255,255,255,.76);
+  line-height: 1.85;
+  font-size: 15px;
+}
+
+body.ub .qgrid{ display:flex; flex-wrap:wrap; gap:10px; }
+body.ub .qchip{
+  display:inline-flex;
+  align-items:center;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.16);
+  color: rgba(255,255,255,.88);
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1;
+}
+
+body.ub .faq{ margin-top: 14px; display:grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width:981px){ body.ub .faq{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+body.ub .faq-item{
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.16);
+  padding: 12px;
+}
+body.ub .faq-q{ font-weight: 1000; font-size: 14px; color: rgba(255,255,255,.92); }
+body.ub .faq-a{ margin-top: 8px; color: rgba(255,255,255,.76); line-height: 1.7; font-size: 14.5px; }
+
+body.ub .meta-note{
+  margin-top: 14px;
+  text-align:center;
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+  line-height: 1.7;
+}
+body.ub .meta-note a{
+  color: rgba(255,255,255,.78);
+  text-decoration:none;
+  border-bottom: 1px solid rgba(255,255,255,.14);
 }
