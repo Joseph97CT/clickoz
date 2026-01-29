@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>JSON Formatter – Format & Validate JSON Online | Clickoz</title>
+  <meta name="description" content="Free JSON Formatter by Clickoz. Format, validate, and minify JSON instantly for debugging and clean output. Runs in your browser, no signup." />
+  <link rel="canonical" href="https://clickoz.com/tools/json-formatter/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b0f19" />
+
+  <!-- Social -->
+  <meta property="og:site_name" content="Clickoz" />
+  <meta property="og:title" content="JSON Formatter – Format & Validate JSON | Clickoz" />
+  <meta property="og:description" content="Format and validate JSON instantly for debugging and clean output. Browser-only and privacy-first." />
+  <meta property="og:url" content="https://clickoz.com/tools/json-formatter/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://clickoz.com/assets/og/json-formatter.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JSON Formatter – Format & Validate JSON | Clickoz" />
+  <meta name="twitter:description" content="Format and validate JSON instantly for debugging and clean output. Browser-only and privacy-first." />
+  <meta name="twitter:image" content="https://clickoz.com/assets/og/json-formatter.png" />
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/assets/site.css?v=5" />
+  <link rel="stylesheet" href="/tools/json-formatter/json-formatter.css?v=1" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"JSON Formatter",
+    "url":"https://clickoz.com/tools/json-formatter/",
+    "applicationCategory":"UtilitiesApplication",
+    "operatingSystem":"All",
+    "browserRequirements":"Requires JavaScript",
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+    "publisher":{"@type":"Organization","name":"Clickoz","url":"https://clickoz.com/"}
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Clickoz","item":"https://clickoz.com/"},
+      {"@type":"ListItem","position":2,"name":"Tools","item":"https://clickoz.com/tools/"},
+      {"@type":"ListItem","position":3,"name":"JSON Formatter","item":"https://clickoz.com/tools/json-formatter/"}
+    ]
+  }
+  </script>
+</head>
+
+<body class="bigtext jf">
+
+  <!-- FX layers -->
+  <div id="clickozParticles" aria-hidden="true"></div>
+  <canvas id="spaceParticles" aria-hidden="true"></canvas>
+  <div class="__grain" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="topNav"></nav>
+  <!-- (nav injected by site.js, same as other tools) -->
+
+  <!-- MAIN -->
+  <section class="section container tool-shell">
+
+    <!-- HERO -->
+    <div class="tool-hero">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <a href="/tools/">Tools</a>
+        <span class="sep">›</span>
+        <span aria-current="page">JSON Formatter</span>
+      </nav>
+
+      <h1 class="section-title">JSON Formatter</h1>
+
+      <div class="kicker">
+        Format and validate <b>JSON</b> instantly for debugging and clean output.
+        Browser-only, copy-ready, privacy-first.
+      </div>
+
+      <div class="mini-trust">
+        <span class="mini-pill">🔒 Browser-only</span>
+        <span class="mini-pill">⚡ Instant format</span>
+        <span class="mini-pill">📋 Copy-ready</span>
+        <span class="mini-pill">🧼 Clean output</span>
+      </div>
+    </div>
+
+    <!-- TOOL PANEL -->
+    <div class="tool-panel">
+
+      <!-- Steps -->
+      <div class="stepbar">
+        <div class="stepbadge"><span class="tag">Step 1</span> Paste JSON</div>
+        <div class="stepbadge"><span class="tag">Step 2</span> Format or minify</div>
+        <div class="stepbadge"><span class="tag">Step 3</span> Copy output</div>
+      </div>
+
+      <div class="tool-grid">
+
+        <!-- LEFT -->
+        <div class="tool-area">
+
+          <div class="field">
+            <label class="field-label" for="jfInput">Input JSON</label>
+            <textarea
+              id="jfInput"
+              class="jf-editor"
+              placeholder='Paste your JSON here…'
+              spellcheck="false"></textarea>
+            <div class="hint">
+              Tip: trailing commas and invalid quotes will cause errors.
+            </div>
+          </div>
+
+          <div class="tool-actions">
+            <button class="btn primary" id="jfFormat" type="button">✨ Format JSON</button>
+            <button class="btn ghost" id="jfMinify" type="button">↘ Minify</button>
+            <button class="btn ghost" id="jfCopyInput" type="button">📋 Copy input</button>
+            <button class="btn ghost" id="jfClear" type="button">🧼 Clear</button>
+          </div>
+
+          <div class="callout">
+            <b>Privacy:</b> Your JSON never leaves your device.
+            This tool runs entirely in your browser with no uploads and no server processing.
+            Read more in <a href="/privacy/">Privacy</a>.
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="jf-out-wrap">
+
+          <div class="field">
+            <label class="field-label" for="jfOutput">Formatted output</label>
+            <textarea
+              id="jfOutput"
+              class="jf-editor"
+              readonly
+              placeholder="Formatted JSON will appear here…"
+              spellcheck="false"></textarea>
+          </div>
+
+          <div class="tool-actions">
+            <button class="btn ghost" id="jfCopyOutput" type="button">✅ Copy output</button>
+          </div>
+
+          <div class="jf-status">
+            <div class="left">
+              <span id="jfValidity" class="jf-badge bad">⚠️ Invalid JSON</span>
+              <span id="jfMeta">Paste JSON to validate and format.</span>
+            </div>
+          </div>
+
+          <!-- Related -->
+          <div class="related">
+            <div class="rel-box">
+              <h4>Related tools</h4>
+              <div class="rel-links">
+                <a href="/tools/url-encoder/">🧩 URL Encoder</a>
+                <a href="/tools/base64/">🔐 Base64 Encode/Decode</a>
+                <a href="/tools/slug-generator/">🔗 Slug Generator</a>
+              </div>
+            </div>
+
+            <div class="rel-box">
+              <h4>Related guides</h4>
+              <div class="rel-links">
+                <a href="/guides/json-formatting/">🧠 JSON Formatting Guide</a>
+                <a href="/guides/api-debugging/">🛠 API Debugging Tips</a>
+                <a href="/guides/clean-data-structures/">📌 Clean Data Structures</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO BLOCK -->
+    <div class="hero-box seo-block">
+
+      <h2>What is a JSON Formatter?</h2>
+      <p>
+        A JSON Formatter takes raw JSON data and makes it readable by fixing indentation,
+        validating structure, and highlighting syntax errors.
+        It’s essential when debugging APIs, inspecting responses, or cleaning data for storage.
+      </p>
+
+      <h3>When should you use it?</h3>
+      <p>
+        Use a JSON formatter when an API response is hard to read, when your JSON fails validation,
+        or when you need compact output for storage or transport.
+      </p>
+
+      <h3>Practical use cases</h3>
+      <ul>
+        <li>Debug REST and GraphQL API responses</li>
+        <li>Validate configuration files</li>
+        <li>Clean JSON before committing to a repository</li>
+        <li>Minify JSON for faster network transfer</li>
+      </ul>
+
+      <h3>FAQ</h3>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-q">Does this tool upload my JSON?</div>
+          <div class="faq-a">No. Everything runs locally in your browser.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I format large JSON files?</div>
+          <div class="faq-a">Yes. Performance depends only on your device.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What’s the difference between format and minify?</div>
+          <div class="faq-a">Format adds indentation for readability. Minify removes whitespace.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is this safe for sensitive data?</div>
+          <div class="faq-a">Yes. Data never leaves your device.</div>
+        </div>
+      </div>
+
+      <div class="meta-note">
+        Last updated: <span>2026-01-29</span> · <a href="/tools/">Browse all tools</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER + COOKIE -->
+  <footer class="footer"></footer>
+  <div class="cookie"></div>
+
+  <!-- Scripts -->
+  <script src="/assets/site.js" defer></script>
+  <script src="/tools/json-formatter/json-formatter.js?v=1" defer></script>
+
+</body>
+</html>
