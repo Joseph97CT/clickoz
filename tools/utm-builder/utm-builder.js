@@ -1,102 +1,174 @@
 (() => {
   "use strict";
 
-  const $  = (s, r=document) => r.querySelector(s);
+  const $ = (s, r = document) => r.querySelector(s);
 
-  // Inputs
-  const urlEl      = $("#ubUrl");
-  const presetEl   = $("#ubPreset");
-  const srcEl      = $("#ubSource");
-  const medEl      = $("#ubMedium");
-  const campEl     = $("#ubCampaign");
-  const termEl     = $("#ubTerm");
-  const contEl     = $("#ubContent");
+  // -----------------------------
+  // Elements
+  // -----------------------------
+  const elUrl       = $("#ubUrl");
+  const elPreset    = $("#ubPreset");
+  const elSource    = $("#ubSource");
+  const elMedium    = $("#ubMedium");
+  const elCampaign  = $("#ubCampaign");
+  const elTerm      = $("#ubTerm");
+  const elContent   = $("#ubContent");
 
-  // Output + UI
-  const outEl      = $("#ubOutput");
-  const hostEl     = $("#ubHost");
-  const pathEl     = $("#ubPath");
-  const lenEl      = $("#ubLen");
-  const paramsEl   = $("#ubParamsCount");
+  const elOutput    = $("#ubOutput");
+  const elHost      = $("#ubHost");
+  const elPath      = $("#ubPath");
+  const elLen       = $("#ubLen");
+  const elCount     = $("#ubParamsCount");
 
-  // Buttons
-  const copyLinkBtn   = $("#ubCopyLink");
-  const copyParamsBtn = $("#ubCopyParams");
-  const clearBtn      = $("#ubClear");
+  const btnCopyLink   = $("#ubCopyLink");
+  const btnCopyParams = $("#ubCopyParams");
+  const btnClear      = $("#ubClear");
 
-  // Examples
-  const exBox       = $("#ubExampleBox");
-  const exLoadBtn   = $("#ubLoadExample");
-  const exNewBtn    = $("#ubNewExample");
+  const exBox      = $("#ubExampleBox");
+  const btnLoadEx  = $("#ubLoadExample");
+  const btnNewEx   = $("#ubNewExample");
 
-  if (!urlEl || !outEl) return;
+  if (!elUrl || !elOutput) return;
 
-  /* =========================================================
-     0) Helpers
-  ========================================================= */
+  // -----------------------------
+  // Examples (realistic)
+  // -----------------------------
+  const examples = [
+    {
+      title: "YouTube description → website",
+      url: "https://clickoz.com/tools/",
+      utm: { source: "youtube", medium: "video", campaign: "tool-hub", content: "description" }
+    },
+    {
+      title: "Instagram bio → landing",
+      url: "https://clickoz.com/",
+      utm: { source: "instagram", medium: "social", campaign: "bio", content: "profile" }
+    },
+    {
+      title: "TikTok profile → product page",
+      url: "https://example.com/product/super-drop?ref=profile",
+      utm: { source: "tiktok", medium: "social", campaign: "launch-jan", content: "profile" }
+    },
+    {
+      title: "Newsletter CTA button → blog post",
+      url: "https://example.com/blog/utm-guide",
+      utm: { source: "newsletter", medium: "email", campaign: "jan-update", content: "cta-button" }
+    },
+    {
+      title: "Paid ads (Google) → keyword test",
+      url: "https://example.com/landing?variant=a",
+      utm: { source: "google", medium: "cpc", campaign: "brand-search", term: "utm builder", content: "ad-a" }
+    },
+    {
+      title: "Partner mention → referral",
+      url: "https://example.com/welcome",
+      utm: { source: "partner-site", medium: "referral", campaign: "partner-spotlight", content: "sidebar-link" }
+    },
+    {
+      title: "QR poster (offline) → signup",
+      url: "https://example.com/signup#pricing",
+      utm: { source: "qr", medium: "offline", campaign: "winter-poster", content: "street-banner" }
+    }
+  ];
+  let exIndex = 0;
 
-  function normalizeSpaces(v){
-    return String(v ?? "")
-      .replace(/\u00A0/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
+  // -----------------------------
+  // Presets
+  // -----------------------------
+  const presets = {
+    youtube:     { source: "youtube",     medium: "video",  campaign: "video-campaign", content: "description" },
+    instagram:   { source: "instagram",   medium: "social", campaign: "ig-bio",         content: "profile" },
+    tiktok:      { source: "tiktok",      medium: "social", campaign: "tiktok-profile", content: "profile" },
+    newsletter:  { source: "newsletter",  medium: "email",  campaign: "newsletter",     content: "cta" },
+    ads:         { source: "google",      medium: "cpc",    campaign: "paid-campaign",  term: "keyword", content: "ad-variant" }
+  };
+
+  // -----------------------------
+  // Helpers
+  // -----------------------------
+  const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+
+  function normalizeText(t) {
+    return String(t ?? "").replace(/\u00A0/g, " ").trim();
   }
 
-  // Keep UTMs readable: lowercase + hyphen (optional but good practice)
-  function normalizeUtmValue(v){
-    const t = normalizeSpaces(v);
-    if(!t) return "";
-    // safe normalize: keep letters/numbers, convert spaces to hyphen
-    return t
-      .toLowerCase()
-      .replace(/&/g, "and")
-      .replace(/[^\p{L}\p{N}\-_.~ ]/gu, "") // allow unicode letters/numbers + safe url chars + space
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^-|-$/g, "");
+  // light sanitize: trim + spaces → hyphen (keeps casing + underscores)
+  function cleanValue(v) {
+    const t = normalizeText(v);
+    if (!t) return "";
+    return t.replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
   }
 
-  function ensureProtocol(raw){
-    const t = String(raw ?? "").trim();
-    if(!t) return "";
-    if (/^https?:\/\//i.test(t)) return t;
-    if (/^[a-z]+:\/\//i.test(t)) return t; // other schemes
-    // allow "example.com/path"
-    return "https://" + t.replace(/^\/+/, "");
+  function ensureProtocol(raw) {
+    const s = normalizeText(raw);
+    if (!s) return "";
+    // already has scheme
+    if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(s)) return s;
+    // protocol-relative
+    if (s.startsWith("//")) return "https:" + s;
+    // mailto/tel/data etc - keep as-is
+    if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(s)) return s;
+    return "https://" + s;
   }
 
-  function safeURL(raw){
-    const withProto = ensureProtocol(raw);
-    if(!withProto) return null;
-    try{
-      return new URL(withProto);
-    }catch(e){
+  function safeUrl(raw) {
+    const s = ensureProtocol(raw);
+    if (!s) return null;
+
+    try {
+      const u = new URL(s);
+      // guard: needs host for http(s)
+      if ((u.protocol === "http:" || u.protocol === "https:") && !u.host) return null;
+      return u;
+    } catch {
       return null;
     }
   }
 
-  function setOrDeleteParam(u, key, value){
-    const v = normalizeUtmValue(value);
-    if(v) u.searchParams.set(key, v);
-    else u.searchParams.delete(key);
+  function setOrDelete(sp, key, value) {
+    if (value) sp.set(key, value);
+    else sp.delete(key);
   }
 
-  function countUtmParams(u){
-    const keys = ["utm_source","utm_medium","utm_campaign","utm_term","utm_content"];
-    let n = 0;
-    for(const k of keys) if(u.searchParams.get(k)) n++;
-    return n;
+  function buildUtmLink() {
+    const u = safeUrl(elUrl.value);
+    if (!u) return { ok: false, link: "", host: "—", path: "—", len: 0, count: 0 };
+
+    // preserve existing params; only update UTM keys
+    const sp = u.searchParams;
+
+    const vSource   = cleanValue(elSource.value);
+    const vMedium   = cleanValue(elMedium.value);
+    const vCampaign = cleanValue(elCampaign.value);
+    const vTerm     = cleanValue(elTerm.value);
+    const vContent  = cleanValue(elContent.value);
+
+    setOrDelete(sp, "utm_source", vSource);
+    setOrDelete(sp, "utm_medium", vMedium);
+    setOrDelete(sp, "utm_campaign", vCampaign);
+    setOrDelete(sp, "utm_term", vTerm);
+    setOrDelete(sp, "utm_content", vContent);
+
+    // count present UTM keys
+    let count = 0;
+    for (const k of UTM_KEYS) if (sp.get(k)) count++;
+
+    const host = u.host || "—";
+    const path = (u.pathname || "/") + (u.hash || "");
+
+    const link = u.toString();
+    return { ok: true, link, host, path, len: link.length, count };
   }
 
-  async function copyToClipboard(str){
+  async function copyToClipboard(str) {
     const text = String(str ?? "");
-    try{
-      if(navigator.clipboard && window.isSecureContext){
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(text);
         return true;
       }
-    }catch(e){}
-    try{
+    } catch {}
+    try {
       const ta = document.createElement("textarea");
       ta.value = text;
       ta.setAttribute("readonly", "");
@@ -109,281 +181,165 @@
       const ok = document.execCommand("copy");
       document.body.removeChild(ta);
       return !!ok;
-    }catch(e){
+    } catch {
       return false;
     }
   }
 
-  function flash(btn, ok, baseText){
-    if(!btn) return;
+  function flash(btn, ok, baseText) {
+    if (!btn) return;
     const base = baseText || btn.getAttribute("data-base") || btn.textContent;
     btn.setAttribute("data-base", base);
     btn.textContent = ok ? "Copied!" : "Copy failed";
     setTimeout(() => (btn.textContent = base), 900);
   }
 
-  function cleanPreview(u){
-    if(!hostEl || !pathEl) return;
-    hostEl.textContent = u ? (u.host || "—") : "—";
-    pathEl.textContent = u ? (u.pathname || "/") : "—";
-  }
+  function render() {
+    const r = buildUtmLink();
 
-  function updateStats(finalUrl){
-    const t = String(finalUrl ?? "");
-    if(lenEl) lenEl.textContent = String(t.length || 0);
-    if(paramsEl){
-      const u = safeURL(t);
-      paramsEl.textContent = u ? String(countUtmParams(u)) : "0";
+    if (elOutput) elOutput.value = r.link || "";
+    if (elHost) elHost.textContent = r.host;
+    if (elPath) elPath.textContent = r.path;
+
+    if (elLen) elLen.textContent = String(r.len || 0);
+    if (elCount) elCount.textContent = String(r.count || 0);
+
+    // subtle "invalid" state
+    if (!r.ok) {
+      elOutput.placeholder = "Paste a valid URL to generate your UTM link…";
+      elOutput.value = "";
+      if (elLen) elLen.textContent = "0";
+      if (elCount) elCount.textContent = "0";
     }
   }
 
-  /* =========================================================
-     1) Presets + Examples
-  ========================================================= */
-
-  const presets = {
-    youtube:     { utm_source: "youtube",    utm_medium: "video",  utm_campaign: "", utm_term: "", utm_content: "description" },
-    instagram:   { utm_source: "instagram",  utm_medium: "social", utm_campaign: "", utm_term: "", utm_content: "bio" },
-    tiktok:      { utm_source: "tiktok",     utm_medium: "social", utm_campaign: "", utm_term: "", utm_content: "profile" },
-    newsletter:  { utm_source: "newsletter", utm_medium: "email",  utm_campaign: "", utm_term: "", utm_content: "cta" },
-    ads:         { utm_source: "google",     utm_medium: "cpc",    utm_campaign: "", utm_term: "", utm_content: "ad-variant-a" }
-  };
-
-  const examples = [
-    {
-      title: "YouTube video description",
-      url: "https://clickoz.com/tools/",
-      preset: "youtube",
-      campaign: "tools-directory",
-      content: "description"
-    },
-    {
-      title: "Instagram bio",
-      url: "https://clickoz.com/",
-      preset: "instagram",
-      campaign: "brand-profile",
-      content: "bio"
-    },
-    {
-      title: "Newsletter CTA",
-      url: "https://clickoz.com/tools/utm-builder/",
-      preset: "newsletter",
-      campaign: "jan-update",
-      content: "top-cta"
-    },
-    {
-      title: "Paid ads landing page",
-      url: "https://clickoz.com/tools/meta-tags/",
-      preset: "ads",
-      campaign: "meta-tags-launch",
-      term: "meta tags tool",
-      content: "headline-a"
-    },
-    {
-      title: "Partner referral",
-      url: "https://clickoz.com/tools/word-counter/",
-      preset: "",
-      source: "partner-site",
-      medium: "referral",
-      campaign: "partner-mention",
-      content: "sidebar-link"
-    },
-    {
-      title: "QR poster (offline)",
-      url: "https://clickoz.com/tools/",
-      preset: "",
-      source: "poster",
-      medium: "offline",
-      campaign: "event-booth",
-      content: "qr-code"
-    },
-    {
-      title: "TikTok profile link",
-      url: "https://clickoz.com/tools/utm-builder/",
-      preset: "tiktok",
-      campaign: "creator-profile",
-      content: "profile"
-    }
-  ];
-
-  let exIndex = 0;
-
-  function renderExampleBox(idx){
-    if(!exBox) return;
-    const ex = examples[idx % examples.length];
+  function setExampleBox(ex) {
+    if (!exBox) return;
     exBox.textContent =
-`${ex.title}
-URL: ${ex.url}
-Preset: ${ex.preset || "custom"}
-Campaign: ${ex.campaign || "(set your name)"}
-Tip: use utm_content for placement/variant`;
+      `${ex.title}\n\n` +
+      `URL: ${ex.url}\n` +
+      `utm_source=${ex.utm.source || ""}\n` +
+      `utm_medium=${ex.utm.medium || ""}\n` +
+      `utm_campaign=${ex.utm.campaign || ""}` +
+      (ex.utm.term ? `\nutm_term=${ex.utm.term}` : "") +
+      (ex.utm.content ? `\nutm_content=${ex.utm.content}` : "");
   }
 
-  function applyExample(idx){
-    const ex = examples[idx % examples.length];
-    urlEl.value = ex.url;
-
-    if(ex.preset){
-      presetEl && (presetEl.value = ex.preset);
-      applyPreset(ex.preset, { silent: true });
-    }else{
-      presetEl && (presetEl.value = "");
-      srcEl.value  = ex.source  || "";
-      medEl.value  = ex.medium  || "";
-      campEl.value = ex.campaign || "";
-      termEl.value = ex.term || "";
-      contEl.value = ex.content || "";
-    }
-
-    // overwrite some fields if present
-    if(ex.campaign) campEl.value = ex.campaign;
-    if(ex.term) termEl.value = ex.term;
-    if(ex.content) contEl.value = ex.content;
-
-    build();
-    urlEl.focus();
+  function applyExample(ex) {
+    elUrl.value = ex.url;
+    elSource.value = ex.utm.source || "";
+    elMedium.value = ex.utm.medium || "";
+    elCampaign.value = ex.utm.campaign || "";
+    elTerm.value = ex.utm.term || "";
+    elContent.value = ex.utm.content || "";
+    render();
+    elUrl.focus();
   }
 
-  function nextExample(){
+  function nextExample() {
     exIndex = (exIndex + 1) % examples.length;
-    renderExampleBox(exIndex);
+    setExampleBox(examples[exIndex]);
   }
 
-  function applyPreset(key, opts = {}){
+  function applyPreset(key) {
     const p = presets[key];
-    if(!p) return;
+    if (!p) return;
 
-    // Only fill blanks (so user doesn’t lose custom values)
-    const fillIfEmpty = (el, v) => {
-      if(!el) return;
-      const cur = normalizeSpaces(el.value);
-      if(!cur) el.value = v || "";
-    };
+    // Fill only if empty → non-destructive
+    if (!normalizeText(elSource.value))   elSource.value = p.source;
+    if (!normalizeText(elMedium.value))   elMedium.value = p.medium;
+    if (!normalizeText(elCampaign.value)) elCampaign.value = p.campaign;
+    if (!normalizeText(elTerm.value) && p.term) elTerm.value = p.term;
+    if (!normalizeText(elContent.value))  elContent.value = p.content;
 
-    fillIfEmpty(srcEl, p.utm_source);
-    fillIfEmpty(medEl, p.utm_medium);
-    fillIfEmpty(campEl, p.utm_campaign);
-    fillIfEmpty(termEl, p.utm_term);
-    fillIfEmpty(contEl, p.utm_content);
-
-    if(!opts.silent) build();
+    render();
   }
 
-  /* =========================================================
-     2) Builder
-  ========================================================= */
-
-  function build(){
-    const raw = normalizeSpaces(urlEl.value);
-    const u = safeURL(raw);
-
-    if(!u){
-      outEl.value = "";
-      cleanPreview(null);
-      updateStats("");
-      return;
-    }
-
-    // apply UTMs
-    setOrDeleteParam(u, "utm_source",   srcEl.value);
-    setOrDeleteParam(u, "utm_medium",   medEl.value);
-    setOrDeleteParam(u, "utm_campaign", campEl.value);
-    setOrDeleteParam(u, "utm_term",     termEl.value);
-    setOrDeleteParam(u, "utm_content",  contEl.value);
-
-    // produce final
-    const finalUrl = u.toString();
-    outEl.value = finalUrl;
-
-    cleanPreview(u);
-    updateStats(finalUrl);
-  }
-
-  function clearAll(){
-    urlEl.value = "";
-    presetEl && (presetEl.value = "");
-    srcEl.value = "";
-    medEl.value = "";
-    campEl.value = "";
-    termEl.value = "";
-    contEl.value = "";
-    outEl.value = "";
-    cleanPreview(null);
-    updateStats("");
-    urlEl.focus();
-  }
-
-  function currentParamsText(){
-    const u = safeURL(outEl.value);
-    if(!u) return "";
-    const keys = ["utm_source","utm_medium","utm_campaign","utm_term","utm_content"];
-    const rows = [];
-    for(const k of keys){
-      const v = u.searchParams.get(k);
-      if(v) rows.push(`${k}=${v}`);
-    }
-    return rows.join("\n");
-  }
-
-  /* =========================================================
-     3) Events
-  ========================================================= */
-
+  // -----------------------------
+  // Events
+  // -----------------------------
   let tmr = null;
-  function scheduleBuild(){
+  function scheduleRender() {
     clearTimeout(tmr);
-    tmr = setTimeout(build, 20);
+    tmr = setTimeout(render, 30);
   }
 
-  urlEl.addEventListener("input", scheduleBuild);
-  srcEl.addEventListener("input", scheduleBuild);
-  medEl.addEventListener("input", scheduleBuild);
-  campEl.addEventListener("input", scheduleBuild);
-  termEl.addEventListener("input", scheduleBuild);
-  contEl.addEventListener("input", scheduleBuild);
+  [elUrl, elSource, elMedium, elCampaign, elTerm, elContent].forEach((el) => {
+    if (!el) return;
+    el.addEventListener("input", scheduleRender);
+    el.addEventListener("change", scheduleRender);
+  });
 
-  if(presetEl){
-    presetEl.addEventListener("change", () => {
-      const key = presetEl.value;
-      if(!key) return build();
+  if (elPreset) {
+    elPreset.addEventListener("change", () => {
+      const key = elPreset.value;
+      if (!key) return;
       applyPreset(key);
-    });
-  }
 
-  if(copyLinkBtn){
-    copyLinkBtn.addEventListener("click", async () => {
-      const t = String(outEl.value ?? "").trim();
-      if(!t){
-        flash(copyLinkBtn, false, "📋 Copy link");
-        return;
+      // hint box aligns with preset (nice UX)
+      if (exBox) {
+        exBox.textContent = `Preset applied → edit values if needed, then copy the link.\n\nTip: keep naming consistent across channels.`;
       }
-      const ok = await copyToClipboard(t);
-      flash(copyLinkBtn, ok, "📋 Copy link");
     });
   }
 
-  if(copyParamsBtn){
-    copyParamsBtn.addEventListener("click", async () => {
-      const t = currentParamsText();
-      if(!t){
-        flash(copyParamsBtn, false, "✅ Copy UTM params");
-        return;
-      }
-      const ok = await copyToClipboard(t);
-      flash(copyParamsBtn, ok, "✅ Copy UTM params");
+  if (btnNewEx) btnNewEx.addEventListener("click", nextExample);
+
+  if (btnLoadEx) {
+    btnLoadEx.addEventListener("click", () => {
+      const ex = examples[exIndex];
+      applyExample(ex);
+      if (exBox) exBox.textContent = "Example loaded → edit values if needed, then copy the link.";
     });
   }
 
-  if(clearBtn){
-    clearBtn.addEventListener("click", clearAll);
+  if (btnClear) {
+    btnClear.addEventListener("click", () => {
+      elUrl.value = "";
+      elPreset.value = "";
+      elSource.value = "";
+      elMedium.value = "";
+      elCampaign.value = "";
+      elTerm.value = "";
+      elContent.value = "";
+      setExampleBox(examples[exIndex]);
+      render();
+      elUrl.focus();
+    });
   }
 
-  // Examples
-  renderExampleBox(exIndex);
+  if (btnCopyLink) {
+    btnCopyLink.addEventListener("click", async () => {
+      const r = buildUtmLink();
+      const ok = r.ok && r.link ? await copyToClipboard(r.link) : false;
+      flash(btnCopyLink, ok, "📋 Copy link");
+    });
+  }
 
-  if(exNewBtn) exNewBtn.addEventListener("click", nextExample);
-  if(exLoadBtn) exLoadBtn.addEventListener("click", () => applyExample(exIndex));
+  if (btnCopyParams) {
+    btnCopyParams.addEventListener("click", async () => {
+      const s = cleanValue(elSource.value);
+      const m = cleanValue(elMedium.value);
+      const c = cleanValue(elCampaign.value);
+      const t = cleanValue(elTerm.value);
+      const o = cleanValue(elContent.value);
 
-  // Initial render
-  build();
+      const lines = [];
+      if (s) lines.push(`utm_source=${encodeURIComponent(s)}`);
+      if (m) lines.push(`utm_medium=${encodeURIComponent(m)}`);
+      if (c) lines.push(`utm_campaign=${encodeURIComponent(c)}`);
+      if (t) lines.push(`utm_term=${encodeURIComponent(t)}`);
+      if (o) lines.push(`utm_content=${encodeURIComponent(o)}`);
+
+      const payload = lines.join("&");
+      const ok = payload ? await copyToClipboard(payload) : false;
+      flash(btnCopyParams, ok, "✅ Copy UTM params");
+    });
+  }
+
+  // -----------------------------
+  // Init
+  // -----------------------------
+  setExampleBox(examples[exIndex]);
+  render();
 })();
