@@ -4,22 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>UTM Builder – Trackable Links for YouTube, TikTok, Instagram & Ads | Clickoz</title>
-  <meta name="description" content="Free UTM Builder by Clickoz. Create trackable links with utm_source, utm_medium, utm_campaign, utm_term, and utm_content. Runs in your browser, no signup, copy-ready." />
+  <title>UTM Builder – Campaign URL Builder, GA4 Tracking Links | Clickoz</title>
+  <meta name="description" content="Free UTM Builder by Clickoz. Create trackable campaign URLs for GA4: add utm_source, utm_medium, utm_campaign (plus term/content). Keeps existing parameters. Browser-only, privacy-first." />
   <link rel="canonical" href="https://clickoz.com/tools/utm-builder/" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0b0f19" />
 
   <meta property="og:site_name" content="Clickoz" />
-  <meta property="og:title" content="UTM Builder – Free Trackable Link Generator | Clickoz" />
-  <meta property="og:description" content="Create clean UTM links for social, ads, newsletters, and campaigns. Browser-only and privacy-first." />
+  <meta property="og:title" content="UTM Builder – Campaign URL Builder | Clickoz" />
+  <meta property="og:description" content="Create trackable URLs for GA4. Preserves existing query params. Browser-only, privacy-first, copy-ready." />
   <meta property="og:url" content="https://clickoz.com/tools/utm-builder/" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://clickoz.com/assets/og/utm-builder.png" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="UTM Builder – Free Trackable Link Generator | Clickoz" />
-  <meta name="twitter:description" content="Create clean UTM links for social, ads, newsletters, and campaigns. Browser-only and privacy-first." />
+  <meta name="twitter:title" content="UTM Builder – Campaign URL Builder | Clickoz" />
+  <meta name="twitter:description" content="Create trackable URLs for GA4. Preserves existing query params. Browser-only, privacy-first, copy-ready." />
   <meta name="twitter:image" content="https://clickoz.com/assets/og/utm-builder.png" />
 
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
@@ -29,10 +29,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet" />
 
+  <!-- Base site -->
   <link rel="stylesheet" href="/assets/site.css?v=5" />
+  <!-- Tool micro CSS -->
   <link rel="stylesheet" href="/tools/utm-builder/utm-builder.css?v=1" />
 
-  <!-- ✅ JSON-LD -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -55,35 +57,6 @@
       {"@type":"ListItem","position":1,"name":"Clickoz","item":"https://clickoz.com/"},
       {"@type":"ListItem","position":2,"name":"Tools","item":"https://clickoz.com/tools/"},
       {"@type":"ListItem","position":3,"name":"UTM Builder","item":"https://clickoz.com/tools/utm-builder/"}
-    ]
-  }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {
-        "@type":"Question",
-        "name":"Do Clickoz tools upload my URL or data?",
-        "acceptedAnswer":{"@type":"Answer","text":"No. This UTM Builder runs in your browser. Your inputs stay on your device (no uploads, no account)."}
-      },
-      {
-        "@type":"Question",
-        "name":"What is a UTM link?",
-        "acceptedAnswer":{"@type":"Answer","text":"A UTM link is a normal URL with tracking parameters (utm_source, utm_medium, utm_campaign, etc.) that help analytics tools attribute clicks to a channel or campaign."}
-      },
-      {
-        "@type":"Question",
-        "name":"Which UTM fields are required?",
-        "acceptedAnswer":{"@type":"Answer","text":"Typically utm_source, utm_medium, and utm_campaign. utm_term and utm_content are optional but useful for paid campaigns or A/B testing."}
-      },
-      {
-        "@type":"Question",
-        "name":"Will UTMs break my existing URL parameters?",
-        "acceptedAnswer":{"@type":"Answer","text":"No. The builder preserves existing parameters and adds UTMs (or replaces UTM keys if they already exist)."}
-      }
     ]
   }
   </script>
@@ -110,7 +83,7 @@
 
       <div class="nav-links" aria-label="Sections">
         <a href="/">Home</a>
-        <a href="/tools/">Tools</a>
+        <a href="/tools/" class="active" aria-current="page">Tools</a>
         <a href="/guides/">Guides</a>
         <a href="/updates/">Updates</a>
       </div>
@@ -159,7 +132,7 @@
 
     <div class="m-links">
       <a class="m-link" href="/">Home</a>
-      <a class="m-link" href="/tools/">Tools</a>
+      <a class="m-link active" href="/tools/" aria-current="page">Tools</a>
       <a class="m-link" href="/guides/">Guides</a>
       <a class="m-link" href="/updates/">Updates</a>
       <a class="m-link" href="/privacy/">Privacy</a>
@@ -188,8 +161,8 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
-  <section class="section container tool-shell" aria-label="UTM Builder tool">
+  <!-- CONTENT -->
+  <section class="section container tool-shell">
     <div class="tool-hero">
       <nav class="crumbs" aria-label="Breadcrumb">
         <a href="/">Home</a>
@@ -200,167 +173,218 @@
       </nav>
 
       <h1 class="section-title">UTM Builder</h1>
+
       <div class="kicker">
-        Build trackable links for <b>YouTube</b>, <b>TikTok</b>, <b>Instagram</b>, newsletters, and ads.
-        Clean UTMs, copy-ready output, privacy-first.
+        Build trackable campaign links for <b>GA4</b> in seconds. Keeps existing parameters. Browser-only and privacy-first.
       </div>
 
       <div class="mini-trust" aria-label="Key benefits">
         <span class="mini-pill">🔒 Browser-only</span>
-        <span class="mini-pill">⚡ Instant build</span>
+        <span class="mini-pill">⚡ Instant output</span>
         <span class="mini-pill">📋 Copy-ready</span>
-        <span class="mini-pill">🎯 Intent-first</span>
+        <span class="mini-pill">🧭 Clean naming</span>
       </div>
     </div>
 
-    <div class="tool-panel">
-
-      <div class="stepbar" aria-label="Steps">
-        <div class="stepbadge"><span class="tag">Step 0</span> Load a sample (optional)</div>
-        <div class="stepbadge"><span class="tag">Step 1</span> Paste your URL</div>
-        <div class="stepbadge"><span class="tag">Step 2</span> Add UTMs</div>
-        <div class="stepbadge"><span class="tag">Step 3</span> Copy link</div>
-      </div>
-
+    <div class="tool-panel" aria-label="UTM Builder tool">
       <div class="tool-grid">
-
         <!-- LEFT -->
         <div class="tool-area">
+          <div class="field-label">
+            <span>Destination URL</span>
+            <span class="hint">Paste any link (https optional)</span>
+          </div>
+          <input id="ubUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false"
+            placeholder="https://example.com/page?ref=profile" />
 
-          <!-- Examples -->
-          <div class="ub-examples" aria-label="Examples">
-            <div class="ub-ex">
+          <div class="field-label" style="margin-top:12px;">
+            <span>Quick preset</span>
+            <span class="hint">Optional shortcut</span>
+          </div>
+          <select id="ubPreset" aria-label="Quick preset">
+            <option value="">Custom (no preset)</option>
+            <option value="youtube">YouTube (video)</option>
+            <option value="instagram">Instagram (social)</option>
+            <option value="tiktok">TikTok (social)</option>
+            <option value="newsletter">Newsletter (email)</option>
+            <option value="ads">Ads (cpc)</option>
+          </select>
+
+          <div class="rows" aria-label="UTM fields">
+            <div>
+              <div class="field-label"><span>utm_source</span><span class="hint">Where traffic comes from</span></div>
+              <input id="ubSource" type="text" autocomplete="off" placeholder="instagram" />
+            </div>
+
+            <div>
+              <div class="field-label"><span>utm_medium</span><span class="hint">Channel type</span></div>
+              <input id="ubMedium" type="text" autocomplete="off" placeholder="social" />
+            </div>
+
+            <div class="row-wide">
+              <div class="field-label"><span>utm_campaign</span><span class="hint">Campaign name</span></div>
+              <input id="ubCampaign" type="text" autocomplete="off" placeholder="tools-directory" />
+            </div>
+
+            <div>
+              <div class="field-label"><span>utm_term</span><span class="hint">Ads keyword/ad group</span></div>
+              <input id="ubTerm" type="text" autocomplete="off" placeholder="optional" />
+            </div>
+
+            <div>
+              <div class="field-label"><span>utm_content</span><span class="hint">Placement / variant</span></div>
+              <input id="ubContent" type="text" autocomplete="off" placeholder="bio | description | cta-a" />
+            </div>
+          </div>
+
+          <div class="out-wrap" aria-label="Output">
+            <div class="field-label">
+              <span>Trackable URL</span>
+              <span class="hint">Final campaign link</span>
+            </div>
+            <textarea id="ubOutput" readonly spellcheck="false" aria-label="Final UTM link"
+              placeholder="Your trackable link will appear here…"></textarea>
+
+            <div class="tool-actions" aria-label="Actions">
+              <button class="btn primary" id="ubCopyLink" type="button">📋 Copy link</button>
+              <button class="btn ghost" id="ubCopyParams" type="button">✅ Copy UTM params</button>
+              <button class="btn ghost" id="ubClear" type="button">🧼 Clear</button>
+            </div>
+
+            <div class="callout" aria-label="Privacy note">
+              <b>Privacy:</b> This tool runs in your browser with no uploads and no server processing. Your inputs stay on your device.
+              Read details in <a href="/privacy/">Privacy</a>.
+            </div>
+          </div>
+
+          <!-- Related -->
+          <div class="rel-zone" aria-label="Related">
+            <div class="rel-card">
+              <div class="rel-head">
+                <h3>Related tools</h3>
+                <div class="mini">Fast shortcuts</div>
+              </div>
+
+              <div class="rel-grid">
+                <a class="rel-item" href="/tools/slug-generator/">
+                  <div class="rel-ico" aria-hidden="true">🔗</div>
+                  <div class="rel-txt">
+                    <div class="rel-title">Slug Generator</div>
+                    <div class="rel-desc">Clean URL slugs for posts, pages, and campaigns.</div>
+                  </div>
+                </a>
+
+                <a class="rel-item" href="/tools/url-encoder/">
+                  <div class="rel-ico" aria-hidden="true">🧩</div>
+                  <div class="rel-txt">
+                    <div class="rel-title">URL Encoder</div>
+                    <div class="rel-desc">Fix broken links with safe encoding/decoding.</div>
+                  </div>
+                </a>
+
+                <a class="rel-item" href="/tools/meta-tags/">
+                  <div class="rel-ico" aria-hidden="true">🏷️</div>
+                  <div class="rel-txt">
+                    <div class="rel-title">Meta Tags</div>
+                    <div class="rel-desc">Write better titles/descriptions for higher CTR.</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div class="rel-card">
+              <div class="rel-head">
+                <h3>Related guides</h3>
+                <div class="mini">Simple rules</div>
+              </div>
+
+              <div class="rel-grid">
+                <a class="rel-item" href="/guides/utm-best-practices/">
+                  <div class="rel-ico" aria-hidden="true">🧠</div>
+                  <div class="rel-txt">
+                    <div class="rel-title">UTM Best Practices</div>
+                    <div class="rel-desc">Naming rules to avoid messy analytics reports.</div>
+                  </div>
+                </a>
+
+                <a class="rel-item" href="/guides/youtube-tracking-links/">
+                  <div class="rel-ico" aria-hidden="true">🎥</div>
+                  <div class="rel-txt">
+                    <div class="rel-title">YouTube Tracking Links</div>
+                    <div class="rel-desc">Separate “profile vs description vs pinned comment”.</div>
+                  </div>
+                </a>
+
+                <a class="rel-item" href="/guides/instagram-bio-utm/">
+                  <div class="rel-ico" aria-hidden="true">📌</div>
+                  <div class="rel-txt">
+                    <div class="rel-title">Instagram Bio UTM</div>
+                    <div class="rel-desc">Track bio traffic cleanly (and keep names consistent).</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <aside class="tool-side" aria-label="Helper panel">
+          <div class="side-card">
+            <h3>Preview</h3>
+            <div class="kv" aria-label="Preview stats">
+              <div class="item">
+                <div class="k">Host</div>
+                <div class="v" id="ubHost">—</div>
+              </div>
+              <div class="item">
+                <div class="k">Path</div>
+                <div class="v" id="ubPath">—</div>
+              </div>
+              <div class="item">
+                <div class="k">Link length</div>
+                <div class="v"><span id="ubLen">0</span> chars</div>
+              </div>
+              <div class="item">
+                <div class="k">UTM fields set</div>
+                <div class="v"><span id="ubParamsCount">0</span> / 5</div>
+              </div>
+            </div>
+
+            <div class="ex-box" aria-label="Examples">
               <h3>Examples</h3>
-              <pre id="ubExampleBox">Click “Load example” to fill a realistic scenario (YouTube, Instagram, Newsletter, Ads…).</pre>
-
-              <div class="ub-ex-actions">
+              <pre id="ubExampleBox"></pre>
+              <div class="ex-actions">
                 <button class="btn ghost" id="ubLoadExample" type="button">Load example</button>
                 <button class="btn ghost" id="ubNewExample" type="button">New example</button>
               </div>
             </div>
           </div>
-
-          <div class="field">
-            <label class="field-label" for="ubUrl">Destination URL</label>
-            <input class="input" id="ubUrl" type="text" placeholder="https://your-site.com/page (or paste without https)" autocomplete="off" />
-            <div class="hint">Tip: existing query parameters are preserved. UTMs are added (or updated).</div>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="ubPreset">Quick preset</label>
-            <div class="preset-row">
-              <select class="select" id="ubPreset" aria-label="UTM presets">
-                <option value="">Choose a preset (optional)</option>
-                <option value="youtube">YouTube (video / description)</option>
-                <option value="instagram">Instagram (social / bio)</option>
-                <option value="tiktok">TikTok (social / profile)</option>
-                <option value="newsletter">Newsletter (email / CTA)</option>
-                <option value="ads">Ads (cpc / keyword)</option>
-              </select>
-            </div>
-            <div class="hint">Presets fill typical values. You can edit everything after.</div>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="ubSource">utm_source</label>
-            <input class="input" id="ubSource" type="text" placeholder="youtube, instagram, newsletter, google, partner-site…" autocomplete="off" />
-            <div class="hint">Where the traffic comes from (platform, partner, channel).</div>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="ubMedium">utm_medium</label>
-            <input class="input" id="ubMedium" type="text" placeholder="social, video, email, cpc, referral, offline…" autocomplete="off" />
-            <div class="hint">The marketing medium (social/email/paid/referral).</div>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="ubCampaign">utm_campaign</label>
-            <input class="input" id="ubCampaign" type="text" placeholder="winter-launch, meta-tags-checklist, jan-update…" autocomplete="off" />
-            <div class="hint">Campaign name (use consistent naming across channels).</div>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="ubTerm">utm_term <span style="opacity:.72;font-weight:900;">(optional)</span></label>
-            <input class="input" id="ubTerm" type="text" placeholder="keyword (useful for ads/search)" autocomplete="off" />
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="ubContent">utm_content <span style="opacity:.72;font-weight:900;">(optional)</span></label>
-            <input class="input" id="ubContent" type="text" placeholder="cta-button, link-variant-a, banner-1…" autocomplete="off" />
-            <div class="hint">Distinguish variants (A/B tests, multiple CTAs, different placements).</div>
-          </div>
-
-          <div class="tool-actions">
-            <button class="btn primary" id="ubCopyLink" type="button">📋 Copy link</button>
-            <button class="btn ghost" id="ubCopyParams" type="button">✅ Copy UTM params</button>
-            <button class="btn ghost" id="ubClear" type="button">🧼 Clear</button>
-          </div>
-
-          <div class="callout" aria-label="Privacy note">
-            <b>Privacy:</b> Your URL and UTMs stay on your device. This tool runs in your browser with no uploads, no account, and no server processing.
-            Read details in <a href="/privacy/">Privacy</a>.
-          </div>
-        </div>
-
-        <!-- RIGHT -->
-        <div class="ub-out-wrap" aria-label="Output">
-          <div class="field">
-            <label class="field-label" for="ubOutput">Your trackable link</label>
-            <textarea class="ub-out" id="ubOutput" placeholder="Your UTM link will appear here…" spellcheck="false"></textarea>
-          </div>
-
-          <div class="ub-preview" aria-label="Preview">
-            <div class="row">
-              <span style="opacity:.72;">Preview</span>
-              <code id="ubHost">—</code>
-              <code id="ubPath">—</code>
-            </div>
-          </div>
-
-          <div class="ub-stats" aria-label="Quick stats">
-            <div class="ub-stat">
-              <div class="label">Link length</div>
-              <div class="value" id="ubLen">0</div>
-            </div>
-            <div class="ub-stat">
-              <div class="label">UTM params</div>
-              <div class="value" id="ubParamsCount">0</div>
-            </div>
-          </div>
-
-          <!-- Related quick boxes -->
-          <div class="related" aria-label="Related">
-            <div class="rel-box">
-              <h4 style="margin:0;font-size:16px;font-weight:1000;">Related tools</h4>
-              <div class="rel-links">
-                <a href="/tools/slug-generator/">🔗 Slug Generator</a>
-                <a href="/tools/url-encoder/">🧩 URL Encoder</a>
-                <a href="/tools/meta-tags/">🏷️ Meta Tags</a>
-              </div>
-            </div>
-
-            <div class="rel-box">
-              <h4 style="margin:0;font-size:16px;font-weight:1000;">Related guides</h4>
-              <div class="rel-links">
-                <a href="/guides/utm-best-practices/">🧠 UTM Best Practices</a>
-                <a href="/guides/youtube-tracking-links/">🎥 YouTube Tracking Links</a>
-                <a href="/guides/instagram-bio-utm/">📌 Instagram Bio UTM</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
+        </aside>
       </div>
     </div>
 
-    <!-- SEO / Guidance -->
+    <!-- SEO + guidance -->
     <div class="hero-box seo-block" aria-label="About UTM links">
       <h2>What is a UTM Builder?</h2>
       <p>
-        A UTM Builder adds tracking parameters to a URL so analytics tools can attribute clicks to the right
-        channel and campaign. It’s the clean way to measure performance for social profiles, video descriptions,
-        newsletters, ads, and partner mentions.
+        A UTM Builder adds tracking parameters to a URL so analytics tools can attribute clicks to the right channel and campaign.
+        It’s the clean way to measure performance for social profiles, video descriptions, newsletters, ads, and partner mentions.
       </p>
+
+      <div class="how-fast" aria-label="How it works">
+        <div class="how-step">
+          <div class="t">1) Paste the destination URL</div>
+          <div class="d">Your link stays intact — existing parameters are preserved.</div>
+        </div>
+        <div class="how-step">
+          <div class="t">2) Add source / medium / campaign</div>
+          <div class="d">Those 3 fields are the core for most tracking. Use content/term for variants.</div>
+        </div>
+        <div class="how-step">
+          <div class="t">3) Copy your trackable link</div>
+          <div class="d">Use it in bio links, video descriptions, newsletters, ads, and referrals.</div>
+        </div>
+      </div>
 
       <h3>How to name UTMs (clean + consistent)</h3>
       <p>
@@ -371,44 +395,59 @@
       <h3>Practical use cases</h3>
       <div class="lanes">
         <div class="lane">
-          <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">🎥</div>
-            <h3>YouTube + TikTok</h3>
+          <div class="lane-head"><div class="lane-ico" aria-hidden="true">🎥</div><h3>YouTube + TikTok</h3></div>
+          <p>Track clicks from video descriptions and profile links. Use <b>utm_content</b> like “description” or “profile”.</p>
+        </div>
+        <div class="lane">
+          <div class="lane-head"><div class="lane-ico" aria-hidden="true">📨</div><h3>Newsletter campaigns</h3></div>
+          <p>Use <b>utm_medium=email</b> and a campaign name like “jan-update”. Track CTAs with <b>utm_content</b>.</p>
+        </div>
+        <div class="lane">
+          <div class="lane-head"><div class="lane-ico" aria-hidden="true">📈</div><h3>Ads and keywords</h3></div>
+          <p>Use <b>utm_medium=cpc</b>. Fill <b>utm_term</b> with a keyword/ad group, and <b>utm_content</b> for variants.</p>
+        </div>
+        <div class="lane">
+          <div class="lane-head"><div class="lane-ico" aria-hidden="true">🤝</div><h3>Partners and referrals</h3></div>
+          <p>Track mentions with <b>utm_medium=referral</b> and source like “partner-site”.</p>
+        </div>
+      </div>
+
+      <div class="seo-intent" aria-label="Search intents">
+        <div class="seo-card">
+          <h4>🔥 Common searches</h4>
+          <p>High-intent queries people type when they need UTMs right now.</p>
+          <div class="qgrid" aria-label="Common UTM queries">
+            <span class="qchip">utm builder</span>
+            <span class="qchip">utm link generator</span>
+            <span class="qchip">campaign url builder</span>
+            <span class="qchip">ga4 utm builder</span>
+            <span class="qchip">google analytics utm</span>
+            <span class="qchip">utm parameters generator</span>
+            <span class="qchip">create utm link</span>
+            <span class="qchip">utm source medium campaign</span>
+            <span class="qchip">utm for instagram bio</span>
+            <span class="qchip">utm for youtube link</span>
+            <span class="qchip">utm for newsletter</span>
+            <span class="qchip">utm for tiktok</span>
+            <span class="qchip">utm tracking url</span>
           </div>
-          <p>
-            Track clicks from video descriptions and profile links. Use <b>utm_content</b> like “description” or “profile”
-            to separate placements.
-          </p>
         </div>
 
-        <div class="lane">
-          <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">📨</div>
-            <h3>Newsletter campaigns</h3>
+        <div class="seo-card">
+          <h4>🎯 Long-tail questions</h4>
+          <p>Lower competition, easier to rank, and they convert well.</p>
+          <div class="qgrid" aria-label="Long-tail UTM queries">
+            <span class="qchip">what are utm parameters</span>
+            <span class="qchip">which utm fields are required</span>
+            <span class="qchip">utm content vs utm term</span>
+            <span class="qchip">how to name utm campaigns</span>
+            <span class="qchip">how to track instagram bio link</span>
+            <span class="qchip">how to track youtube description link</span>
+            <span class="qchip">does utm affect seo</span>
+            <span class="qchip">are utm parameters case sensitive</span>
+            <span class="qchip">keep existing query parameters</span>
+            <span class="qchip">update existing utm parameters</span>
           </div>
-          <p>
-            Use <b>utm_medium=email</b> and a campaign name like “jan-update”. Track which CTA performs with <b>utm_content</b>.
-          </p>
-        </div>
-
-        <div class="lane">
-          <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">📈</div>
-            <h3>Ads and keywords</h3>
-          </div>
-          <p>
-            Use <b>utm_medium=cpc</b> and fill <b>utm_term</b> with a keyword or ad group. Add <b>utm_content</b> for ad variants.
-          </p>
-        </div>
-
-        <div class="lane">
-          <div class="lane-head">
-            <div class="lane-ico" aria-hidden="true">🤝</div>
-            <h3>Partners and referrals</h3>
-          </div>
-          <p>
-            Track mentions from other sites with <b>utm_medium=referral</b> and a source like “partner-site”.
-          </p>
         </div>
       </div>
 
@@ -424,7 +463,7 @@
         </div>
         <div class="faq-item">
           <div class="faq-q">Can I paste a URL without https?</div>
-          <div class="faq-a">Yes. The tool will assume https automatically so the final link is valid.</div>
+          <div class="faq-a">Yes. The tool assumes https automatically so the final link is valid.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Does it keep my existing parameters?</div>
@@ -478,7 +517,7 @@
     </div>
   </footer>
 
-  <!-- Cookie banner -->
+  <!-- Cookie banner (same pattern as site) -->
   <div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences">
     <div class="cookie-card">
       <button class="cookie-x" id="cookieClose" type="button" aria-label="Close">×</button>
@@ -499,43 +538,7 @@
 
   <!-- Base site behavior -->
   <script src="/assets/site.js" defer></script>
-
   <!-- Tool behavior -->
-  <script src="/tools/utm-builder/utm-builder.js?v=1" defer></script>
-
-  <!-- Example box sync (tiny helper) -->
-  <script>
-    // Optional: keep the example box message aligned with loaded preset (pure UI)
-    // The main logic stays in utm-builder.js
-    (function(){
-      const box = document.getElementById("ubExampleBox");
-      const loadBtn = document.getElementById("ubLoadExample");
-      const newBtn = document.getElementById("ubNewExample");
-      if(!box || !loadBtn || !newBtn) return;
-
-      // If you want: just a nicer static hint
-      const hints = [
-        "YouTube description → track clicks from your video link.",
-        "Instagram bio → track profile traffic.",
-        "Newsletter CTA → track which button converts.",
-        "Ads landing page → separate keywords and variants.",
-        "Partner referral → measure mentions that perform.",
-        "QR poster → track offline scans.",
-        "TikTok profile → separate profile vs pinned video links."
-      ];
-      let i = 0;
-
-      function rotate(){
-        i = (i + 1) % hints.length;
-        box.textContent = hints[i];
-      }
-      newBtn.addEventListener("click", rotate);
-      // Load example already fills fields (handled by main JS)
-      // Keep the box readable:
-      loadBtn.addEventListener("click", () => {
-        box.textContent = "Example loaded → edit values if needed, then copy the link.";
-      });
-    })();
-  </script>
+  <script src="/tools/utm-builder/utm-builder.js" defer></script>
 </body>
 </html>
