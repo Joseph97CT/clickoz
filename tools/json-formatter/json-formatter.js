@@ -16,11 +16,6 @@
   const stBadge = $("#jfValidity");
   const stMeta  = $("#jfMeta");
 
-  // Examples UI (optional)
-  const exBox   = $("#jfExampleBox");
-  const exLoad  = $("#jfLoadExample");
-  const exNew   = $("#jfNewExample");
-
   if (!inTa || !outTa) return;
 
   // -----------------------------
@@ -66,14 +61,17 @@
   }
 
   function lineColFromIndex(text, idx){
+    // idx is 0-based offset in text
     const upto = text.slice(0, Math.max(0, idx));
     const lines = upto.split("\n");
-    const line = lines.length; // 1-based
+    const line = lines.length;               // 1-based
     const col  = (lines[lines.length-1] || "").length + 1; // 1-based
     return { line, col };
   }
 
   function parseErrorOffset(err){
+    // V8/Chromium: "Unexpected token ... in JSON at position 123"
+    // Safari: "JSON Parse error: Unexpected identifier "x" at line 1 column 2"
     const msg = String(err?.message || err || "");
     const mPos = msg.match(/position\s+(\d+)/i);
     if(mPos) return { type:"pos", value: Number(mPos[1]) };
@@ -115,7 +113,7 @@
       stBadge.textContent = ok ? "✅ Valid JSON" : "⚠️ Invalid JSON";
     }
     if(stMeta){
-      stMeta.textContent = info || (ok ? "Looks good. Copy the output when ready." : "Fix the error and try again.");
+      stMeta.textContent = info || (ok ? "Looks good. You can copy the formatted output." : "Fix the error and try again.");
     }
   }
 
@@ -140,6 +138,7 @@
   }
 
   function safeStringify(obj, pretty){
+    // pretty: true => 2 spaces
     return JSON.stringify(obj, null, pretty ? 2 : 0);
   }
 
@@ -198,106 +197,6 @@
   }
 
   // -----------------------------
-  // Examples (7 scenarios)
-  // -----------------------------
-  const examples = [
-    {
-      title: "API response (users)",
-      text: `{"success":true,"page":1,"pageSize":3,"data":[{"id":101,"name":"Mark","role":"admin","active":true},{"id":102,"name":"Sophie","role":"editor","active":true},{"id":103,"name":"Alex","role":"viewer","active":false}]}`
-    },
-    {
-      title: "Product listing (e-commerce)",
-      text: `{"sku":"LD-PS4-CTRL-BLK","title":"Wireless Controller","price":{"amount":34.9,"currency":"EUR"},"features":["responsive buttons","smooth analog sticks","fast pairing"],"inStock":true,"shipping":{"from":"FR","etaDays":2}}`
-    },
-    {
-      title: "Site config (feature flags)",
-      text: `{"app":"clickoz","env":"prod","features":{"particles":true,"translate":true,"cookieBanner":true},"limits":{"maxInputKB":256,"maxOutputKB":512}}`
-    },
-    {
-      title: "Analytics event payload",
-      text: `{"event":"tool_use","tool":"json-formatter","ts":"2026-01-29T12:10:00Z","meta":{"source":"tools_index","device":"mobile"},"props":{"formatted":true,"chars":842}}`
-    },
-    {
-      title: "Nested structure (debugging)",
-      text: `{"a":{"b":{"c":[{"k":"v","n":1},{"k":"v2","n":2}],"ok":true}},"notes":"deep nesting example"}`
-    },
-    {
-      title: "Array-heavy JSON",
-      text: `{"ids":[1,2,3,5,8,13,21],"tags":["seo","dev","tools"],"ratios":[0.1,0.25,0.5,1]}`
-    },
-    {
-      title: "Broken JSON (to test validation)",
-      text: `{"ok": true, "name": "Clickoz", "items": [1,2,], }`
-    }
-  ];
-  let exIndex = 0;
-
-  function showExample(idx){
-    if(!exBox) return;
-    const ex = examples[idx % examples.length];
-    exBox.textContent = `${ex.title}\n\n${ex.text}`;
-  }
-
-  function nextExample(){
-    exIndex = (exIndex + 1) % examples.length;
-    showExample(exIndex);
-  }
-
- function loadExample(){
-  const ex = examples[exIndex % examples.length];
-  inTa.value = ex.text;
-
-  // Broken JSON: no auto-format, show a helpful tip
-  if(ex.broken){
-    outTa.value = "";
-    validateOnly(); // sets status + focuses near error when possible
-
-    // Add a precise, human tip for the common mistakes in this sample
-    if(stMeta){
-      stMeta.textContent =
-        "Tip: this sample is intentionally broken → remove trailing commas (like [1,2,]) and the extra comma before the closing brace (… , }).";
-    }
-    if(stBadge){
-      stBadge.classList.remove("ok");
-      stBadge.classList.add("bad");
-      stBadge.textContent = "⚠️ Invalid JSON (example)";
-    }
-
-    inTa.focus();
-    return;
-  }
-
-  // Valid example: auto-format immediately
-  formatJSON(true);
-  inTa.focus();
-}
-
-function selectFirstTrailingComma(text){
-  try{
-    const t = normalize(text);
-
-    // Find first ", ]" or ", }" (optionally with spaces/newlines)
-    const re = /,\s*([\]}])/g;
-    const m = re.exec(t);
-    if(!m) return false;
-
-    const commaIndex = m.index; // position of comma
-    inTa.focus();
-    inTa.setSelectionRange(commaIndex, Math.min(t.length, commaIndex + 1)); // select comma only
-    return true;
-  }catch(e){
-    return false;
-  }
-}
-
-  if(exBox){
-    // initial message
-    showExample(exIndex);
-  }
-  if(exNew) exNew.addEventListener("click", nextExample);
-  if(exLoad) exLoad.addEventListener("click", loadExample);
-
-  // -----------------------------
   // Events
   // -----------------------------
   let tmr = null;
@@ -327,7 +226,9 @@ function selectFirstTrailingComma(text){
     renderStats(false, "");
   });
 
+  // Output is read-only UX, but keep focusable
   outTa.addEventListener("focus", () => {
+    // select all on focus for quick copy if user wants
     try{ outTa.select(); }catch(e){}
   });
 
