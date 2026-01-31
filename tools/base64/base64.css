@@ -556,3 +556,94 @@ body.b64 .meta-note a{
   text-decoration:none;
   border-bottom: 1px solid rgba(255,255,255,.14);
 }
+/* =========================================================
+   SEO intents (chips) — Base64
+========================================================= */
+body.b64 .seo-intent{
+  margin-top: 10px;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width:981px){
+  body.b64 .seo-intent{ grid-template-columns: 1fr 1fr; }
+}
+
+body.b64 .seo-card{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  padding: 14px;
+}
+body.b64 .seo-card h4{
+  margin: 0;
+  font-size: 16px;
+  font-weight: 1000;
+  letter-spacing: -0.01em;
+}
+body.b64 .seo-card p{
+  margin: 8px 0 0;
+  color: rgba(255,255,255,.74);
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+body.b64 .qgrid{
+  margin-top: 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+body.b64 .qchip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.16);
+  color: rgba(255,255,255,.88);
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+}
+body.b64 .qchip small{
+  opacity: .72;
+  font-weight: 1000;
+  font-size: 12px;
+}
+
+body.b64 .seo-mini{
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  color: rgba(255,255,255,.78);
+  line-height: 1.75;
+  font-size: 14px;
+}
+body.b64 .seo-mini b{ color: rgba(255,255,255,.92); font-weight: 1000; }
+
+body.b64 .seo-sublinks{
+  margin-top: 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+body.b64 .seo-sublinks a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  text-decoration:none;
+  font-weight: 900;
+  font-size: 13px;
+  color: rgba(255,255,255,.88);
+}
+body.b64 .seo-sublinks a:hover{
+  border-color: rgba(var(--accent-rgb), .28);
+  background: rgba(var(--accent-rgb), .08);
+}
